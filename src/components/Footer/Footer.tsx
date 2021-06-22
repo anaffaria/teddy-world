@@ -6,7 +6,7 @@ import "./footer.css";
 function Footer() {
   return (
     <>
-      <footer className="text-center text-lg-start mt-3 footer-container">
+      <footer className="text-center text-lg-start footer-container mt-4">
         <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
           <div className="me-5 d-none d-lg-block">
             <span>Onde nos encontrar nas redes sociais:</span>
@@ -33,9 +33,8 @@ function Footer() {
                   <i className="fas fa-gem me-3"></i>Teddy World
                 </h6>
                 <p>
-                  Here you can use rows and columns to organize your footer
-                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                  elit.
+                  Teddy World tem a missão social de levar suporte para crianças.
+                  Todas as vendas de pelúcias da nossa loja é revertida para orfanatos.
                 </p>
               </div>
 
@@ -63,41 +62,18 @@ function Footer() {
                 </p>
               </div>
 
-              <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Pricing
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Settings
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Orders
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Help
-                  </a>
-                </p>
-              </div>
-
-              <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              
+              <div className="col-md-4 col-lg-4 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
                 <p>
-                  <i className="fas fa-envelope me-3"></i>
+                  <i className="fas fa-envelope me-6"></i>
                   E-mail: teddyworld@google.com.br
                 </p>
                 <p>
-                  <i className="fas fa-phone me-3"></i> Telefone: (11) 47531541
+                  <i className="fas fa-phone me-6"></i> Telefone: (11) 47531541
                 </p>
                 <p>
-                  <i className="fas fa-print me-3"></i> Celular: (11) 987563478
+                  <i className="fas fa-print me-6"></i> Celular: (11) 987563478
                 </p>
               </div>
             </div>
