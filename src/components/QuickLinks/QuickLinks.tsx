@@ -1,7 +1,7 @@
 import { AiFillHeart } from "react-icons/ai";
-import "./navbar.css";
+import "./QuickLinks.css";
 
-function Navbar() {
+function QuickLinks() {
   return (
     <>
       <ul className="nav justify-content-between navbar-light bg-light navbar-expand-lg ">
@@ -52,4 +52,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default QuickLinks;

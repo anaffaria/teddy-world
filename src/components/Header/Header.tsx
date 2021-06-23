@@ -1,9 +1,15 @@
+
 import logoImg from "../../assets/logo.svg";
 import { FiShoppingBag } from "react-icons/fi";
 import { BiUserCircle } from "react-icons/bi";
 import { HiOutlineSearch } from "react-icons/hi";
 import { GiPlainCircle } from "react-icons/gi";
 import "./header.css";
+
+// Pages
+import Login from "../Login/Login";
+import { Link } from "react-router-dom";
+
 
 function Header() {
   return (
@@ -30,11 +36,11 @@ function Header() {
           </div>
 
           <div className="d-flex flex-column header-user-info">
-            <a href="#">
+            <Link to='/atendimento' >
               <span>Atendimento</span>
-            </a>
+            </Link>
             <a href="#">
-              <span>Entre ou Cadastre-se</span>
+              <span >Entre ou Cadastre-se</span>
             </a>
           </div>
         </div>
