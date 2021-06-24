@@ -1,7 +1,7 @@
 import Img1 from "../../components/Carousel/img/img1.jpg";
 import Img2 from "../../components/Carousel/img/img2.jpg";
 import Img3 from "../../components/Carousel/img/img3.jpg";
-import "./carousel.css";
+import "./Carousel.css";
 
 function Carousel() {
   return (

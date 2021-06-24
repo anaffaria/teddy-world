@@ -1,7 +1,7 @@
 import { AiFillFacebook } from "react-icons/ai";
 import { AiFillTwitterCircle } from "react-icons/ai";
 import { AiFillInstagram } from "react-icons/ai";
-import "./footer.css";
+import "./Footer.css";
 
 function Footer() {
   return (
@@ -25,8 +25,8 @@ function Footer() {
           </div>
         </section>
 
-        <section className="">
-          <div className="container text-center text-md-start mt-5">
+        <section>
+          <div className="text-center text-md-start mt-5">
             <div className="row mt-3">
               <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">

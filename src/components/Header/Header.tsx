@@ -4,10 +4,9 @@ import { FiShoppingBag } from "react-icons/fi";
 import { BiUserCircle } from "react-icons/bi";
 import { HiOutlineSearch } from "react-icons/hi";
 import { GiPlainCircle } from "react-icons/gi";
-import "./header.css";
+import "./Header.css";
 
-// Pages
-import Login from "../Login/Login";
+// Import
 import { Link } from "react-router-dom";
 
 
@@ -39,9 +38,9 @@ function Header() {
             <Link to='/atendimento' >
               <span>Atendimento</span>
             </Link>
-            <a href="#">
+            <Link to='/login'>
               <span >Entre ou Cadastre-se</span>
-            </a>
+            </Link>
           </div>
         </div>
 

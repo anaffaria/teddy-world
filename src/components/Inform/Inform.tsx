@@ -2,7 +2,7 @@ import { FiPhoneCall } from "react-icons/fi";
 import { BiPackage } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
 
-import "./inform.css";
+import "./Inform.css";
 function Inform() {
   return (
     <>
