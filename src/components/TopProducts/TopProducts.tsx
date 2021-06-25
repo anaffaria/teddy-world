@@ -20,6 +20,7 @@ function TopProducts({ products }: TopProductsProps) {
             <div className="card-body">
               <h5 className="card-title">{el.title}</h5>
               <p className="card-text">{el.subtitle}</p>
+              <p className="card-text">R$: {el.price}</p>
               <a href={el.productUrl} className="buttom d-flex">
                 <p className="m-auto text-center">Visitar</p>
               </a>

@@ -1,7 +1,8 @@
-body {
+main {
+  display: flex;
+  width: auto;
+  height: 579px;
   background-color: #fd9ec3;
-  margin: 0;
-  padding: 0;
 }
 
 .header-logo {
@@ -11,9 +12,8 @@ body {
 
 .container {
   position: relative;
-  height: 579px;
-  width: 700px;
-
+  height: 505px;
+  width: 600px;
   background-color: #fd9ec3;
   display: flex;
   justify-content: center;
@@ -21,7 +21,7 @@ body {
 }
 
 .login-form {
-  margin-top: 21px;
+  margin-top: 17px;
 }
 
 .box {
