@@ -1,0 +1,45 @@
+main {
+  display: flex;
+  width: auto;
+  height: 579px;
+  background-color: #fd9ec3;
+}
+
+.header-logo {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  height: 505px;
+  width: 600px;
+  background-color: #fd9ec3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  margin-top: 17px;
+}
+
+.box {
+  padding: 50px 100px;
+  background-color: #ffff;
+  margin: auto;
+  width: 500px;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttom {
+  background-color: #fd9ec3; /* Green */
+  border-radius: 12px;
+  border: none;
+  padding: 2px 20px;
+  text-align: center;
+  font-size: 14px;
+  width: 110px;
+  height: 40px;
+}
