@@ -4,8 +4,8 @@ import "./Register.css";
 function Register() {
   return (
     <>
-      <main>
-        <section className="container login-form">
+      <main className='register-bg'>
+        <section className="container login-form m-auto h-100">
           <form className="box">
             <div className="row mb-2">
               <div className="col">

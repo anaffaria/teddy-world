@@ -1,14 +1,14 @@
+// Import
+import { Link } from "react-router-dom";
 import logoImg from "../../assets/logo.svg";
 import "./Login.css";
 
-// Import
-import { Link } from "react-router-dom";
 
 function Login() {
   return (
     <>
-      <main>
-        <section className="container login-form">
+      <main className='register-bg'>
+        <section className="container login-form m-auto h-100">
           <form className="box">
             <div className="header-logo mb-4 mt-2">
               <img src={logoImg} alt="logo" />
