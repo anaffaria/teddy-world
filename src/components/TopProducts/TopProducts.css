@@ -1,6 +1,5 @@
-
 .buttom{
-  background-color: #fd9ec3; /* Green */
+  background-color: #FA98AF; /* Green */
   border-radius: 12px;
   color: black;
   padding: 10px 30px;
@@ -11,3 +10,10 @@
   width: 100px;
   height: 40px;
 }
+a{
+  text-decoration: none;
+}
+a:hover {
+  color: #7D2849;
+}
+

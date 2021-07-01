@@ -1,4 +1,12 @@
-import { AiFillFacebook, AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
+import {
+  AiFillFacebook,
+  AiFillInstagram,
+  AiFillTwitterCircle,
+} from "react-icons/ai";
+import { FcApproval} from "react-icons/fc";
+import { FcLock} from "react-icons/fc"
+import { FcShipped} from "react-icons/fc"
+
 import "./Footer.css";
 
 function Footer() {
@@ -31,38 +39,29 @@ function Footer() {
                   <i className="fas fa-gem me-3"></i>Teddy World
                 </h6>
                 <p>
-                  Teddy World tem a missão social de levar suporte para crianças.
-                  Todas as vendas de pelúcias da nossa loja é revertida para orfanatos.
+                  Teddy World tem a missão social de levar suporte para
+                  crianças. Todas as vendas de pelúcias são
+                  revertida para orfanatos.
                 </p>
               </div>
 
               <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Products</h6>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Angular
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    React
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Vue
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Laravel
-                  </a>
-                </p>
+                <h6 className="text-uppercase fw-bold mb-4">Selos</h6>
+                <div>
+                  <i  className="me-4 text-reset">
+                    <FcApproval fontSize={30} />
+                  </i>
+                  <i  className="me-4 text-reset">
+                    <FcLock fontSize={30} />
+                  </i>
+                  <i  className="me-4 text-reset">
+                    <FcShipped fontSize={30} />
+                  </i>
+                </div>
               </div>
 
-              
               <div className="col-md-4 col-lg-4 col-xl-3 mx-auto mb-md-0 mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
+                <h6 className="text-uppercase fw-bold mb-4">Contato</h6>
                 <p>
                   <i className="fas fa-envelope me-6"></i>
                   E-mail: teddyworld@google.com.br
@@ -78,9 +77,7 @@ function Footer() {
           </div>
         </section>
 
-        <div className="text-center p-4">
-          © 2021 Copyright
-        </div>
+        <div className="text-center p-4">© 2021 Copyright</div>
       </footer>
     </>
   );

@@ -4,15 +4,11 @@
   margin: 0 auto;
 }
 
-.icon-heart {
-  color: #fd9ec3;
-  margin-top: -4px;
-}
 ul {
   list-style-type: none;
 }
 .nav-link a:active {
-  color: #fd9ec3;
+  color: #FA98AF;
 }
 .a{
   justify-content: center;

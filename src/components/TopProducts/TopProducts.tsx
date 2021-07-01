@@ -1,4 +1,5 @@
 import "./TopProducts.css";
+import { Link } from "react-router-dom";
 
 interface TopProductsProps {
   products: Array<{
@@ -21,9 +22,11 @@ function TopProducts({ products }: TopProductsProps) {
               <h5 className="card-title">{el.title}</h5>
               <p className="card-text">{el.subtitle}</p>
               <p className="card-text">R$: {el.price}</p>
-              <a href={el.productUrl} className="buttom d-flex">
-                <p className="m-auto text-center">Visitar</p>
-              </a>
+              <Link className='link' to='/produto'>
+                <a  href={el.productUrl} className=" buttom d-flex">
+                  <p className="m-auto text-center">Visitar</p>
+                </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,8 +1,10 @@
+var color #FA98AF
+
 main {
   display: flex;
   width: auto;
   height: 579px;
-  background-color: #fd9ec3;
+  background-color: color;
 }
 
 .header-logo {
@@ -14,7 +16,7 @@ main {
   position: relative;
   height: 505px;
   width: 600px;
-  background-color: #fd9ec3;
+  background-color: color;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +36,7 @@ main {
 }
 
 .buttom {
-  background-color: #fd9ec3; /* Green */
+  background-color: color; /* Green */
   border-radius: 12px;
   border: none;
   padding: 2px 20px;

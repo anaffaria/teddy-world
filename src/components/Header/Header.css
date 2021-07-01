@@ -1,8 +1,7 @@
 .header-line {
-  background-color: #fd9ec3;
-  display: inline-block;
+  background-color: #FA98AF;
   width: 100%;
-  height: 18px;
+  height: 12px;
 }
 
 .header-container {
@@ -18,8 +17,8 @@
 }
 
 .header-user-info a {
-  margin-left: 10px;
-  flex-direction: column;
+  margin-left: 6px;
+  flex-direction: row;
   text-decoration: none;
   color: #000;
 }
@@ -27,15 +26,16 @@
   text-decoration: underline;
 }
 .header-user-info a:active {
-  color: #fd9ec3;
+  color: #FA98AF;
 }
 
 .hearder-shopping-circle {
   position: absolute;
-  top: 67px;
+  top: 55px;
+  right: 35px;
+  margin-left: 15px;
   margin-top: 6px;
-  margin-right: 10px;
-  color: #fd9ec3;
+  color: #FA98AF;
 }
 
 @media only screen and (max-width: 1300px) {

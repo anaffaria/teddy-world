@@ -27,22 +27,38 @@ function Login() {
               <label className="form-label">Senha</label>
             </div>
 
-            <div className="row justify-content-center">
-              <button type="submit" className="buttom text-center">
-                Entrar
-              </button>
+            <div className="row mb-2 mx-3">
+              <div className="col ">
+                <Link to='/'>
+                  <button type="submit" className="buttom text-center ">
+                    Voltar
+                  </button>
+                </Link>
+              </div>
+              <div className="col ">
+                <Link to='#'>
+                  <button type="submit" className="buttom text-center ">
+                    Entrar
+                  </button>
+                </Link>
+              </div>
             </div>
 
             <div className="row mb-2 mt-4">
               <div className="col text-center">
-                <a href="#!">Esqueci minha senha</a>
+                <Link to='/recuperarsenha'>
+                  <a href="#!">Esqueci minha senha</a>
+                </Link>
+                
               </div>
             </div>
+
             <div className="col text-center">
               <Link to="/cadastro">
                 <span>Ainda não sou cliente</span>
               </Link>
             </div>
+            
           </form>
         </section>
       </main>

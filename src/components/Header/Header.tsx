@@ -1,4 +1,3 @@
-
 import logoImg from "../../assets/logo.svg";
 import { FiShoppingBag } from "react-icons/fi";
 import { BiUserCircle } from "react-icons/bi";
@@ -8,7 +7,6 @@ import "./Header.css";
 
 // Import
 import { Link } from "react-router-dom";
-
 
 function Header() {
   return (
@@ -35,12 +33,18 @@ function Header() {
           </div>
 
           <div className="d-flex flex-column header-user-info">
-            <Link to='/atendimento' >
+            <Link to="/atendimento">
               <span>Atendimento</span>
             </Link>
-            <Link to='/login'>
-              <span >Entre ou Cadastre-se</span>
-            </Link>
+            <div>
+              <Link to="/login">
+                <span>Entre</span>
+              </Link>
+                {" "}ou 
+              <Link to="/cadastro">
+              <span>Cadastre-se</span>
+              </Link>
+            </div>
           </div>
         </div>
 
