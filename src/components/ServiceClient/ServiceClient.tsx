@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 function ServiceClient() {
   return (
     <>
-      <main className="register-bg">
-        <section className="container login-form m-auto h-100">
-          <form className="box-register">
+      <main className="layout-main">
+        <section className="layout-container layout-form m-auto h-100">
+          <form className="layout-box">
             <div className="form-outline mb-3 text-center">
               <h5>Central de atendimento</h5>
             </div>
@@ -68,13 +68,13 @@ function ServiceClient() {
             <div className="row mb-2 mx-3 mt-4">
               <div className="col ">
                 <Link to="/">
-                  <button type="submit" className="buttom text-center ">
+                  <button type="submit" className="layout-buttom ">
                     Voltar
                   </button>
                 </Link>
               </div>
               <div className="col ">
-                <button type="submit" className="buttom text-center">
+                <button type="submit" className="layout-buttom ">
                   Enviar
                 </button>
               </div>

@@ -1,0 +1,38 @@
+.card-text-product {
+  font-size: 16px;
+}
+.card-title-product {
+  margin-top: -10px;
+  font-size: 35px;
+}
+.card-text-info {
+  margin-top: 20px;
+}
+.icons {
+  margin-top: 4px;
+  margin-right: 20px;
+}
+.product-value {
+  font-size: 25px;
+  color: #fa98af;
+  position: absolute;
+  margin-top: -35px;
+  margin-left: 35px;
+}
+
+.product-buttom {
+  background-color: #fa98af; /* Green */
+  border-radius: 12px;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 168px;
+  height: 40px;
+  text-align: center;
+  position: absolute;
+  margin-top: -35px;
+  margin-left: 80px;
+}

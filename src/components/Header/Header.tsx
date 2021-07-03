@@ -12,10 +12,12 @@ function Header() {
   return (
     <>
       <div className="header-line" />
-      <div className="header-container">
-        <div className="header-logo">
-          <img src={logoImg} alt="logo" />
-        </div>
+      <div className="header-container mt-1">
+        <Link to='/'>
+          <div className="header-logo">
+            <img src={logoImg} alt="logo" />
+          </div>
+        </Link>
 
         <div className="hearder-search d-flex">
           <div className="header-search-bar input-group">
@@ -39,10 +41,10 @@ function Header() {
             <div>
               <Link to="/login">
                 <span>Entre</span>
-              </Link>
-                {" "}ou 
+              </Link>{" "}
+              ou
               <Link to="/cadastro">
-              <span>Cadastre-se</span>
+                <span>Cadastre-se</span>
               </Link>
             </div>
           </div>

@@ -1,16 +1,16 @@
 import Header from "../components/Header/Header";
-import PageProduct from "../components/Product/Product";
+import PageProductList from "../components/ProductList/ProductList";
 import Footer from "../components/Footer/Footer";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
-function Product() {
+function ProductList() {
   return (
     <>
       <Header />
       <QuickLinks/>
-      <PageProduct/>
+      <PageProductList/>
       <Footer />
     </>
   );
 }
 
-export default Product;
+export default ProductList;

@@ -22,10 +22,8 @@ function TopProducts({ products }: TopProductsProps) {
               <h5 className="card-title">{el.title}</h5>
               <p className="card-text">{el.subtitle}</p>
               <p className="card-text">R$: {el.price}</p>
-              <Link className='link' to='/produto'>
-                <a  href={el.productUrl} className=" buttom d-flex">
-                  <p className="m-auto text-center">Visitar</p>
-                </a>
+              <Link className="link layout-buttom d-flex" to={`/produto?id=${el.productUrl}`}>
+                <p className="m-auto text-center">Visitar</p>
               </Link>
             </div>
           </div>

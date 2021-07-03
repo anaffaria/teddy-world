@@ -1,6 +1,6 @@
 import Header from "../components/Header/Header";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
-import Carousel from "../components/Carousel/Carousel";
+import Showcase from "../components/Showcase/Showcase";
 import Inform from "../components/Inform/Inform";
 import Footer from "../components/Footer/Footer";
 import TopProducts from "../components/TopProducts/TopProducts";
@@ -44,7 +44,7 @@ function Home() {
     <>
       <Header />
       <QuickLinks />
-      <Carousel />
+      <Showcase />
       <Inform />
       <TopProducts products={products} />
       <Footer />

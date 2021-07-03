@@ -1,10 +1,10 @@
 import PageRegister from "../components/Register/Register";
 
-function Register(){
-  return(
-      <>
-        <PageRegister/>
-      </>
+function Register() {
+  return (
+    <>
+      <PageRegister />
+    </>
   );
 }
 

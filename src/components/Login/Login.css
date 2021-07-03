@@ -1,10 +1,8 @@
-var color #FA98AF
-
-main {
+.layout-main{
   display: flex;
   width: auto;
-  height: 579px;
-  background-color: color;
+  height: 627px;
+  background-color: #FA98AF;
 }
 
 .header-logo {
@@ -12,7 +10,7 @@ main {
   justify-content: center;
 }
 
-.container {
+.layout-container {
   position: relative;
   height: 505px;
   width: 600px;
@@ -22,11 +20,11 @@ main {
   align-items: center;
 }
 
-.login-form {
+.layout-form {
   margin-top: 17px;
 }
 
-.box {
+.layout-box {
   padding: 50px 100px;
   background-color: #ffff;
   margin: auto;
@@ -35,15 +33,18 @@ main {
   align-items: center;
 }
 
-.buttom {
-  background-color: color; /* Green */
+.layout-buttom{
+  background-color: #FA98AF; /* Green */
   border-radius: 12px;
   border: none;
-  padding: 2px 20px;
-  text-align: center;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
   font-size: 14px;
-  width: 110px;
+  width: 100px;
   height: 40px;
+  text-align:center
 }
 
 .register-bg {

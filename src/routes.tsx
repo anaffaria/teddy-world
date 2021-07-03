@@ -4,7 +4,9 @@ import Login from './pages/Login'
 import Register from "./components/Register/Register";
 import RememberPass from "./pages/RememberPass";
 import ServiceClient from "./pages/ServiceClient";
-import Product from "./components/Product/Product";
+import Product from "./pages/Product";
+import ProductList from "./pages/ProductList";
+
 
 function Routes() {
   return (
@@ -16,6 +18,7 @@ function Routes() {
         <Route path="/recuperarsenha" component={RememberPass} />
         <Route path="/atendimento" component={ServiceClient} />
         <Route path="/produto" component={Product} />
+        <Route path="/produtos" component={ProductList} />
       </Switch>
     </BrowserRouter>
   );

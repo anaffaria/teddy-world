@@ -1,13 +1,11 @@
-import "./Register.css";
-
 import { Link } from "react-router-dom";
 function Register() {
   return (
     <>
-      <main className="register-bg">
-        <section className="container login-form m-auto h-100">
-          <form className="box-register">
-            <div className="form-outline mb-4">
+      <main className="layout-main">
+        <section className="layout-container layout-form m-auto h-100">
+          <form className="layout-box">
+            <div className="form-outline mb-4 mt-3">
               <label className="form-label">Nome Completo:</label>
               <input type="email" id="form2Example1" className="form-control" />
             </div>
@@ -46,18 +44,20 @@ function Register() {
               </div>
             </div>
 
-            <div className="row mb-2 mx-3 mt-10">
+            <div className="row mb-2 mx-3 mt-4">
               <div className="col ">
-                <Link to='/login'>
-                  <button type="submit" className="buttom text-center ">
+                <Link to="/login">
+                  <button type="submit" className="layout-buttom">
                     Voltar
                   </button>
                 </Link>
               </div>
               <div className="col ">
-                <button type="submit" className="buttom text-center">
-                  Cadastrar
-                </button>
+                <Link to="/login">
+                  <button type="submit" className="layout-buttom">
+                    Cadastrar
+                  </button>
+                </Link>
               </div>
             </div>
           </form>
