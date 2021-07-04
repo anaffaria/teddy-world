@@ -1,7 +1,11 @@
-a{
+/* a {
   text-decoration: none;
 }
 a:hover {
-  color: #7D2849;
-}
+  color: #7d2849;
+} */
 
+.layout-buttom:hover {
+  color: #7d2849;
+  text-decoration: none;
+}

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import './ServiceClient.css'
 
 function ServiceClient() {
   return (
     <>
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
-          <form className="layout-box">
+          <form className="layout-box layout-box-service__client">
             <div className="form-outline mb-3 text-center">
               <h5>Central de atendimento</h5>
             </div>
@@ -28,8 +29,8 @@ function ServiceClient() {
               </div>
             </div>
 
-            <div className="row mt-1">
-              <div className="form-group mt-1">
+            <div className="row ">
+              <div className="form-group col-md-12 ">
                 <label>CPF:</label>
                 <input
                   type="email"
@@ -38,7 +39,7 @@ function ServiceClient() {
                 />
               </div>
 
-              <div className="form-group mt-1">
+              <div className="form-group col-md-12 ">
                 <label>Nome Completo:</label>
                 <input
                   type="email"
@@ -47,7 +48,7 @@ function ServiceClient() {
                 />
               </div>
 
-              <div className="form-group mt-1">
+              <div className="form-group col-md-12 ">
                 <label>E-mail:</label>
                 <input
                   type="email"
@@ -55,7 +56,7 @@ function ServiceClient() {
                   className="form-control"
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group col-md-12">
               <label>Motivo:</label>
                 <input
                   type="email"

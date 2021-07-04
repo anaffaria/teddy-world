@@ -15,7 +15,7 @@ function TopProducts({ products }: TopProductsProps) {
   function renderProducts() {
     return products.map((el, index) => {
       return (
-        <div className="col-xs-12 col-sm-3 col-md-3 col-lg-3" key={index}>
+        <div className="col-xs-12 mt-2 col-sm-3 col-md-3 col-lg-3" key={index}>
           <div className="card">
             <img className="card-img-top" src={el.image} alt="Card image cap" />
             <div className="card-body">
@@ -38,13 +38,13 @@ function TopProducts({ products }: TopProductsProps) {
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div className="card text-center ">
             <div className="card-body">
-              <h5 className="card-title mt-0">Pelúcias mais vendidos</h5>
+              <h5>Pelúcias mais vendidos</h5>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="row m-auto mt-2 w-100">{renderProducts()}</div>
+      <div className="row m-auto mt-2 w-100 flex-wrap">{renderProducts()}</div>
     </>
   );
 }
