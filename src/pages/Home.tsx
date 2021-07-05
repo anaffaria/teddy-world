@@ -38,7 +38,7 @@ function Home() {
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img4,
       productUrl: "#",
-    },         
+    },     
   ];
   return (
     <>
