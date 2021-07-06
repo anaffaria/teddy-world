@@ -15,7 +15,7 @@ interface ListProductsProps {
     categories: string[];
     colors: string[];
     sizes: string[];
-  }
+  };
 }
 
 function ProductList({ listproducts, listfilter }: ListProductsProps) {
@@ -49,6 +49,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
   function renderFilterList() {
     return (
       <>
+      
         <div
           data-spy="scroll"
           data-target="#list-example"
@@ -56,8 +57,8 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Categoria</h6>
-          <ul className="list-group ">
-            <li className="list-group-item border-0 mt-0">
+          <ul className="list-group">
+            <li className="list-group-item border-0">
               <input
                 className="form-check-input me-1"
                 type="checkbox"
@@ -76,8 +77,8 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Cor</h6>
-          <ul className="list-group ">
-            <li className="list-group-item border-0 mt-0">
+          <ul className="list-group">
+            <li className="list-group-item border-0">
               <input
                 className="form-check-input me-1"
                 type="checkbox"
@@ -102,10 +103,11 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
                 type="checkbox"
                 value=""
                 aria-label="..."
-              /> 
+              />
             </li>
           </ul>
         </div>
+      
       </>
     );
   }
@@ -145,7 +147,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
                   }}
                 />
               </div>
-            {renderFilterList()}
+              {renderFilterList()}
             </div>
             <div className="col-md-9 d-flex flex-wrap border-0">
               {renderProductsList()}

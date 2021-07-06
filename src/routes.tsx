@@ -1,12 +1,12 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from './pages/Home'
-import Login from './pages/Login'
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Register from "./components/Register/Register";
 import RememberPass from "./pages/RememberPass";
 import ServiceClient from "./pages/ServiceClient";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
-
+import CustomerAccount from "./pages/CustomerAccount";
 
 function Routes() {
   return (
@@ -19,6 +19,7 @@ function Routes() {
         <Route path="/atendimento" component={ServiceClient} />
         <Route path="/produto" component={Product} />
         <Route path="/produtos" component={ProductList} />
+        <Route path="/cliente" component={CustomerAccount} />
       </Switch>
     </BrowserRouter>
   );

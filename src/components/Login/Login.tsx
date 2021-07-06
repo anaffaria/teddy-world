@@ -35,7 +35,7 @@ function Login() {
                 </Link>
               </div>
               <div className="col ">
-                <Link to="#">
+                <Link to="/cliente">
                   <button type="submit" className="layout-buttom text-center ">
                     Entrar
                   </button>
