@@ -6,6 +6,7 @@ import {
 import { FcApproval} from "react-icons/fc";
 import { FcLock} from "react-icons/fc"
 import { FcShipped} from "react-icons/fc"
+import {MdEmail} from "react-icons/md"
 
 import "./Footer.css";
 
@@ -13,20 +14,23 @@ function Footer() {
   return (
     <>
       <footer className="text-center text-lg-start footer-container mt-4">
-        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <section className="d-flex justify-content-center justify-content-lg-between p-3 border-bottom">
           <div className="me-5 d-none d-lg-block">
             <span>Onde nos encontrar nas redes sociais:</span>
           </div>
 
-          <div>
+          <div className='w-70'>
             <a href="" className="me-4 text-reset">
-              <AiFillFacebook fontSize={20} />
+              <AiFillFacebook fontSize={25} />
             </a>
             <a href="" className="me-4 text-reset">
-              <AiFillTwitterCircle fontSize={20} />
+              <AiFillTwitterCircle fontSize={25} />
             </a>
             <a href="" className="me-4 text-reset">
-              <AiFillInstagram fontSize={20} />
+              <AiFillInstagram fontSize={25} />
+            </a>
+            <a href="" className="me-4 text-reset">
+              <MdEmail fontSize={25} />
             </a>
           </div>
         </section>
@@ -62,10 +66,6 @@ function Footer() {
 
               <div className="col-md-4 col-lg-4 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">Contato</h6>
-                <p>
-                  <i className="fas fa-envelope me-6"></i>
-                  E-mail: teddyworld@google.com.br
-                </p>
                 <p>
                   <i className="fas fa-phone me-6"></i> Telefone: (11) 47531541
                 </p>

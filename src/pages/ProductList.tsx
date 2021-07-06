@@ -8,9 +8,10 @@ import img3 from "../components/TopProducts/img/img3.jpg";
 import img4 from "../components/TopProducts/img/img4.jpg";
 
 function ProductList() {
+  
   const listproducts = [
     {
-      price: 69.90,
+      price: 69.9,
       title: "Leão de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img1,
@@ -24,55 +25,57 @@ function ProductList() {
       productUrl: "#",
     },
     {
-      price: 69.90,
+      price: 69.9,
       title: "Girafa de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img3,
       productUrl: "#",
     },
     {
-      price: 69.90,
+      price: 69.9,
       title: "Onça de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img4,
       productUrl: "#",
     },
     {
-      price: 69.90,
+      price: 69.9,
       title: "Onça de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img4,
       productUrl: "#",
     },
     {
-      price: 69.90,
+      price: 69.9,
       title: "Onça de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img2,
       productUrl: "#",
     },
     {
-      price: 69.90,
+      price: 69.9,
       title: "Onça de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img1,
       productUrl: "#",
     },
     {
-      price: 69.90,
+      price: 69.9,
       title: "Onça de Pelúcia",
       subtitle: "25 cm - M Decoração Quarto Bebê",
       image: img3,
       productUrl: "#",
     },
-            
   ];
 
   return (
     <>
       <Header />
-      <QuickLinks/>
-      <PageProductList listproducts={listproducts}/>
+      <QuickLinks />
+      <PageProductList
+        listproducts={listproducts}
+        // filterproducts={filterproducts}
+      />
       <Footer />
     </>
   );

@@ -24,6 +24,7 @@
 }
 .header-user-info a:hover {
   text-decoration: underline;
+  color: #FA98AF;
 }
 .header-user-info a:active {
   color: #FA98AF;
@@ -31,7 +32,7 @@
 
 .hearder-shopping-circle {
   position: absolute;
-  top: 55px;
+  top: 58px;
   right: 35px;
   margin-left: 15px;
   margin-top: 6px;
