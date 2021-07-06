@@ -10,9 +10,15 @@ interface ListProductsProps {
     productUrl: string;
     price: number;
   }>;
+
+  listfilter: {
+    categories: string[];
+    colors: string[];
+    sizes: string[];
+  }
 }
 
-function ProductList({ listproducts }: ListProductsProps) {
+function ProductList({ listproducts, listfilter }: ListProductsProps) {
   const [valRange, setValRange] = useState<number>(0);
   function renderProductsList() {
     return listproducts.map((el, index) => {
@@ -38,6 +44,70 @@ function ProductList({ listproducts }: ListProductsProps) {
         </>
       );
     });
+  }
+
+  function renderFilterList() {
+    return (
+      <>
+        <div
+          data-spy="scroll"
+          data-target="#list-example"
+          data-offset="0"
+          className="scrollspy-example"
+        >
+          <h6 className="w-100 mt-2">Categoria</h6>
+          <ul className="list-group ">
+            <li className="list-group-item border-0 mt-0">
+              <input
+                className="form-check-input me-1"
+                type="checkbox"
+                value=""
+                aria-label="..."
+              />
+              Urso
+            </li>
+          </ul>
+        </div>
+
+        <div
+          data-spy="scroll"
+          data-target="#list-example"
+          data-offset="0"
+          className="scrollspy-example"
+        >
+          <h6 className="w-100 mt-2">Cor</h6>
+          <ul className="list-group ">
+            <li className="list-group-item border-0 mt-0">
+              <input
+                className="form-check-input me-1"
+                type="checkbox"
+                value=""
+                aria-label="..."
+              />
+            </li>
+          </ul>
+        </div>
+
+        <div
+          data-spy="scroll"
+          data-target="#list-example"
+          data-offset="0"
+          className="scrollspy-example"
+        >
+          <h6 className="w-100 mt-2">Tamanho</h6>
+          <ul className="list-group ">
+            <li className="list-group-item border-0 mt-0">
+              <input
+                className="form-check-input me-1"
+                type="checkbox"
+                value=""
+                aria-label="..."
+              /> 
+            </li>
+          </ul>
+        </div>
+      </>
+    );
   }
 
   return (
@@ -75,65 +145,8 @@ function ProductList({ listproducts }: ListProductsProps) {
                   }}
                 />
               </div>
-
-              <div
-                data-spy="scroll"
-                data-target="#list-example"
-                data-offset="0"
-                className="scrollspy-example"
-              >
-                <h6 className="w-100 mt-2">Categoria</h6>
-                <ul className="list-group ">
-                  <li className="list-group-item border-0 mt-0">
-                    <input
-                      className="form-check-input me-1"
-                      type="checkbox"
-                      value=""
-                      aria-label="..."
-                    />
-                  </li>
-                </ul>
-              </div>
-
-              <div
-                data-spy="scroll"
-                data-target="#list-example"
-                data-offset="0"
-                className="scrollspy-example"
-              >
-                <h6 className="w-100 mt-2">Cor</h6>
-                <ul className="list-group ">
-                  <li className="list-group-item border-0 mt-0">
-                    <input
-                      className="form-check-input me-1"
-                      type="checkbox"
-                      value=""
-                      aria-label="..."
-                    />
-                  </li>
-                </ul>
-              </div>
-
-              <div
-                data-spy="scroll"
-                data-target="#list-example"
-                data-offset="0"
-                className="scrollspy-example"
-              >
-                <h6 className="w-100 mt-2">Tamanho</h6>
-                <ul className="list-group ">
-                  <li className="list-group-item border-0 mt-0">
-                    <input
-                      className="form-check-input me-1"
-                      type="checkbox"
-                      value=""
-                      aria-label="..."
-                    />
-                  </li>
-                </ul>
-              </div>
+            {renderFilterList()}
             </div>
-
             <div className="col-md-9 d-flex flex-wrap border-0">
               {renderProductsList()}
             </div>

@@ -8,7 +8,6 @@ import img3 from "../components/TopProducts/img/img3.jpg";
 import img4 from "../components/TopProducts/img/img4.jpg";
 
 function ProductList() {
-  
   const listproducts = [
     {
       price: 69.9,
@@ -68,13 +67,19 @@ function ProductList() {
     },
   ];
 
+  const filterproducts = {
+    categories: ["Ursos", "Elefantes", "Girafas"],
+    colors: ["Azul", "Vermelho", "Marrom"],
+    sizes: ["0cm ~ 20cm", "21cm ~ 30cm", "31cm ~ 40cm"],
+  };
+
   return (
     <>
       <Header />
       <QuickLinks />
       <PageProductList
         listproducts={listproducts}
-        // filterproducts={filterproducts}
+        listfilter={filterproducts}
       />
       <Footer />
     </>
