@@ -7,6 +7,7 @@ import ServiceClient from "./pages/ServiceClient";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import CustomerAccount from "./pages/CustomerAccount";
+import CustomerEdit from "./pages/CustomerEdit";
 
 function Routes() {
   return (
@@ -19,7 +20,8 @@ function Routes() {
         <Route path="/atendimento" component={ServiceClient} />
         <Route path="/produto" component={Product} />
         <Route path="/produtos" component={ProductList} />
-        <Route path="/cliente" component={CustomerAccount} />
+        <Route path="/cliente" exact component={CustomerAccount} />
+        <Route path="/cliente/alterar_dados" component={CustomerEdit} />
       </Switch>
     </BrowserRouter>
   );

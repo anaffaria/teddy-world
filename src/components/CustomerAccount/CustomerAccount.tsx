@@ -1,7 +1,12 @@
 import "./CustomerAccount.css";
 import { FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-function CustomerAccount() {
+export interface CustomerAccountProps {
+  children?: React.ReactNode
+}
+
+function CustomerAccount({ children }: CustomerAccountProps) {
   return (
     <>
       <main>
@@ -12,7 +17,9 @@ function CustomerAccount() {
               <label className="font-weight-normal ml-2">Olá, Name!</label>
             </div>
             <div className="col-lg-9">
-            <label className="font-weight-normal ml-2">Nome do link selecionado</label>
+              <label className="font-weight-normal ml-2">
+                Nome do link selecionado
+              </label>
             </div>
           </div>
           <div className="row ">
@@ -20,9 +27,12 @@ function CustomerAccount() {
               <div className="list-group p-2 ">
                 <h6>Seu Cadastro</h6>
                 <div>
-                  <a href="#" className="list-group-item border-0">
+                  <Link
+                    to="/cliente/alterar_dados"
+                    className="list-group-item border-0"
+                  >
                     Alterar dados cadastrais
-                  </a>
+                  </Link>
                   <a href="#" className="list-group-item border-0">
                     Alterar senha
                   </a>
@@ -57,9 +67,7 @@ function CustomerAccount() {
               </div>
             </div>
 
-            <div className="col-9  border">
-
-            </div>
+            <div className="col-9  border">{children}</div>
           </div>
         </div>
       </main>
