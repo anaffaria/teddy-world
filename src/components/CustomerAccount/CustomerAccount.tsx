@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export interface CustomerAccountProps {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 function CustomerAccount({ children }: CustomerAccountProps) {
@@ -13,12 +13,17 @@ function CustomerAccount({ children }: CustomerAccountProps) {
         <div className="container ">
           <div className="row p-1 mt-2 ">
             <div className="col-lg-3 col-sm-3">
-              <FaUserCircle size={25} />
+              <FaUserCircle size={30} />
               <label className="font-weight-normal ml-2">Olá, Name!</label>
             </div>
-            <div className="col-lg-9">
+            <div className="col-lg-6">
               <label className="font-weight-normal ml-2">
                 Nome do link selecionado
+              </label>
+            </div>
+            <div className="col-lg-3">
+              <label className="font-weight-normal ml-2">
+                
               </label>
             </div>
           </div>
@@ -27,41 +32,59 @@ function CustomerAccount({ children }: CustomerAccountProps) {
               <div className="list-group p-2 ">
                 <h6>Seu Cadastro</h6>
                 <div>
-                  <Link
+                  <Link 
                     to="/cliente/alterar_dados"
                     className="list-group-item costumer_account_link border-0"
                   >
                     Alterar dados cadastrais
                   </Link>
-                  <a href="#" className="list-group-item costumer_account_link border-0">
+                  <Link
+                    to="/cliente/alterar_senha"
+                    className="list-group-item costumer_account_link border-0"
+                  >
                     Alterar senha
-                  </a>
-                  <a href="#" className="list-group-item costumer_account_link border-0">
+                  </Link>
+                  <Link
+                    to="/cliente/alterar_dados"
+                    className="list-group-item costumer_account_link border-0"
+                  >
                     Cartões
-                  </a>
-                  <a href="#" className="list-group-item costumer_account_link border-0">
+                  </Link>
+                  <Link
+                    to="/"
+                    className="list-group-item costumer_account_link border-0"
+                  >
                     Sair
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="list-group ">
                   <h6>Seus Pedidos</h6>
                   <div>
-                    <a href="#" className="list-group-item costumer_account_link border-0">
+                    <Link
+                      to="/"
+                      className="list-group-item costumer_account_link border-0"
+                    >
                       Acompanhar pedidos
-                    </a>
-                    <a href="#" className="list-group-item costumer_account_link border-0">
+                    </Link>
+                    <Link
+                      to="/"
+                      className="list-group-item costumer_account_link border-0"
+                    >
                       Compras
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
                 <div className="list-group ">
                   <h6>Serviços</h6>
                   <div>
-                    <a href="#" className="list-group-item costumer_account_link border-0">
+                    <Link
+                      to="/"
+                      className="list-group-item costumer_account_link border-0"
+                    >
                       Central de Atendimento
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

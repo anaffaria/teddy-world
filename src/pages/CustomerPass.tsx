@@ -1,17 +1,17 @@
-import CustomerAccountPage from "../components/CustomerAccount/CustomerAccount";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
+import CustomerPassPage from "../components/CustomerPass/CustomerPass";
 
-function CustomerAccount() {
+function CustomerPass() {
   return (
     <>
       <Header />
-      <QuickLinks/>
-      <CustomerAccountPage />
+      <QuickLinks />
+      <CustomerPassPage/>
       <Footer />
     </>
   );
 }
 
-export default CustomerAccount;
+export default CustomerPass;

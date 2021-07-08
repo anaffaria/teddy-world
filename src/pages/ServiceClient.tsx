@@ -1,8 +1,8 @@
-import PageServiceClient from "../components/ServiceClient/ServiceClient";
+import ServiceClientPage from "../components/ServiceClient/ServiceClient";
 
 function ServiceClient(){
   return(
-    <PageServiceClient/>
+    <ServiceClientPage/>
   );
 }
 

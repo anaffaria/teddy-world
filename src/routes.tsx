@@ -8,6 +8,7 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import CustomerAccount from "./pages/CustomerAccount";
 import CustomerEdit from "./pages/CustomerEdit";
+import CustomerPass from "./pages/CustomerPass";
 
 function Routes() {
   return (
@@ -22,6 +23,7 @@ function Routes() {
         <Route path="/produtos" component={ProductList} />
         <Route path="/cliente" exact component={CustomerAccount} />
         <Route path="/cliente/alterar_dados" component={CustomerEdit} />
+        <Route path="/cliente/alterar_senha" component={CustomerPass} />
       </Switch>
     </BrowserRouter>
   );

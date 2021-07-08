@@ -1,5 +1,5 @@
 import Header from "../components/Header/Header";
-import PageProduct from "../components/Product/Product";
+import ProductPage from "../components/Product/Product";
 import Footer from "../components/Footer/Footer";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
 function Product() {
@@ -7,7 +7,7 @@ function Product() {
     <>
       <Header />
       <QuickLinks/>
-      <PageProduct/>
+      <ProductPage/>
       <Footer />
     </>
   );

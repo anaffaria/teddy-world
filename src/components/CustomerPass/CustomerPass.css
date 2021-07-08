@@ -1,0 +1,11 @@
+.custumer_pass-buttom {
+  background-color: #fa98af; /* Green */
+  border-radius: 12px;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 14px;
+  width: 168px;
+  height: 40px;
+}

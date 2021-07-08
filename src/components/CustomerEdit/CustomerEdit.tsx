@@ -1,4 +1,4 @@
-import { Form } from "react-bootstrap";
+import { Form, Modal, Button } from "react-bootstrap";
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -99,9 +99,15 @@ function CustomerEdit() {
               </div>
             </form>
           </div>
-          <div className="col-4 col-sm-4  mt-4">
+          
+          <div className="col-4 col-sm-4 mt-4">
             <div className="col-12 col-sm-12  mt-3 align-items-center border">
-              <IoMdAddCircle type="button" className="col-12 align-items-center" size={40} color={"#FA98AF"} />
+              <IoMdAddCircle
+                type="button"
+                className="col-12 align-items-center"
+                size={40}
+                color={"#FA98AF"}
+              />
               <label className=" col-12 font-weight-bold text-center">
                 Adicionar novo endereço
               </label>
@@ -112,5 +118,7 @@ function CustomerEdit() {
     </>
   );
 }
+
+
 
 export default CustomerEdit;

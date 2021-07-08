@@ -1,5 +1,5 @@
 import Header from "../components/Header/Header";
-import PageProductList from "../components/ProductList/ProductList";
+import ProductListPage from "../components/ProductList/ProductList";
 import Footer from "../components/Footer/Footer";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
 import img1 from "../components/TopProducts/img/img1.jpg";
@@ -77,7 +77,7 @@ function ProductList() {
     <>
       <Header />
       <QuickLinks />
-      <PageProductList
+      <ProductListPage
         listproducts={listproducts}
         listfilter={filterproducts}
       />
