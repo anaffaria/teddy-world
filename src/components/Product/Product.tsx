@@ -3,8 +3,11 @@ import Img1 from "../../components/Product/img/img1.jpg";
 import { Link } from "react-router-dom";
 import { Accordion, Card } from "react-bootstrap";
 import "./Product.css";
+import { useState } from "react";
 
 function Product() {
+  const [amount, setAmount] = useState<number>(0);
+
   return (
     <>
       <main>
@@ -40,13 +43,40 @@ function Product() {
                       Garantia: <label> de 1 mês</label>
                     </p>
 
-                    <input
-                      type="number"
-                      id="quantity"
-                      name="quantity"
-                      min="1"
-                      max="20"
-                    />
+                    <div className="quantity d-flex align-items-center">
+                      <input
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        min="1"
+                        max="20"
+                        step="1"
+                        value={amount}
+                        className="product-amount"
+                      />
+                      <div className="plus_minus__buttons d-flex flex-column">
+                        <div
+                          className="w-100 h-100 m-auto d-flex plus-border-button"
+                          onClick={() => {
+                            setAmount((prev: number) => prev + 1);
+                          }}
+                        >
+                          <span>+</span>
+                        </div>
+
+                        <div
+                          className="w-100 h-100 m-auto d-flex"
+                          onClick={() => {
+                            setAmount((prev: number) => {
+                              if (prev <= 0) return 0;
+                              return prev - 1;
+                            });
+                          }}
+                        >
+                          <span>-</span>
+                        </div>
+                      </div>
+                    </div>
 
                     <div className="col ">
                       <Link to="#">
@@ -59,9 +89,13 @@ function Product() {
                       </Link>
                     </div>
 
-                    <Accordion className='mt-5'>
+                    <Accordion className="mt-5" defaultActiveKey="0">
                       <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey="0">
+                        <Accordion.Toggle
+                          as={Card.Header}
+                          eventKey="0"
+                          active=""
+                        >
                           Descrição do produto
                         </Accordion.Toggle>
 

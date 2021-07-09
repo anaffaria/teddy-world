@@ -13,17 +13,17 @@ function Login() {
               <img src={logoImg} alt="logo" />
             </div>
             <div className="form-outline mb-4">
-              <input type="email" id="form2Example1" className="form-control" />
               <label className="form-label">E-mail</label>
+              <input type="email" id="form2Example1" className="form-control" />
             </div>
 
             <div className="form-outline mb-4">
+              <label className="form-label">Senha</label>
               <input
                 type="password"
                 id="form2Example2"
                 className="form-control"
               />
-              <label className="form-label">Senha</label>
             </div>
 
             <div className="row mb-2 mx-3">

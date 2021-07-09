@@ -36,3 +36,37 @@
   margin-top: -35px;
   margin-left: 80px;
 }
+
+.quantity {
+  height: 50px;
+}
+
+.product-amount {
+  -moz-appearance: textfield;
+  height: 100%;
+  width: 70px;
+}
+
+.product-amount::-webkit-inner-spin-button, .product-amount::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.plus_minus__buttons {
+  position: absolute;
+  left: 99px;
+  margin: auto;
+  width: 18px;
+
+  box-sizing: content-box;
+  border-left: 1px solid #FA98AF;
+  cursor: default;
+}
+
+.plus_minus__buttons span {
+  margin: auto;
+  cursor: default;
+}
+
+.plus-border-button {
+  border-bottom: 1px solid #FA98AF;
+}
