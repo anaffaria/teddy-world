@@ -67,12 +67,6 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                     >
                       Acompanhar pedidos
                     </Link>
-                    <Link
-                      to="/"
-                      className="list-group-item costumer_account_link border-0"
-                    >
-                      Compras
-                    </Link>
                   </div>
                 </div>
 
