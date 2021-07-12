@@ -1,14 +1,12 @@
-a{
-  text-decoration: none;
-}
-.costumer_account_link-item :hover {
-  color: #fa98af;
-  text-decoration: none;
+.costumer_account_link{
+  color: #000;
+  outline: 0 none;
 }
 
-.costumer_account_link {
-  justify-content: center;
-  align-items: center;
-  color: #000;
+.costumer_account_link:focus,
+.costumer_account_link:hover, 
+.costumer_account_link:active{
+  color: #fa98af;
   text-decoration: none;
+  outline: 0 none;
 }
