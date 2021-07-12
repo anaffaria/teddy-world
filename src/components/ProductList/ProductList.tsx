@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MdAssignmentReturned } from "react-icons/md";
+import { Link } from "react-router-dom";
 import "./ProductList.css";
 
 interface ListProductsProps {
@@ -29,16 +30,18 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
             key={index}
           >
             <div className="card border-0">
-              <img
-                className="card-img-top"
-                src={el.image}
-                alt="Card image cap"
-              />
-              <div className="card-body ">
-                <h5 className="card-title">{el.title}</h5>
-                <p className="card-text">{el.subtitle}</p>
-                <p className="card-text">R$: {el.price}</p>
-              </div>
+              <Link to="/produto" className="product_link">  
+                <img
+                  className="card-img-top"
+                  src={el.image}
+                  alt="Card image cap"
+                />
+                <div className="card-body ">
+                  <h5 className="card-title">{el.title}</h5>
+                  <p className="card-text">{el.subtitle}</p>
+                  <p className="card-text">R$: {el.price}</p>
+                </div>
+              </Link>
             </div>
           </div>
         </>

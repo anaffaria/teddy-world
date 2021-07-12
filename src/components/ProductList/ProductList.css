@@ -1,3 +1,16 @@
+.product_link{
+  color: #000;
+  outline: 0 none;
+}
+
+.product_link:focus,
+.product_link:hover, 
+.product_link:active{
+  color: #000;
+  text-decoration: none;
+  outline: 0 none;
+}
+
 input[type=range] {
   -webkit-appearance: none;
   margin: 10px 0;
