@@ -1,12 +1,12 @@
 import CustomerAccountPage from "../components/CustomerAccount/CustomerAccount";
 import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
+import UserOn from "../components/UserOn/UserOn";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
 
 function CustomerAccount() {
   return (
     <>
-      <Header />
+      <UserOn/>
       <QuickLinks/>
       <CustomerAccountPage />
       <Footer />

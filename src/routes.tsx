@@ -9,6 +9,7 @@ import ProductList from "./pages/ProductList";
 import CustomerAccount from "./pages/CustomerAccount";
 import CustomerEdit from "./pages/CustomerEdit";
 import CustomerPass from "./pages/CustomerPass";
+import CustomerProducts from "./pages/CustomerProducts";
 import Checkout from "./pages/Checkout";
 
 function Routes() {
@@ -25,6 +26,7 @@ function Routes() {
         <Route path="/cliente" exact component={CustomerAccount} />
         <Route path="/cliente/alterar_dados" component={CustomerEdit} />
         <Route path="/cliente/alterar_senha" component={CustomerPass} />
+        <Route path="/cliente/produtos" component={CustomerProducts} />
         <Route path="/cliente/:id/checkout" component={Checkout} />
       </Switch>
     </BrowserRouter>

@@ -45,7 +45,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                     Alterar senha
                   </Link>
                   <Link
-                    to="/cliente/alterar_dados"
+                    to="/cliente/cartão"
                     className="list-group-item costumer_account_link border-0"
                   >
                     Cartões
@@ -62,7 +62,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                   <h6>Seus Pedidos</h6>
                   <div>
                     <Link
-                      to="/"
+                      to="/cliente/produtos"
                       className="list-group-item costumer_account_link border-0"
                     >
                       Acompanhar pedidos
@@ -74,7 +74,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                   <h6>Serviços</h6>
                   <div>
                     <Link
-                      to="/"
+                      to="/atendimento"
                       className="list-group-item costumer_account_link border-0"
                     >
                       Central de Atendimento

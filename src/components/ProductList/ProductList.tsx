@@ -126,8 +126,8 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           <div className="colum d-flex justify-content-between ">
             <p>Busque por preços</p>
             <p>produtos encontrados para essa busca</p>
-            <div className="form-group col-md-2">
-              <select id="inputState" className="form-control">
+            <div className="form-group  col-md-2">
+              <select id="inputState" className="form-control select_product">
                 <option selected>Selecione</option>
                 <option>Maior preço</option>
                 <option>Menor preço.</option>

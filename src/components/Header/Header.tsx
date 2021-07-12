@@ -8,12 +8,16 @@ import "./Header.css";
 // Import
 import { Link } from "react-router-dom";
 
-function Header() {
+export interface HeaderProps {
+  children?: React.ReactNode;
+}
+
+function Header({ children }: HeaderProps) {
   return (
     <>
       <div className="header-line" />
       <div className="header-container mt-1">
-        <Link to='/'>
+        <Link to="/">
           <div className="header-logo">
             <img src={logoImg} alt="logo" />
           </div>
@@ -29,26 +33,7 @@ function Header() {
           </div>
         </div>
 
-        <div className="header-user d-flex  align-items-center">
-          <div className="header-user-icon">
-            <BiUserCircle fontSize={37} />
-          </div>
-
-          <div className="d-flex flex-column header-user-info">
-            <Link to="/atendimento" className='nav-link-header'>
-              <span>Atendimento</span>
-            </Link>
-            <div>
-              <Link to="/login" className='nav-link-header'>
-                <span>Entre</span>
-              </Link>{" "}
-              ou
-              <Link to="/cadastro" className='nav-link-header'>
-                <span>Cadastre-se</span>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <div className="header-user d-flex  align-items-center">{children}</div>
 
         <div className="hearder-shopping-bag d-flex align-items-center">
           <div>
@@ -65,5 +50,3 @@ function Header() {
 }
 
 export default Header;
-
- 

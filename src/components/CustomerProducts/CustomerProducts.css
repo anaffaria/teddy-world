@@ -1,0 +1,17 @@
+thead {
+  background-color: #fa98af;
+  color: #7D2849;;
+}
+table td {
+  border: none !important;
+  
+}
+
+table{
+  font-size: 14px;
+}
+
+.icon{
+  margin-bottom: 4px;
+  color: #7D2849;
+}
