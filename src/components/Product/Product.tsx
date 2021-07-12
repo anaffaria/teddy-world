@@ -43,50 +43,52 @@ function Product() {
                       Garantia: <label> de 1 mês</label>
                     </p>
 
-                    <div className="quantity d-flex align-items-center">
-                      <input
-                        type="number"
-                        id="quantity"
-                        name="quantity"
-                        min="1"
-                        max="20"
-                        step="1"
-                        value={amount}
-                        className="product-amount"
-                      />
-                      <div className="plus_minus__buttons d-flex flex-column">
-                        <div
-                          className="w-100 h-100 m-auto d-flex plus-border-button"
-                          onClick={() => {
-                            setAmount((prev: number) => prev + 1);
-                          }}
-                        >
-                          <span>+</span>
-                        </div>
+                    <div className="d-flex justify-content-between">
+                      <div className="quantity d-flex align-items-center">
+                        <input
+                          type="number"
+                          id="quantity"
+                          name="quantity"
+                          min="1"
+                          max="20"
+                          step="1"
+                          value={amount}
+                          className="product-amount"
+                        />
+                        <div className="plus_minus__buttons d-flex flex-column">
+                          <div
+                            className="w-100 h-100 m-auto d-flex plus-border-button"
+                            onClick={() => {
+                              setAmount((prev: number) => prev + 1);
+                            }}
+                          >
+                            <span>+</span>
+                          </div>
 
-                        <div
-                          className="w-100 h-100 m-auto d-flex"
-                          onClick={() => {
-                            setAmount((prev: number) => {
-                              if (prev <= 0) return 0;
-                              return prev - 1;
-                            });
-                          }}
-                        >
-                          <span>-</span>
+                          <div
+                            className="w-100 h-100 m-auto d-flex"
+                            onClick={() => {
+                              setAmount((prev: number) => {
+                                if (prev <= 0) return 0;
+                                return prev - 1;
+                              });
+                            }}
+                          >
+                            <span>-</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="col ">
-                      <Link to="#">
-                        <button
-                          type="submit"
-                          className="product-buttom text-center "
-                        >
-                          Comprar
-                        </button>
-                      </Link>
+                      <div className="w-100 ml-4">
+                        <Link to="#" className='w-100'>
+                          <button
+                            type="submit"
+                            className="product-buttom text-center w-100"
+                          >
+                            Comprar
+                          </button>
+                        </Link>
+                      </div>
                     </div>
 
                     <Accordion className="mt-5" defaultActiveKey="0">
