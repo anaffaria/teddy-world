@@ -1,17 +1,23 @@
-import { MdPayment } from "react-icons/md";
+import UserOff from "../UserOff/UserOff";
+import QuickLinks from "../QuickLinks/QuickLinks";
+import Footer from "../Footer/Footer";
+
 import Img1 from "../../components/Product/img/img1.jpg";
+import { MdPayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Accordion, Card } from "react-bootstrap";
-import "./Product.css";
 import { useState } from "react";
-import {HiShieldCheck} from "react-icons/hi";
-import {RiBearSmileFill} from "react-icons/ri";
+import { HiShieldCheck } from "react-icons/hi";
+import { RiBearSmileFill } from "react-icons/ri";
 
+import "./Product.css";
 function Product() {
   const [amount, setAmount] = useState<number>(0);
 
   return (
     <>
+      <UserOff />
+      <QuickLinks />
       <main>
         <div className="container ">
           <div className="row mt-5">
@@ -82,7 +88,7 @@ function Product() {
                       </div>
 
                       <div className="w-100 ml-4">
-                        <Link to="/cliente/produtos" className="w-100">
+                        <Link to="/cliente/pedidos" className="w-100">
                           <button
                             type="submit"
                             className="product-buttom text-center w-100"
@@ -123,19 +129,24 @@ function Product() {
                           <Card.Body>
                             <ul className="list-group d-flex border-none">
                               <li className="list-group-item">
-                                <HiShieldCheck size={20} color={"#fa98af"}/> Pelúcia 100% Poliéster
+                                <HiShieldCheck size={20} color={"#fa98af"} />{" "}
+                                Pelúcia 100% Poliéster
                               </li>
                               <li className="list-group-item">
-                              <HiShieldCheck size={20} color={"#fa98af"}/> Pelúcia Hipoalergênica
+                                <HiShieldCheck size={20} color={"#fa98af"} />{" "}
+                                Pelúcia Hipoalergênica
                               </li>
                               <li className="list-group-item">
-                              <HiShieldCheck size={20} color={"#fa98af"}/> Pelúcia Atóxica
+                                <HiShieldCheck size={20} color={"#fa98af"} />{" "}
+                                Pelúcia Atóxica
                               </li>
                               <li className="list-group-item">
-                              <HiShieldCheck size={20} color={"#fa98af"}/> Lavável
+                                <HiShieldCheck size={20} color={"#fa98af"} />{" "}
+                                Lavável
                               </li>
                               <li className="list-group-item">
-                              <HiShieldCheck size={20} color={"#fa98af"}/> Enchimento em fibra sintética de silicone.
+                                <HiShieldCheck size={20} color={"#fa98af"} />{" "}
+                                Enchimento em fibra sintética de silicone.
                               </li>
                             </ul>
                           </Card.Body>
@@ -149,17 +160,19 @@ function Product() {
 
                         <Accordion.Collapse eventKey="2">
                           <Card.Body>
-                          <ul className="list-group d-flex border-none">
+                            <ul className="list-group d-flex border-none">
                               <li className="list-group-item">
-                                <RiBearSmileFill size={20} color={"#fa98af"}/> Lavar a mão
+                                <RiBearSmileFill size={20} color={"#fa98af"} />{" "}
+                                Lavar a mão
                               </li>
                               <li className="list-group-item">
-                              <RiBearSmileFill size={20} color={"#fa98af"}/> Não alvejar
+                                <RiBearSmileFill size={20} color={"#fa98af"} />{" "}
+                                Não alvejar
                               </li>
                               <li className="list-group-item">
-                              <RiBearSmileFill size={20} color={"#fa98af"}/> Não usar secadora
+                                <RiBearSmileFill size={20} color={"#fa98af"} />{" "}
+                                Não usar secadora
                               </li>
-                              
                             </ul>
                           </Card.Body>
                         </Accordion.Collapse>
@@ -172,6 +185,7 @@ function Product() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
