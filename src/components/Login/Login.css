@@ -1,7 +1,7 @@
 .layout-main{
   display: flex;
   width: auto;
-  height: 627px;
+  height: 100vh;
   background-color: #FA98AF;
 }
 
@@ -31,6 +31,7 @@
   width: 500px;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
 }
 
 .layout-buttom{
