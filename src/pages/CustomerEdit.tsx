@@ -1,12 +1,12 @@
 import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
 import CustomerEditPage from "../components/CustomerEdit/CustomerEdit";
+import UserOn from "../components/UserOn/UserOn";
 
 function CustomerEdit() {
   return (
     <>
-      <Header />
+      <UserOn />
       <QuickLinks/>
       <CustomerEditPage />
       <Footer />

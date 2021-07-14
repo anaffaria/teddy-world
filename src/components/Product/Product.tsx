@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Accordion, Card } from "react-bootstrap";
 import "./Product.css";
 import { useState } from "react";
+import {HiShieldCheck} from "react-icons/hi";
+import {RiBearSmileFill} from "react-icons/ri";
 
 function Product() {
   const [amount, setAmount] = useState<number>(0);
@@ -80,7 +82,7 @@ function Product() {
                       </div>
 
                       <div className="w-100 ml-4">
-                        <Link to="#" className='w-100'>
+                        <Link to="/cliente/produtos" className="w-100">
                           <button
                             type="submit"
                             className="product-buttom text-center w-100"
@@ -118,7 +120,25 @@ function Product() {
                         </Accordion.Toggle>
 
                         <Accordion.Collapse eventKey="1">
-                          <Card.Body>This is second tab body</Card.Body>
+                          <Card.Body>
+                            <ul className="list-group d-flex border-none">
+                              <li className="list-group-item">
+                                <HiShieldCheck size={20} color={"#fa98af"}/> Pelúcia 100% Poliéster
+                              </li>
+                              <li className="list-group-item">
+                              <HiShieldCheck size={20} color={"#fa98af"}/> Pelúcia Hipoalergênica
+                              </li>
+                              <li className="list-group-item">
+                              <HiShieldCheck size={20} color={"#fa98af"}/> Pelúcia Atóxica
+                              </li>
+                              <li className="list-group-item">
+                              <HiShieldCheck size={20} color={"#fa98af"}/> Lavável
+                              </li>
+                              <li className="list-group-item">
+                              <HiShieldCheck size={20} color={"#fa98af"}/> Enchimento em fibra sintética de silicone.
+                              </li>
+                            </ul>
+                          </Card.Body>
                         </Accordion.Collapse>
                       </Card>
 
@@ -128,7 +148,20 @@ function Product() {
                         </Accordion.Toggle>
 
                         <Accordion.Collapse eventKey="2">
-                          <Card.Body>This is first tab body</Card.Body>
+                          <Card.Body>
+                          <ul className="list-group d-flex border-none">
+                              <li className="list-group-item">
+                                <RiBearSmileFill size={20} color={"#fa98af"}/> Lavar a mão
+                              </li>
+                              <li className="list-group-item">
+                              <RiBearSmileFill size={20} color={"#fa98af"}/> Não alvejar
+                              </li>
+                              <li className="list-group-item">
+                              <RiBearSmileFill size={20} color={"#fa98af"}/> Não usar secadora
+                              </li>
+                              
+                            </ul>
+                          </Card.Body>
                         </Accordion.Collapse>
                       </Card>
                     </Accordion>

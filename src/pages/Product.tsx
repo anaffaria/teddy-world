@@ -1,11 +1,12 @@
-import Header from "../components/Header/Header";
 import ProductPage from "../components/Product/Product";
 import Footer from "../components/Footer/Footer";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
+import UserOff from "../components/UserOff/UserOff";
+
 function Product() {
   return (
     <>
-      <Header />
+      <UserOff/>
       <QuickLinks/>
       <ProductPage/>
       <Footer />

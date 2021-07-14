@@ -57,6 +57,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           data-target="#list-example"
           data-offset="0"
           className="scrollspy-example"
+        
         >
           <h6 className="w-100 mt-2">Categoria</h6>
           <ul className="list-group">
@@ -68,7 +69,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
                   value=""
                   id="defaultCheck1"
                 />
-                <label className="form-check-label">Default checkbox</label>
+                <label className="form-check-label"></label>
               </div>
             </li>
           </ul>
@@ -90,7 +91,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
                   value=""
                   id="defaultCheck1"
                 />
-                <label className="form-check-label">Default checkbox</label>
+                <label className="form-check-label">Branco</label>
               </div>
             </li>
           </ul>
@@ -112,7 +113,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
                   value=""
                   id="defaultCheck1"
                 />
-                <label className="form-check-label">Default checkbox</label>
+                <label className="form-check-label">0 cm a 27 cm</label>
               </div>
             </li>
           </ul>
