@@ -6,10 +6,9 @@ import RememberPass from "./pages/RememberPass";
 import ServiceClient from "./pages/ServiceClient";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
-import CustomerAccount from "./pages/CustomerAccount";
 import CustomerEdit from "./pages/CustomerEdit";
 import CustomerPass from "./pages/CustomerPass";
-import CustomerProducts from "./pages/CustomerProducts";
+import CustomerOrders from "./pages/CustomerOrders";
 import Checkout from "./pages/Checkout";
 
 function Routes() {
@@ -23,10 +22,9 @@ function Routes() {
         <Route path="/atendimento" component={ServiceClient} />
         <Route path="/produto" component={Product} />
         <Route path="/produtos" component={ProductList} />
-        <Route path="/cliente" exact component={CustomerAccount} />
         <Route path="/cliente/alterar_dados" component={CustomerEdit} />
         <Route path="/cliente/alterar_senha" component={CustomerPass} />
-        <Route path="/cliente/produtos" component={CustomerProducts} />
+        <Route path="/cliente/pedidos" component={CustomerOrders} />
         <Route path="/cliente/:id/checkout" component={Checkout} />
       </Switch>
     </BrowserRouter>

@@ -1,12 +1,12 @@
 import { Table } from "react-bootstrap";
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
-import "./CustomerProducts.css";
+import "./CustomerOrders.css";
 import { BiTimeFive } from "react-icons/bi";
 import { AiOutlineBarcode } from "react-icons/ai";
 import { ImPriceTags } from "react-icons/im";
 import { AiFillCreditCard } from "react-icons/ai";
 
-function CustumerProducts() {
+function CustumerOrders() {
   return (
     <>
       <CustomerAccount>
@@ -43,4 +43,4 @@ function CustumerProducts() {
   );
 }
 
-export default CustumerProducts;
+export default CustumerOrders;
