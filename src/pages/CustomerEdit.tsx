@@ -1,17 +1,11 @@
-import Footer from "../components/Footer/Footer";
-import QuickLinks from "../components/QuickLinks/QuickLinks";
-import CustomerEditPage from "../components/CustomerEdit/CustomerEdit";
-import UserOn from "../components/UserOn/UserOn";
+import CustomerEditComponent from "../components/CustomerEdit/CustomerEdit";
 
 function CustomerEdit() {
   return (
     <>
-      <UserOn />
-      <QuickLinks/>
-      <CustomerEditPage />
-      <Footer />
+      <CustomerEditComponent />
     </>
-  )
+  );
 }
 
 export default CustomerEdit;

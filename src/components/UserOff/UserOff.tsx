@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
 import Header from "../Header/Header";
 
-function UserOff() {
+export interface UserOffProps {
+  children?: React.ReactNode;
+}
+
+function UserOff({ children }: UserOffProps) {
   return (
     <>
       <Header>
@@ -12,9 +16,6 @@ function UserOff() {
           </div>
 
           <div className="d-flex flex-column header-user-info">
-            <Link to="/atendimento" className="nav-link-header">
-              <span>Atendimento</span>
-            </Link>
             <div>
               <Link to="/login" className="nav-link-header">
                 <span>Entre</span>

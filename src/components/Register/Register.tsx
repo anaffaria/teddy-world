@@ -53,7 +53,7 @@ function Register() {
                 </Link>
               </div>
               <div className="col ">
-                <Link to="/cliente">
+                <Link to="/cliente/pedidos">
                   <button type="submit" className="layout-buttom">
                     Cadastrar
                   </button>

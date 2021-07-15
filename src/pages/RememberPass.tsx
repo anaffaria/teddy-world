@@ -1,9 +1,9 @@
-import RememberPassPage from "../components/RememberPass/RememberPass";
+import RememberPassComponent from "../components/RememberPass/RememberPass";
 
 function RememberPass() {
   return (
     <>
-      <RememberPassPage />
+      <RememberPassComponent />
     </>
   );
 }

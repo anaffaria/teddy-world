@@ -1,5 +1,8 @@
+import UserOff from "../UserOff/UserOff";
+import QuickLinks from "../QuickLinks/QuickLinks";
+import Footer from "../Footer/Footer";
+
 import { useState } from "react";
-import { MdAssignmentReturned } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./ProductList.css";
 
@@ -119,6 +122,8 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
 
   return (
     <>
+      <UserOff />
+      <QuickLinks />
       <main>
         <div className="container mt-2">
           <h6>Pesquisa</h6>
@@ -164,6 +169,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

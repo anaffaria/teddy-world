@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import Header from "../Header/Header";
-function UserOn() {
+
+export interface UserOnProps {
+  children?: React.ReactNode;
+}
+
+function UserOn({ children }: UserOnProps) {
   return (
     <>
       <Header>
@@ -11,7 +16,7 @@ function UserOn() {
           </div>
 
           <div className="d-flex flex-column header-user-info">
-            <Link to="/atendimento" className="nav-link-header">
+            <Link to="/atendimento/novo" className="nav-link-header">
               <span>Atendimento</span>
             </Link>
             <div>

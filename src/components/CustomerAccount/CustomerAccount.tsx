@@ -1,3 +1,6 @@
+import UserOn from "../UserOn/UserOn";
+import QuickLinks from "../QuickLinks/QuickLinks";
+import Footer from "../Footer/Footer";
 import "./CustomerAccount.css";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -9,6 +12,8 @@ export interface CustomerAccountProps {
 function CustomerAccount({ children }: CustomerAccountProps) {
   return (
     <>
+      <UserOn/>
+      <QuickLinks/>
       <main>
         <div className="container ">
           <div className="row p-1 mt-2 ">
@@ -22,9 +27,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
               </label>
             </div>
             <div className="col-lg-3">
-              <label className="font-weight-normal ml-2">
-                
-              </label>
+              <label className="font-weight-normal ml-2"></label>
             </div>
           </div>
           <div className="row ">
@@ -32,7 +35,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
               <div className="list-group p-2 ">
                 <h6>Seu Cadastro</h6>
                 <div>
-                  <Link 
+                  <Link
                     to="/cliente/alterar_dados"
                     className="list-group-item costumer_account_link border-0"
                   >
@@ -62,7 +65,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                   <h6>Seus Pedidos</h6>
                   <div>
                     <Link
-                      to="/cliente/produtos"
+                      to="/cliente/pedidos"
                       className="list-group-item costumer_account_link border-0"
                     >
                       Acompanhar pedidos
@@ -88,6 +91,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
           </div>
         </div>
       </main>
+      <Footer/>
     </>
   );
 }
