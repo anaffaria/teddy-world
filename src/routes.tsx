@@ -10,6 +10,7 @@ import CustomerEdit from "./pages/CustomerEdit";
 import CustomerPass from "./pages/CustomerPass";
 import CustomerOrders from "./pages/CustomerOrders";
 import Checkout from "./pages/Checkout";
+import AdminIndex from "./pages/Admin/Home/Home";
 
 function Routes() {
   return (
@@ -26,6 +27,8 @@ function Routes() {
         <Route path="/cliente/alterar_senha" component={CustomerPass} />
         <Route path="/cliente/pedidos" component={CustomerOrders} />
         <Route path="/cliente/:id/checkout" component={Checkout} />
+
+        <Route path="/admin" exact component={AdminIndex} />
       </Switch>
     </BrowserRouter>
   );

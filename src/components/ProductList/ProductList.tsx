@@ -21,30 +21,62 @@ interface ListProductsProps {
 
 function ProductList({ listproducts, listfilter }: ListProductsProps) {
   const [valRange, setValRange] = useState<number>(0);
+
   function renderProductsList() {
     return listproducts.map((el, index) => {
       return (
-        <>
-          <div
-            className="col-xs-12 mt-1 col-sm-3 col-md-3 col-lg-3"
-            key={index}
-          >
-            <div className="card border-0">
-              <Link to="/produto" className="product_link">  
-                <img
-                  className="card-img-top"
-                  src={el.image}
-                  alt="Card image cap"
-                />
-                <div className="card-body ">
-                  <h5 className="card-title">{el.title}</h5>
-                  <p className="card-text">{el.subtitle}</p>
-                  <p className="card-text">R$: {el.price}</p>
-                </div>
-              </Link>
-            </div>
+        <div className="col-xs-12 mt-1 col-sm-3 col-md-3 col-lg-3" key={index}>
+          <div className="card border-0">
+            <Link to="/produto" className="product_link">
+              <img className="card-img-top" src={el.image} alt="Card cap" />
+              <div className="card-body ">
+                <h5 className="card-title">{el.title}</h5>
+                <p className="card-text">{el.subtitle}</p>
+                <p className="card-text">R$: {el.price}</p>
+              </div>
+            </Link>
           </div>
-        </>
+        </div>
+      );
+    });
+  }
+
+  function renderCategories() {
+    console.info(listfilter);
+    return listfilter.categories.map((element: string, index: number) => {
+      return (
+        <li key={index}>
+          <div className="form-check ">
+            <input className="form-check-input" type="checkbox" value="" />
+            <label className="form-check-label">{element}</label>
+          </div>
+        </li>
+      );
+    });
+  }
+
+  function renderColors() {
+    return listfilter.colors.map((element, index) => {
+      return (
+        <li key={index}>
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" />
+            <label className="form-check-label">{element}</label>
+          </div>
+        </li>
+      );
+    });
+  }
+
+  function renderSizes() {
+    return listfilter.sizes.map((element, index) => {
+      return (
+        <li key={index}>
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" />
+            <label className="form-check-label">{element}</label>
+          </div>
+        </li>
       );
     });
   }
@@ -57,22 +89,9 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           data-target="#list-example"
           data-offset="0"
           className="scrollspy-example"
-        
         >
           <h6 className="w-100 mt-2">Categoria</h6>
-          <ul className="list-group">
-            <li>
-              <div className="form-check ">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="defaultCheck1"
-                />
-                <label className="form-check-label"></label>
-              </div>
-            </li>
-          </ul>
+          <ul className="list-group">{renderCategories()}</ul>
         </div>
 
         <div
@@ -82,19 +101,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Cor</h6>
-          <ul className="list-group">
-            <li>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="defaultCheck1"
-                />
-                <label className="form-check-label">Branco</label>
-              </div>
-            </li>
-          </ul>
+          <ul className="list-group">{renderColors()}</ul>
         </div>
 
         <div
@@ -104,19 +111,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Tamanho</h6>
-          <ul className="list-group ">
-            <li>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="defaultCheck1"
-                />
-                <label className="form-check-label">0 cm a 27 cm</label>
-              </div>
-            </li>
-          </ul>
+          <ul className="list-group ">{renderSizes()}</ul>
         </div>
       </>
     );
@@ -130,13 +125,17 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           <div className="colum d-flex justify-content-between ">
             <p>Busque por preços</p>
             <p>produtos encontrados para essa busca</p>
-            <div className="form-group  col-md-2">
-              <select id="inputState" className="form-control select_product">
-                <option selected>Selecione</option>
-                <option>Maior preço</option>
-                <option>Menor preço.</option>
-                <option>A a Z</option>
-                <option>Z a A</option>
+            <div className="form-group col-md-2">
+              <select
+                id="inputState"
+                className="form-control select_product"
+                defaultValue=""
+              >
+                <option value="">Selecione</option>
+                <option value="2">Maior preço</option>
+                <option value="3">Menor preço.</option>
+                <option value="4">A a Z</option>
+                <option value="5">Z a A</option>
               </select>
             </div>
           </div>
