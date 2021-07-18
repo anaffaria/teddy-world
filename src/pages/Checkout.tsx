@@ -1,13 +1,23 @@
+import { FormEvent } from "react";
+import Checkout from "../components/Checkout/Checkout";
 import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
-import QuickLinks from "../components/QuickLinks/QuickLinks";
+import UserOn from "../components/UserOn/UserOn";
 
 function CheckoutPage() {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.info(
+      "%c evento de handlesubmit",
+      "color: #123456; background: #f7f7"
+    );
+  }
+
   return (
     <>
-      <Header />
-      <QuickLinks />
-      <h1>Checkout Page</h1>
+      <UserOn />
+
+      <Checkout handleSubmit={handleSubmit} />
+
       <Footer />
     </>
   );
