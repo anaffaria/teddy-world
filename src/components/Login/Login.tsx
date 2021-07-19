@@ -1,6 +1,7 @@
 // Import
 import { Link } from "react-router-dom";
 import logoImg from "../../assets/logo.svg";
+import { useState } from "react";
 
 import "./Login.css";
 function Login() {
@@ -12,18 +13,15 @@ function Login() {
             <div className="header-logo mb-4 mt-2">
               <img src={logoImg} alt="logo" />
             </div>
+
             <div className="form-outline mb-4">
               <label className="form-label">E-mail</label>
-              <input type="email" id="form2Example1" className="form-control" />
+              <input type="email" id="email" className="form-control" />
             </div>
 
             <div className="form-outline mb-4">
               <label className="form-label">Senha</label>
-              <input
-                type="password"
-                id="form2Example2"
-                className="form-control"
-              />
+              <input type="password" id="password" className="form-control" />
             </div>
 
             <div className="row mb-2 mx-3">

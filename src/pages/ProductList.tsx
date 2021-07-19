@@ -38,9 +38,9 @@ function ProductList() {
   ];
 
   const filterproducts = {
-    categories: ["Ursos", "Elefantes", "Girafas"],
-    colors: ["Azul", "Vermelho", "Marrom"],
-    sizes: ["0cm ~ 20cm", "21cm ~ 30cm", "31cm ~ 40cm"],
+    categories: ["Elefante", "Urso", "Panda", "Unicórnio"],
+    colors: ["Bege", "Branco", "Caramelo", "Cinza", "Marrom", "Colorido"],
+    sizes: ["0 cm a 20 cm", "21 cm a 40 cm", "41 cm a 60 cm"],
   };
 
   return (

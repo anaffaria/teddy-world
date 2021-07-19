@@ -1,9 +1,11 @@
 import LoginComponent from "../components/Login/Login";
 
+
+
 function Login() {
   return (
     <>
-      <LoginComponent />
+      <LoginComponent/>
     </>
   );
 }
