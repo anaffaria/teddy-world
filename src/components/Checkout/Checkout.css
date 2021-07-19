@@ -1,0 +1,38 @@
+.checkout-form {
+  height: 100%;
+  width: 100%;
+  border-radius: 40px;
+  /* background-color: #9ed1ff; */
+}
+
+.checkout-info {
+  /* background-color: #9ed1ff; */
+  height: 100%;
+  border-radius: 16px;
+  padding: 40px 30px;
+  padding-top: 0;
+}
+
+.padding-checkout {
+  padding: 40px 0px;
+  padding-top: 0;
+}
+
+.button-checkout {
+  margin: auto;
+  margin-top: 2rem;
+  margin-right: 0;
+  
+  background-color: #fa98af; /* Green */
+  border-radius: 12px;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 168px;
+  height: 40px;
+  text-align: center;
+  
+}

@@ -10,7 +10,7 @@ function CustumerOrders() {
   return (
     <>
       <CustomerAccount>
-        <Table>
+        <Table responsive>
           <thead>
             <tr>
               <th>
