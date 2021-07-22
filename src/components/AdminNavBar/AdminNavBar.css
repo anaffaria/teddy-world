@@ -29,7 +29,8 @@
 }
 
 .navbar-container {
-  height: 100vh;
+  position: fixed;
+  height: 100%;
   width: 100%;
   max-width: 240px;
   background-color: #9ed1ff;
@@ -47,6 +48,7 @@
 
 .navbar-content {
   display: flex;
+  cursor: pointer;
 
   background-color: #e6f5ff;
   width: 100%;
@@ -63,7 +65,7 @@
 }
 
 .navbar-content:active {
-  background-color: #ACB8BF;
+  background-color: #acb8bf;
 }
 
 .navbar-content-text {
@@ -75,14 +77,25 @@
   margin-left: 0.9rem;
 }
 
+.navbar-footer:hover {
+  background-color: #e38dae;
+}
+
+.navbar-footer:active {
+  background-color: #BD7590;
+}
+
 .navbar-footer {
   margin-top: auto;
+  cursor: pointer;
 
   display: flex;
   background-color: #fd9ec3;
   width: 100%;
   height: 60px;
   border-bottom-right-radius: 10px;
+
+  transition: background-color 0.3s ease;
 }
 
 .navbar-footer-icon {
@@ -96,4 +109,32 @@
   margin-left: 0;
 
   font-family: "Nunito", sans-serif;
+}
+
+.header-text {
+  font-family: "Nunito", sans-serif;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-dashboard {
+  width: 300px;
+  height: 150px;
+  margin: 10px;
+}
+
+.web-content {
+  width: calc(100% - 260px);
+  margin-left: 240px;
+}
+
+.topbar {
+  height: 85px;
+  width: 100%;
+  position: absolute;
+  background-color: #90affc;
 }
