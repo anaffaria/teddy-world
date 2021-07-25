@@ -1,15 +1,41 @@
 import AdminLogo from "../../assets/logoAdmin.svg";
 import "./AdminNavBar.css";
 import { IoExitOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { GoGraph } from "react-icons/go";
+import { FiShoppingBag } from "react-icons/fi";
+import { CgArrowsExchangeAlt } from "react-icons/cg";
+import { RiUserHeartLine } from "react-icons/ri";
 
-interface AdminNavBarProps {
-  links?: Array<{
-    icon: JSX.Element;
-    text: string;
-  }>;
-}
+function AdminNavBar() {
+  const links = [
+    {
+      icon: <GoGraph fontSize={24}></GoGraph>,
+      text: "Dashboard",
+      link: "/admin",
+    },
+    {
+      icon: <FiShoppingBag fontSize={24}></FiShoppingBag>,
+      text: "Pedidos",
+      link: "/admin/orders",
+    },
+    {
+      icon: <CgArrowsExchangeAlt fontSize={24}></CgArrowsExchangeAlt>,
+      text: "Devoluções",
+      link: "/admin/devolutions",
+    },
+    {
+      icon: <RiUserHeartLine fontSize={24}></RiUserHeartLine>,
+      text: "Clientes",
+      link: "/admin/customers",
+    },
+    {
+      icon: <RiUserHeartLine fontSize={24}></RiUserHeartLine>,
+      text: "Cupons",
+      link: "/admin/coupons",
+    },
+  ];
 
-function AdminNavBar({ links }: AdminNavBarProps) {
   return (
     <nav className="navbar-container">
       <div className="navbar-admin">
@@ -24,12 +50,18 @@ function AdminNavBar({ links }: AdminNavBarProps) {
         <div className="navbar-contents-wrapper">
           {links?.map((element, index) => {
             return (
-              <div className="navbar-content mb-4" key={index}>
-                <div className="navbar-content-icon">{element.icon}</div>
-                <div className="navbar-content-text">
-                  <span>{element.text}</span>
+              <Link
+                to={{ pathname: element.link }}
+                key={index}
+                className="admin-link"
+              >
+                <div className="navbar-content mb-4">
+                  <div className="navbar-content-icon">{element.icon}</div>
+                  <div className="navbar-content-text">
+                    <span>{element.text}</span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

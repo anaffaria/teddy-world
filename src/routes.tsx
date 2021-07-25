@@ -12,6 +12,7 @@ import CustomerContactUs from "./pages/CustomerContactUs";
 import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import AdminIndex from "./pages/Admin/Home/Home";
+import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 
 function Routes() {
   return (
@@ -31,6 +32,7 @@ function Routes() {
         <Route path="/cliente/:id/checkout" component={Checkout} />
 
         <Route path="/admin" exact component={AdminIndex} />
+        <Route path="/admin/orders" component={AdminOrders} />
       </Switch>
     </BrowserRouter>
   );

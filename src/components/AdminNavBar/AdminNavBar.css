@@ -28,6 +28,15 @@
   height: 100%;
 }
 
+.admin-link {
+  color: #212529;
+}
+
+.admin-link:hover {
+  text-decoration: none;
+  color: #212529;
+}
+
 .navbar-container {
   position: fixed;
   height: 100%;
@@ -35,6 +44,7 @@
   max-width: 240px;
   background-color: #9ed1ff;
   border-radius: 0px 20px 20px 0;
+  top: 0;
 }
 
 .divider {
@@ -137,4 +147,5 @@
   width: 100%;
   position: absolute;
   background-color: #90affc;
+  top: 0;
 }
