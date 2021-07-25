@@ -1,6 +1,7 @@
 import { Table } from "react-bootstrap";
 import { AiOutlineCreditCard, AiOutlineDelete } from "react-icons/ai";
 import { BiCalendarHeart } from "react-icons/bi";
+import { IoMdAddCircle } from "react-icons/io";
 import { TiSortNumerically } from "react-icons/ti";
 import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 
@@ -43,9 +44,20 @@ function Cards() {
         </Table>
 
         <div className="d-flex p-4">
-          <button className="btn btn-primary ml-auto">
-            Adicionar novo Cartão
-          </button>
+          <div
+            className="col-12 col-sm-12  mt-3 align-items-center mt-4 border"
+            onClick={() => {}}
+          >
+            <IoMdAddCircle
+              type="button"
+              className="col-12 align-items-center"
+              size={40}
+              color={"#FA98AF"}
+            />
+            <label className=" col-12 font-weight-bold text-center">
+              Adicionar novo cartão
+            </label>
+          </div>
         </div>
       </section>
     </CustomerAccount>

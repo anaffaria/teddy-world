@@ -103,87 +103,101 @@ function CustomerEdit() {
           </div>
 
           <div className="col-4 col-sm-4">
-            <div className={`${isOpenForm ? "d-none" : ""} border p-2`}>
-              <span>Endereços de Entrega:</span>
+            {!isOpenForm && (
+              <div className={`${isOpenForm ? "d-none" : ""} border p-2`}>
+                <span>Endereços de Entrega:</span>
 
-              <ul className="m-0 p-0 mt-3">
-                <li>
-                  Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
-                  Cruzes-SP - CEP 08773-600
-                </li>
-              </ul>
+                <ul className="m-0 p-0 mt-3">
+                  <li>
+                    Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
+                    Cruzes-SP - CEP 08773-600
+                  </li>
+                </ul>
 
-              <hr />
-              <span>Endereços de Cobrança:</span>
-              <ul className="m-0 p-0 mt-3">
-                <li>
-                  Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
-                  Cruzes-SP - CEP 08773-600
-                </li>
-              </ul>
-            </div>
-            <aside className={isOpenForm ? "" : "d-none"}>
-              <form className="mt-2">
-                <div className="form-group">
-                  <label htmlFor="cep">CEP</label>
-                  <input name="cep" className="form-control" />
-                </div>
+                <hr />
+                <span>Endereços de Cobrança:</span>
+                <ul className="m-0 p-0 mt-3">
+                  <li>
+                    Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
+                    Cruzes-SP - CEP 08773-600
+                  </li>
+                </ul>
+              </div>
+            )}
+            {isOpenForm && (
+              <aside>
+                <form className="mt-2">
+                  <div className="form-group">
+                    <label htmlFor="cep">CEP</label>
+                    <input name="cep" className="form-control" />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="street">Logradouro</label>
-                  <input name="street" className="form-control" />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="street">Logradouro</label>
+                    <input name="street" className="form-control" />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="number">Número</label>
-                  <input name="street" className="form-control" />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="number">Número</label>
+                    <input name="street" className="form-control" />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="complement">Complemento</label>
-                  <input name="complement" className="form-control" />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="complement">Complemento</label>
+                    <input name="complement" className="form-control" />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="state">Estado</label>
-                  <input name="state" className="form-control" />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="state">Estado</label>
+                    <input name="state" className="form-control" />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="city">Cidade</label>
-                  <input name="city" className="form-control" />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="city">Cidade</label>
+                    <input name="city" className="form-control" />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="adressType">Tipo do Endereço</label>
-                  <select
-                    name="adressType"
-                    className="form-control"
-                    defaultValue=""
-                  >
-                    <option value="">Selecione</option>
-                    <option value="billing">Entrega</option>
-                    <option value="delivery">Cobrança</option>
-                  </select>
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="adressType">Tipo do Endereço</label>
+                    <select
+                      name="adressType"
+                      className="form-control"
+                      defaultValue=""
+                    >
+                      <option value="">Selecione</option>
+                      <option value="billing">Entrega</option>
+                      <option value="delivery">Cobrança</option>
+                    </select>
+                  </div>
 
-                <button className="btn btn-primary btn-block">Adicionar</button>
-              </form>
-            </aside>
-            <div
-              className="col-12 col-sm-12  mt-3 align-items-center mt-4 border"
-              onClick={() => setIsOpenForm(true)}
-            >
-              <IoMdAddCircle
-                type="button"
-                className="col-12 align-items-center"
-                size={40}
-                color={"#FA98AF"}
-              />
-              <label className=" col-12 font-weight-bold text-center">
-                Adicionar novo endereço
-              </label>
-            </div>
+                  <button className="btn btn-primary btn-block">
+                    Adicionar
+                  </button>
+                </form>
+                <button
+                  className="btn btn-secondary btn-block mt-4"
+                  onClick={() => setIsOpenForm(false)}
+                >
+                  Cancelar
+                </button>
+              </aside>
+            )}
+            {!isOpenForm && (
+              <div
+                className="col-12 col-sm-12  mt-3 align-items-center mt-4 border"
+                onClick={() => setIsOpenForm(true)}
+              >
+                <IoMdAddCircle
+                  type="button"
+                  className="col-12 align-items-center"
+                  size={40}
+                  color={"#FA98AF"}
+                />
+                <label className=" col-12 font-weight-bold text-center">
+                  Adicionar novo endereço
+                </label>
+              </div>
+            )}
           </div>
         </div>
       </CustomerAccount>
