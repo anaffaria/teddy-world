@@ -12,6 +12,7 @@ import CustomerContactUs from "./pages/CustomerContactUs";
 import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import AdminIndex from "./pages/Admin/Home/Home";
+import Cards from "./pages/Cards";
 
 function Routes() {
   return (
@@ -29,6 +30,7 @@ function Routes() {
         <Route path="/cliente/alterar_senha" component={CustomerPass} />
         <Route path="/cliente/pedidos" component={CustomerOrders} />
         <Route path="/cliente/:id/checkout" component={Checkout} />
+        <Route path="/cliente/:id/cartao" component={Cards} />
 
         <Route path="/admin" exact component={AdminIndex} />
       </Switch>

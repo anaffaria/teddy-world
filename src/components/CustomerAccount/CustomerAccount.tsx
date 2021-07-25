@@ -48,7 +48,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                     Alterar senha
                   </Link>
                   <Link
-                    to="/cliente/cartão"
+                    to="/cliente/1/cartao"
                     className="list-group-item costumer_account_link border-0"
                   >
                     Cartões

@@ -52,6 +52,7 @@ function CustomerContactUs({ children }: CustomerContactUsProps) {
             </tr>
           </tbody>
         </Table>
+        
         <div className="col mt-5 mb-5 d-flex justify-content-end">
           <Link to="/atendimento/novo">
             <button type="submit" className="custumer_edit-buttom">
