@@ -15,6 +15,7 @@ import AdminIndex from "./pages/Admin/Home/Home";
 import AdminTeddy from "./pages/Admin/Teddy/AdminTeddy";
 import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 import AdminDevolutions from "./pages/Admin/Devolutions/AdminDevolutions";
+import AdminCustomers from "./pages/Admin/Customers/AdminCustomers";
 
 
 function Routes() {
@@ -35,9 +36,10 @@ function Routes() {
         <Route path="/cliente/:id/checkout" component={Checkout} />
 
         <Route path="/admin" exact component={AdminIndex} />
-        <Route path="/admin/teddy" component={AdminTeddy} />
-        <Route path="/admin/orders" component={AdminOrders} />
-        <Route path="/admin/devolutions" component={AdminDevolutions} />
+        <Route path="/admin/pelucias" component={AdminTeddy} />
+        <Route path="/admin/pedidos" component={AdminOrders} />
+        <Route path="/admin/devolucoes" component={AdminDevolutions} />
+        <Route path="/admin/clientes" component={AdminCustomers} />
         
       </Switch>
     </BrowserRouter>

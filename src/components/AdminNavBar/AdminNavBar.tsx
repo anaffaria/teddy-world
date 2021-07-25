@@ -19,27 +19,27 @@ function AdminNavBar() {
     {
       icon: <RiBearSmileLine fontSize={24}></RiBearSmileLine>,
       text: "Pelúcias",
-      link: "/admin/teddy",
+      link: "/admin/pelucias",
     },
     {
       icon: <FiShoppingBag fontSize={24}></FiShoppingBag>,
       text: "Pedidos",
-      link: "/admin/orders",
+      link: "/admin/pedidos",
     },
     {
       icon: <CgArrowsExchangeAlt fontSize={24}></CgArrowsExchangeAlt>,
       text: "Devoluções",
-      link: "/admin/devolutions",
+      link: "/admin/devolucoes",
     },
     {
       icon: <RiUserHeartLine fontSize={24}></RiUserHeartLine>,
       text: "Clientes",
-      link: "/admin/customers",
+      link: "/admin/clientes",
     },
     {
       icon: <IoPricetagsOutline fontSize={24}></IoPricetagsOutline>,
       text: "Cupons",
-      link: "/admin/coupons",
+      link: "/admin/cupons",
     },
   ];
 
