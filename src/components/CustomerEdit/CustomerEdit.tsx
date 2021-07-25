@@ -1,10 +1,13 @@
-import { Form, Modal, Button } from "react-bootstrap";
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import "./CustomerEdit.css";
 
 function CustomerEdit() {
+  function handleClickAdd() {
+    console.info("oieie");
+  }
+
   return (
     <>
       <CustomerAccount>
@@ -99,14 +102,22 @@ function CustomerEdit() {
               </div>
             </form>
           </div>
-          
+
           <div className="col-4 col-sm-4 mt-4">
+            <section>
+              <form>
+                <div className="form-group">
+                  <label htmlFor=""></label>
+                </div>
+              </form>
+            </section>
             <div className="col-12 col-sm-12  mt-3 align-items-center border">
               <IoMdAddCircle
                 type="button"
                 className="col-12 align-items-center"
                 size={40}
                 color={"#FA98AF"}
+                onClick={handleClickAdd}
               />
               <label className=" col-12 font-weight-bold text-center">
                 Adicionar novo endereço
@@ -118,7 +129,5 @@ function CustomerEdit() {
     </>
   );
 }
-
-
 
 export default CustomerEdit;
