@@ -6,6 +6,8 @@ import { GoGraph } from "react-icons/go";
 import { FiShoppingBag } from "react-icons/fi";
 import { CgArrowsExchangeAlt } from "react-icons/cg";
 import { RiUserHeartLine } from "react-icons/ri";
+import { IoPricetagsOutline } from "react-icons/io5";
+import { RiBearSmileLine } from "react-icons/ri";
 
 function AdminNavBar() {
   const links = [
@@ -13,6 +15,11 @@ function AdminNavBar() {
       icon: <GoGraph fontSize={24}></GoGraph>,
       text: "Dashboard",
       link: "/admin",
+    },
+    {
+      icon: <RiBearSmileLine fontSize={24}></RiBearSmileLine>,
+      text: "Pelúcias",
+      link: "/admin/teddy",
     },
     {
       icon: <FiShoppingBag fontSize={24}></FiShoppingBag>,
@@ -30,7 +37,7 @@ function AdminNavBar() {
       link: "/admin/customers",
     },
     {
-      icon: <RiUserHeartLine fontSize={24}></RiUserHeartLine>,
+      icon: <IoPricetagsOutline fontSize={24}></IoPricetagsOutline>,
       text: "Cupons",
       link: "/admin/coupons",
     },

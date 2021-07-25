@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
-import "./AdminOrders.css";
+import "../../../assets/Global.css";
 
 function AdminOrders() {
   return (
@@ -10,10 +10,10 @@ function AdminOrders() {
       <main className="web-content">
         <div className="main-content-admin">
           <div className="container">
-            <h3>Listagem de Pedidos</h3>
+            <h3>Lista de Pedidos</h3>
             <hr />
             <div className="d-flex mt-3">
-              <aside className="left-filter col-4">
+              <aside className="left-filter col-3">
                 <form className="filter-admin">
                   <h4>Filtro</h4>
                   <hr />
@@ -87,23 +87,23 @@ function AdminOrders() {
                 <thead>
                   <tr>
                     <th>Nº Pedido</th>
-                    <th>Produtos</th>
+                    <th>Valor da compra </th>
                     <th>Data da compra</th>
-                    <th>Valor</th>
+                    <th>Conteúdo comprado</th>
                     <th>Situação</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>123456</td>
+                    <td>
+                      <label>R$</label> 200,0
+                    </td>
+                    <td>24/07/2021 - 20:54:00</td>
                     <td className="d-flex flex-column">
                       <span>2* Leão = 100,0</span>
                       <span>1* Girafa = 50,0</span>
                       <span>1* Elefante = 50,0</span>
-                    </td>
-                    <td>24/07/2021 - 20:54:00</td>
-                    <td>
-                      <label>R$</label> 200,0
                     </td>
                     <td style={{width: 150}}>
                       <select defaultValue="" className="form-control">
