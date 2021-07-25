@@ -23,13 +23,13 @@ function Product() {
           <div className="row mt-5">
             <div className="col-sm-2 col-lg-1 ">
               <div className="card">
-                <img className="card-img-top" src={Img1} alt="Card image cap" />
+                <img className="card-img-top" src={Img1} alt="Card cap" />
               </div>
             </div>
 
             <div className="col-sm">
               <div className="card border-0">
-                <img className="card-img-top" src={Img1} alt="Card image cap" />
+                <img className="card-img-top" src={Img1} alt="Card cap" />
               </div>
             </div>
 
@@ -88,7 +88,7 @@ function Product() {
                       </div>
 
                       <div className="w-100 ml-4">
-                        <Link to="/cliente/pedidos" className="w-100">
+                        <Link to="/cliente/1/checkout" className="w-100">
                           <button
                             type="submit"
                             className="product-buttom text-center w-100"
