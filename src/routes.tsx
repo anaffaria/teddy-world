@@ -13,6 +13,10 @@ import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
 import AdminIndex from "./pages/Admin/Home/Home";
 import Cards from "./pages/Cards";
+import AdminTeddy from "./pages/Admin/Teddy/AdminTeddy";
+import AdminOrders from "./pages/Admin/Orders/AdminOrders";
+import AdminDevolutions from "./pages/Admin/Devolutions/AdminDevolutions";
+
 
 function Routes() {
   return (
@@ -33,6 +37,10 @@ function Routes() {
         <Route path="/cliente/:id/cartao" component={Cards} />
 
         <Route path="/admin" exact component={AdminIndex} />
+        <Route path="/admin/teddy" component={AdminTeddy} />
+        <Route path="/admin/orders" component={AdminOrders} />
+        <Route path="/admin/devolutions" component={AdminDevolutions} />
+        
       </Switch>
     </BrowserRouter>
   );
