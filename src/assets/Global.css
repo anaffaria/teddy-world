@@ -8,3 +8,29 @@
 .main-content-admin {
   margin-top: 100px;
 }
+
+.modal .modal-dialog {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  margin: 0;
+  max-width: 800px;
+}
+
+.modal.fade .modal-dialog {
+  transform: none !important;
+}
+
+.modal.fade.show .modal-dialog .modal-content {
+  transition: 1s ease;
+  transform: none
+}
+
+.modal.fade .modal-dialog .modal-content {
+  transition: 1s ease;
+  transform: translateX(800px);
+}
+
+.modal-content {
+  height: 100%;
+}
