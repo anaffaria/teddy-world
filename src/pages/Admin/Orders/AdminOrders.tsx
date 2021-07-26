@@ -78,7 +78,7 @@ function AdminOrders() {
                     />
                   </div>
 
-                  <button className="btn btn-primary btn-block">
+                  <button className="buttom btn-block">
                     Pesquisar
                   </button>
                 </form>

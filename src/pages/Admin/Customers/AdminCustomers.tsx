@@ -1,7 +1,6 @@
 import { Table } from "react-bootstrap";
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
-import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { BiHash } from "react-icons/bi";
 
@@ -54,7 +53,7 @@ function AdminCustomers() {
                     </select>
                   </div>
 
-                  <button className="btn btn-primary btn-block">
+                  <button className="buttom btn-block">
                     Pesquisar
                   </button>
                 </form>
