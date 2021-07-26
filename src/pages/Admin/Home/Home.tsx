@@ -101,6 +101,7 @@ function AdminIndex() {
             </label>
             <div className="card-icons">
               <BiCreditCard fontSize={50} />
+              <BiCreditCard fontSize={50} />
             </div>
             <div className="card-span">
               <span className="font-weight-bold ">

@@ -55,7 +55,7 @@ function CustomerContactUs({ children }: CustomerContactUsProps) {
         
         <div className="col mt-5 mb-5 d-flex justify-content-end">
           <Link to="/atendimento/novo">
-            <button type="submit" className="custumer_edit-buttom">
+            <button type="submit" className="buttom btn-block custumer_edit-buttom">
               Novo Atendimento
             </button>
           </Link>

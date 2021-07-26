@@ -118,7 +118,7 @@ function Cards() {
               <input className="form-control" name="cardSecurity" />
             </div>
 
-            <button className="btn btn-success btn-block mt-5">
+            <button className="buttom btn-block mt-5">
               Adicionar Cartão
             </button>
           </form>
