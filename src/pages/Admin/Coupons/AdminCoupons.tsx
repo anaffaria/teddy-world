@@ -78,7 +78,7 @@ function AdminCoupons() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Leão</td>
+                    <td>01</td>
                     <td>
                       <label>R$</label> 200,0
                     </td>

@@ -121,28 +121,30 @@ function AdminIndex() {
               <input type="date" name="end-date" className="form-control" />
             </div>
             <div className="form-group col-sm-3">
-              <label htmlFor="products">Status:</label>
+              <label htmlFor="products">Categoria:</label>
               <select defaultValue="" className="form-control">
                 <option value="">Selecione</option>
-                <option value="accept">Aceito</option>
-                <option value="proccessing"></option>
-                <option value="denied">Negado</option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
               </select>
             </div>
 
-            
-            <button
-              className=" col-sm-3 buttom btn-block"
-              style={{
-                width: 20, 
-                height: 50,
-                alignSelf: "flex-end",
-                marginBottom: "1rem",  
-              }}
-            >
-              <BiSearchAlt fontSize={20} />
-              Pesquisar
-            </button>
+            <div className='col-sm-3 search-button align-self-end'>
+              <button
+                className="buttom btn-block"
+                style={{
+                  minWidth: 200,
+                  height: 50,
+                  alignSelf: "flex-end",
+                  marginBottom: "1rem",
+                
+                }}
+              >
+                <BiSearchAlt fontSize={20} />
+                Pesquisar
+              </button>
+            </div>
           </div>
         </form>
         <Chart data={data} dataKeys={dataKeys} />
