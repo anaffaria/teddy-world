@@ -23,7 +23,7 @@
 
 .modal.fade.show .modal-dialog .modal-content {
   transition: 1s ease;
-  transform: none
+  transform: none;
 }
 
 .modal.fade .modal-dialog .modal-content {
@@ -33,4 +33,17 @@
 
 .modal-content {
   height: 100%;
+}
+
+.buttom {
+  background-color: #fa98af; /* Green */
+  border-radius: 12px;
+  border: none;
+  color: black;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
+  text-align: center;
 }

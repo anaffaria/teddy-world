@@ -11,7 +11,10 @@
   padding-bottom: 0;
   display: flex;
 }
-
+.navbar-icon{
+  font-size: 24px;
+  color: #acb8bf;
+}
 .logo-wrapper {
   margin: auto;
 }
@@ -29,6 +32,26 @@
   overflow: auto;
 }
 
+.navbar-admin::-webkit-scrollbar {
+  width: 7px;
+  margin-right: -100px;
+}
+
+.navbar-admin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.navbar-admin::-webkit-scrollbar-thumb {
+  background-color: #90affc;
+  border-radius: 20px;
+}
+
+.search-button {
+  max-width: 180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .admin-link {
   color: #212529;
 }
@@ -44,7 +67,7 @@
   width: 100%;
   max-width: 240px;
   background-color: #9ed1ff;
-  border-radius: 0px 20px 20px 0;
+  border-radius: 0px 20px 0px 0;
   top: 0;
 }
 
@@ -138,6 +161,33 @@
   height: 150px;
   margin: 10px;
 }
+.card-label{
+  color:#90affc;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.card-icons{
+  display: flex;
+  margin-left: auto;
+  margin-right: 10px;
+  margin-top: 7px;
+  color: #acb8bf;
+}
+
+.card-span{
+  color:#90affc;
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
+  margin-left: 6px;
+  margin-right: 10px;
+  margin-top: -40px;
+}
+
 
 .web-content {
   width: calc(100% - 260px);

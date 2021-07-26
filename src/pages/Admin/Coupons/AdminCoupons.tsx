@@ -5,7 +5,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
-function AdminTeddy() {
+function AdminCoupons() {
   return (
     <>
       <div className="topbar"></div>
@@ -14,9 +14,9 @@ function AdminTeddy() {
         <div className="main-content-admin">
           <div className="container">
             <div className="d-flex ">
-              <h3>Lista de Pelúcias </h3>
+              <h3>Lista de Cupons</h3>
               <span className="btn-sm btn btn-outline-success ml-auto mb-1">
-                <IoMdAddCircleOutline fontSize={25} /> Nova Pelúcia
+                <IoMdAddCircleOutline fontSize={25} /> Novo Cupom
               </span>
             </div>
 
@@ -28,33 +28,36 @@ function AdminTeddy() {
                   <hr />
 
                   <div className="form-group">
-                    <label htmlFor="products">Nome do produto:</label>
+                    <label htmlFor="products">Codigo do cupom:</label>
                     <input className="form-control" />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Valor até:</label>
+                    <label htmlFor="products">Valor da compra até:</label>
                     <input type="text" className="form-control" />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Categoria:</label>
-                    <select defaultValue="" className="form-control">
-                      <option value="">Selecione uma opção</option>
-                      <option value="">Elefante</option>
-                      <option value="">Urso</option>
-                      <option value="">Panda</option>
-                    </select>
+                    <label>Data início:</label>
+                    <input
+                      type="date"
+                      name="start-date"
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="form-group ">
+                    <label>Data fim:</label>
+                    <input
+                      type="date"
+                      name="end-date"
+                      className="form-control"
+                    />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Tamanho:</label>
-                    <select defaultValue="" className="form-control">
-                      <option value="">Selecione uma opção</option>
-                      <option value="">Elefante</option>
-                      <option value="">Urso</option>
-                      <option value="">Panda</option>
-                    </select>
+                    <label htmlFor="products">Vezes utilizadas:</label>
+                    <input type="text" className="form-control" />
                   </div>
 
                   <button className="buttom btn-block">
@@ -65,23 +68,21 @@ function AdminTeddy() {
               <Table responsive hover>
                 <thead>
                   <tr>
-                    <th>Nome</th>
+                    <th>Codigo do cupom</th>
                     <th>Valor</th>
-                    <th>Categoria</th>
-                    <th>Tamanho</th>
-                    <th>Estoque</th>
+                    <th>Data de criação</th>
+                    <th>Quantidade disponvel</th>
                     <th>Edição</th>
                     <th>Exclusão</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Leão</td>
+                    <td>01</td>
                     <td>
                       <label>R$</label> 200,0
                     </td>
-                    <td>pelucia</td>
-                    <td>0cm a 27cm</td>
+                    <td>24/07/2021</td>
                     <td>100</td>
                     
                     <td>
@@ -106,4 +107,4 @@ function AdminTeddy() {
   );
 }
 
-export default AdminTeddy;
+export default AdminCoupons;

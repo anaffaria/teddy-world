@@ -19,7 +19,7 @@ function AdminOrders() {
                   <hr />
 
                   <div className="form-group">
-                    <label htmlFor="products">Número do Pedido</label>
+                    <label htmlFor="products">Número do pedido:</label>
                     <input className="form-control" />
                   </div>
 
@@ -41,7 +41,7 @@ function AdminOrders() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Produtos</label>
+                    <label htmlFor="products">Produtos:</label>
                     <select defaultValue="" className="form-control">
                       <option value="">Selecione uma opção</option>
                       <option value="lion">Leão</option>
@@ -51,7 +51,7 @@ function AdminOrders() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Categorias</label>
+                    <label htmlFor="products">Categorias:</label>
                     <select defaultValue="" className="form-control">
                       <option value="">Selecione uma opção</option>
                       <option value="lion">Leão</option>
@@ -61,7 +61,7 @@ function AdminOrders() {
                   </div>
 
                   <div className="form-group">
-                    <label>Data início</label>
+                    <label>Data início:</label>
                     <input
                       type="date"
                       name="start-date"
@@ -70,7 +70,7 @@ function AdminOrders() {
                   </div>
 
                   <div className="form-group ">
-                    <label>Data fim</label>
+                    <label>Data fim:</label>
                     <input
                       type="date"
                       name="end-date"
@@ -78,7 +78,7 @@ function AdminOrders() {
                     />
                   </div>
 
-                  <button className="btn btn-primary btn-block">
+                  <button className="buttom btn-block">
                     Pesquisar
                   </button>
                 </form>
