@@ -20,7 +20,7 @@ function AdminDevolutions() {
                   <hr />
 
                   <div className="form-group">
-                    <label htmlFor="products">Número do Pedido</label>
+                    <label htmlFor="products">Número do pedido</label>
                     <input className="form-control" />
                   </div>
 
@@ -58,7 +58,7 @@ function AdminDevolutions() {
                     </select>
                   </div>
 
-                  <button className="btn btn-primary btn-block">
+                  <button className="buttom btn-block">
                     Pesquisar
                   </button>
                 </form>

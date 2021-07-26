@@ -8,3 +8,16 @@
 .main-content-admin {
   margin-top: 100px;
 }
+
+.buttom{
+  background-color: #FA98AF; /* Green */
+  border-radius: 12px;
+  border: none;
+  color: black;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
+  text-align:center
+}

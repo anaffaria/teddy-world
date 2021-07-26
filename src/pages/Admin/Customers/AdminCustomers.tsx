@@ -1,11 +1,10 @@
 import { Table } from "react-bootstrap";
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
-import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import { BiHash } from "react-icons/bi";
 
-function AdminTeddy() {
+function AdminCustomers() {
   return (
     <>
       <div className="topbar"></div>
@@ -13,13 +12,7 @@ function AdminTeddy() {
       <main className="web-content">
         <div className="main-content-admin">
           <div className="container">
-            <div className="d-flex ">
-              <h3>Lista de Pelúcias </h3>
-              <span className="btn-sm btn btn-outline-success ml-auto mb-1">
-                <IoMdAddCircleOutline fontSize={25} /> Nova Pelúcia
-              </span>
-            </div>
-
+            <h3>Lista de Clientes</h3>
             <hr />
             <div className="d-flex mt-3">
               <aside className="left-filter col-3">
@@ -28,32 +21,35 @@ function AdminTeddy() {
                   <hr />
 
                   <div className="form-group">
-                    <label htmlFor="products">Nome do produto:</label>
+                    <label htmlFor="products">Nome do cliente:</label>
                     <input className="form-control" />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Valor até:</label>
+                    <label htmlFor="products">Documento:</label>
                     <input type="text" className="form-control" />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Categoria:</label>
+                    <label htmlFor="products">Estado:</label>
                     <select defaultValue="" className="form-control">
                       <option value="">Selecione uma opção</option>
-                      <option value="">Elefante</option>
-                      <option value="">Urso</option>
-                      <option value="">Panda</option>
+                      <option value="">São Paulo</option>
                     </select>
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Tamanho:</label>
+                    <label htmlFor="products">E-mail</label>
+                    <input type="text" className="form-control" />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="products">Classificação do cliente:</label>
                     <select defaultValue="" className="form-control">
-                      <option value="">Selecione uma opção</option>
-                      <option value="">Elefante</option>
-                      <option value="">Urso</option>
-                      <option value="">Panda</option>
+                      <option value="">Selecione a classificação</option>
+                      <option value="">Bronze</option>
+                      <option value="">Prata</option>
+                      <option value="">Ouro</option>
                     </select>
                   </div>
 
@@ -65,31 +61,23 @@ function AdminTeddy() {
               <Table responsive hover>
                 <thead>
                   <tr>
+                    <th><BiHash fontSize={20}/></th>
                     <th>Nome</th>
-                    <th>Valor</th>
-                    <th>Categoria</th>
-                    <th>Tamanho</th>
-                    <th>Estoque</th>
-                    <th>Edição</th>
+                    <th>Documentos</th>
+                    <th>Estado</th>
+                    <th>E-mail</th>
+                    <th>Classificação do cliente</th>
                     <th>Exclusão</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Leão</td>
-                    <td>
-                      <label>R$</label> 200,0
-                    </td>
-                    <td>pelucia</td>
-                    <td>0cm a 27cm</td>
-                    <td>100</td>
-                    
-                    <td>
-                      <span className="btn-sm btn btn-outline-primary">
-                        <BiEditAlt fontSize={20} />
-                        Editar
-                      </span>
-                    </td>
+                    <td>01</td>
+                    <td>User</td>
+                    <td>11111111111</td>
+                    <td>São Paulo</td>
+                    <td>user@gmail.com</td>
+                    <td>Ouro</td>
                     <td>
                       <span className="btn-sm btn btn-outline-danger">
                         <BsTrashFill fontSize={20} /> Editar
@@ -106,4 +94,4 @@ function AdminTeddy() {
   );
 }
 
-export default AdminTeddy;
+export default AdminCustomers;

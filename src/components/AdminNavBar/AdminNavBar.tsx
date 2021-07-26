@@ -8,38 +8,39 @@ import { CgArrowsExchangeAlt } from "react-icons/cg";
 import { RiUserHeartLine } from "react-icons/ri";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { RiBearSmileLine } from "react-icons/ri";
+import '../../assets/Global.css'
 
 function AdminNavBar() {
   const links = [
     {
-      icon: <GoGraph fontSize={24}></GoGraph>,
+      icon: <GoGraph  className="navbar-icon"></GoGraph>,
       text: "Dashboard",
       link: "/admin",
     },
     {
-      icon: <RiBearSmileLine fontSize={24}></RiBearSmileLine>,
+      icon: <RiBearSmileLine  className="navbar-icon"></RiBearSmileLine>,
       text: "Pelúcias",
-      link: "/admin/teddy",
+      link: "/admin/pelucias",
     },
     {
-      icon: <FiShoppingBag fontSize={24}></FiShoppingBag>,
+      icon: <FiShoppingBag  className="navbar-icon" ></FiShoppingBag>,
       text: "Pedidos",
-      link: "/admin/orders",
+      link: "/admin/pedidos",
     },
     {
-      icon: <CgArrowsExchangeAlt fontSize={24}></CgArrowsExchangeAlt>,
+      icon: <CgArrowsExchangeAlt  className="navbar-icon"></CgArrowsExchangeAlt>,
       text: "Devoluções",
-      link: "/admin/devolutions",
+      link: "/admin/devolucoes",
     },
     {
-      icon: <RiUserHeartLine fontSize={24}></RiUserHeartLine>,
+      icon: <RiUserHeartLine  className="navbar-icon"></RiUserHeartLine>,
       text: "Clientes",
-      link: "/admin/customers",
+      link: "/admin/clientes",
     },
     {
-      icon: <IoPricetagsOutline fontSize={24}></IoPricetagsOutline>,
+      icon: <IoPricetagsOutline  className="navbar-icon"></IoPricetagsOutline>,
       text: "Cupons",
-      link: "/admin/coupons",
+      link: "/admin/cupons",
     },
   ];
 
