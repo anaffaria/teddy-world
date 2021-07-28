@@ -4,9 +4,13 @@ import { useRef } from "react";
 
 export interface InputProps {
   name: string;
+  type?: string;
+  id?: string;
+  className?: string;
+  [key: string]: string | undefined;
 }
 
-function InputText({ name }: InputProps) {
+function InputText({ name, ...rest }: InputProps) {
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
@@ -18,7 +22,7 @@ function InputText({ name }: InputProps) {
     });
   }, [fieldName, registerField]);
 
-  return <input type="text" ref={inputRef} />;
+  return <input defaultValue={defaultValue} ref={inputRef} {...rest} />;
 }
 
 export default InputText;

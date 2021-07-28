@@ -1,8 +1,14 @@
-.layout-main{
+.layout-main {
   display: flex;
   width: auto;
   height: 100vh;
-  background-color: #FA98AF;
+  background-color: #fa98af;
+}
+
+@media (max-width: 768px) {
+  .layout-main {
+    height: auto;
+  }
 }
 
 .header-logo {
@@ -34,8 +40,8 @@
   border-radius: 20px;
 }
 
-.layout-buttom{
-  background-color: #FA98AF; /* Green */
+.layout-buttom {
+  background-color: #fa98af; /* Green */
   border-radius: 12px;
   border: none;
   color: black;
@@ -45,7 +51,7 @@
   font-size: 14px;
   width: 100px;
   height: 40px;
-  text-align:center
+  text-align: center;
 }
 
 .register-bg {
