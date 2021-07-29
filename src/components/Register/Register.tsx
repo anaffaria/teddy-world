@@ -1,32 +1,106 @@
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import InputText from "../Form/InputText";
+import * as Yup from "yup";
+
+interface RegisterProps {
+  fullName: string;
+  email: string;
+  cpf: string;
+  password: string;
+  passwordConfirm: string;
+}
+
 function Register() {
+  const formRef = useRef<FormHandles>(null);
+
+  async function handleSubmit(data: RegisterProps) {
+    console.log(data);
+    console.log(formRef.current);
+
+    try {
+      const schema = Yup.object().shape({
+        fullName: Yup.string().required("O nome é obrigatório."),
+        email: Yup.string()
+          .email("Digite um e-mail válido.")
+          .required("E-mail é obrigatório."),
+        cpf: Yup.string().min(11, "Digite um CPF válido."),
+        password: Yup.string()
+          .required("Senha é obrigatório.")
+          .min(6, "Senha muito curta, mínimo 6 caractéres")
+          .matches(
+            /^.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].*$/,
+            "Necessita de caracter especial."
+          ),
+        passwordConfirm: Yup.string()
+          .required("Confirmação de senha obrigatória.")
+          .oneOf([Yup.ref("password"), null], "As senhas não conferem"),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      formRef.current?.setErrors({});
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errorMessage: { [key: string]: string } = {};
+
+        error.inner.forEach((err) => {
+          if (err.path) errorMessage[err.path] = err.message;
+        });
+
+        console.log(errorMessage);
+
+        formRef.current?.setErrors(errorMessage);
+      }
+    }
+  }
+
+  // TODO: standby function to fill iniital data of Form
+  // add this code on Form properties -> initialData={initialData}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const initialData: RegisterProps = {
+    fullName: "Ana Caroline",
+    email: "ana@test.com",
+    cpf: "12345678901",
+    password: "123",
+    passwordConfirm: "123",
+  };
+
   return (
     <>
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
-          <form className="layout-box">
+          <Form ref={formRef} onSubmit={handleSubmit} className="layout-box">
             <div className="form-outline mb-4 mt-3">
               <label className="form-label">Nome Completo:</label>
-              <input type="email" id="form2Example1" className="form-control" />
+              <InputText
+                name="fullName"
+                id="form2Example1"
+                className="form-control"
+              />
             </div>
 
             <div className="form-outline mb-4">
               <label className="form-label">E-mail:</label>
-              <input type="email" id="form2Example1" className="form-control" />
+              <InputText name="email" type="email" className="form-control" />
             </div>
 
             <div className="form-outline mb-4">
               <label className="form-label">CPF:</label>
-              <input type="email" id="form2Example1" className="form-control" />
+              <InputText name="cpf" className="form-control" />
             </div>
 
             <div className="row mb-2">
               <div className="col">
                 <div className="form-outline">
                   <label className="form-label">Senha:</label>
-                  <input
-                    type="text"
-                    id="form3Example1"
+                  <InputText
+                    name="password"
+                    type="password"
                     className="form-control"
                   />
                 </div>
@@ -35,9 +109,9 @@ function Register() {
               <div className="col">
                 <div className="form-outline">
                   <label className="form-label">Confirmar senha:</label>
-                  <input
-                    type="text"
-                    id="form3Example2"
+                  <InputText
+                    name="passwordConfirm"
+                    type="password"
                     className="form-control"
                   />
                 </div>
@@ -53,14 +127,12 @@ function Register() {
                 </Link>
               </div>
               <div className="col ">
-                <Link to="/cliente/pedidos">
-                  <button type="submit" className="layout-buttom">
-                    Cadastrar
-                  </button>
-                </Link>
+                <button type="submit" className="layout-buttom">
+                  Cadastrar
+                </button>
               </div>
             </div>
-          </form>
+          </Form>
         </section>
       </main>
     </>

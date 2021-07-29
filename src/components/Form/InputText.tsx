@@ -22,7 +22,12 @@ function InputText({ name, ...rest }: InputProps) {
     });
   }, [fieldName, registerField]);
 
-  return <input defaultValue={defaultValue} ref={inputRef} {...rest} />;
+  return (
+    <div className="input-error">
+      <input defaultValue={defaultValue} ref={inputRef} {...rest} />
+      {error && <span>{error}</span>}
+    </div>
+  );
 }
 
 export default InputText;
