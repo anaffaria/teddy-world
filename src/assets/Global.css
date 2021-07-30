@@ -50,5 +50,10 @@
 
 .custom-group .field-error {
   border-color: rgba(204, 0, 0, 1);
-  box-shadow: 0 0 0.2rem rgba(204, 0, 0, 1)
+  box-shadow: 0 0 0.2rem rgba(204, 0, 0, 1);
+}
+.buttom:hover {
+  color: #7d2849;
+  text-decoration: none;
+  transition-delay: 2ms;
 }

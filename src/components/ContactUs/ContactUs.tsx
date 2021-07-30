@@ -74,8 +74,8 @@ function ContactUs() {
                 </div>
 
                 <div className="col mt-5 mb-5 d-flex justify-content-end">
-                  <Link to="/cliente">
-                    <button type="submit" className="custumer_edit-buttom">
+                  <Link to="/cliente/pedidos">
+                    <button type="submit" className="buttom btn-block custumer_edit-buttom">
                       Enviar Mensagem
                     </button>
                   </Link>

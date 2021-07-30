@@ -36,7 +36,7 @@ function CustomerPass() {
 
             <div className="col-12 d-flex justify-content-end mt-5 mb-5 mx-auto">
               <Link to="/cliente">
-                <button type="submit" className="custumer_pass-buttom">
+                <button type="submit" className="buttom btn-block custumer_pass-buttom">
                   Salvar Alterações
                 </button>
               </Link>

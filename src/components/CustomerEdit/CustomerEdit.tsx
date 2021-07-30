@@ -93,7 +93,7 @@ function CustomerEdit() {
 
                 <div className="col mt-5 mb-5 d-flex justify-content-end">
                   <Link to="/cliente">
-                    <button type="submit" className="custumer_edit-buttom">
+                    <button type="submit" className="buttom btn-block custumer_edit-buttom">
                       Alterar cadastro
                     </button>
                   </Link>
@@ -170,7 +170,7 @@ function CustomerEdit() {
                     </select>
                   </div>
 
-                  <button className="btn btn-primary btn-block">
+                  <button className="buttom btn-block">
                     Adicionar
                   </button>
                 </form>
