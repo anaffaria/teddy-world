@@ -1,6 +1,6 @@
 .layout-main {
-  display: flex;
-  width: auto;
+  display: table;
+  width: 100%;
   height: 100vh;
   background-color: #fa98af;
 }
@@ -19,7 +19,7 @@
 .layout-container {
   position: relative;
   height: 505px;
-  width: 600px;
+  width: 100%;
   background-color: color;
   display: flex;
   justify-content: center;
@@ -38,6 +38,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .layout-buttom {

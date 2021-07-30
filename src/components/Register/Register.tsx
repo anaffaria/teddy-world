@@ -1,7 +1,7 @@
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import InputText from "../Form/InputText";
 import * as Yup from "yup";
 
@@ -16,10 +16,9 @@ interface RegisterProps {
 function Register() {
   const formRef = useRef<FormHandles>(null);
 
-  async function handleSubmit(data: RegisterProps) {
-    console.log(data);
-    console.log(formRef.current);
+  const history = useHistory();
 
+  async function handleSubmit(data: RegisterProps) {
     try {
       const schema = Yup.object().shape({
         fullName: Yup.string().required("O nome é obrigatório."),
@@ -44,6 +43,8 @@ function Register() {
       });
 
       formRef.current?.setErrors({});
+
+      history.push("/cliente/pedidos");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -75,7 +76,7 @@ function Register() {
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
           <Form ref={formRef} onSubmit={handleSubmit} className="layout-box">
-            <div className="form-outline mb-4 mt-3">
+            <div className="form-outline mb-4 mt-3 w-100">
               <label className="form-label">Nome Completo:</label>
               <InputText
                 name="fullName"
@@ -84,12 +85,12 @@ function Register() {
               />
             </div>
 
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-4 w-100">
               <label className="form-label">E-mail:</label>
               <InputText name="email" type="email" className="form-control" />
             </div>
 
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-4 w-100">
               <label className="form-label">CPF:</label>
               <InputText name="cpf" className="form-control" />
             </div>

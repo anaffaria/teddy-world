@@ -4,6 +4,10 @@ import { Form } from "@unform/web";
 
 import "./Login.css";
 import InputText from "../Form/InputText";
+import { useRef } from "react";
+import { FormHandles } from "@unform/core";
+import * as Yup from "yup";
+
 interface LoginProps {
   email: string;
   password: string;
@@ -11,22 +15,49 @@ interface LoginProps {
 
 function Login() {
   const history = useHistory();
+  const formRef = useRef<FormHandles>(null);
 
-  function handleSubmit(data: LoginProps) {
-    console.info(data);
-    history.push("/cliente/pedidos");
+  async function handleSubmit(data: LoginProps) {
+    console.log(data);
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("Digite um e-mail válido.")
+          .required("E-mail é obrigatório."),
+        password: Yup.string().required("Senha é obrigatória."),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      formRef.current?.setErrors({});
+
+      history.push("/cliente/pedidos");
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        console.log(error.inner);
+        const errorMessage: { [key: string]: string } = {};
+
+        error.inner.forEach((err) => {
+          if (err.path) errorMessage[err.path] = err.message;
+        });
+
+        formRef.current?.setErrors(errorMessage);
+      }
+    }
   }
 
   return (
     <>
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
-          <Form className="layout-box" onSubmit={handleSubmit}>
+          <Form className="layout-box" onSubmit={handleSubmit} ref={formRef}>
             <div className="header-logo mb-4 mt-2">
               <img src={logoImg} alt="logo" />
             </div>
 
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-4 w-100">
               <label className="form-label">E-mail</label>
               <InputText
                 type="email"
@@ -36,7 +67,7 @@ function Login() {
               />
             </div>
 
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-4 w-100">
               <label className="form-label">Senha</label>
               <InputText
                 type="password"
@@ -63,9 +94,7 @@ function Login() {
 
             <div className="row mb-2 mt-4">
               <div className="col text-center">
-                <Link to="/recuperarsenha">
-                  Esqueci minha senha
-                </Link>
+                <Link to="/recuperarsenha">Esqueci minha senha</Link>
               </div>
             </div>
 

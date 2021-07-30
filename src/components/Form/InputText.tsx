@@ -10,7 +10,7 @@ export interface InputProps {
   [key: string]: string | undefined;
 }
 
-function InputText({ name, ...rest }: InputProps) {
+function InputText({ name, className, ...rest }: InputProps) {
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
@@ -22,10 +22,21 @@ function InputText({ name, ...rest }: InputProps) {
     });
   }, [fieldName, registerField]);
 
+  function parseToCSSClass() {
+    return [error ? "field-error" : "", className ?? ""]
+      .toString()
+      .replaceAll(",", " ");
+  }
+
   return (
-    <div className="input-error">
-      <input defaultValue={defaultValue} ref={inputRef} {...rest} />
-      {error && <span>{error}</span>}
+    <div className="custom-group">
+      <input
+        defaultValue={defaultValue}
+        ref={inputRef}
+        {...rest}
+        className={parseToCSSClass()}
+      />
+      {error && <span style={{color: 'rgba(204, 0, 0, 1)'}}>{error}</span>}
     </div>
   );
 }
