@@ -4,8 +4,8 @@ import { Form } from "@unform/web";
 import Img1 from "../Product/img/img1.jpg";
 import "./Checkout.css";
 import { ModalTeddy } from "../Modal/Modal";
-import { CreditCardForm } from "../Utils/Forms/CreditCardForm";
-import { AddressForm } from "../Utils/Forms/AddressForm";
+import { CreditCardForm } from "../Forms/CreditCardForm";
+import { AddressForm } from "../Forms/AddressForm";
 
 interface CheckoutProps {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => {} | void;

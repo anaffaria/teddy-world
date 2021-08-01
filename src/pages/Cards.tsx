@@ -6,7 +6,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { TiSortNumerically } from "react-icons/ti";
 import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 import { ModalTeddy } from "../components/Modal/Modal";
-import { CreditCardForm } from "../components/Utils/Forms/CreditCardForm";
+import { CreditCardForm } from "../components/Forms/CreditCardForm";
 
 function Cards() {
   const [show, setShow] = useState(false);

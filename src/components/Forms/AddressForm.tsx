@@ -1,12 +1,12 @@
 import { useRef } from "react";
 import { Form } from "@unform/web";
-import InputText from "../../Form/InputText";
-import { Select } from "../../Form/SelectInput";
+import InputText from "../Form/InputText";
+import { Select } from "../Form/SelectInput";
 import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import axios from "axios";
-import { UfToName } from "../ParseUfToName";
+import { UfToName } from "../Utils/ParseUfToName";
 
 enum AddressType {
   delivery = "delivery",

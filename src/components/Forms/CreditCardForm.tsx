@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Form } from "@unform/web";
-import InputText from "../../Form/InputText";
+import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";

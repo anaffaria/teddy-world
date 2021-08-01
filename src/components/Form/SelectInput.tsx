@@ -16,6 +16,7 @@ export function Select({ name, children, className, ...rest }: Props) {
   const { fieldName, defaultValue, registerField, error } = useField(name);
 
   useEffect(() => {
+    console.log(selectRef.current?.value)
     registerField({
       ref: selectRef.current,
       name: fieldName,

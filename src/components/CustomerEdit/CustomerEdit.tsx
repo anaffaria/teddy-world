@@ -3,7 +3,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import "./CustomerEdit.css";
 import { useState } from "react";
-import { AddressForm } from "../Utils/Forms/AddressForm";
+import { AddressForm } from "../Forms/AddressForm";
 
 function CustomerEdit() {
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);

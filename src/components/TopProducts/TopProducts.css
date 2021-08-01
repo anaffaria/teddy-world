@@ -1,6 +1,8 @@
-
 .layout-buttom:hover {
   color: #7d2849;
   text-decoration: none;
 }
 
+.card-img-top {
+  max-width: 306px;
+}
