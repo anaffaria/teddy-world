@@ -104,7 +104,8 @@ function Checkout({ handleSubmit }: CheckoutProps) {
               <label>Endereço de Entrega</label>
               <select defaultValue="" className="form-control">
                 <option value="">Selecione</option>
-                <option value={1}>RG: 00.000.000.0</option>
+                <option value={1}>Endereço de Entrega 1</option>
+                <option value={-1}>Cadastrar novo endereço</option>
               </select>
             </Form.Group>
 
@@ -112,7 +113,8 @@ function Checkout({ handleSubmit }: CheckoutProps) {
               <label>Endereço de Cobrança</label>
               <select defaultValue="" className="form-control">
                 <option value="">Selecione</option>
-                <option value={1}>RG: 00.000.000.0</option>
+                <option value={1}>Endereço de Cobrança 1</option>
+                <option value={-1}>Cadastrar novo endereço</option>
               </select>
             </Form.Group>
 
@@ -124,7 +126,8 @@ function Checkout({ handleSubmit }: CheckoutProps) {
               <label>Método de Pagamento</label>
               <select defaultValue="" className="form-control">
                 <option value="">Selecione</option>
-                <option value={1}>RG: 00.000.000.0</option>
+                <option value={1}>****1234</option>
+                <option value={-1}>Cadastrar novo cartão</option>
               </select>
             </Form.Group>
 

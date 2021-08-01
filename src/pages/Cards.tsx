@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Button, Modal, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { AiOutlineCreditCard, AiOutlineDelete } from "react-icons/ai";
 import { BiCalendarHeart } from "react-icons/bi";
 import { IoMdAddCircle } from "react-icons/io";
 import { TiSortNumerically } from "react-icons/ti";
 import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
+import { ModalTeddy } from "../components/Modal/Modal";
+import { CreditCardForm } from "../components/Utils/Forms/CreditCardForm";
 
 function Cards() {
   const [show, setShow] = useState(false);
@@ -67,68 +69,13 @@ function Cards() {
         </div>
       </section>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Adicionar Novo Cartão</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
-            <div className="form-group">
-              <label htmlFor="creditCardNumber">
-                Número do Cartão de Crédito
-              </label>
-              <input
-                type="text"
-                name="creditCardNumber"
-                className="form-control"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="cardHolder">Nome do Títular</label>
-              <input type="text" className="form-control" name="cardHolder" />
-            </div>
-
-            <div className="d-flex">
-              <div className="form-group mr-3">
-                <label htmlFor="cardMonth">Mês</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="cardMonth"
-                  step={1}
-                  min={1}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="cardYear">Ano</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="cardYear"
-                  step={1}
-                  min={1}
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="cardSecurity">CVV</label>
-              <input className="form-control" name="cardSecurity" />
-            </div>
-
-            <button className="buttom btn-block mt-5">
-              Adicionar Cartão
-            </button>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Voltar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalTeddy
+        handleClose={handleClose}
+        show={show}
+        title="Adicionar Novo Cartão"
+      >
+        <CreditCardForm />
+      </ModalTeddy>
     </CustomerAccount>
   );
 }
