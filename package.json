@@ -12,6 +12,7 @@
     "@types/react-dom": "^17.0.0",
     "@unform/core": "^2.1.6",
     "@unform/web": "^2.1.6",
+    "axios": "^0.21.1",
     "bootstrap": "4.6.0",
     "card-validator": "^8.1.1",
     "prettier": "^2.3.1",

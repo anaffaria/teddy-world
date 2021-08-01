@@ -3,6 +3,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import "./CustomerEdit.css";
 import { useState } from "react";
+import { AddressForm } from "../Utils/Forms/AddressForm";
 
 function CustomerEdit() {
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
@@ -93,7 +94,10 @@ function CustomerEdit() {
 
                 <div className="col mt-5 mb-5 d-flex justify-content-end">
                   <Link to="/cliente">
-                    <button type="submit" className="buttom btn-block custumer_edit-buttom">
+                    <button
+                      type="submit"
+                      className="buttom btn-block custumer_edit-buttom"
+                    >
                       Alterar cadastro
                     </button>
                   </Link>
@@ -126,54 +130,7 @@ function CustomerEdit() {
             )}
             {isOpenForm && (
               <aside>
-                <form className="mt-2">
-                  <div className="form-group">
-                    <label htmlFor="cep">CEP</label>
-                    <input name="cep" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="street">Logradouro</label>
-                    <input name="street" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="number">Número</label>
-                    <input name="street" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="complement">Complemento</label>
-                    <input name="complement" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="state">Estado</label>
-                    <input name="state" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="city">Cidade</label>
-                    <input name="city" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="adressType">Tipo do Endereço</label>
-                    <select
-                      name="adressType"
-                      className="form-control"
-                      defaultValue=""
-                    >
-                      <option value="">Selecione</option>
-                      <option value="billing">Entrega</option>
-                      <option value="delivery">Cobrança</option>
-                    </select>
-                  </div>
-
-                  <button className="buttom btn-block">
-                    Adicionar
-                  </button>
-                </form>
+                <AddressForm className="mt-2" />
                 <button
                   className="btn btn-secondary btn-block mt-4"
                   onClick={() => setIsOpenForm(false)}

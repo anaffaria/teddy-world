@@ -1,13 +1,14 @@
 import { useField } from "@unform/core";
+import { HTMLProps } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { parseToCSSClass } from "../Utils/ParseToCSS";
 
-export interface InputProps {
+export interface InputProps extends HTMLProps<HTMLInputElement> {
   name: string;
   type?: string;
   id?: string;
   className?: string;
-  [key: string]: string | undefined;
 }
 
 function InputText({ name, className, ...rest }: InputProps) {
@@ -22,21 +23,16 @@ function InputText({ name, className, ...rest }: InputProps) {
     });
   }, [fieldName, registerField]);
 
-  function parseToCSSClass() {
-    return [error ? "field-error" : "", className ?? ""]
-      .toString()
-      .replaceAll(",", " ");
-  }
-
   return (
     <div className="custom-group">
       <input
         defaultValue={defaultValue}
         ref={inputRef}
         {...rest}
-        className={parseToCSSClass()}
+        className={parseToCSSClass(className, error)}
       />
-      {error && <span style={{color: 'rgba(204, 0, 0, 1)'}}>{error}</span>}
+
+      {error && <span style={{ color: "rgba(204, 0, 0, 1)" }}>{error}</span>}
     </div>
   );
 }
