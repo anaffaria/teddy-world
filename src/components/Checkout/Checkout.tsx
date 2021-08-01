@@ -1,13 +1,25 @@
-import { FormEvent } from "react";
-import { Form, Table } from "react-bootstrap";
+import { FormEvent, useRef, useState } from "react";
+import { Table } from "react-bootstrap";
+import { Form } from "@unform/web";
 import Img1 from "../Product/img/img1.jpg";
 import "./Checkout.css";
+import { ModalTeddy } from "../Modal/Modal";
+import { CreditCardForm } from "../Utils/Forms/CreditCardForm";
+import { AddressForm } from "../Utils/Forms/AddressForm";
 
 interface CheckoutProps {
-  handleSubmit?: (event: FormEvent<HTMLFormElement>) => {} | void;
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => {} | void;
 }
 
 function Checkout({ handleSubmit }: CheckoutProps) {
+  const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
+  const [showNewAddress, setShowNewAddress] = useState(false);
+
+  const handleClosePayment = () => setShowNewPaymentMethod(false);
+  const handleCloseAddress = () => setShowNewAddress(false);
+
+  const formRef = useRef(null);
+
   return (
     <>
       <Table bordered hover>
@@ -80,6 +92,7 @@ function Checkout({ handleSubmit }: CheckoutProps) {
 
       <section className="d-flex flex-wrap w-100 justify-content-around mt-5">
         <Form
+          ref={formRef}
           onSubmit={handleSubmit}
           className="col-sm-12 col-md-4 checkout-form"
         >
@@ -88,53 +101,73 @@ function Checkout({ handleSubmit }: CheckoutProps) {
               <h4>Documentos Pessoais</h4>
               <hr />
             </div>
-            <Form.Group>
+
+            <div className="form-group">
               <label>Documento</label>
               <select defaultValue="" className="form-control">
                 <option value="">Selecione</option>
                 <option value={1}>RG: 00.000.000.0</option>
               </select>
-            </Form.Group>
+            </div>
 
             <div className="text-center mt-5">
               <h4>Selecione os Endereços</h4>
               <hr />
             </div>
-            <Form.Group>
+
+            <div className="form-group">
               <label>Endereço de Entrega</label>
-              <select defaultValue="" className="form-control">
+              <select
+                defaultValue=""
+                className="form-control"
+                onChange={(val) => {
+                  if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                }}
+              >
                 <option value="">Selecione</option>
                 <option value={1}>Endereço de Entrega 1</option>
                 <option value={-1}>Cadastrar novo endereço</option>
               </select>
-            </Form.Group>
+            </div>
 
-            <Form.Group>
+            <div className="form-group">
               <label>Endereço de Cobrança</label>
-              <select defaultValue="" className="form-control">
+              <select
+                defaultValue=""
+                className="form-control"
+                onChange={(val) => {
+                  if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                }}
+              >
                 <option value="">Selecione</option>
                 <option value={1}>Endereço de Cobrança 1</option>
                 <option value={-1}>Cadastrar novo endereço</option>
               </select>
-            </Form.Group>
+            </div>
 
             <div className="text-center mt-5">
               <h4>Opções de Pagamento</h4>
               <hr />
             </div>
-            <Form.Group>
+
+            <div className="form-group">
               <label>Método de Pagamento</label>
-              <select defaultValue="" className="form-control">
+              <select
+                defaultValue=""
+                className="form-control"
+                onChange={(val) => {
+                  if (val.currentTarget.value === "-1")
+                    setShowNewPaymentMethod(true);
+                }}
+              >
                 <option value="">Selecione</option>
                 <option value={1}>****1234</option>
                 <option value={-1}>Cadastrar novo cartão</option>
               </select>
-            </Form.Group>
+            </div>
 
             <div className="d-flex">
-              <button className="button-checkout">
-                Finalizar Compra
-              </button>
+              <button className="button-checkout">Finalizar Compra</button>
             </div>
           </div>
         </Form>
@@ -184,15 +217,31 @@ function Checkout({ handleSubmit }: CheckoutProps) {
               <span>25,00</span>
             </div>
 
-            <hr/>
+            <hr />
 
             <div className="form-group mt-2">
-            <label>Cupom de Desconto</label>
-            <input className="form-control" defaultValue="COUPON502021" />
+              <label>Cupom de Desconto</label>
+              <input className="form-control" defaultValue="COUPON502021" />
             </div>
           </div>
         </aside>
       </section>
+
+      <ModalTeddy
+        handleClose={handleClosePayment}
+        show={showNewPaymentMethod}
+        title="Adicionar Novo Cartão"
+      >
+        <CreditCardForm />
+      </ModalTeddy>
+
+      <ModalTeddy
+        handleClose={handleCloseAddress}
+        show={showNewAddress}
+        title="Adicionar Novo Endereço"
+      >
+        <AddressForm />
+      </ModalTeddy>
     </>
   );
 }

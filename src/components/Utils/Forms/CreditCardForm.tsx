@@ -19,8 +19,6 @@ export function CreditCardForm() {
   const history = useHistory();
 
   async function handleSubmit(data: CreditCard) {
-    console.log(data);
-
     try {
       const schema = Yup.object().shape({
         cardHolder: Yup.string().required("Nome do titular é obrigatório."),
