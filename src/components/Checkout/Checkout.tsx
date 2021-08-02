@@ -6,19 +6,75 @@ import "./Checkout.css";
 import { ModalTeddy } from "../Modal/Modal";
 import { CreditCardForm } from "../Forms/CreditCardForm";
 import { AddressForm } from "../Forms/AddressForm";
+import { FormHandles } from "@unform/core";
+import { Select } from "../Form/SelectInput";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 
 interface CheckoutProps {
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => {} | void;
+  handleSubmit?: (event: FormEvent<HTMLFormElement>) => {} | void;
 }
 
-function Checkout({ handleSubmit }: CheckoutProps) {
+interface CheckoutSubmit {
+  document: string;
+  deliveryAddress: string;
+  billingAddress: string;
+  paymentMethod: string;
+}
+
+function Checkout(props: CheckoutProps) {
   const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
   const [showNewAddress, setShowNewAddress] = useState(false);
 
   const handleClosePayment = () => setShowNewPaymentMethod(false);
   const handleCloseAddress = () => setShowNewAddress(false);
 
-  const formRef = useRef(null);
+  const formRef = useRef<FormHandles>(null);
+
+  const history = useHistory();
+
+  async function handleSubmit(data: CheckoutSubmit) {
+    try {
+      const schema = Yup.object().shape({
+        document: Yup.string().required("O documento é obrigatório"),
+        deliveryAddress: Yup.string()
+          .required("Endereço de entrega é obrigatório")
+          .test(
+            "Endereço",
+            "Endereço de entrega inválido",
+            (value = "") => Number(value) > 0
+          ),
+        billingAddress: Yup.string()
+          .required("Endereço de cobrança é obrigatório")
+          .test(
+            "Endereço",
+            "Endereço de cobrança inválido",
+            (value = "") => Number(value) > 0
+          ),
+        paymentMethod: Yup.string()
+          .required("Método de pagamento é obrigatório")
+          .test("Pagamento", "Método de Pagamento inválido", (value = "") => Number(value) > 0),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      formRef.current?.setErrors({});
+
+      history.push("/cliente/pedidos");
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errorMessage: { [key: string]: string } = {};
+
+        error.inner.forEach((err) => {
+          if (err.path) errorMessage[err.path] = err.message;
+        });
+
+        formRef.current?.setErrors(errorMessage);
+      }
+    }
+  }
 
   return (
     <>
@@ -104,10 +160,10 @@ function Checkout({ handleSubmit }: CheckoutProps) {
 
             <div className="form-group">
               <label>Documento</label>
-              <select defaultValue="" className="form-control">
+              <Select name="document" defaultValue="" className="form-control">
                 <option value="">Selecione</option>
                 <option value={1}>RG: 00.000.000.0</option>
-              </select>
+              </Select>
             </div>
 
             <div className="text-center mt-5">
@@ -117,9 +173,10 @@ function Checkout({ handleSubmit }: CheckoutProps) {
 
             <div className="form-group">
               <label>Endereço de Entrega</label>
-              <select
+              <Select
                 defaultValue=""
                 className="form-control"
+                name="deliveryAddress"
                 onChange={(val) => {
                   if (val.currentTarget.value === "-1") setShowNewAddress(true);
                 }}
@@ -127,13 +184,14 @@ function Checkout({ handleSubmit }: CheckoutProps) {
                 <option value="">Selecione</option>
                 <option value={1}>Endereço de Entrega 1</option>
                 <option value={-1}>Cadastrar novo endereço</option>
-              </select>
+              </Select>
             </div>
 
             <div className="form-group">
               <label>Endereço de Cobrança</label>
-              <select
+              <Select
                 defaultValue=""
+                name="billingAddress"
                 className="form-control"
                 onChange={(val) => {
                   if (val.currentTarget.value === "-1") setShowNewAddress(true);
@@ -142,7 +200,7 @@ function Checkout({ handleSubmit }: CheckoutProps) {
                 <option value="">Selecione</option>
                 <option value={1}>Endereço de Cobrança 1</option>
                 <option value={-1}>Cadastrar novo endereço</option>
-              </select>
+              </Select>
             </div>
 
             <div className="text-center mt-5">
@@ -152,8 +210,9 @@ function Checkout({ handleSubmit }: CheckoutProps) {
 
             <div className="form-group">
               <label>Método de Pagamento</label>
-              <select
+              <Select
                 defaultValue=""
+                name="paymentMethod"
                 className="form-control"
                 onChange={(val) => {
                   if (val.currentTarget.value === "-1")
@@ -163,7 +222,7 @@ function Checkout({ handleSubmit }: CheckoutProps) {
                 <option value="">Selecione</option>
                 <option value={1}>****1234</option>
                 <option value={-1}>Cadastrar novo cartão</option>
-              </select>
+              </Select>
             </div>
 
             <div className="d-flex">

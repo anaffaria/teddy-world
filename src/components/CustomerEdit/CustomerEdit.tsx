@@ -1,83 +1,116 @@
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
-import { Link } from "react-router-dom";
 import "./CustomerEdit.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AddressForm } from "../Forms/AddressForm";
+import { Form } from "@unform/web";
+import InputText from "../Form/InputText";
+import { FormHandles } from "@unform/core";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
+
+interface CustomerEditProps {
+  email: string;
+  fullName: string;
+  cpf: string;
+  mainPhone: string;
+  altPhone: string;
+  birthDate: string;
+}
 
 function CustomerEdit() {
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
 
+  const formRef = useRef<FormHandles>(null);
+
+  const history = useHistory();
+
+  async function handleSubmit(data: CustomerEditProps) {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("Digite um e-mail válido")
+          .required("O e-mail é obrigatório"),
+        fullName: Yup.string().required("Nome é obrigatório"),
+        cpf: Yup.string()
+          .required("CPF é obrigatório")
+          .test("CPF", "CPF inválido", (value = "") => {
+            return /^\d+$/.test(value);
+          })
+          .min(11, "CPF inválido"),
+        mainPhone: Yup.string().required("Telefone principal obrigatório"),
+        birthDate: Yup.string().required("Data de nascimento é obrigatória"),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      formRef.current?.setErrors({});
+
+      history.push("/cliente/pedidos");
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errorMessage: { [key: string]: string } = {};
+
+        error.inner.forEach((err) => {
+          if (err.path) errorMessage[err.path] = err.message;
+        });
+
+        formRef.current?.setErrors(errorMessage);
+      }
+    }
+  }
   return (
     <>
       <CustomerAccount>
         <div className="row">
           <div className="col-sm-8 ">
-            <form>
+            <Form ref={formRef} onSubmit={handleSubmit}>
               <div className="form-row ">
                 <div className="col-12 col-sm-12 mt-2">
                   <label>E-mail</label>
-                  <input
+                  <InputText
                     type="text"
                     className="form-control"
                     placeholder="E-mail"
+                    name="email"
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
                   <label>Nome</label>
-                  <input
+                  <InputText
                     type="text"
                     className="form-control"
                     placeholder="Nome"
+                    name="fullName"
                   />
                 </div>
 
                 <div className="col-6 col-sm-6  mt-2">
                   <label>CPF</label>
-                  <input
+                  <InputText
                     type="text"
                     className="form-control"
                     placeholder="CPF"
+                    name="cpf"
                   />
                 </div>
 
-                <div className="col-2 col-sm-2  mt-2">
-                  <label>Dia</label>
-                  <input
-                    type="text"
+                <div className="col-6 col-sm-6  mt-2">
+                  <label>Data de nascimento:</label>
+                  <InputText
+                    type="date"
                     className="form-control"
-                    placeholder="Dia"
-                  />
-                </div>
-                <div className="col-2 col-sm-2  mt-2">
-                  <label>Mês</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Mês"
-                  />
-                </div>
-                <div className="col-2 col-sm-2  mt-2">
-                  <label>Ano</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Ano"
-                  />
-                </div>
-                <div className="col-12 col-sm-12  mt-2">
-                  <label>RG</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="RG"
+                    name="birthDate"
                   />
                 </div>
 
                 <div className="col-6 col-sm-6  mt-2">
                   <label>Telefone principal</label>
-                  <input
+                  <InputText
                     type="text"
+                    name="mainPhone"
                     className="form-control"
                     placeholder="Telefone primario"
                   />
@@ -85,25 +118,24 @@ function CustomerEdit() {
 
                 <div className="col-6 col-sm-6  mt-2">
                   <label>Telefone secundário</label>
-                  <input
+                  <InputText
                     type="text"
+                    name="altPhone"
                     className="form-control"
                     placeholder="Telefone secundário"
                   />
                 </div>
 
                 <div className="col mt-5 mb-5 d-flex justify-content-end">
-                  <Link to="/cliente">
-                    <button
-                      type="submit"
-                      className="buttom btn-block custumer_edit-buttom"
-                    >
-                      Alterar cadastro
-                    </button>
-                  </Link>
+                  <button
+                    type="submit"
+                    className="buttom btn-block custumer_edit-buttom"
+                  >
+                    Alterar cadastro
+                  </button>
                 </div>
               </div>
-            </form>
+            </Form>
           </div>
 
           <div className="col-4 col-sm-4">
