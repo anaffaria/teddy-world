@@ -4,6 +4,7 @@ import "../../../assets/Global.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 function AdminCoupons() {
   return (
@@ -15,9 +16,12 @@ function AdminCoupons() {
           <div className="container">
             <div className="d-flex ">
               <h3>Lista de Cupons</h3>
-              <span className="btn-sm btn btn-outline-success ml-auto mb-1">
+              <Link
+                to="cupons/new"
+                className="btn-sm btn btn-outline-success ml-auto mb-1"
+              >
                 <IoMdAddCircleOutline fontSize={25} /> Novo Cupom
-              </span>
+              </Link>
             </div>
 
             <hr />
@@ -60,9 +64,7 @@ function AdminCoupons() {
                     <input type="text" className="form-control" />
                   </div>
 
-                  <button className="buttom btn-block">
-                    Pesquisar
-                  </button>
+                  <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
               <Table responsive hover>
@@ -84,7 +86,7 @@ function AdminCoupons() {
                     </td>
                     <td>24/07/2021</td>
                     <td>100</td>
-                    
+
                     <td>
                       <span className="btn-sm btn btn-outline-primary">
                         <BiEditAlt fontSize={20} />

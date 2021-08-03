@@ -4,6 +4,7 @@ import "../../../assets/Global.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 function AdminTeddy() {
   return (
@@ -15,9 +16,9 @@ function AdminTeddy() {
           <div className="container">
             <div className="d-flex ">
               <h3>Lista de Pelúcias </h3>
-              <span className="btn-sm btn btn-outline-success ml-auto mb-1">
+              <Link to='pelucias/new' className="btn-sm btn btn-outline-success ml-auto mb-1">
                 <IoMdAddCircleOutline fontSize={25} /> Nova Pelúcia
-              </span>
+              </Link>
             </div>
 
             <hr />

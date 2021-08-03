@@ -53,8 +53,15 @@
   border-color: rgba(204, 0, 0, 1);
   box-shadow: 0 0 0.2rem rgba(204, 0, 0, 1);
 }
+
 .buttom:hover {
   color: #7d2849;
   text-decoration: none;
   transition-delay: 2ms;
+}
+
+.form-style {
+  padding: 0 30px;
+  width: 100%;
+  margin-bottom: 50px;
 }
