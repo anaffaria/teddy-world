@@ -33,7 +33,7 @@ export function NewCouponForm() {
 
       formRef.current?.setErrors({});
 
-      // history.push("/cliente/pedidos");
+      history.push("/admin/cupons");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -61,7 +61,14 @@ export function NewCouponForm() {
 
       <div className="d-flex justify-content-between mt-5">
         <button className="buttom">Criar Cupom</button>
-        <button className="btn btn-secondary">Voltar</button>
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          Voltar
+        </button>
       </div>
     </Form>
   );

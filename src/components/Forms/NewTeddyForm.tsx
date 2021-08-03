@@ -6,7 +6,7 @@ import InputText from "../Form/InputText";
 import { Select } from "../Form/SelectInput";
 import * as Yup from "yup";
 
-import "./NewTeddyForm.css";
+import "../../assets/Global.css";
 
 interface TeddyForm {
   title: string;
@@ -111,7 +111,14 @@ export function NewTeddyForm() {
 
       <div className="d-flex justify-content-between mt-5">
         <button className="buttom">Criar Pelúcia</button>
-        <button className="btn btn-secondary">Voltar</button>
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          Voltar
+        </button>
       </div>
     </Form>
   );
