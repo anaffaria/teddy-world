@@ -7,24 +7,25 @@ import * as Yup from "yup";
 
 import "../../assets/Global.css";
 
-interface TeddyForm {
-  title: string;
-  subtitle: string;
-  price: number;
-  categories: Array<string>;
-  colors: Array<string>;
-  size: string;
+interface CouponForm {
+  code: string;
+  value: string;
 }
 
 export function NewCouponForm() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
-  async function handleSubmit(data: TeddyForm) {
+  async function handleSubmit(data: CouponForm) {
     console.log(data);
 
     try {
-      const schema = Yup.object().shape({});
+      const schema = Yup.object().shape({
+        code: Yup.string()
+          .required("Código é obrigatório")
+          .min(5, "O código deve ter no mínimo 5 caractéres"),
+        value: Yup.string().required("Valor é obrigatório"),
+      });
 
       await schema.validate(data, {
         abortEarly: false,
