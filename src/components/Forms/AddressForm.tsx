@@ -50,8 +50,6 @@ export function AddressForm({ className }: AddressFormProps) {
   }
 
   async function handleSubmit(data: CustomerAddress) {
-    console.log(formRef.current);
-    console.log(formRef.current?.getData());
     try {
       const schema = Yup.object().shape({
         cep: Yup.string().required("CEP é obrigatório"),

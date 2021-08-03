@@ -22,8 +22,6 @@ export function NewTeddyForm() {
   const history = useHistory();
 
   async function handleSubmit(data: TeddyForm) {
-    console.log(data);
-
     try {
       const schema = Yup.object().shape({});
 

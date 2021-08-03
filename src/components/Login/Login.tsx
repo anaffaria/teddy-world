@@ -18,7 +18,6 @@ function Login() {
   const formRef = useRef<FormHandles>(null);
 
   async function handleSubmit(data: LoginProps) {
-    console.log(data);
     try {
       const schema = Yup.object().shape({
         email: Yup.string()
@@ -36,7 +35,6 @@ function Login() {
       history.push("/cliente/pedidos");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
-        console.log(error.inner);
         const errorMessage: { [key: string]: string } = {};
 
         error.inner.forEach((err) => {

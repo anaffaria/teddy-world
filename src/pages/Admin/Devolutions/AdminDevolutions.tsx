@@ -1,7 +1,8 @@
 import { Table } from "react-bootstrap";
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
-import {FiEdit3} from "react-icons/fi";
+import { FiEdit3 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 function AdminDevolutions() {
   return (
@@ -58,9 +59,7 @@ function AdminDevolutions() {
                     </select>
                   </div>
 
-                  <button className="buttom btn-block">
-                    Pesquisar
-                  </button>
+                  <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
               <Table responsive hover>
@@ -89,7 +88,11 @@ function AdminDevolutions() {
                     </td>
                     <td>Produto defeituoso</td>
                     <td>Aceito</td>
-                    <td><FiEdit3 fontSize={20} /></td>
+                    <td>
+                      <Link to='devolucoes/1/edit'>
+                        <FiEdit3 fontSize={20} />
+                      </Link>
+                    </td>
                   </tr>
                 </tbody>
               </Table>

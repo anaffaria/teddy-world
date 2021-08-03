@@ -53,8 +53,6 @@ function Register() {
           if (err.path) errorMessage[err.path] = err.message;
         });
 
-        console.log(errorMessage);
-
         formRef.current?.setErrors(errorMessage);
       }
     }

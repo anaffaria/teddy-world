@@ -20,6 +20,7 @@ import AdminCustomers from "./pages/Admin/Customers/AdminCustomers";
 import AdminCoupons from "./pages/Admin/Coupons/AdminCoupons";
 import { NewTeddy } from "./pages/Admin/Teddy/NewTeddy";
 import AdminCouponsNew from "./pages/Admin/Coupons/NewCoupons";
+import { EditDevolution } from "./pages/Admin/Devolutions/EditDevolutions";
 
 
 function Routes() {
@@ -44,7 +45,8 @@ function Routes() {
         <Route path="/admin/pelucias" exact component={AdminTeddy} />
         <Route path="/admin/pelucias/new" component={NewTeddy} />
         <Route path="/admin/pedidos" component={AdminOrders} />
-        <Route path="/admin/devolucoes" component={AdminDevolutions} />
+        <Route path="/admin/devolucoes" exact component={AdminDevolutions} />
+        <Route path="/admin/devolucoes/:id/edit" component={EditDevolution} />
         <Route path="/admin/clientes" component={AdminCustomers} />
         <Route path="/admin/cupons" exact component={AdminCoupons} />
         <Route path="/admin/cupons/new" component={AdminCouponsNew} />

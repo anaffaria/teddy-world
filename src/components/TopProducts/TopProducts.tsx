@@ -17,12 +17,15 @@ function TopProducts({ products }: TopProductsProps) {
       return (
         <div className="col-xs-12 mt-2 col-sm-3 col-md-3 col-lg-3" key={index}>
           <div className="card">
-            <img className="card-img-top" src={el.image} alt="Card image cap" />
+            <img className="card-img-top" src={el.image} alt="Card-cap" />
             <div className="card-body">
               <h5 className="card-title">{el.title}</h5>
               <p className="card-text">{el.subtitle}</p>
               <p className="card-text">R$: {el.price}</p>
-              <Link className="link layout-buttom d-flex" to={`/produto?id=${el.productUrl}`}>
+              <Link
+                className="link layout-buttom d-flex"
+                to={`/produto?id=${el.productUrl}`}
+              >
                 <p className="m-auto text-center">Visitar</p>
               </Link>
             </div>

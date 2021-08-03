@@ -17,8 +17,6 @@ export function NewCouponForm() {
   const history = useHistory();
 
   async function handleSubmit(data: CouponForm) {
-    console.log(data);
-
     try {
       const schema = Yup.object().shape({
         code: Yup.string()
