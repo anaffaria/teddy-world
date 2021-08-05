@@ -6,7 +6,7 @@ import { useRef } from "react";
 import * as Yup from "yup";
 import { Form } from "@unform/web";
 import InputText from "../../../components/Form/InputText";
-import { Select } from "../../../components/Form/SelectInput";
+import CreatableSelect from "../../../components/Form/ReactSelect";
 
 interface TeddyForm {
   title: string;
@@ -22,6 +22,7 @@ export function NewTeddy() {
   const history = useHistory();
 
   async function handleSubmit(data: TeddyForm) {
+    console.log(data);
     try {
       const schema = Yup.object().shape({});
 
@@ -105,25 +106,32 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="category">Categoria da Pelúcia</label>
-                  <Select name="category" className="form-control" multiple>
-                    <option>Elefante</option>
-                    <option>Urso</option>
-                    <option>Panda</option>
-                    <option>Unicórnio</option>
-                  </Select>
+                  <label htmlFor="categories">Categoria da Pelúcia</label>
+                  <CreatableSelect
+                    name="categories"
+                    multiple
+                    options={[
+                      { label: "Elefante", value: "1" },
+                      { label: "Urso", value: "2" },
+                      { label: "Panda", value: "3" },
+                      { label: "Unicórnio", value: "4" },
+                    ]}
+                  />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="color">Cor da Pelúcia</label>
-                  <Select name="color" className="form-control" multiple>
-                    <option>Bege</option>
-                    <option>Branco</option>
-                    <option>Caramelo</option>
-                    <option>Cinza</option>
-                    <option>Marrom</option>
-                    <option>Colorido</option>
-                  </Select>
+                  <label htmlFor="colors">Cor da Pelúcia</label>
+                  <CreatableSelect
+                    name="colors"
+                    multiple
+                    options={[
+                      { label: "Bege", value: "1" },
+                      { label: "Branco", value: "2" },
+                      { label: "Caramelo", value: "3" },
+                      { label: "Cinza", value: "4" },
+                      { label: "Colorido", value: "5" },
+                    ]}
+                  />
                 </div>
 
                 <div className="d-flex justify-content-between mt-5">
