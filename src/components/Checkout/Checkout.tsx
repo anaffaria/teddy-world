@@ -10,10 +10,7 @@ import { FormHandles } from "@unform/core";
 import { Select } from "../Form/SelectInput";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-
-interface CheckoutProps {
-  handleSubmit?: (event: FormEvent<HTMLFormElement>) => {} | void;
-}
+import { IoMdTrash } from "react-icons/io";
 
 interface CheckoutSubmit {
   document: string;
@@ -22,7 +19,7 @@ interface CheckoutSubmit {
   paymentMethod: string;
 }
 
-function Checkout(props: CheckoutProps) {
+function Checkout() {
   const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
   const [showNewAddress, setShowNewAddress] = useState(false);
 
@@ -53,7 +50,11 @@ function Checkout(props: CheckoutProps) {
           ),
         paymentMethod: Yup.string()
           .required("Método de pagamento é obrigatório")
-          .test("Pagamento", "Método de Pagamento inválido", (value = "") => Number(value) > 0),
+          .test(
+            "Pagamento",
+            "Método de Pagamento inválido",
+            (value = "") => Number(value) > 0
+          ),
       });
 
       await schema.validate(data, {
@@ -86,6 +87,7 @@ function Checkout(props: CheckoutProps) {
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Valor Total</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -106,6 +108,9 @@ function Checkout(props: CheckoutProps) {
             </td>
             <td style={{ verticalAlign: "middle" }}>R$: 69,9</td>
             <td style={{ verticalAlign: "middle" }}>R$: 139,8</td>
+            <td style={{ verticalAlign: "middle" }}>
+              <IoMdTrash size={20} className="icon" /> Excluir
+            </td>
           </tr>
           <tr>
             <td style={{ verticalAlign: "middle" }}>2</td>
@@ -124,6 +129,9 @@ function Checkout(props: CheckoutProps) {
             </td>
             <td style={{ verticalAlign: "middle" }}>R$: 69,9</td>
             <td style={{ verticalAlign: "middle" }}>R$: 139,8</td>
+            <td style={{ verticalAlign: "middle" }}>
+              <IoMdTrash size={20} className="icon" /> Excluir
+            </td>
           </tr>
           <tr>
             <td style={{ verticalAlign: "middle" }}>3</td>
@@ -142,6 +150,9 @@ function Checkout(props: CheckoutProps) {
             </td>
             <td style={{ verticalAlign: "middle" }}>R$: 69,9</td>
             <td style={{ verticalAlign: "middle" }}>R$: 139,8</td>
+            <td style={{ verticalAlign: "middle" }}>
+              <IoMdTrash size={20} className="icon" /> Excluir
+            </td>
           </tr>
         </tbody>
       </Table>

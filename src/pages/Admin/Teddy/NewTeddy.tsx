@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { Form } from "@unform/web";
 import InputText from "../../../components/Form/InputText";
 import CreatableSelect from "../../../components/Form/ReactSelect";
+import { Select } from "../../../components/Form/SelectInput";
 
 interface TeddyForm {
   title: string;
@@ -15,6 +16,8 @@ interface TeddyForm {
   categories: Array<string>;
   colors: Array<string>;
   size: string;
+  reason?: string;
+  status?: boolean;
 }
 
 export function NewTeddy() {
@@ -132,6 +135,24 @@ export function NewTeddy() {
                       { label: "Colorido", value: "5" },
                     ]}
                   />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="status">Status</label>
+                  <Select
+                    name="status"
+                    defaultValue=""
+                    className="form-control"
+                  >
+                    <option value="">Selecione</option>
+                    <option value={1}>Ativo</option>
+                    <option value={0}>Inativo</option>
+                  </Select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="reason">Justificativa: </label>
+                  <InputText name="reason" className="form-control" />
                 </div>
 
                 <div className="d-flex justify-content-between mt-5">

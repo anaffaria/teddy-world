@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
 import * as CardValidator from "card-validator";
+import { Select } from "../Form/SelectInput";
 
 interface CreditCard {
   cardHolder: string;
@@ -12,6 +13,7 @@ interface CreditCard {
   cardMonth: string;
   cardYear: string;
   cardSecurity: string;
+  cardFavourite: boolean;
 }
 
 export function CreditCardForm() {
@@ -129,6 +131,16 @@ export function CreditCardForm() {
           name="cardSecurity"
           placeholder="0000"
         />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="cardFavourite">
+          Deseja tornar como cartão preferencial?
+        </label>
+        <Select className="form-control" name="cardFavourite" defaultValue={0}>
+          <option value={1}>Sim</option>
+          <option value={0}>Não</option>
+        </Select>
       </div>
 
       <button className="buttom btn-block mt-5">Adicionar Cartão</button>
