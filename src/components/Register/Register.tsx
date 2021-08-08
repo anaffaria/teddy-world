@@ -27,12 +27,12 @@ function Register() {
           .required("E-mail é obrigatório."),
         cpf: Yup.string().min(11, "Digite um CPF válido."),
         password: Yup.string()
-          .required("Senha é obrigatório.")
-          .min(6, "Senha muito curta, mínimo 6 caractéres")
           .matches(
             /^.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].*$/,
             "Necessita de caracter especial."
-          ),
+          )
+          .min(6, "Senha muito curta, mínimo 6 caractéres")
+          .required("Senha é obrigatório."),
         passwordConfirm: Yup.string()
           .required("Confirmação de senha obrigatória.")
           .oneOf([Yup.ref("password"), null], "As senhas não conferem"),
@@ -45,6 +45,7 @@ function Register() {
       formRef.current?.setErrors({});
 
       history.push("/cliente/pedidos");
+      
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

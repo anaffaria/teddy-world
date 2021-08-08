@@ -87,7 +87,18 @@ function Product() {
                         </div>
                       </div>
 
-                      <div className="w-100 ml-4">
+                      <div className="w-100 ml-3">
+                        <Link to="/produto" className="w-100">
+                          <button
+                            type="submit"
+                            className="product-buttom text-center w-100"
+                          >
+                            Adicionar ao Carrinho
+                          </button>
+                        </Link>
+                      </div>
+
+                      <div className="w-70 ml-3">
                         <Link to="/cliente/1/checkout" className="w-100">
                           <button
                             type="submit"
