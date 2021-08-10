@@ -10,7 +10,7 @@ public class CustomerController {
 
     @GetMapping("/customer")
     public ResponseEntity newCustomer() {
-        Customer customer = new Customer("Ana Caroline", "123456");
-        return ResponseEntity.ok(customer);
+//        Customer customer = new Customer("Ana Caroline", "123456");
+        return ResponseEntity.ok("");
     }
 }
