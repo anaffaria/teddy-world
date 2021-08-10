@@ -5,6 +5,7 @@ import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.DomainEntity;
 import br.com.teddy.store.repostiory.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +15,17 @@ import java.util.List;
 public class CustomerDAO implements IDAO {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     ICustomerRepository customerRepository;
 
     @Override
     public DomainEntity create(DomainEntity domainEntity) {
-        return customerRepository.save((Customer) domainEntity);
+        Customer customer = (Customer) domainEntity;
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+
+        return customerRepository.save((Customer) customer);
     }
 
     @Override
