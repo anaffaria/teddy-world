@@ -158,7 +158,7 @@ function Register() {
               <div className="col-6 col-sm-6  mt-2">
                 <label>Senha</label>
                 <InputText
-                  type="text"
+                  type="password"
                   className="form-control"
                   placeholder="senha"
                   name="password"
@@ -168,7 +168,7 @@ function Register() {
               <div className="col-6 col-sm-6  mt-2">
                 <label>Confirmar Senha</label>
                 <InputText
-                  type="text"
+                  type="password"
                   className="form-control"
                   placeholder="confirmar senha"
                   name="passwordConfirm"
