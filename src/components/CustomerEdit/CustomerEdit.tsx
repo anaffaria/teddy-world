@@ -8,13 +8,14 @@ import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
+import { Select } from "../Form/SelectInput";
 
 interface CustomerEditProps {
   email: string;
   fullName: string;
   cpf: string;
+  gender: string;
   mainPhone: string;
-  altPhone: string;
   birthDate: string;
 }
 
@@ -38,6 +39,13 @@ function CustomerEdit() {
             return /^\d+$/.test(value);
           })
           .min(11, "CPF inválido"),
+        gender: Yup.string()
+          .test(
+            "gender",
+            "Selecione uma opção",
+            (value = "") => Number(value) > 0
+          )
+          .required("Sexo é obrigatório"),
         mainPhone: Yup.string().required("Telefone principal obrigatório"),
         birthDate: Yup.string().required("Data de nascimento é obrigatória"),
       });
@@ -87,7 +95,7 @@ function CustomerEdit() {
                   />
                 </div>
 
-                <div className="col-6 col-sm-6  mt-2">
+                <div className="col-8 col-sm-8  mt-2">
                   <label>CPF</label>
                   <InputText
                     type="text"
@@ -97,16 +105,21 @@ function CustomerEdit() {
                   />
                 </div>
 
-                <div className="col-6 col-sm-6  mt-2">
-                  <label>Data de nascimento:</label>
-                  <InputText
-                    type="date"
-                    className="form-control"
-                    name="birthDate"
-                  />
+                <div className="col-6 col-sm-4  mt-2">
+                  <label>Sexo</label>
+                  <Select
+                    name="gender"
+                    id="gender"
+                    className="form-control select_product"
+                  >
+                    <option selected>Selecione</option>
+                    <option value="1">Feminino</option>
+                    <option value="2">Masculino</option>
+                    <option value="3">Indefinido</option>
+                  </Select>
                 </div>
 
-                <div className="col-6 col-sm-6  mt-2">
+                <div className="col-8 col-sm-8  mt-2">
                   <label>Telefone principal</label>
                   <InputText
                     type="text"
@@ -115,14 +128,12 @@ function CustomerEdit() {
                     placeholder="Telefone primario"
                   />
                 </div>
-
-                <div className="col-6 col-sm-6  mt-2">
-                  <label>Telefone secundário</label>
+                <div className="col-6 col-sm-4  mt-2">
+                  <label>Data de nascimento:</label>
                   <InputText
-                    type="text"
-                    name="altPhone"
+                    type="date"
                     className="form-control"
-                    placeholder="Telefone secundário"
+                    name="birthDate"
                   />
                 </div>
 
