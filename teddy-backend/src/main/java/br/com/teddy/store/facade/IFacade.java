@@ -9,6 +9,6 @@ public interface IFacade {
     public ResponseDTO create(DomainEntity domainEntity);
     public DomainEntity delete(DomainEntity domainEntity);
     public DomainEntity update(DomainEntity domainEntity);
-    public List<DomainEntity> list(DomainEntity domainEntity);
-    public DomainEntity get(DomainEntity domainEntity);
+    public List<ResponseDTO> list(DomainEntity domainEntity);
+    public ResponseDTO get(DomainEntity domainEntity);
 }

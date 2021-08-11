@@ -49,6 +49,12 @@ public class CustomerDAO implements IDAO {
 
     @Override
     public DomainEntity get(Long id) {
-        return (DomainEntity) customerRepository.findById(id).get();
+        Customer customer = null;
+        try {
+            customer = customerRepository.findById(id).get();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return customer;
     }
 }

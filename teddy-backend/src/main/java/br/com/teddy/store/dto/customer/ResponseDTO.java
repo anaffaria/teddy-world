@@ -14,6 +14,7 @@ import lombok.Setter;
 public class ResponseDTO {
     private String fullName;
     private String email;
+    private Long id;
     private boolean hasError;
     private String message;
 
@@ -22,6 +23,7 @@ public class ResponseDTO {
             Customer customer = (Customer) domainEntity;
             this.email = customer.getEmail();
             this.fullName = customer.getFullName();
+            this.id = customer.getId();
         }
     }
 

@@ -6,6 +6,7 @@ import br.com.teddy.store.dto.customer.ResponseDTO;
 import br.com.teddy.store.strategy.IStrategy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,12 +60,23 @@ public class Facade extends AbstractFacade implements IFacade{
     }
 
     @Override
-    public List<DomainEntity> list(DomainEntity domainEntity) {
-        return null;
+    public List<ResponseDTO> list(DomainEntity domainEntity) {
+        super.initialize();
+        String className = domainEntity.getClass().getName();
+        IDAO dao = daos.get(className);
+
+        List<ResponseDTO> responseDTOList = new ArrayList<>();
+        dao.list(domainEntity).forEach(d -> responseDTOList.add(new ResponseDTO(d)));
+
+        return responseDTOList;
     }
 
     @Override
-    public DomainEntity get(DomainEntity domainEntity) {
-        return null;
+    public ResponseDTO get(DomainEntity domainEntity) {
+        super.initialize();
+        String className = domainEntity.getClass().getName();
+        IDAO dao = daos.get(className);
+
+        return new ResponseDTO(dao.get(domainEntity.getId()));
     }
 }
