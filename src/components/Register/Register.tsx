@@ -175,15 +175,15 @@ function Register() {
                 />
               </div>
 
-              <div className="row mb-2 mx-3 mt-4">
-                <div className="col ">
+              <div className="row mb-2 mx-3 mt-4 justify-content-around w-100">
+                <div>
                   <Link to="/login">
                     <button type="submit" className="layout-buttom">
                       Voltar
                     </button>
                   </Link>
                 </div>
-                <div className="col ">
+                <div>
                   <button type="submit" className="layout-buttom">
                     Cadastrar
                   </button>
