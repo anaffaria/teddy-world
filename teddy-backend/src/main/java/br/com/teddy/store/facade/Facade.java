@@ -55,8 +55,26 @@ public class Facade extends AbstractFacade implements IFacade{
     }
 
     @Override
-    public DomainEntity update(DomainEntity domainEntity) {
-        return null;
+    public ResponseDTO update(DomainEntity domainEntity) {
+        super.initialize();
+        String className = domainEntity.getClass().getName();
+        IDAO dao = daos.get(className);
+        Map<String, List<IStrategy>> entityMap = businessRule.get(className);
+        List<IStrategy> bnsEntity = entityMap.get("UPDATE");
+
+        executeRules(domainEntity, bnsEntity);
+
+        responseDTO = new ResponseDTO();
+
+        if(stringBuilder.length() > 0) {
+            responseDTO.setHasError(true);
+            responseDTO.setMessage(stringBuilder.toString());
+            return responseDTO;
+        }
+
+        dao.update(domainEntity);
+
+        return new ResponseDTO(domainEntity);
     }
 
     @Override
@@ -78,5 +96,24 @@ public class Facade extends AbstractFacade implements IFacade{
         IDAO dao = daos.get(className);
 
         return new ResponseDTO(dao.get(domainEntity.getId()));
+    }
+
+    public ResponseDTO updatePassword(DomainEntity domainEntity) {
+        super.initialize();
+        String className = domainEntity.getClass().getName();
+        IDAO dao = daos.get(className);
+        Map<String, List<IStrategy>> entityMap = businessRule.get(className);
+        List<IStrategy> bnsEntity = entityMap.get("UPDATE_PASSWORD");
+
+        executeRules(domainEntity, bnsEntity);
+
+        if(stringBuilder.length() > 0) {
+            responseDTO.setHasError(true);
+            responseDTO.setMessage(stringBuilder.toString());
+            return responseDTO;
+        }
+
+
+        return new ResponseDTO(dao.update(domainEntity));
     }
 }
