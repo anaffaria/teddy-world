@@ -66,23 +66,23 @@ function RebemberPass() {
             </div>
 
             <div className="row mb-2 mx-3 mt-4 justify-content-around w-100">
-            <div>
-              <Link to="/login">
+              <div>
+                <Link to="/login">
+                  <button type="submit" className="layout-buttom">
+                    Voltar
+                  </button>
+                </Link>
+              </div>
+              <div>
+
                 <button type="submit" className="layout-buttom">
-                  Voltar
+                  Enviar
                 </button>
-              </Link>
-            </div>
-            <div>
-              
-                 <button type="submit" className="layout-buttom">
-                 Enviar
-              </button>
 
+              </div>
             </div>
-          </div>
 
-            
+
           </Form>
         </section>
       </main>

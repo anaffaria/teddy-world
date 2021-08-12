@@ -20,7 +20,9 @@ interface CustomerAddress {
   number: string;
   state: string;
   city: string;
+  country: string;
   addressType: AddressType;
+
 }
 
 interface AddressFormProps {
@@ -57,6 +59,7 @@ export function AddressForm({ className }: AddressFormProps) {
         number: Yup.string().required("Número é obrigatório"),
         state: Yup.string().required("Estado é obrigatório"),
         city: Yup.string().required("Cidade é obrigatório"),
+        country: Yup.string().required("País é obrigatório"),
         addressType: Yup.string().required("Selecione o tipo do endereço"),
       });
 
@@ -116,6 +119,11 @@ export function AddressForm({ className }: AddressFormProps) {
       <div className="form-group">
         <label htmlFor="city">Cidade</label>
         <InputText name="city" className="form-control" />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="country">País</label>
+        <InputText name="country" className="form-control" />
       </div>
 
       <div className="form-group">
