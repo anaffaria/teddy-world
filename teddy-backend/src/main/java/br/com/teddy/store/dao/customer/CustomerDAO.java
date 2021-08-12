@@ -4,6 +4,7 @@ import br.com.teddy.store.dao.IDAO;
 import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.DomainEntity;
 import br.com.teddy.store.repostiory.ICustomerRepository;
+import br.com.teddy.store.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,20 +37,25 @@ public class CustomerDAO implements IDAO {
 
     @Override
     public DomainEntity update(DomainEntity domainEntity) {
-        //TODO Fix this logic to update only the new fields.
+        // https://stackoverflow.com/questions/27818334/jpa-update-only-specific-fields
         Customer customerNew = (Customer) domainEntity;
-        Customer customerOld = (Customer) get(domainEntity.getId());
+        Customer customerExisting = (Customer) get(domainEntity.getId());
+        String cpf = customerExisting.getCpf();
+        LocalDateTime createdAt = customerExisting.getCreatedAt();
+        String encryptedPassword = customerExisting.getPassword();
 
-        customerNew.setCpf(customerOld.getCpf());
-        customerNew.setUpdatedAt(LocalDateTime.now());
+        FillNullProperty.copyNonNullProperties(customerNew, customerExisting);
 
-        if(null != customerNew.getPassword() && !passwordEncoder.matches(customerNew.getPassword(), customerOld.getPassword())) {
-            customerNew.setPassword(passwordEncoder.encode(customerNew.getPassword()));
-        } else {
-            customerNew.setPassword(customerOld.getPassword());
+        customerExisting.setCpf(cpf);
+        customerExisting.setCreatedAt(createdAt);
+        customerExisting.setPassword(encryptedPassword);
+        customerExisting.setUpdatedAt(LocalDateTime.now());
+
+        if(null != customerNew.getPassword() && !passwordEncoder.matches(customerNew.getPassword(), encryptedPassword)) {
+            customerExisting.setPassword(passwordEncoder.encode(customerNew.getPassword()));
         }
 
-        return customerRepository.save((Customer) domainEntity);
+        return customerRepository.save(customerExisting);
     }
 
     @Override
