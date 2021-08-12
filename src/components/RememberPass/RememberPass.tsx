@@ -47,15 +47,15 @@ function RebemberPass() {
     <>
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
-          <Form className="layout-box" onSubmit={handleSubmit} ref={formRef} >
+          <Form className="layout-box form-row" onSubmit={handleSubmit} ref={formRef} >
             <div className="header-logo mt-5">
               <img src={Gif} alt="gif" />
             </div>
-            <div className="form-outline mb-5 text-center">
+            <div className="col-12 mb-5 text-center">
               <h4>Esqueci minha Senha</h4>
             </div>
 
-            <div className="form-outline mb-4">
+            <div className="col-12 mb-4">
               <label className="form-label">E-mail:</label>
               <InputText
                 type="email"
@@ -65,20 +65,24 @@ function RebemberPass() {
               />
             </div>
 
-            <div className="row mb-2 mx-3 mt-5">
-              <div className="col ">
-                <Link to="/login">
-                  <button type="submit" className="layout-buttom">
-                    Voltar
-                  </button>
-                </Link>
-              </div>
-              <div className="col ">
+            <div className="row mb-2 mx-3 mt-4 justify-content-around w-100">
+            <div>
+              <Link to="/login">
                 <button type="submit" className="layout-buttom">
-                  Cadastrar
+                  Voltar
                 </button>
-              </div>
+              </Link>
             </div>
+            <div>
+              
+                 <button type="submit" className="layout-buttom">
+                 Enviar
+              </button>
+
+            </div>
+          </div>
+
+            
           </Form>
         </section>
       </main>
