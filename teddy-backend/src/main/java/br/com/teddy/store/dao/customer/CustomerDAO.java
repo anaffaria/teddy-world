@@ -31,8 +31,13 @@ public class CustomerDAO implements IDAO {
     }
 
     @Override
-    public void delete(Long id) {
-        customerRepository.deleteById(id);
+    public DomainEntity delete(Long id) {
+        Customer customer = (Customer) get(id);
+                 customer.setDeletedAt(LocalDateTime.now());
+
+        customerRepository.save(customer);
+
+        return customer;
     }
 
     @Override

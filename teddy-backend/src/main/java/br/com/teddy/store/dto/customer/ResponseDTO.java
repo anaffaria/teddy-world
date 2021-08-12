@@ -7,23 +7,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class ResponseDTO {
+    private Long id;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
+
     private String fullName;
     private String email;
-    private Long id;
     private boolean hasError;
     private String message;
 
     public ResponseDTO(DomainEntity domainEntity) {
+        this.id = domainEntity.getId();
+        this.createdAt = domainEntity.getCreatedAt();
+        this.deletedAt = domainEntity.getDeletedAt();
+
         if(domainEntity instanceof Customer) {
             Customer customer = (Customer) domainEntity;
             this.email = customer.getEmail();
             this.fullName = customer.getFullName();
-            this.id = customer.getId();
         }
     }
 

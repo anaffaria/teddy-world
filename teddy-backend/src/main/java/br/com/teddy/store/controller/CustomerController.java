@@ -31,6 +31,14 @@ public class CustomerController {
         return ResponseEntity.ok(facade.updatePassword(customer));
     }
 
+    @DeleteMapping("/customer/{id}")
+    public ResponseEntity deleteCustomer(@PathVariable Long id) {
+        Customer customer = new Customer();
+        customer.setId(id);
+
+        return ResponseEntity.ok(facade.delete(customer));
+    }
+
     @PostMapping("/customer")
     public ResponseEntity newCustomer(@RequestBody Customer customer) {
         return ResponseEntity.ok(facade.create(customer));

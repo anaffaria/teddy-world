@@ -50,8 +50,16 @@ public class Facade extends AbstractFacade implements IFacade{
     }
 
     @Override
-    public DomainEntity delete(DomainEntity domainEntity) {
-        return null;
+    public ResponseDTO delete(DomainEntity domainEntity) {
+        super.initialize();
+        stringBuilder.setLength(0);
+
+        String className = domainEntity.getClass().getName();
+        IDAO dao = daos.get(className);
+
+        domainEntity = dao.delete(domainEntity.getId());
+
+        return new ResponseDTO(domainEntity);
     }
 
     @Override
