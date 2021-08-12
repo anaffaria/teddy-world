@@ -57,6 +57,8 @@ public class Facade extends AbstractFacade implements IFacade{
     @Override
     public ResponseDTO update(DomainEntity domainEntity) {
         super.initialize();
+        stringBuilder.setLength(0);
+
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
         Map<String, List<IStrategy>> entityMap = businessRule.get(className);
@@ -100,6 +102,10 @@ public class Facade extends AbstractFacade implements IFacade{
 
     public ResponseDTO updatePassword(DomainEntity domainEntity) {
         super.initialize();
+        stringBuilder.setLength(0);
+
+        responseDTO = new ResponseDTO();
+
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
         Map<String, List<IStrategy>> entityMap = businessRule.get(className);
