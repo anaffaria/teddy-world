@@ -55,7 +55,7 @@ function Login() {
               <img src={logoImg} alt="logo" />
             </div>
 
-            <div className="form-outline mb-4 w-100">
+            <div className="col-12 mb-4 w-100">
               <label className="form-label">E-mail</label>
               <InputText
                 type="email"
@@ -65,7 +65,7 @@ function Login() {
               />
             </div>
 
-            <div className="form-outline mb-4 w-100">
+            <div className="col-12 mb-4 w-100">
               <label className="form-label">Senha</label>
               <InputText
                 type="password"
@@ -75,20 +75,21 @@ function Login() {
               />
             </div>
 
-            <div className="row mb-2 mx-3">
-              <div className="col ">
+            <div className="row mb-2 mx-3 mt-5 justify-content-around">
+              <div>
                 <Link to="/">
-                  <button type="submit" className="layout-buttom text-center ">
+                  <button type="submit" className="layout-buttom">
                     Voltar
                   </button>
                 </Link>
               </div>
-              <div className="col ">
-                <button type="submit" className="layout-buttom text-center ">
+              <div>
+                <button type="submit" className="layout-buttom">
                   Entrar
                 </button>
               </div>
             </div>
+
 
             <div className="row mb-2 mt-4">
               <div className="col text-center">
