@@ -1,4 +1,4 @@
-package br.com.teddy.store.dto.customer;
+package br.com.teddy.store.dto;
 
 import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.DomainEntity;

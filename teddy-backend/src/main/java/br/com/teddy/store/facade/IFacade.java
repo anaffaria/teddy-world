@@ -1,7 +1,7 @@
 package br.com.teddy.store.facade;
 
 import br.com.teddy.store.domain.DomainEntity;
-import br.com.teddy.store.dto.customer.ResponseDTO;
+import br.com.teddy.store.dto.ResponseDTO;
 
 import java.util.List;
 
