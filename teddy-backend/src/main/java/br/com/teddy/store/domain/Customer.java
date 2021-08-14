@@ -9,6 +9,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,9 +26,13 @@ public class Customer extends DomainEntity{
 //    @Column(unique = true)
     private String email;
 
-    private String password;
     private String cpf;
 
+    private String gender;
+
+    private LocalDateTime birthDate;
+
+    private String password;
     @Transient
     private String passwordConfirm;
 }

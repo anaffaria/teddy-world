@@ -42,6 +42,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                     Alterar dados cadastrais
                   </Link>
                   <Link
+                  
                     to="/cliente/alterar_senha"
                     className="list-group-item costumer_account_link border-0"
                   >
