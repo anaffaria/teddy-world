@@ -92,13 +92,13 @@ public class Facade extends AbstractFacade implements IFacade{
     }
 
     @Override
-    public List<ResponseDTO> list(DomainEntity domainEntity) {
+    public List<AResponseDTO> list(DomainEntity domainEntity) {
         super.initialize();
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
 
-        List<ResponseDTO> responseDTOList = new ArrayList<>();
-//        dao.list(domainEntity).forEach(d -> responseDTOList.add(new ResponseDTO(d)));
+        List<AResponseDTO> responseDTOList = new ArrayList<>();
+        dao.list(domainEntity).forEach(d -> responseDTOList.add(ResponseDTO.createDTO(d, "LIST")));
 
         return responseDTOList;
     }
