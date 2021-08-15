@@ -1,7 +1,10 @@
 package br.com.teddy.store.dto;
 
+import br.com.teddy.store.domain.Address;
 import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.DomainEntity;
+import br.com.teddy.store.dto.address.AddressDTO;
+import br.com.teddy.store.dto.customer.CustomerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ResponseDTO {
+public abstract class ResponseDTO {
     private Long id;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -21,19 +24,22 @@ public class ResponseDTO {
 
     private String fullName;
     private String email;
-    private boolean hasError;
-    private String message;
+    public static boolean hasError;
+    public static String message;
 
-    public ResponseDTO(DomainEntity domainEntity) {
-        this.id = domainEntity.getId();
-        this.createdAt = domainEntity.getCreatedAt();
-        this.deletedAt = domainEntity.getDeletedAt();
+    public static AResponseDTO createDTO(DomainEntity domainEntity, String method) {
+        if(hasError) {
+            return new ErrorDTO(hasError, message);
+        }
 
         if(domainEntity instanceof Customer) {
-            Customer customer = (Customer) domainEntity;
-            this.email = customer.getEmail();
-            this.fullName = customer.getFullName();
+            return new CustomerDTO((Customer) domainEntity, method);
         }
+
+        if(domainEntity instanceof Address) {
+            return new AddressDTO((Address) domainEntity);
+        }
+        return null;
     }
 
 

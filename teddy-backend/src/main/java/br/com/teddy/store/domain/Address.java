@@ -2,6 +2,7 @@ package br.com.teddy.store.domain;
 
 import lombok.*;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -39,4 +40,6 @@ public class Address extends DomainEntity{
 
     private String addressType;
 
+    @ManyToOne
+    private Customer customer;
 }

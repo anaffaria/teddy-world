@@ -27,7 +27,9 @@ public class CustomerDAO implements IDAO {
         Customer customer = (Customer) domainEntity;
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
 
-        return customerRepository.save(customer);
+        customerRepository.saveAndFlush(customer);
+
+        return customer;
     }
 
     @Override

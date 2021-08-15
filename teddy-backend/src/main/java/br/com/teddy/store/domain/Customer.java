@@ -2,14 +2,12 @@ package br.com.teddy.store.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,7 +30,12 @@ public class Customer extends DomainEntity{
 
     private LocalDateTime birthDate;
 
+    private String telephone;
+
     private String password;
     @Transient
     private String passwordConfirm;
+
+    @OneToMany(mappedBy = "customer", targetEntity = Address.class)
+    private List<Address> addressList;
 }
