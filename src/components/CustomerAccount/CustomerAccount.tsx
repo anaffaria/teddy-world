@@ -21,11 +21,6 @@ function CustomerAccount({ children }: CustomerAccountProps) {
               <FaUserCircle size={30} />
               <label className="font-weight-normal ml-2">Olá, Name!</label>
             </div>
-            <div className="col-lg-6">
-              <label className="font-weight-normal ml-2">
-                Nome do link selecionado
-              </label>
-            </div>
             <div className="col-lg-3">
               <label className="font-weight-normal ml-2"></label>
             </div>

@@ -63,11 +63,11 @@ function AdminCustomers() {
                   <tr>
                     <th><BiHash fontSize={20}/></th>
                     <th>Nome</th>
-                    <th>Documentos</th>
+                    <th>Documento</th>
                     <th>Estado</th>
                     <th>E-mail</th>
                     <th>Classificação do cliente</th>
-                    <th>Exclusão</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
