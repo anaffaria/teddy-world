@@ -22,12 +22,12 @@ public class CustomerController {
         return ResponseEntity.ok(facade.get(customer));
     }
 
-    @PutMapping("/customer/{id}")
+    @PutMapping("/customer")
     public ResponseEntity updateCustomer(@RequestBody Customer customer) {
         return ResponseEntity.ok(facade.update(customer));
     }
 
-    @PatchMapping("/customer/{id}")
+    @PatchMapping("/customer")
     public ResponseEntity updateCustomerPassword(@RequestBody Customer customer) {
         return ResponseEntity.ok(facade.updatePassword(customer));
     }
