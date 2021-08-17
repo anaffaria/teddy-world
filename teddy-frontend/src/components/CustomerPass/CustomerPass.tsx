@@ -1,5 +1,5 @@
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./CustomerPass.css";
 import InputText from "../Form/InputText";
 import { useRef } from "react";

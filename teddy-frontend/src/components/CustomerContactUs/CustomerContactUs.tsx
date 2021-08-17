@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { Table } from "react-bootstrap";
 import { AiOutlineBarcode } from "react-icons/ai";
@@ -7,13 +7,12 @@ import { AiFillMessage } from "react-icons/ai";
 import { AiFillSound } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
-import { useRef } from "react";
-import { FormHandles } from "@unform/core";
 
 export interface CustomerContactUsProps {
   children?: React.ReactNode;
 }
 
+/*
 interface ListContactUsProps {
   devolution: string;
   name: string;
@@ -22,7 +21,7 @@ interface ListContactUsProps {
   subject: string;
   justification: string;
 }
-
+*/
 function CustomerContactUs({ children }: CustomerContactUsProps) {
   const history = useHistory();
 

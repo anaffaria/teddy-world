@@ -23,16 +23,16 @@ function Footer({ children }: FooterProps) {
           </div>
 
           <div className="w-70">
-            <a href="" className="me-4 text-reset">
+            <a href="#123" className="me-4 text-reset">
               <AiFillFacebook fontSize={25} />
             </a>
-            <a href="" className="me-4 text-reset">
+            <a href="#123" className="me-4 text-reset">
               <AiFillTwitterCircle fontSize={25} />
             </a>
-            <a href="" className="me-4 text-reset">
+            <a href="#123" className="me-4 text-reset">
               <AiFillInstagram fontSize={25} />
             </a>
-            <a href="" className="me-4 text-reset">
+            <a href="#123" className="me-4 text-reset">
               <MdEmail fontSize={25} />
             </a>
           </div>

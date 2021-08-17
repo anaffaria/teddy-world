@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Form } from "@unform/web";
 import Img1 from "../Product/img/img1.jpg";

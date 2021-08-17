@@ -3,8 +3,37 @@ import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
 import { BsTrashFill } from "react-icons/bs";
 import { BiHash } from "react-icons/bi";
+import { useEffect } from "react";
+import { axiosInstance } from "../../../service/serviceInstance";
+import { useState } from "react";
+
+export interface Customer {
+  id: number;
+  createdAt: string;
+  deletedAt: string;
+  fullName: string;
+  birthDate: string;
+  email: string;
+  cpf: string;
+  telephone: string;
+  gender: string;
+  addressList: [];
+}
 
 function AdminCustomers() {
+  const [customers, setCustomers] = useState<Array<Customer>>([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get("customers")
+      .then((response) => {
+        setCustomers(response.data as Array<Customer>);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <>
       <div className="topbar"></div>
@@ -53,37 +82,41 @@ function AdminCustomers() {
                     </select>
                   </div>
 
-                  <button className="buttom btn-block">
-                    Pesquisar
-                  </button>
+                  <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
               <Table responsive hover>
                 <thead>
                   <tr>
-                    <th><BiHash fontSize={20}/></th>
+                    <th>
+                      <BiHash fontSize={20} />
+                    </th>
                     <th>Nome</th>
                     <th>Documentos</th>
-                    <th>Estado</th>
+                    <th>Data de nascimento</th>
                     <th>E-mail</th>
                     <th>Classificação do cliente</th>
                     <th>Exclusão</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>User</td>
-                    <td>11111111111</td>
-                    <td>São Paulo</td>
-                    <td>user@gmail.com</td>
-                    <td>Ouro</td>
-                    <td>
-                      <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Desativar
-                      </span>
-                    </td>
-                  </tr>
+                  {customers.map((customer, index) => {
+                    return (
+                      <tr>
+                        <td>{customer.id}</td>
+                        <td>{customer.fullName}</td>
+                        <td>{customer.cpf}</td>
+                        <td>{customer.birthDate}</td>
+                        <td>{customer.email}</td>
+                        <td>Ouro</td>
+                        <td>
+                          <span className="btn-sm btn btn-outline-danger">
+                            <BsTrashFill fontSize={20} /> Desativar
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </div>

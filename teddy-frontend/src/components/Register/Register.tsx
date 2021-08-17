@@ -43,7 +43,7 @@ function Register() {
         birthDate: Yup.string().required("Data de nascimento é obrigatória"),
         password: Yup.string()
           .matches(
-            /^.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].*$/,
+            /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
             "Necessita de caracter especial."
           )
           .min(6, "Senha muito curta, mínimo 6 caractéres")

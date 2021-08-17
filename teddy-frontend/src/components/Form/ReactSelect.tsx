@@ -28,13 +28,16 @@ export default function CreatableSelect({ name, multiple, ...rest }: Props) {
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
-    <Select
-      defaultValue={defaultValue}
-      ref={selectRef}
-      // @ts-expect-error
-      isMulti={multiple}
-      classNamePrefix="react-select"
-      {...rest}
-    />
+    <>
+      <Select
+        defaultValue={defaultValue}
+        ref={selectRef}
+        // @ts-expect-error
+        isMulti={multiple}
+        classNamePrefix="react-select"
+        {...rest}
+      />
+      {error && <span style={{ color: "rgba(204, 0, 0, 1)" }}>{error}</span>}
+    </>
   );
 }
