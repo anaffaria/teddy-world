@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@CrossOrigin
 public class CustomerController {
 
     @Autowired
@@ -44,7 +45,8 @@ public class CustomerController {
         return ResponseEntity.ok(facade.create(customer));
     }
 
-    @GetMapping("/customer")
+
+    @GetMapping("/customers")
     public ResponseEntity getAllCustomer() {
         return ResponseEntity.ok(facade.list(new Customer()));
     }
