@@ -1,20 +1,16 @@
 package br.com.teddy.store.dto.address;
 
 import br.com.teddy.store.domain.Address;
-import br.com.teddy.store.dto.AResponseDTO;
-import lombok.AllArgsConstructor;
+import br.com.teddy.store.dto.AttrResponseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddressDTO extends AResponseDTO {
+public class AddressDTO extends AttrResponseDTO {
     private String street;
 
     private String number;

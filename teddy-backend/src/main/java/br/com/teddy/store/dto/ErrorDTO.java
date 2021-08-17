@@ -9,7 +9,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ErrorDTO extends AResponseDTO{
-    private boolean hasError;
+public class ErrorDTO extends AttrResponseDTO {
+    private boolean hasError = true;
     private String message;
+
+    public ErrorDTO(String message) {
+        this.message = message;
+    }
 }

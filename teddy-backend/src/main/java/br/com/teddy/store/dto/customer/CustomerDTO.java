@@ -1,8 +1,7 @@
 package br.com.teddy.store.dto.customer;
 
-import br.com.teddy.store.domain.Address;
 import br.com.teddy.store.domain.Customer;
-import br.com.teddy.store.dto.AResponseDTO;
+import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.dto.address.AddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CustomerDTO extends AResponseDTO {
+public class CustomerDTO extends AttrResponseDTO {
     private String fullName;
     private LocalDateTime birthDate;
     private String email;
