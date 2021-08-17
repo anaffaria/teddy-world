@@ -1,6 +1,8 @@
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
+import { BiEditAlt } from "react-icons/bi";
+import { BsTrashFill } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
@@ -160,7 +162,19 @@ function CustomerEdit() {
                     Cruzes-SP - CEP 08773-600
                   </li>
                 </ul>
-
+                <div className="row mt-3 mb-0 d-flex justify-content-end">
+                  <div className="mr-3 ml-2">
+                    <span className="btn-sm btn btn-outline-primary">
+                      <BiEditAlt fontSize={20} />
+                      Editar
+                    </span>
+                  </div>
+                  <div className="mr-3 ml-2">
+                    <span className="btn-sm btn btn-outline-danger">
+                      <BsTrashFill fontSize={20} /> Excluir
+                    </span>
+                  </div>
+                </div>
                 <hr />
                 <span>Endereços de Cobrança:</span>
                 <ul className="m-0 p-0 mt-3">
@@ -169,6 +183,19 @@ function CustomerEdit() {
                     Cruzes-SP - CEP 08773-600
                   </li>
                 </ul>
+                <div className="row mt-3 mb-0 d-flex justify-content-end">
+                  <div className="mr-3 ml-2">
+                    <span className="btn-sm btn btn-outline-primary">
+                      <BiEditAlt fontSize={20} />
+                      Editar
+                    </span>
+                  </div>
+                  <div className="mr-3 ml-2">
+                    <span className="btn-sm btn btn-outline-danger">
+                      <BsTrashFill fontSize={20} /> Excluir
+                    </span>
+                  </div>
+                </div>
               </div>
             )}
             {isOpenForm && (

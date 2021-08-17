@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap";
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
-import { BsTrashFill } from "react-icons/bs";
+import { BiBlock } from "react-icons/bi";
 import { BiHash } from "react-icons/bi";
 
 function AdminCustomers() {
@@ -26,16 +26,8 @@ function AdminCustomers() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="products">Documento:</label>
+                    <label htmlFor="products">CPF:</label>
                     <input type="text" className="form-control" />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="products">Estado:</label>
-                    <select defaultValue="" className="form-control">
-                      <option value="">Selecione uma opção</option>
-                      <option value="">São Paulo</option>
-                    </select>
                   </div>
 
                   <div className="form-group">
@@ -46,7 +38,7 @@ function AdminCustomers() {
                   <div className="form-group">
                     <label htmlFor="products">Classificação do cliente:</label>
                     <select defaultValue="" className="form-control">
-                      <option value="">Selecione a classificação</option>
+                      <option value="">Selecione</option>
                       <option value="">Bronze</option>
                       <option value="">Prata</option>
                       <option value="">Ouro</option>
@@ -63,8 +55,7 @@ function AdminCustomers() {
                   <tr>
                     <th><BiHash fontSize={20}/></th>
                     <th>Nome</th>
-                    <th>Documento</th>
-                    <th>Estado</th>
+                    <th>CPF</th>
                     <th>E-mail</th>
                     <th>Classificação do cliente</th>
                     <th></th>
@@ -73,14 +64,13 @@ function AdminCustomers() {
                 <tbody>
                   <tr>
                     <td>01</td>
-                    <td>User</td>
-                    <td>11111111111</td>
-                    <td>São Paulo</td>
-                    <td>user@gmail.com</td>
+                    <td>Ana Flávia dos Santos</td>
+                    <td>49632584789</td>
+                    <td>ana@gmail.com</td>
                     <td>Ouro</td>
                     <td>
                       <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Desativar
+                        <BiBlock fontSize={20} /> Desativar
                       </span>
                     </td>
                   </tr>
