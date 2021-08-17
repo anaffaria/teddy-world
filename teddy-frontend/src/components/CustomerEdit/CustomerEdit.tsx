@@ -1,7 +1,9 @@
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
-import { useRef, useState } from "react";
+import { BiEditAlt } from "react-icons/bi";
+import { BsTrashFill } from "react-icons/bs";
+import { useEffect, useRef, useState } from "react";
 import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
@@ -9,6 +11,21 @@ import { FormHandles } from "@unform/core";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
+import { axiosInstance } from "../../service/serviceInstance";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+
+export interface Customer {
+  id: number;
+  createdAt: string;
+  deletedAt: string;
+  fullName: string;
+  birthDate: string;
+  email: string;
+  cpf: string;
+  telephone: string;
+  gender: string;
+  addressList: [];
+}
 
 interface CustomerEditProps {
   email: string;
@@ -68,7 +85,22 @@ function CustomerEdit() {
         formRef.current?.setErrors(errorMessage);
       }
     }
+
   }
+
+  const [customers, setCustomers] = useState<Customer>();
+
+  useEffect(() => {
+    axiosInstance
+      .get("customer/5")
+      .then((response) => {
+        setCustomers(response.data as Customer);
+        console.log(customers)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
   return (
     <>
       <CustomerAccount>
@@ -83,6 +115,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="E-mail"
                     name="email"
+                    defaultValue={customers?.email}
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
@@ -92,6 +125,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="Nome"
                     name="fullName"
+                    defaultValue={customers?.fullName}
                   />
                 </div>
 
@@ -102,6 +136,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="CPF"
                     name="cpf"
+                    defaultValue={customers?.cpf}
                   />
                 </div>
 
@@ -113,7 +148,7 @@ function CustomerEdit() {
                     className="form-control select_product"
                   >
                     <option selected>Selecione</option>
-                    <option value="1">Feminino</option>
+                    <option value="female">Feminino</option>
                     <option value="2">Masculino</option>
                     <option value="3">Indefinido</option>
                   </Select>
@@ -126,6 +161,7 @@ function CustomerEdit() {
                     name="mainPhone"
                     className="form-control"
                     placeholder="Telefone primario"
+                    defaultValue={customers?.cpf}
                   />
                 </div>
                 <div className="col-6 col-sm-4  mt-2">
@@ -151,25 +187,53 @@ function CustomerEdit() {
 
           <div className="col-4 col-sm-4">
             {!isOpenForm && (
-              <div className={`${isOpenForm ? "d-none" : ""} border p-2`}>
-                <span>Endereços de Entrega:</span>
+              <>
+                <div className={`${isOpenForm ? "d-none" : ""} border p-2`}>
+                  <span>Endereços de Entrega:</span>
 
-                <ul className="m-0 p-0 mt-3">
-                  <li>
-                    Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
-                    Cruzes-SP - CEP 08773-600
-                  </li>
-                </ul>
+                  <ul className="m-0 p-0 mt-3">
+                    <li>
+                      Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
+                      Cruzes-SP - CEP 08773-600
+                    </li>
+                  </ul>
+                  <div className="row mt-3 mb-0 d-flex justify-content-end">
+                    <div className="mr-3 ml-2">
+                      <span className="btn-sm btn btn-outline-primary">
+                        <BiEditAlt fontSize={20} />
+                        Editar
+                      </span>
+                    </div>
+                    <div className="mr-3 ml-2">
+                      <span className="btn-sm btn btn-outline-danger">
+                        <BsTrashFill fontSize={20} /> Excluir
+                      </span>
+                    </div>
+                  </div>
+                  <hr/>
+                  <span>Endereços de Cobrança:</span>
+                  <ul className="m-0 p-0 mt-3">
+                    <li>
+                      Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
+                      Cruzes-SP - CEP 08773-600
+                    </li>
+                  </ul>
+                  <div className="row mt-3 mb-0 d-flex justify-content-end">
+                    <div className="mr-3 ml-2">
+                      <span className="btn-sm btn btn-outline-primary">
+                        <BiEditAlt fontSize={20} />
+                        Editar
+                      </span>
+                    </div>
+                    <div className="mr-3 ml-2">
+                      <span className="btn-sm btn btn-outline-danger">
+                        <BsTrashFill fontSize={20} /> Excluir
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-                <hr />
-                <span>Endereços de Cobrança:</span>
-                <ul className="m-0 p-0 mt-3">
-                  <li>
-                    Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
-                    Cruzes-SP - CEP 08773-600
-                  </li>
-                </ul>
-              </div>
+              </>
             )}
             {isOpenForm && (
               <aside>
