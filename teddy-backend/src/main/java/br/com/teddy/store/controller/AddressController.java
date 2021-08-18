@@ -21,7 +21,7 @@ public class AddressController {
         return ResponseEntity.ok(facade.get(address));
     }
 
-    @PutMapping("/address/{id}")
+    @PutMapping("/address")
     public ResponseEntity updateAddress(@RequestBody Address address) {
         return ResponseEntity.ok(facade.update(address));
     }

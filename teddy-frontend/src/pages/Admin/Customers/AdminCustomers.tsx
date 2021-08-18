@@ -28,7 +28,6 @@ function AdminCustomers() {
       .get("customers")
       .then((response) => {
         setCustomers(response.data as Array<Customer>);
-        console.log(customers)
       })
       .catch((err) => {
         console.error(err);
