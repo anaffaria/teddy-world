@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
 import * as CardValidator from "card-validator";
 import { Select } from "../Form/SelectInput";
+import { useState } from "react";
 
 interface CreditCard {
   cardHolder: string;
@@ -14,11 +15,13 @@ interface CreditCard {
   cardYear: string;
   cardSecurity: string;
   cardFavourite: boolean;
+  cardFlag: string;
 }
 
 export function CreditCardForm() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
+  const [cardFlag, setCardFlag] = useState<string | undefined>("")
 
   async function handleSubmit(data: CreditCard) {
     try {
@@ -54,6 +57,7 @@ export function CreditCardForm() {
             "Código de segurança é inválido",
             (value) => CardValidator.cvv(value).isValid
           ),
+        cardFlag: Yup.string().required("Bandeira é obrigatória")
       });
 
       await schema.validate(data, {
@@ -76,6 +80,28 @@ export function CreditCardForm() {
     }
   }
 
+  function cardFlags(number: string) {
+    var re: { [key: string]: RegExp } = {
+      electron: /^(4026|417500|4405|4508|4844|4913|4917)\d+$/,
+      maestro: /^(5018|5020|5038|5612|5893|6304|6759|6761|6762|6763|0604|6390)\d+$/,
+      dankort: /^(5019)\d+$/,
+      interpayment: /^(636)\d+$/,
+      unionpay: /^(62|88)\d+$/,
+      visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+      mastercard: /^5[1-5][0-9]{14}$/,
+      amex: /^3[47][0-9]{13}$/,
+      diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
+      discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+      jcb: /^(?:2131|1800|35\d{3})\d{11}$/
+    }
+
+    for (var key in re) {
+      if (re[key].test(number)) {
+        return key.toLocaleUpperCase()
+      }
+    }
+  }
+
   return (
     <Form ref={formRef} onSubmit={handleSubmit}>
       <div className="form-group">
@@ -85,6 +111,13 @@ export function CreditCardForm() {
           name="creditCardNumber"
           className="form-control"
           placeholder="1234-1234-1234-1234"
+          onChange={(val) => {
+            if (val.currentTarget.value?.length > 14) {
+              let number = val.currentTarget.value.replaceAll("-", '').replaceAll(/^\s+|\s+$/g, "");
+              let flag = cardFlags(number);
+              setCardFlag(flag);
+            }
+          }}
         />
       </div>
 
@@ -130,6 +163,16 @@ export function CreditCardForm() {
           className="form-control"
           name="cardSecurity"
           placeholder="0000"
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="cardSecurity">Bandeira</label>
+        <InputText
+          className="form-control"
+          name="cardFlag"
+          placeholder="MasterCard"
+          defaultValue={cardFlag}
         />
       </div>
 
