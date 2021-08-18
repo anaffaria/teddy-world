@@ -12,7 +12,6 @@ import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
 import { axiosInstance } from "../../service/serviceInstance";
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 export interface Customer {
   id: number;
@@ -95,7 +94,6 @@ function CustomerEdit() {
       .get("customer/5")
       .then((response) => {
         setCustomers(response.data as Customer);
-        console.log(customers)
       })
       .catch((err) => {
         console.error(err);
