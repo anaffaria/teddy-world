@@ -3,7 +3,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
@@ -11,7 +11,6 @@ import { FormHandles } from "@unform/core";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
-import { useEffect } from "react";
 import { axiosInstance } from "../../service/serviceInstance";
 
 export interface Customer {
@@ -33,10 +32,6 @@ function CustomerEdit(customer: Customer) {
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
-
-  useEffect(() => {
-    formRef.current?.setData(customer);
-  }, [customer]);
 
   async function handleSubmit(data: Customer) {
     try {
@@ -93,8 +88,21 @@ function CustomerEdit(customer: Customer) {
         formRef.current?.setErrors(errorMessage);
       }
     }
+
   }
 
+  const [customers, setCustomers] = useState<Customer>();
+
+  useEffect(() => {
+    axiosInstance
+      .get("customer/5")
+      .then((response) => {
+        setCustomers(response.data as Customer);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
   return (
     <>
       <CustomerAccount>
@@ -223,6 +231,7 @@ function CustomerEdit(customer: Customer) {
                     </div>
                   </div>
                 </div>
+
               </>
             )}
             {isOpenForm && (

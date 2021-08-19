@@ -93,7 +93,7 @@ function AdminTeddy() {
                     </td>
                     <td>
                       <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Editar
+                        <BsTrashFill fontSize={20} /> Excluir
                       </span>
                     </td>
                   </tr>

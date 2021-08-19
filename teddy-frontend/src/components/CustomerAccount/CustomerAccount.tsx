@@ -4,12 +4,43 @@ import Footer from "../Footer/Footer";
 import "./CustomerAccount.css";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { axiosInstance } from "../../service/serviceInstance";
 
 export interface CustomerAccountProps {
   children?: React.ReactNode;
 }
 
+export interface Customer{
+  id: number;
+  createdAt: string;
+  deletedAt: string;
+  fullName: string;
+  birthDate: string;
+  email: string;
+  cpf: string;
+  telephone: string;
+  gender: string;
+  addressList: [];
+}
+
 function CustomerAccount({ children }: CustomerAccountProps) {
+
+  const [customer, setCustomer] = useState<Customer>();
+  
+  useEffect(() => {
+    axiosInstance
+      .get("customer/5")
+      .then((response) => {
+        setCustomer(response.data as Customer);
+        console.log(customer)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <>
       <UserOn/>
@@ -17,21 +48,13 @@ function CustomerAccount({ children }: CustomerAccountProps) {
       <main>
         <div className="container ">
           <div className="row p-1 mt-2 ">
-            <div className="col-lg-3 col-sm-3">
-              <FaUserCircle size={30} />
-              <label className="font-weight-normal ml-2">Olá, Name!</label>
-            </div>
-            <div className="col-lg-6">
-              <label className="font-weight-normal ml-2">
-                Nome do link selecionado
-              </label>
-            </div>
-            <div className="col-lg-3">
-              <label className="font-weight-normal ml-2"></label>
+          <FaUserCircle size={30} /> 
+            <div className="">
+              <label className="font-weight-normal ml-2">Olá, {customer?.fullName}</label>
             </div>
           </div>
-          <div className="row ">
-            <div className="col-3 col-sm-3 border">
+          <div className="row">
+            <div className="col-sm-3 border">
               <div className="list-group p-2 ">
                 <h6>Seu Cadastro</h6>
                 <div>
@@ -88,7 +111,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
               </div>
             </div>
 
-            <div className="col-9 col-sm-9">{children}</div>
+            <div className="col-sm-9">{children}</div>
           </div>
         </div>
       </main>

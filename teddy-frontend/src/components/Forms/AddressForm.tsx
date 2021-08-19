@@ -20,6 +20,7 @@ interface CustomerAddress {
   number: string;
   state: string;
   city: string;
+  neighborhood: string;
   country: string;
   addressType: AddressType;
 
@@ -42,7 +43,9 @@ export function AddressForm({ className }: AddressFormProps) {
           formRef.current?.setData({
             street: data.logradouro,
             city: data.localidade,
-            state: UfToName(data.uf)
+            neighborhood: data.bairro,
+            state: UfToName(data.uf),
+            country: "Brasil"
           });
         })
         .catch((err) => {
@@ -57,6 +60,7 @@ export function AddressForm({ className }: AddressFormProps) {
         cep: Yup.string().required("CEP é obrigatório"),
         street: Yup.string().required("Rua é obrigatório"),
         number: Yup.string().required("Número é obrigatório"),
+        neighborhood: Yup.string().required("Bairro é obrigatório"),
         state: Yup.string().required("Estado é obrigatório"),
         city: Yup.string().required("Cidade é obrigatório"),
         country: Yup.string().required("País é obrigatório"),
@@ -107,6 +111,16 @@ export function AddressForm({ className }: AddressFormProps) {
       </div>
 
       <div className="form-group">
+        <label htmlFor="neighborhood">Bairro</label>
+        <InputText name="neighborhood" className="form-control" />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="city">Cidade</label>
+        <InputText name="city" className="form-control" />
+      </div>
+
+      <div className="form-group">
         <label htmlFor="complement">Complemento</label>
         <InputText name="complement" className="form-control" />
       </div>
@@ -114,11 +128,6 @@ export function AddressForm({ className }: AddressFormProps) {
       <div className="form-group">
         <label htmlFor="state">Estado</label>
         <InputText name="state" className="form-control" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="city">Cidade</label>
-        <InputText name="city" className="form-control" />
       </div>
 
       <div className="form-group">
