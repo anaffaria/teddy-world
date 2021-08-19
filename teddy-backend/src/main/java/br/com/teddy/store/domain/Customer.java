@@ -1,13 +1,17 @@
 package br.com.teddy.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,11 +30,13 @@ public class Customer extends DomainEntity{
 
     private String cpf;
 
-    private String gender;
+    @Enumerated(EnumType.ORDINAL)
+    private Gender gender;
 
-    private LocalDateTime birthDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate birthDate;
 
-    private String telephone;
+    private String telNumber;
 
     private String password;
     @Transient

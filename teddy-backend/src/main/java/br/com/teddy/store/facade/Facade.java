@@ -86,7 +86,7 @@ public class Facade extends AbstractFacade implements IFacade{
             return FactoryResponseDTO.createDTO(domainEntity, "UPDATE");
         }
 
-        dao.update(domainEntity);
+        domainEntity = dao.update(domainEntity);
 
         return FactoryResponseDTO.createDTO(domainEntity, "UPDATE");
     }

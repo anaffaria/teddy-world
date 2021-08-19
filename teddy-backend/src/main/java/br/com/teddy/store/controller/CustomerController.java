@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@CrossOrigin
+@CrossOrigin(origins = "*")
+@RestController
 public class CustomerController {
 
     @Autowired
@@ -22,6 +22,7 @@ public class CustomerController {
         return ResponseEntity.ok(facade.get(customer));
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/customer")
     public ResponseEntity updateCustomer(@RequestBody Customer customer) {
         return ResponseEntity.ok(facade.update(customer));
@@ -51,3 +52,4 @@ public class CustomerController {
         return ResponseEntity.ok(facade.list(new Customer()));
     }
 }
+

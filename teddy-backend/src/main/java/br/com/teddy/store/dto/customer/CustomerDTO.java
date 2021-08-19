@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
 @Setter
 public class CustomerDTO extends AttrResponseDTO {
     private String fullName;
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
     private String email;
     private String cpf;
-    private String telephone;
-    private String gender;
+    private String telNumber;
+    private Integer gender;
     private List<AddressDTO> addressList = new ArrayList<>();
 
     public CustomerDTO(Customer customer, String method) {
@@ -31,9 +31,9 @@ public class CustomerDTO extends AttrResponseDTO {
         this.deletedAt = customer.getDeletedAt();
         this.fullName = customer.getFullName();
         this.email = customer.getEmail();
-        this.gender = customer.getGender();
+        this.gender = customer.getGender().ordinal();
         this.cpf = customer.getCpf();
-        this.telephone = customer.getTelephone();
+        this.telNumber = customer.getTelNumber();
         this.birthDate = customer.getBirthDate();
 
         if(method.equals("GET")){

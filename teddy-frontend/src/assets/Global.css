@@ -1,3 +1,12 @@
+.swal2-title {
+  font-family: "Nunito";
+  font-size: 25px;
+}
+
+.swal2-loader {
+  border-color: #fa98af transparent #fa98af transparent;
+}
+
 .filter-admin {
   padding: 25px;
 

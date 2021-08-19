@@ -3,7 +3,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
@@ -11,38 +11,34 @@ import { FormHandles } from "@unform/core";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
+import { useEffect } from "react";
 import { axiosInstance } from "../../service/serviceInstance";
 
 export interface Customer {
-  id: number;
-  createdAt: string;
-  deletedAt: string;
-  fullName: string;
-  birthDate: string;
-  email: string;
-  cpf: string;
-  telephone: string;
-  gender: string;
-  addressList: [];
+  id?: number;
+  createdAt?: string;
+  deletedAt?: string;
+  fullName?: string;
+  birthDate?: string;
+  email?: string;
+  cpf?: string;
+  telNumber?: string;
+  gender?: number;
+  addressList?: [];
 }
 
-interface CustomerEditProps {
-  email: string;
-  fullName: string;
-  cpf: string;
-  gender: string;
-  mainPhone: string;
-  birthDate: string;
-}
-
-function CustomerEdit() {
+function CustomerEdit(customer: Customer) {
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
 
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
 
-  async function handleSubmit(data: CustomerEditProps) {
+  useEffect(() => {
+    formRef.current?.setData(customer);
+  }, [customer]);
+
+  async function handleSubmit(data: Customer) {
     try {
       const schema = Yup.object().shape({
         email: Yup.string()
@@ -59,10 +55,10 @@ function CustomerEdit() {
           .test(
             "gender",
             "Selecione uma opção",
-            (value = "") => Number(value) > 0
+            (value = "") => Number(value) >= 0
           )
           .required("Sexo é obrigatório"),
-        mainPhone: Yup.string().required("Telefone principal obrigatório"),
+        telNumber: Yup.string().required("Telefone principal obrigatório"),
         birthDate: Yup.string().required("Data de nascimento é obrigatória"),
       });
 
@@ -72,7 +68,20 @@ function CustomerEdit() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/pedidos");
+      data.id = customer.id
+
+      axiosInstance
+        .put("/customer", data, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+          },
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // history.push("/cliente/pedidos");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -84,21 +93,8 @@ function CustomerEdit() {
         formRef.current?.setErrors(errorMessage);
       }
     }
-
   }
 
-  const [customers, setCustomers] = useState<Customer>();
-
-  useEffect(() => {
-    axiosInstance
-      .get("customer/5")
-      .then((response) => {
-        setCustomers(response.data as Customer);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
   return (
     <>
       <CustomerAccount>
@@ -113,7 +109,6 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="E-mail"
                     name="email"
-                    defaultValue={customers?.email}
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
@@ -123,7 +118,6 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="Nome"
                     name="fullName"
-                    defaultValue={customers?.fullName}
                   />
                 </div>
 
@@ -134,21 +128,21 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="CPF"
                     name="cpf"
-                    defaultValue={customers?.cpf}
+                    disabled
                   />
                 </div>
 
-                <div className="col-6 col-sm-4  mt-2">
+                <div className="col-6 col-sm-4 mt-2">
                   <label>Sexo</label>
                   <Select
                     name="gender"
                     id="gender"
                     className="form-control select_product"
                   >
-                    <option selected>Selecione</option>
-                    <option value="female">Feminino</option>
-                    <option value="2">Masculino</option>
-                    <option value="3">Indefinido</option>
+                    <option value="">Selecione</option>
+                    <option value="0">Feminino</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Indefinido</option>
                   </Select>
                 </div>
 
@@ -156,10 +150,9 @@ function CustomerEdit() {
                   <label>Telefone principal</label>
                   <InputText
                     type="text"
-                    name="mainPhone"
+                    name="telNumber"
                     className="form-control"
                     placeholder="Telefone primario"
-                    defaultValue={customers?.cpf}
                   />
                 </div>
                 <div className="col-6 col-sm-4  mt-2">
@@ -208,7 +201,7 @@ function CustomerEdit() {
                       </span>
                     </div>
                   </div>
-                  <hr/>
+                  <hr />
                   <span>Endereços de Cobrança:</span>
                   <ul className="m-0 p-0 mt-3">
                     <li>
@@ -230,7 +223,6 @@ function CustomerEdit() {
                     </div>
                   </div>
                 </div>
-
               </>
             )}
             {isOpenForm && (
