@@ -88,14 +88,14 @@ function CustomerEdit() {
 
   }
 
-  const [customers, setCustomers] = useState<Customer>();
+  const [customer, setCustomers] = useState<Customer>();
 
   useEffect(() => {
     axiosInstance
       .get("customer/5")
       .then((response) => {
         setCustomers(response.data as Customer);
-        console.log(customers)
+        console.log(customer)
       })
       .catch((err) => {
         console.error(err);
@@ -115,7 +115,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="E-mail"
                     name="email"
-                    defaultValue={customers?.email}
+                    defaultValue={customer?.email}
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
@@ -125,7 +125,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="Nome"
                     name="fullName"
-                    defaultValue={customers?.fullName}
+                    defaultValue={customer?.fullName}
                   />
                 </div>
 
@@ -136,7 +136,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="CPF"
                     name="cpf"
-                    defaultValue={customers?.cpf}
+                    defaultValue={customer?.cpf}
                   />
                 </div>
 
@@ -161,7 +161,7 @@ function CustomerEdit() {
                     name="mainPhone"
                     className="form-control"
                     placeholder="Telefone primario"
-                    defaultValue={customers?.cpf}
+                    defaultValue={customer?.cpf}
                   />
                 </div>
                 <div className="col-6 col-sm-4  mt-2">
