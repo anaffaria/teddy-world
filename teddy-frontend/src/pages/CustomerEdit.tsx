@@ -25,7 +25,7 @@ function CustomerEdit() {
     axiosInstance
       .get(`customer/${id}`)
       .then((response) => {
-        setCustomer(response.data as Customer);
+        setCustomer(response.data);
         setTimeout(() => {
           Swal.close();
         }, 2000);

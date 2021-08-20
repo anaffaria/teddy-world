@@ -13,8 +13,8 @@ import { useEffect } from "react";
 import { Customer } from "../CustomerEdit/CustomerEdit";
 
 enum AddressType {
-  billing = 0,
-  delivery = 1,
+  BILLING = 0,
+  DELIVERY = 1,
 }
 
 export interface Address {
@@ -43,7 +43,7 @@ export function AddressForm({ className, customer }: AddressFormProps) {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("customer", customer)
+    console.log("customer", customer);
     setCustomerAddress(customer);
   }, [customer]);
 
@@ -87,8 +87,8 @@ export function AddressForm({ className, customer }: AddressFormProps) {
       formRef.current?.setErrors({});
 
       data.customer = {
-        id: Number(customerAddress?.id)
-      }
+        id: Number(customerAddress?.id),
+      };
 
       axiosInstance
         .post("/address", data)
@@ -176,8 +176,8 @@ export function AddressForm({ className, customer }: AddressFormProps) {
         <label htmlFor="addressType">Tipo do Endereço</label>
         <Select name="addressType" className="form-control" defaultValue="">
           <option value="">Selecione</option>
-          <option value={AddressType.billing}>Cobrança</option>
-          <option value={AddressType.delivery}>Entrega</option>
+          <option value={AddressType.BILLING}>Cobrança</option>
+          <option value={AddressType.DELIVERY}>Entrega</option>
         </Select>
       </div>
 

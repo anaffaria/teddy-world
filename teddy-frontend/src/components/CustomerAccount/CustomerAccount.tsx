@@ -33,7 +33,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
     axiosInstance
       .get(`customer/${id}`)
       .then((response) => {
-        setCustomer(response.data as Customer);
+        setCustomer(response.data);
       })
       .catch((err) => {
         console.error(err);
