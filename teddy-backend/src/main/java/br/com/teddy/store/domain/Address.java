@@ -2,6 +2,8 @@ package br.com.teddy.store.domain;
 
 import lombok.*;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,7 +40,8 @@ public class Address extends DomainEntity{
     @NotNull(message = "País não pode estar nulo")
     private String country;
 
-    private String addressType;
+    @Enumerated(EnumType.ORDINAL)
+    private AddressType addressType;
 
     @ManyToOne
     private Customer customer;

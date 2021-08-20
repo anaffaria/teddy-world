@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { Select } from "../Form/SelectInput";
@@ -7,14 +7,18 @@ import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import axios from "axios";
 import { UfToName } from "../Utils/ParseUfToName";
+import { axiosInstance } from "../../service/serviceInstance";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { Customer } from "../CustomerEdit/CustomerEdit";
 
 enum AddressType {
-  delivery = "delivery",
-  billing = "billing",
+  billing = 0,
+  delivery = 1,
 }
 
-interface CustomerAddress {
-  cep: string;
+export interface Address {
+  postalCode: string;
   street: string;
   complement: string;
   number: string;
@@ -23,16 +27,25 @@ interface CustomerAddress {
   neighborhood: string;
   country: string;
   addressType: AddressType;
-
+  customer: {
+    id: number;
+  };
 }
 
 interface AddressFormProps {
   className?: string;
+  customer?: Customer;
 }
 
-export function AddressForm({ className }: AddressFormProps) {
+export function AddressForm({ className, customer }: AddressFormProps) {
   const formRef = useRef<FormHandles>(null);
+  const [customerAddress, setCustomerAddress] = useState<Customer>();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log("customer", customer)
+    setCustomerAddress(customer);
+  }, [customer]);
 
   function fillAddress(value: string) {
     if (value.trim().length > 7) {
@@ -45,7 +58,7 @@ export function AddressForm({ className }: AddressFormProps) {
             city: data.localidade,
             neighborhood: data.bairro,
             state: UfToName(data.uf),
-            country: "Brasil"
+            country: "Brasil",
           });
         })
         .catch((err) => {
@@ -54,10 +67,10 @@ export function AddressForm({ className }: AddressFormProps) {
     }
   }
 
-  async function handleSubmit(data: CustomerAddress) {
+  async function handleSubmit(data: Address) {
     try {
       const schema = Yup.object().shape({
-        cep: Yup.string().required("CEP é obrigatório"),
+        postalCode: Yup.string().required("CEP é obrigatório"),
         street: Yup.string().required("Rua é obrigatório"),
         number: Yup.string().required("Número é obrigatório"),
         neighborhood: Yup.string().required("Bairro é obrigatório"),
@@ -73,8 +86,32 @@ export function AddressForm({ className }: AddressFormProps) {
 
       formRef.current?.setErrors({});
 
+      data.customer = {
+        id: Number(customerAddress?.id)
+      }
+
+      axiosInstance
+        .post("/address", data)
+        .then((resp) => {
+          if (resp.data?.hasError) throw new Error(resp.data?.message);
+          Swal.fire({
+            icon: "success",
+            title: "Parabéns",
+            text: "Seu endereço foi criado com sucesso!",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+          });
+        });
+
       history.push("/cliente/pedidos");
     } catch (error) {
+      console.log(error);
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
 
@@ -90,9 +127,9 @@ export function AddressForm({ className }: AddressFormProps) {
   return (
     <Form className={className} onSubmit={handleSubmit} ref={formRef}>
       <div className="form-group">
-        <label htmlFor="cep">CEP</label>
+        <label htmlFor="postalCode">CEP</label>
         <InputText
-          name="cep"
+          name="postalCode"
           className="form-control"
           onChange={(val) => {
             fillAddress(val.currentTarget.value);

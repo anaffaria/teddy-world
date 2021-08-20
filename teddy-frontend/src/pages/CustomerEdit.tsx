@@ -38,7 +38,7 @@ function CustomerEdit() {
           text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
         });
       });
-  }, []);
+  }, [id]);
 
   return (
     <>

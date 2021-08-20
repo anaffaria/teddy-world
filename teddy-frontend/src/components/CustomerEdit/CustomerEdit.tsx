@@ -4,7 +4,7 @@ import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
-import { AddressForm } from "../Forms/AddressForm";
+import { Address, AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
@@ -24,16 +24,13 @@ export interface Customer {
   cpf?: string;
   telNumber?: string;
   gender?: number;
-  addressList?: [
-  ];
+  addressList?: Array<Address>;
 }
 
 function CustomerEdit(customer: Customer) {
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
 
   const formRef = useRef<FormHandles>(null);
-
-  const history = useHistory();
 
   async function handleSubmit(data: Customer) {
     try {
@@ -65,8 +62,7 @@ function CustomerEdit(customer: Customer) {
 
       formRef.current?.setErrors({});
 
-      data.id = customer.id
-
+      data.id = customer.id;
 
       axiosInstance
         .put("/customer", data, {
@@ -84,11 +80,10 @@ function CustomerEdit(customer: Customer) {
           });
         });
 
-        Swal.fire({
-          icon: "success",
-          title: "Dados Atualizados!",
-        });
-      // history.push("/cliente/pedidos");
+      Swal.fire({
+        icon: "success",
+        title: "Dados Atualizados!",
+      });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -100,12 +95,37 @@ function CustomerEdit(customer: Customer) {
         formRef.current?.setErrors(errorMessage);
       }
     }
-
   }
 
   useEffect(() => {
-    formRef?.current?.setData(customer)
-  }, [customer])
+    formRef?.current?.setData(customer);
+  }, [customer]);
+
+  function mapAddresses(addressType: number) {
+    return customer.addressList?.map((address, index) => {
+      if (address.addressType !== addressType) return;
+      return (
+        <>
+          <li>
+            {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city}-${address.state}, CEP: ${address.postalCode}`}
+          </li>
+          <div className="row mt-3 mb-4 d-flex justify-content-end">
+            <div className="mr-3 ml-2">
+              <span className="btn-sm btn btn-outline-primary">
+                <BiEditAlt fontSize={20} />
+                Editar
+              </span>
+            </div>
+            <div className="mr-3 ml-2">
+              <span className="btn-sm btn btn-outline-danger">
+                <BsTrashFill fontSize={20} /> Excluir
+              </span>
+            </div>
+          </div>
+        </>
+      );
+    });
+  }
 
   return (
     <>
@@ -193,57 +213,19 @@ function CustomerEdit(customer: Customer) {
               <>
                 <div className={`${isOpenForm ? "d-none" : ""} border p-2`}>
                   <span>Endereços de Entrega:</span>
+                  <ul className="m-0 p-0 mt-3">{mapAddresses(1)}</ul>
 
-                  <ul className="m-0 p-0 mt-3">
-                    <li>
-                      Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
-                      Cruzes-SP - CEP 08773-600
-                    </li>
-                  </ul>
-                  <div className="row mt-3 mb-0 d-flex justify-content-end">
-                    <div className="mr-3 ml-2">
-                      <span className="btn-sm btn btn-outline-primary">
-                        <BiEditAlt fontSize={20} />
-                        Editar
-                      </span>
-                    </div>
-                    <div className="mr-3 ml-2">
-                      <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Excluir
-                      </span>
-                    </div>
-                  </div>
                   <hr />
+
                   <span>Endereços de Cobrança:</span>
-                  <ul className="m-0 p-0 mt-3">
-                    <li>
-                      Rua Carlos Barattino, n. 908 - Vila Nova Mogilar, Mogi das
-                      Cruzes-SP - CEP 08773-600
-                    </li>
-                  </ul>
-
-                  <div className="row mt-3 mb-0 d-flex justify-content-end">
-                    {!isOpenForm && (
-                      <div className="mr-3 ml-2">
-                        <span className="btn-sm btn btn-outline-primary">
-                          <BiEditAlt fontSize={20} />
-                          Editar
-                        </span>
-                      </div>
-                    )}
-                    <div className="mr-3 ml-2">
-                      <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Excluir
-                      </span>
-                    </div>
-                  </div>
+                  <ul className="m-0 p-0 mt-3">{mapAddresses(0)}</ul>
                 </div>
-
               </>
             )}
             {isOpenForm && (
               <aside>
-                <AddressForm className="mt-2" />
+                {console.log(customer)}
+                <AddressForm className="mt-2" customer={customer} />
                 <button
                   className="btn btn-secondary btn-block mt-4"
                   onClick={() => setIsOpenForm(false)}
