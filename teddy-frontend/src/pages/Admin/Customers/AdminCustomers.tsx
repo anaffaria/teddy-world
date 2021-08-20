@@ -27,7 +27,7 @@ function AdminCustomers() {
     axiosInstance
       .get("customers")
       .then((response) => {
-        setCustomers(response.data as Array<Customer>);
+        setCustomers(response.data);
       })
       .catch((err) => {
         console.error(err);
