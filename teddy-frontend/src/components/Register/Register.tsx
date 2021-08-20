@@ -22,9 +22,7 @@ export interface Customer {
   passwordConfirm?: string;
 }
 
-
-function Register(customer: Customer) {
-
+function Register() {
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
@@ -50,10 +48,10 @@ function Register(customer: Customer) {
         birthDate: Yup.string().required("Data de nascimento é obrigatória"),
         password: Yup.string()
           .matches(
-            /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
-            "Necessita de caracter especial."
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%])/,
+            "Necessita de caracter especial e uma letra maiúscula."
           )
-          .min(6, "Senha muito curta, mínimo 6 caractéres")
+          .min(8, "Senha muito curta, mínimo 8 caractéres")
           .required("Senha é obrigatório."),
         passwordConfirm: Yup.string()
           .required("Confirmação é obrigatória.")
@@ -66,14 +64,27 @@ function Register(customer: Customer) {
 
       formRef.current?.setErrors({});
 
-      data.id = customer.id
-
       axiosInstance
         .post("/customer", data, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "*",
           },
+        })
+        .then((resp) => {
+          console.log(resp);
+          if (resp.data?.hasError) {
+            throw new Error(resp.data?.message);
+          }
+          Swal.fire({
+            icon: "success",
+            title: "Parabéns",
+            text: "Sua conta foi criada com sucesso!",
+            didClose: () => {
+              history.push(`/cliente/${data.id}/pedidos`);
+            },
+          });
+          data.id = resp.data?.id;
         })
         .catch((err) => {
           console.log(err);
@@ -83,8 +94,6 @@ function Register(customer: Customer) {
             text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
           });
         });
-
-      // history.push("/cliente/pedidos");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -98,32 +107,11 @@ function Register(customer: Customer) {
     }
   }
 
-  // TODO: standby function to fill iniital data of Form
-  // add this code on Form properties -> initialData={initialData}
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  useEffect(() => {
-    formRef?.current?.setData(customer)
-  }, [customer])
-
-  const initialData: Customer = {
-    id: customer.id,
-    createdAt: customer.createdAt,
-    deletedAt: customer.deletedAt,
-    fullName: customer.fullName,
-    email: customer.email,
-    cpf: customer.cpf,
-    gender: customer.gender,
-    birthDate: customer.telNumber,
-    telNumber: customer.telNumber,
-    password: customer.password,
-    passwordConfirm: customer.passwordConfirm,
-  };
-
   return (
     <>
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
-          <Form ref={formRef} onSubmit={handleSubmit} initialData={initialData} className="layout-box">
+          <Form ref={formRef} onSubmit={handleSubmit} className="layout-box">
             <div className="form-row">
               <div className="col-12 col-sm-12 mt-2">
                 <label>Nome</label>
@@ -132,7 +120,6 @@ function Register(customer: Customer) {
                   className="form-control"
                   placeholder="Nome completo "
                   name="fullName"
-                  defaultValue={customer?.fullName}
                 />
               </div>
               <div className="col-12 col-sm-12  mt-2">
@@ -142,7 +129,6 @@ function Register(customer: Customer) {
                   className="form-control"
                   placeholder="email@"
                   name="email"
-                  defaultValue={customer?.email}
                 />
               </div>
 
@@ -153,7 +139,6 @@ function Register(customer: Customer) {
                   className="form-control"
                   placeholder="CPF"
                   name="cpf"
-                  defaultValue={customer?.cpf}
                 />
               </div>
 
@@ -163,9 +148,8 @@ function Register(customer: Customer) {
                   name="gender"
                   id="gender"
                   className="form-control select_product"
-                  defaultValue={customer?.gender}
                 >
-                  <option selected>Selecione</option>
+                  <option>Selecione</option>
                   <option value="1">Feminino</option>
                   <option value="2">Masculino</option>
                   <option value="3">Indefinido</option>
@@ -179,7 +163,6 @@ function Register(customer: Customer) {
                   name="telNumber"
                   className="form-control"
                   placeholder="Telefone Principal"
-                  defaultValue={customer?.telNumber}
                 />
               </div>
 
@@ -189,7 +172,6 @@ function Register(customer: Customer) {
                   type="date"
                   className="form-control"
                   name="birthDate"
-                  defaultValue={customer?.birthDate}
                 />
               </div>
 
@@ -200,7 +182,6 @@ function Register(customer: Customer) {
                   className="form-control"
                   placeholder="senha"
                   name="password"
-                  defaultValue={customer?.password}
                 />
               </div>
 
@@ -211,7 +192,6 @@ function Register(customer: Customer) {
                   className="form-control"
                   placeholder="confirmar senha"
                   name="passwordConfirm"
-                  defaultValue={customer?.passwordConfirm}
                 />
               </div>
 

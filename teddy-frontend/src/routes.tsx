@@ -35,9 +35,9 @@ function Routes() {
         <Route path="/atendimento/novo" component={ContactUs} />
         <Route path="/produto" component={Product} />
         <Route path="/produtos" component={ProductList} />
-        <Route path="/cliente/alterar_dados" component={CustomerEdit} />
-        <Route path="/cliente/alterar_senha" component={CustomerPass} />
-        <Route path="/cliente/pedidos" component={CustomerOrders} />
+        <Route path="/cliente/:id/alterar_dados" component={CustomerEdit} />
+        <Route path="/cliente/:id/alterar_senha" component={CustomerPass} />
+        <Route path="/cliente/:id/pedidos" component={CustomerOrders} />
         <Route path="/cliente/:id/checkout" component={Checkout} />
         <Route path="/cliente/:id/cartao" component={Cards} />
 

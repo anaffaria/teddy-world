@@ -4,10 +4,11 @@ import CustomerEditComponent, {
 } from "../components/CustomerEdit/CustomerEdit";
 import Swal from "sweetalert2";
 import { axiosInstance } from "../service/serviceInstance";
+import { useParams } from "react-router-dom";
 
 function CustomerEdit() {
-  
   const [customer, setCustomer] = useState<Customer>();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     Swal.fire({
@@ -22,7 +23,7 @@ function CustomerEdit() {
     });
 
     axiosInstance
-      .get("customer/5")
+      .get(`customer/${id}`)
       .then((response) => {
         setCustomer(response.data as Customer);
         setTimeout(() => {
@@ -41,7 +42,7 @@ function CustomerEdit() {
 
   return (
     <>
-      <CustomerEditComponent {...customer}/>
+      <CustomerEditComponent {...customer} />
     </>
   );
 }

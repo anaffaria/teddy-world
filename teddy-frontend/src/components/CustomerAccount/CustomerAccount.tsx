@@ -3,7 +3,7 @@ import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
 import "./CustomerAccount.css";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { axiosInstance } from "../../service/serviceInstance";
@@ -12,7 +12,7 @@ export interface CustomerAccountProps {
   children?: React.ReactNode;
 }
 
-export interface Customer{
+export interface Customer {
   id: number;
   createdAt: string;
   deletedAt: string;
@@ -26,31 +26,32 @@ export interface Customer{
 }
 
 function CustomerAccount({ children }: CustomerAccountProps) {
-
   const [customer, setCustomer] = useState<Customer>();
-  
+  const { id } = useParams<{ id: string }>();
+
   useEffect(() => {
     axiosInstance
-      .get("customer/5")
+      .get(`customer/${id}`)
       .then((response) => {
         setCustomer(response.data as Customer);
-        console.log(customer)
       })
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [id]);
 
   return (
     <>
-      <UserOn/>
-      <QuickLinks/>
+      <UserOn />
+      <QuickLinks />
       <main>
         <div className="container ">
           <div className="row p-1 mt-2 ">
-          <FaUserCircle size={30} /> 
+            <FaUserCircle size={30} />
             <div className="">
-              <label className="font-weight-normal ml-2">Olá, {customer?.fullName}</label>
+              <label className="font-weight-normal ml-2">
+                Olá, {customer?.fullName}
+              </label>
             </div>
           </div>
           <div className="row">
@@ -59,20 +60,19 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                 <h6>Seu Cadastro</h6>
                 <div>
                   <Link
-                    to="/cliente/alterar_dados"
+                    to={`/cliente/${id}/alterar_dados`}
                     className="list-group-item costumer_account_link border-0"
                   >
                     Alterar dados cadastrais
                   </Link>
                   <Link
-                  
-                    to="/cliente/alterar_senha"
+                    to={`/cliente/${id}/alterar_senha`}
                     className="list-group-item costumer_account_link border-0"
                   >
                     Alterar senha
                   </Link>
                   <Link
-                    to="/cliente/1/cartao"
+                    to={`/cliente/${id}/cartao`}
                     className="list-group-item costumer_account_link border-0"
                   >
                     Cartões
@@ -89,7 +89,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                   <h6>Seus Pedidos</h6>
                   <div>
                     <Link
-                      to="/cliente/pedidos"
+                      to={`/cliente/${id}/pedidos`}
                       className="list-group-item costumer_account_link border-0"
                     >
                       Acompanhar pedidos
@@ -115,7 +115,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
           </div>
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }
