@@ -6,7 +6,10 @@
 .swal2-loader {
   border-color: #fa98af transparent #fa98af transparent;
 }
-
+.swal2-styled.swal2-confirm{
+  background-color: #fa98af;
+  border: none;
+}
 .filter-admin {
   padding: 25px;
 

@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
 import { axiosInstance } from "../../service/serviceInstance";
+import Swal from "sweetalert2";
 
 export interface Customer {
   id?: number;
@@ -23,7 +24,8 @@ export interface Customer {
   cpf?: string;
   telNumber?: string;
   gender?: number;
-  addressList?: [];
+  addressList?: [
+  ];
 }
 
 function CustomerEdit(customer: Customer) {
@@ -65,6 +67,7 @@ function CustomerEdit(customer: Customer) {
 
       data.id = customer.id
 
+
       axiosInstance
         .put("/customer", data, {
           headers: {
@@ -74,8 +77,17 @@ function CustomerEdit(customer: Customer) {
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+          });
         });
 
+        Swal.fire({
+          icon: "success",
+          title: "Dados Atualizados!",
+        });
       // history.push("/cliente/pedidos");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
@@ -91,18 +103,10 @@ function CustomerEdit(customer: Customer) {
 
   }
 
-  const [customers, setCustomers] = useState<Customer>();
-
   useEffect(() => {
-    axiosInstance
-      .get("customer/5")
-      .then((response) => {
-        setCustomers(response.data as Customer);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    formRef?.current?.setData(customer)
+  }, [customer])
+
   return (
     <>
       <CustomerAccount>
@@ -217,13 +221,16 @@ function CustomerEdit(customer: Customer) {
                       Cruzes-SP - CEP 08773-600
                     </li>
                   </ul>
+
                   <div className="row mt-3 mb-0 d-flex justify-content-end">
-                    <div className="mr-3 ml-2">
-                      <span className="btn-sm btn btn-outline-primary">
-                        <BiEditAlt fontSize={20} />
-                        Editar
-                      </span>
-                    </div>
+                    {!isOpenForm && (
+                      <div className="mr-3 ml-2">
+                        <span className="btn-sm btn btn-outline-primary">
+                          <BiEditAlt fontSize={20} />
+                          Editar
+                        </span>
+                      </div>
+                    )}
                     <div className="mr-3 ml-2">
                       <span className="btn-sm btn btn-outline-danger">
                         <BsTrashFill fontSize={20} /> Excluir

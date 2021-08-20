@@ -1,28 +1,35 @@
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
+import { axiosInstance } from "../../service/serviceInstance";
+import Swal from "sweetalert2";
 
-interface RegisterProps {
-  fullName: string;
-  email: string;
-  cpf: string;
-  gender: string;
-  birthDate: string;
-  mainPhone: string;
-  password: string;
-  passwordConfirm: string;
+export interface Customer {
+  id?: number;
+  createdAt?: string;
+  deletedAt?: string;
+  fullName?: string;
+  email?: string;
+  cpf?: string;
+  gender?: string;
+  birthDate?: string;
+  telNumber?: string;
+  password?: string;
+  passwordConfirm?: string;
 }
 
-function Register() {
+
+function Register(customer: Customer) {
+
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
 
-  async function handleSubmit(data: RegisterProps) {
+  async function handleSubmit(data: Customer) {
     try {
       const schema = Yup.object().shape({
         fullName: Yup.string().required("O nome é obrigatório."),
@@ -39,7 +46,7 @@ function Register() {
             (value = "") => Number(value) > 0
           )
           .required("Sexo é obrigatório"),
-        mainPhone: Yup.string().required("Telefone é obrigatório."),
+        telNumber: Yup.string().required("Telefone é obrigatório."),
         birthDate: Yup.string().required("Data de nascimento é obrigatória"),
         password: Yup.string()
           .matches(
@@ -59,7 +66,25 @@ function Register() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/pedidos");
+      data.id = customer.id
+
+      axiosInstance
+        .post("/customer", data, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+          },
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+          });
+        });
+
+      // history.push("/cliente/pedidos");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -76,22 +101,29 @@ function Register() {
   // TODO: standby function to fill iniital data of Form
   // add this code on Form properties -> initialData={initialData}
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const initialData: RegisterProps = {
-    fullName: "Ana Caroline",
-    email: "ana@test.com",
-    cpf: "12345678901",
-    gender: "Feminio",
-    birthDate: "22/01/2021",
-    mainPhone: "11111111111",
-    password: "123",
-    passwordConfirm: "123",
+  useEffect(() => {
+    formRef?.current?.setData(customer)
+  }, [customer])
+
+  const initialData: Customer = {
+    id: customer.id,
+    createdAt: customer.createdAt,
+    deletedAt: customer.deletedAt,
+    fullName: customer.fullName,
+    email: customer.email,
+    cpf: customer.cpf,
+    gender: customer.gender,
+    birthDate: customer.telNumber,
+    telNumber: customer.telNumber,
+    password: customer.password,
+    passwordConfirm: customer.passwordConfirm,
   };
 
   return (
     <>
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
-          <Form ref={formRef} onSubmit={handleSubmit} className="layout-box">
+          <Form ref={formRef} onSubmit={handleSubmit} initialData={initialData} className="layout-box">
             <div className="form-row">
               <div className="col-12 col-sm-12 mt-2">
                 <label>Nome</label>
@@ -100,6 +132,7 @@ function Register() {
                   className="form-control"
                   placeholder="Nome completo "
                   name="fullName"
+                  defaultValue={customer?.fullName}
                 />
               </div>
               <div className="col-12 col-sm-12  mt-2">
@@ -109,6 +142,7 @@ function Register() {
                   className="form-control"
                   placeholder="email@"
                   name="email"
+                  defaultValue={customer?.email}
                 />
               </div>
 
@@ -119,6 +153,7 @@ function Register() {
                   className="form-control"
                   placeholder="CPF"
                   name="cpf"
+                  defaultValue={customer?.cpf}
                 />
               </div>
 
@@ -128,6 +163,7 @@ function Register() {
                   name="gender"
                   id="gender"
                   className="form-control select_product"
+                  defaultValue={customer?.gender}
                 >
                   <option selected>Selecione</option>
                   <option value="1">Feminino</option>
@@ -140,9 +176,10 @@ function Register() {
                 <label>Telefone principal</label>
                 <InputText
                   type="text"
-                  name="mainPhone"
+                  name="telNumber"
                   className="form-control"
                   placeholder="Telefone Principal"
+                  defaultValue={customer?.telNumber}
                 />
               </div>
 
@@ -152,6 +189,7 @@ function Register() {
                   type="date"
                   className="form-control"
                   name="birthDate"
+                  defaultValue={customer?.birthDate}
                 />
               </div>
 
@@ -162,6 +200,7 @@ function Register() {
                   className="form-control"
                   placeholder="senha"
                   name="password"
+                  defaultValue={customer?.password}
                 />
               </div>
 
@@ -172,6 +211,7 @@ function Register() {
                   className="form-control"
                   placeholder="confirmar senha"
                   name="passwordConfirm"
+                  defaultValue={customer?.passwordConfirm}
                 />
               </div>
 

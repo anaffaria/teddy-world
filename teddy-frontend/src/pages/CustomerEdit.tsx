@@ -6,12 +6,13 @@ import Swal from "sweetalert2";
 import { axiosInstance } from "../service/serviceInstance";
 
 function CustomerEdit() {
+  
   const [customer, setCustomer] = useState<Customer>();
 
   useEffect(() => {
     Swal.fire({
       title: "Aguarde um momento",
-      html: "<p>Estamos buscando suas informações.</p><img width=200 height=170 src='https://i.imgur.com/b2bPz7v.gif'></img>",
+      html: "<p>Estamos buscando suas informações.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
       allowOutsideClick: false,
       showConfirmButton: false,
       // didOpen: () => {
@@ -21,12 +22,12 @@ function CustomerEdit() {
     });
 
     axiosInstance
-      .get("customer/13")
+      .get("customer/5")
       .then((response) => {
         setCustomer(response.data as Customer);
         setTimeout(() => {
           Swal.close();
-        }, 1000);
+        }, 2000);
       })
       .catch((err) => {
         console.error(err);
