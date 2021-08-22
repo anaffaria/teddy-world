@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import RegisterComponent, { Customer } from "../components/Register/Register";
-import { axiosInstance } from "../service/serviceInstance";
+import RegisterComponent from "../components/Register/Register";
 
 function Register() {
   return (

@@ -10,7 +10,7 @@ import { UfToName } from "../Utils/ParseUfToName";
 import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { Customer } from "../CustomerEdit/CustomerEdit";
+import { Customer } from "../CustomerAccount/CustomerAccount";
 
 enum AddressType {
   BILLING = 0,
@@ -18,6 +18,7 @@ enum AddressType {
 }
 
 export interface Address {
+  id?: string;
   postalCode: string;
   street: string;
   complement: string;
@@ -35,17 +36,22 @@ export interface Address {
 interface AddressFormProps {
   className?: string;
   customer?: Customer;
+  address?: Address;
 }
 
-export function AddressForm({ className, customer }: AddressFormProps) {
+export function AddressForm({
+  className,
+  customer,
+  address,
+}: AddressFormProps) {
   const formRef = useRef<FormHandles>(null);
   const [customerAddress, setCustomerAddress] = useState<Customer>();
   const history = useHistory();
 
   useEffect(() => {
-    console.log("customer", customer);
     setCustomerAddress(customer);
-  }, [customer]);
+    if (address) formRef.current?.setData(address);
+  }, [customer, address]);
 
   function fillAddress(value: string) {
     if (value.trim().length > 7) {
@@ -90,14 +96,22 @@ export function AddressForm({ className, customer }: AddressFormProps) {
         id: Number(customerAddress?.id),
       };
 
-      axiosInstance
-        .post("/address", data)
+      let saveAddress = axiosInstance.post;
+
+      if (address?.id) {
+        data.id = address?.id;
+        saveAddress = axiosInstance.put;
+      }
+
+      saveAddress("/address", data)
         .then((resp) => {
           if (resp.data?.hasError) throw new Error(resp.data?.message);
           Swal.fire({
             icon: "success",
             title: "Parabéns",
-            text: "Seu endereço foi criado com sucesso!",
+            text: `Seu endereço foi ${
+              data.id ? "atualizado" : "criado"
+            } com sucesso!`,
           });
         })
         .catch((err) => {
@@ -125,7 +139,12 @@ export function AddressForm({ className, customer }: AddressFormProps) {
   }
 
   return (
-    <Form className={className} onSubmit={handleSubmit} ref={formRef}>
+    <Form
+      className={className}
+      onSubmit={handleSubmit}
+      ref={formRef}
+      initialData={address}
+    >
       <div className="form-group">
         <label htmlFor="postalCode">CEP</label>
         <InputText
@@ -181,7 +200,9 @@ export function AddressForm({ className, customer }: AddressFormProps) {
         </Select>
       </div>
 
-      <button className="buttom btn-block">Adicionar</button>
+      <button className="buttom btn-block">
+        {address ? "Atualizar" : "Adicionar"}
+      </button>
     </Form>
   );
 }

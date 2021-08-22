@@ -7,22 +7,24 @@ import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { axiosInstance } from "../../service/serviceInstance";
+import { Address } from "../Forms/AddressForm";
 
 export interface CustomerAccountProps {
   children?: React.ReactNode;
 }
 
 export interface Customer {
-  id: number;
-  createdAt: string;
-  deletedAt: string;
-  fullName: string;
-  birthDate: string;
-  email: string;
-  cpf: string;
-  telephone: string;
-  gender: string;
-  addressList: [];
+  id?: number;
+  createdAt?: string;
+  deletedAt?: string;
+  fullName?: string;
+  birthDate?: string;
+  email?: string;
+  cpf?: string;
+  telNumber?: string;
+  gender?: number;
+  addressList?: Array<Address>;
+  setCustomer?: React.Dispatch<React.SetStateAction<Customer | undefined>>;
 }
 
 function CustomerAccount({ children }: CustomerAccountProps) {

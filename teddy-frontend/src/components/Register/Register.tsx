@@ -1,26 +1,15 @@
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
 import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
+import { SaveCustomer } from "../../service/customerService";
+import { Customer } from "../CustomerAccount/CustomerAccount";
 
-export interface Customer {
-  id?: number;
-  createdAt?: string;
-  deletedAt?: string;
-  fullName?: string;
-  email?: string;
-  cpf?: string;
-  gender?: string;
-  birthDate?: string;
-  telNumber?: string;
-  password?: string;
-  passwordConfirm?: string;
-}
 
 function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -64,36 +53,57 @@ function Register() {
 
       formRef.current?.setErrors({});
 
-      axiosInstance
-        .post("/customer", data, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*",
+      const onSuccess = (resp: any) => {
+        Swal.fire({
+          icon: "success",
+          title: "Parabéns",
+          text: "Sua conta foi criada com sucesso!",
+          didClose: () => {
+            // history.push(`/cliente/${resp?.data?.id}/pedidos`);
           },
-        })
-        .then((resp) => {
-          console.log(resp);
-          if (resp.data?.hasError) {
-            throw new Error(resp.data?.message);
-          }
-          Swal.fire({
-            icon: "success",
-            title: "Parabéns",
-            text: "Sua conta foi criada com sucesso!",
-            didClose: () => {
-              history.push(`/cliente/${data.id}/pedidos`);
-            },
-          });
-          data.id = resp.data?.id;
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-          });
         });
+      };
+
+      const onError = () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+        });
+      };
+
+      const customer = SaveCustomer({ onSuccess, onError, data });
+
+      // axiosInstance
+      //   .post("/customer", data, {
+      //     headers: {
+      //       "Access-Control-Allow-Origin": "*",
+      //       "Access-Control-Allow-Methods": "*",
+      //     },
+      //   })
+      //   .then((resp) => {
+      //     console.log(resp);
+      //     if (resp.data?.hasError) {
+      //       throw new Error(resp.data?.message);
+      //     }
+      //     Swal.fire({
+      //       icon: "success",
+      //       title: "Parabéns",
+      //       text: "Sua conta foi criada com sucesso!",
+      //       didClose: () => {
+      //         history.push(`/cliente/${data.id}/pedidos`);
+      //       },
+      //     });
+      //     data.id = resp.data?.id;
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     Swal.fire({
+      //       icon: "error",
+      //       title: "Oops...",
+      //       text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+      //     });
+      //   });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

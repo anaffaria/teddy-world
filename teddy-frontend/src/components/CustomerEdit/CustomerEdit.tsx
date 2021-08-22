@@ -1,4 +1,4 @@
-import CustomerAccount from "../CustomerAccount/CustomerAccount";
+import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
@@ -8,27 +8,15 @@ import { Address, AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
-import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
 import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
-
-export interface Customer {
-  id?: number;
-  createdAt?: string;
-  deletedAt?: string;
-  fullName?: string;
-  birthDate?: string;
-  email?: string;
-  cpf?: string;
-  telNumber?: string;
-  gender?: number;
-  addressList?: Array<Address>;
-}
+import { SaveCustomer } from "../../service/customerService";
 
 function CustomerEdit(customer: Customer) {
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
+  const [address, setAddress] = useState<Address>();
 
   const formRef = useRef<FormHandles>(null);
 
@@ -64,26 +52,22 @@ function CustomerEdit(customer: Customer) {
 
       data.id = customer.id;
 
-      axiosInstance
-        .put("/customer", data, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*",
-          },
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-          });
+      const onSuccess = () => {
+        Swal.fire({
+          icon: "success",
+          title: "Dados Atualizados!",
         });
+      };
 
-      Swal.fire({
-        icon: "success",
-        title: "Dados Atualizados!",
-      });
+      const onError = () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+        });
+      };
+
+      SaveCustomer({ data, onSuccess, onError });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -102,27 +86,60 @@ function CustomerEdit(customer: Customer) {
   }, [customer]);
 
   function mapAddresses(addressType: number) {
-    return customer.addressList?.map((address, index) => {
+    return customer.addressList?.map((address) => {
       if (address.addressType !== addressType) return;
       return (
-        <>
-          <li>
-            {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city}-${address.state}, CEP: ${address.postalCode}`}
-          </li>
+        <li key={address.id}>
+          {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city}-${address.state}, CEP: ${address.postalCode}`}
           <div className="row mt-3 mb-4 d-flex justify-content-end">
             <div className="mr-3 ml-2">
-              <span className="btn-sm btn btn-outline-primary">
+              <button
+                className="btn-sm btn btn-outline-primary"
+                onClick={() => {
+                  setAddress(address);
+                  setIsOpenForm(true);
+                }}
+              >
                 <BiEditAlt fontSize={20} />
                 Editar
-              </span>
+              </button>
             </div>
             <div className="mr-3 ml-2">
-              <span className="btn-sm btn btn-outline-danger">
+              <button
+                className="btn-sm btn btn-outline-danger"
+                onClick={() => {
+                  axiosInstance
+                    .delete(`/address/${address.id}`)
+                    .then((resp) => {
+                      if (resp.data.hasError) throw new Error();
+                      Swal.fire({
+                        icon: "success",
+                        title: "Dados Atualizados!",
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                      });
+                    });
+                  if (customer.setCustomer) {
+                    customer.setCustomer((prev) => {
+                      const newCustomerAddress = Object.assign({}, prev);
+                      newCustomerAddress.addressList =
+                        prev?.addressList?.filter((el) => el.id !== address.id);
+                      return newCustomerAddress;
+                    });
+                  }
+                }}
+              >
                 <BsTrashFill fontSize={20} /> Excluir
-              </span>
+              </button>
             </div>
           </div>
-        </>
+        </li>
       );
     });
   }
@@ -224,8 +241,11 @@ function CustomerEdit(customer: Customer) {
             )}
             {isOpenForm && (
               <aside>
-                {console.log(customer)}
-                <AddressForm className="mt-2" customer={customer} />
+                <AddressForm
+                  className="mt-2"
+                  customer={customer}
+                  address={address}
+                />
                 <button
                   className="btn btn-secondary btn-block mt-4"
                   onClick={() => setIsOpenForm(false)}
@@ -237,7 +257,10 @@ function CustomerEdit(customer: Customer) {
             {!isOpenForm && (
               <div
                 className="col-12 col-sm-12  mt-3 align-items-center mt-4 border"
-                onClick={() => setIsOpenForm(true)}
+                onClick={() => {
+                  setIsOpenForm(true);
+                  setAddress(undefined);
+                }}
               >
                 <IoMdAddCircle
                   type="button"
