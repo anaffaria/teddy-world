@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { Customer } from "../CustomerAccount/CustomerAccount";
 
-
 function Register() {
   const formRef = useRef<FormHandles>(null);
 
@@ -59,7 +58,7 @@ function Register() {
           title: "Parabéns",
           text: "Sua conta foi criada com sucesso!",
           didClose: () => {
-            // history.push(`/cliente/${resp?.data?.id}/pedidos`);
+            history.push(`/cliente/${resp?.data?.id}/pedidos`);
           },
         });
       };
@@ -73,37 +72,6 @@ function Register() {
       };
 
       const customer = SaveCustomer({ onSuccess, onError, data });
-
-      // axiosInstance
-      //   .post("/customer", data, {
-      //     headers: {
-      //       "Access-Control-Allow-Origin": "*",
-      //       "Access-Control-Allow-Methods": "*",
-      //     },
-      //   })
-      //   .then((resp) => {
-      //     console.log(resp);
-      //     if (resp.data?.hasError) {
-      //       throw new Error(resp.data?.message);
-      //     }
-      //     Swal.fire({
-      //       icon: "success",
-      //       title: "Parabéns",
-      //       text: "Sua conta foi criada com sucesso!",
-      //       didClose: () => {
-      //         history.push(`/cliente/${data.id}/pedidos`);
-      //       },
-      //     });
-      //     data.id = resp.data?.id;
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     Swal.fire({
-      //       icon: "error",
-      //       title: "Oops...",
-      //       text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-      //     });
-      //   });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

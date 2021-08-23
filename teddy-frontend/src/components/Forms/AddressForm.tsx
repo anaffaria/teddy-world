@@ -37,12 +37,16 @@ interface AddressFormProps {
   className?: string;
   customer?: Customer;
   address?: Address;
+  setCustomer?: Function;
+  setIsFormOpen?: Function;
 }
 
 export function AddressForm({
   className,
   customer,
   address,
+  setCustomer,
+  setIsFormOpen,
 }: AddressFormProps) {
   const formRef = useRef<FormHandles>(null);
   const [customerAddress, setCustomerAddress] = useState<Customer>();
@@ -106,6 +110,32 @@ export function AddressForm({
       saveAddress("/address", data)
         .then((resp) => {
           if (resp.data?.hasError) throw new Error(resp.data?.message);
+
+          if (address?.id) {
+            setCustomer?.((prev: Customer) => {
+              const newCustomerAddress = Object.assign({}, prev);
+              let oldAddressIndex = newCustomerAddress.addressList?.findIndex(
+                (el) => el.id === address.id
+              );
+
+              console.log(oldAddressIndex);
+              console.log(prev === newCustomerAddress);
+
+              if (oldAddressIndex && newCustomerAddress.addressList) {
+                console.log("atualizandolista");
+                newCustomerAddress.addressList[oldAddressIndex] = resp.data;
+                console.log(newCustomerAddress.addressList[oldAddressIndex]);
+              }
+              setIsFormOpen?.(false);
+
+              console.log(prev === newCustomerAddress);
+              // console.log("antigo", prev);
+              // console.log("novo", newCustomerAddress);
+
+              return newCustomerAddress;
+            });
+          }
+
           Swal.fire({
             icon: "success",
             title: "Parabéns",
@@ -123,7 +153,7 @@ export function AddressForm({
           });
         });
 
-      history.push("/cliente/pedidos");
+      // history.push("/cliente/pedidos");
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {

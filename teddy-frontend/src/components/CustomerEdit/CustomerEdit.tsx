@@ -129,7 +129,9 @@ function CustomerEdit(customer: Customer) {
                     customer.setCustomer((prev) => {
                       const newCustomerAddress = Object.assign({}, prev);
                       newCustomerAddress.addressList =
-                        prev?.addressList?.filter((el) => el.id !== address.id);
+                        prev?.addressList?.filter(
+                          (el) => el.id !== address.id
+                        ) || [];
                       return newCustomerAddress;
                     });
                   }
@@ -245,6 +247,8 @@ function CustomerEdit(customer: Customer) {
                   className="mt-2"
                   customer={customer}
                   address={address}
+                  setCustomer={customer.setCustomer}
+                  setIsFormOpen={setIsOpenForm}
                 />
                 <button
                   className="btn btn-secondary btn-block mt-4"
