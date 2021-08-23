@@ -1,18 +1,12 @@
 import { Customer } from "../components/CustomerAccount/CustomerAccount";
 import { axiosInstance } from "./serviceInstance";
-
-export interface CustomerServiceProps {
-  onSuccess?: Function;
-  onError?: Function;
-  id?: string;
-  data?: Customer;
-}
+import { ServiceTypes } from "./serviceTypes";
 
 export async function GetCustomer({
   onSuccess,
   id,
   onError,
-}: CustomerServiceProps) {
+}: ServiceTypes<Customer>) {
   let customer = undefined;
   await axiosInstance
     .get(`customer/${id}`)
@@ -31,7 +25,7 @@ export async function SaveCustomer({
   onSuccess,
   onError,
   data,
-}: CustomerServiceProps) {
+}: ServiceTypes<Customer>) {
   let customer = undefined;
   let customerSave = axiosInstance.post;
 

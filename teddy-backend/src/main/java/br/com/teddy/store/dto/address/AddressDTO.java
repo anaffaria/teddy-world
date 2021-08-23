@@ -23,6 +23,8 @@ public class AddressDTO extends AttrResponseDTO {
 
     private String city;
 
+    private String state;
+
     private String country;
 
     private Integer addressType;
@@ -37,6 +39,7 @@ public class AddressDTO extends AttrResponseDTO {
         this.postalCode = address.getPostalCode();
         this.complement = address.getComplement();
         this.city = address.getCity();
+        this.state = address.getState();
         this.country = address.getCountry();
         this.addressType = address.getAddressType().ordinal();
     }

@@ -86,10 +86,11 @@ function CustomerEdit(customer: Customer) {
   }, [customer]);
 
   function mapAddresses(addressType: number) {
-    return customer.addressList?.map((address) => {
+    console.log(customer.addressList)
+    return customer.addressList?.map((address, index) => {
       if (address.addressType !== addressType) return;
       return (
-        <li key={address.id}>
+        <li key={index}>
           {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city}-${address.state}, CEP: ${address.postalCode}`}
           <div className="row mt-3 mb-4 d-flex justify-content-end">
             <div className="mr-3 ml-2">

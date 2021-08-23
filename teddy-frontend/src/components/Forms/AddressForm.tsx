@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { Select } from "../Form/SelectInput";
-import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import axios from "axios";
@@ -11,6 +10,7 @@ import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { Customer } from "../CustomerAccount/CustomerAccount";
+import { SaveAddress } from "../../service/addressService";
 
 enum AddressType {
   BILLING = 0,
@@ -50,7 +50,6 @@ export function AddressForm({
 }: AddressFormProps) {
   const formRef = useRef<FormHandles>(null);
   const [customerAddress, setCustomerAddress] = useState<Customer>();
-  const history = useHistory();
 
   useEffect(() => {
     setCustomerAddress(customer);
@@ -100,60 +99,50 @@ export function AddressForm({
         id: Number(customerAddress?.id),
       };
 
-      let saveAddress = axiosInstance.post;
+      data.id = address?.id;
 
-      if (address?.id) {
-        data.id = address?.id;
-        saveAddress = axiosInstance.put;
-      }
-
-      saveAddress("/address", data)
-        .then((resp) => {
-          if (resp.data?.hasError) throw new Error(resp.data?.message);
+      const onSuccess = (resp: any) => {
+        setCustomer?.((prev: Customer) => {
+          const newCustomerAddress = Object.assign({}, prev);
+          console.log(resp);
 
           if (address?.id) {
-            setCustomer?.((prev: Customer) => {
-              const newCustomerAddress = Object.assign({}, prev);
-              let oldAddressIndex = newCustomerAddress.addressList?.findIndex(
-                (el) => el.id === address.id
-              );
+            let oldAddressIndex = newCustomerAddress.addressList?.findIndex(
+              (el) => el.id === address.id
+            );
 
-              console.log(oldAddressIndex);
-              console.log(prev === newCustomerAddress);
-
-              if (oldAddressIndex && newCustomerAddress.addressList) {
-                console.log("atualizandolista");
-                newCustomerAddress.addressList[oldAddressIndex] = resp.data;
-                console.log(newCustomerAddress.addressList[oldAddressIndex]);
-              }
-              setIsFormOpen?.(false);
-
-              console.log(prev === newCustomerAddress);
-              // console.log("antigo", prev);
-              // console.log("novo", newCustomerAddress);
-
-              return newCustomerAddress;
-            });
+            if (oldAddressIndex && newCustomerAddress.addressList) {
+              newCustomerAddress.addressList[oldAddressIndex] = resp?.data;
+              console.log(newCustomerAddress.addressList[oldAddressIndex]);
+            }
+            return newCustomerAddress;
           }
 
-          Swal.fire({
-            icon: "success",
-            title: "Parabéns",
-            text: `Seu endereço foi ${
-              data.id ? "atualizado" : "criado"
-            } com sucesso!`,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-          });
+          newCustomerAddress.addressList?.push(resp?.data);
+
+          return newCustomerAddress;
         });
 
-      // history.push("/cliente/pedidos");
+        setIsFormOpen?.(false);
+
+        Swal.fire({
+          icon: "success",
+          title: "Parabéns",
+          text: `Seu endereço foi ${
+            data.id ? "atualizado" : "criado"
+          } com sucesso!`,
+        });
+      };
+
+      const onError = (resp: any) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+        });
+      };
+
+      SaveAddress({ data, onError, onSuccess });
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {

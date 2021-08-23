@@ -1,6 +1,8 @@
 package br.com.teddy.store.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Entity(name = "_address")
+@Where(clause = "deleted_at is null")
 public class Address extends DomainEntity{
 
     @NotBlank(message = "Logradouro não pode estar em branco")
@@ -35,6 +38,10 @@ public class Address extends DomainEntity{
     @NotBlank(message = "Cidade não pode estar em branco")
     @NotNull(message = "Cidade não pode estar nulo")
     private String city;
+
+    @NotBlank(message = "Estado não pode estar em branco")
+    @NotNull(message = "Estado não pode estar nulo")
+    private String state;
 
     @NotBlank(message = "País não pode estar em branco")
     @NotNull(message = "País não pode estar nulo")
