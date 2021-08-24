@@ -11,6 +11,7 @@ import { FormHandles } from "@unform/core";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
+import Swal from "sweetalert2";
 
 interface CustomerEditProps {
   email: string;
@@ -35,12 +36,6 @@ function CustomerEdit() {
           .email("Digite um e-mail válido")
           .required("O e-mail é obrigatório"),
         fullName: Yup.string().required("Nome é obrigatório"),
-        cpf: Yup.string()
-          .required("CPF é obrigatório")
-          .test("CPF", "CPF inválido", (value = "") => {
-            return /^\d+$/.test(value);
-          })
-          .min(11, "CPF inválido"),
         gender: Yup.string()
           .test(
             "gender",
@@ -58,7 +53,15 @@ function CustomerEdit() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/pedidos");
+      Swal.fire({
+        icon: "success",
+        title: "Dados Alterados com sucesso!",
+        text: "",
+        didClose: () => {
+          history.push("/cliente/alterar_dados");
+        },
+      });
+
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -70,6 +73,26 @@ function CustomerEdit() {
         formRef.current?.setErrors(errorMessage);
       }
     }
+  }
+
+  function handleDelete() {
+    Swal.fire({
+      title: 'Excluir endereço?',
+      text: "Deseja deletar este endereço?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deletado!',
+          'O endereço foi deletado.',
+          'success',
+        );
+      }
+    })
   }
   return (
     <>
@@ -85,6 +108,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="E-mail"
                     name="email"
+                    id="email"
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
@@ -94,6 +118,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="Nome"
                     name="fullName"
+                    id="fullName"
                   />
                 </div>
 
@@ -102,8 +127,9 @@ function CustomerEdit() {
                   <InputText
                     type="text"
                     className="form-control"
-                    placeholder="CPF"
+                    placeholder="68684319028"
                     name="cpf"
+                    disabled
                   />
                 </div>
 
@@ -128,6 +154,7 @@ function CustomerEdit() {
                     name="mainPhone"
                     className="form-control"
                     placeholder="Telefone primario"
+                    id="mainPhone"
                   />
                 </div>
                 <div className="col-6 col-sm-4  mt-2">
@@ -164,13 +191,13 @@ function CustomerEdit() {
                 </ul>
                 <div className="row mt-3 mb-0 d-flex justify-content-end">
                   <div className="mr-3 ml-2">
-                    <span className="btn-sm btn btn-outline-primary">
+                    <span className="btn-sm btn btn-outline-primary" onClick={() => setIsOpenForm(true)}>
                       <BiEditAlt fontSize={20} />
                       Editar
                     </span>
                   </div>
                   <div className="mr-3 ml-2">
-                    <span className="btn-sm btn btn-outline-danger">
+                    <span className="btn-sm btn btn-outline-danger" onClick={() => handleDelete()}>
                       <BsTrashFill fontSize={20} /> Excluir
                     </span>
                   </div>
@@ -184,17 +211,20 @@ function CustomerEdit() {
                   </li>
                 </ul>
                 <div className="row mt-3 mb-0 d-flex justify-content-end">
-                  <div className="mr-3 ml-2">
-                    <span className="btn-sm btn btn-outline-primary">
-                      <BiEditAlt fontSize={20} />
-                      Editar
-                    </span>
-                  </div>
-                  <div className="mr-3 ml-2">
-                    <span className="btn-sm btn btn-outline-danger">
-                      <BsTrashFill fontSize={20} /> Excluir
-                    </span>
-                  </div>
+
+                  <>
+                    <div className="mr-3 ml-2">
+                      <span className="btn-sm btn btn-outline-primary" onClick={() => setIsOpenForm(true)}>
+                        <BiEditAlt fontSize={20} />
+                        Editar
+                      </span>
+                    </div>
+                    <div className="mr-3 ml-2">
+                      <span className="btn-sm btn btn-outline-danger" onClick={() => handleDelete()}>
+                        <BsTrashFill fontSize={20} /> Excluir
+                      </span>
+                    </div>
+                  </>
                 </div>
               </div>
             )}

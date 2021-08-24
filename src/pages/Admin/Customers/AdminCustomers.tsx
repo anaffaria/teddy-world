@@ -3,8 +3,30 @@ import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
 import { BiBlock } from "react-icons/bi";
 import { BiHash } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 function AdminCustomers() {
+
+  function handleDelete() {
+    Swal.fire({
+      title: 'Desativar usuário?',
+      text: "Está ação não pode ser desfeita!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deletado!',
+          'O usuário foi desativado.',
+          'success',
+        );
+      }
+    })
+  }
+
   return (
     <>
       <div className="topbar"></div>
@@ -69,7 +91,7 @@ function AdminCustomers() {
                     <td>ana@gmail.com</td>
                     <td>Ouro</td>
                     <td>
-                      <span className="btn-sm btn btn-outline-danger">
+                      <span className="btn-sm btn btn-outline-danger" onClick={() => handleDelete()}>
                         <BiBlock fontSize={20} /> Desativar
                       </span>
                     </td>

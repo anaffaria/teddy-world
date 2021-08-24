@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
+import Swal from "sweetalert2";
 
 interface RegisterProps {
   fullName: string;
@@ -30,7 +31,12 @@ function Register() {
           .email("Digite um e-mail válido.")
           .required("E-mail é obrigatório."),
         cpf: Yup.string()
-          .min(11, "Digite um CPF válido.")
+
+          .test("CPF", "CPF inválido", (value = "") => {
+            return /^\d+$/.test(value);
+          })
+          .min(11, "CPF inválido")
+          .max(11, "CPF inválido")
           .required("CPF é obrigatório"),
         gender: Yup.string()
           .test(
@@ -60,6 +66,16 @@ function Register() {
       formRef.current?.setErrors({});
 
       history.push("/cliente/pedidos");
+
+      Swal.fire({
+        icon: "success",
+        title: "Parabéns",
+        text: "Sua conta foi criada com sucesso!",
+        didClose: () => {
+          history.push("/cliente/pedidos");
+        },
+      });
+
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -100,6 +116,7 @@ function Register() {
                   className="form-control"
                   placeholder="Nome completo "
                   name="fullName"
+                  id="fullName"
                 />
               </div>
               <div className="col-12 col-sm-12  mt-2">
@@ -109,6 +126,7 @@ function Register() {
                   className="form-control"
                   placeholder="email@"
                   name="email"
+                  id="email"
                 />
               </div>
 
@@ -119,6 +137,7 @@ function Register() {
                   className="form-control"
                   placeholder="CPF"
                   name="cpf"
+                  id="cpf"
                 />
               </div>
 
@@ -152,6 +171,7 @@ function Register() {
                   type="date"
                   className="form-control"
                   name="birthDate"
+                  id="birthDate"
                 />
               </div>
 
@@ -162,6 +182,7 @@ function Register() {
                   className="form-control"
                   placeholder="senha"
                   name="password"
+                  id="password"
                 />
               </div>
 
@@ -172,6 +193,7 @@ function Register() {
                   className="form-control"
                   placeholder="confirmar senha"
                   name="passwordConfirm"
+                  id="password"
                 />
               </div>
 
@@ -184,7 +206,7 @@ function Register() {
                   </Link>
                 </div>
                 <div>
-                  <button type="submit" className="layout-buttom">
+                  <button type="submit" id="cadastro" className="layout-buttom">
                     Cadastrar
                   </button>
                 </div>

@@ -4,7 +4,9 @@
   border-radius: 16px;
   border: 1px solid #90affc;
 }
-
+.swal2-styled.swal2-confirm{
+  background-color: #fa98af;
+}
 .main-content-admin {
   margin-top: 100px;
 }

@@ -7,6 +7,7 @@ import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import axios from "axios";
 import { UfToName } from "../Utils/ParseUfToName";
+import Swal from "sweetalert2";
 
 enum AddressType {
   delivery = "delivery",
@@ -57,7 +58,7 @@ export function AddressForm({ className }: AddressFormProps) {
   async function handleSubmit(data: CustomerAddress) {
     try {
       const schema = Yup.object().shape({
-        cep: Yup.string().required("CEP é obrigatório"),
+        cep: Yup.string().required("CEP é obrigatório").max(8, "CEP inválido").min(8, "CEP inválido"),
         street: Yup.string().required("Rua é obrigatório"),
         number: Yup.string().required("Número é obrigatório"),
         neighborhood: Yup.string().required("Bairro é obrigatório"),
@@ -72,8 +73,15 @@ export function AddressForm({ className }: AddressFormProps) {
       });
 
       formRef.current?.setErrors({});
-
-      history.push("/cliente/pedidos");
+      
+      Swal.fire({
+        icon: "success",
+        title: "Dados Alterados com sucesso!",
+        text: "",
+        didClose: () => {
+          history.push("/cliente/alterar_dados");
+        },
+      });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -97,47 +105,48 @@ export function AddressForm({ className }: AddressFormProps) {
           onChange={(val) => {
             fillAddress(val.currentTarget.value);
           }}
+          id='cep'
         />
       </div>
 
       <div className="form-group">
         <label htmlFor="street">Logradouro</label>
-        <InputText name="street" className="form-control" />
+        <InputText name="street" id='street' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="number">Número</label>
-        <InputText name="number" className="form-control" />
+        <InputText name="number" id='number' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="neighborhood">Bairro</label>
-        <InputText name="neighborhood" className="form-control" />
+        <InputText name="neighborhood" id='neighborhood' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="city">Cidade</label>
-        <InputText name="city" className="form-control" />
+        <InputText name="city" id='city' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="complement">Complemento</label>
-        <InputText name="complement" className="form-control" />
+        <InputText name="complement" id='complement' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="state">Estado</label>
-        <InputText name="state" className="form-control" />
+        <InputText name="state" id='state' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="country">País</label>
-        <InputText name="country" className="form-control" />
+        <InputText name="country" id='country' className="form-control" />
       </div>
 
       <div className="form-group">
         <label htmlFor="addressType">Tipo do Endereço</label>
-        <Select name="addressType" className="form-control" defaultValue="">
+        <Select name="addressType" id='addressType' className="form-control" defaultValue="">
           <option value="">Selecione</option>
           <option value={AddressType.billing}>Cobrança</option>
           <option value={AddressType.delivery}>Entrega</option>

@@ -7,13 +7,33 @@ import { TiSortNumerically } from "react-icons/ti";
 import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 import { ModalTeddy } from "../components/Modal/Modal";
 import { CreditCardForm } from "../components/Forms/CreditCardForm";
+import Swal from "sweetalert2";
 
 function Cards() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  
+  function handleDelete() {
+    Swal.fire({
+      title: 'Excluir cartão?',
+      text: "Deseja deletar este cartão?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deletado!',
+          'O cartão foi deletado.',
+          'success',
+        );
+      }
+    })
+  }
   return (
     <CustomerAccount>
       <section className="border">
@@ -43,7 +63,7 @@ function Cards() {
                 <div className="d-flex m-auto">
                   <div className="m-auto btn btn-sm btn-outline-danger">
                     <AiOutlineDelete fontSize={24} className="m-auto" />
-                    <span className="m-auto">Excluir</span>
+                    <span className="m-auto" onClick={() => handleDelete()}>Excluir</span>
                   </div>
                 </div>
               </td>

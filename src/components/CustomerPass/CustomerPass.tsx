@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { Form } from "@unform/web";
+import Swal from "sweetalert2";
 
 interface CustumerPassProps {
   password: string;
@@ -21,14 +22,27 @@ function CustomerPass() {
     try {
       const schema = Yup.object().shape({
         password: Yup.string()
-          .min(8, "A senha deve conter 8 dígitos")
-          .required("Senha é obrigatória."),
+          .matches(
+            /^.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].*$/,
+            "Necessita de caracter especial."
+          )
+          .min(6, "Senha muito curta, mínimo 8 caractéres")
+          .required("Senha é obrigatório."),
         newPassword: Yup.string()
-          .min(8, "A senha deve conter 8 dígitos")
+          .matches(
+            /^.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].*$/,
+            "Necessita de caracter especial."
+          )
+          .min(6, "A senha deve conter 8 dígitos")
           .required("Nova Senha é obrigatória."),
         CompareNewPassword: Yup.string()
-          .min(8, "A senha deve conter 8 dígitos")
-          .required("Confirmação da senha é obrigatória."),
+          .matches(
+            /^.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].*$/,
+            "Necessita de caracter especial."
+          )
+          .min(6, "A senha deve conter 8 dígitos")
+          .required("Confirmação da senha é obrigatória.")
+          .oneOf([Yup.ref("newPassword"), null], "As senhas não conferem"),
       });
 
       await schema.validate(data, {
@@ -37,7 +51,15 @@ function CustomerPass() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/alterar_dados");
+      Swal.fire({
+        icon: "success",
+        title: "Dados Alterados com sucesso!",
+        text: "",
+        didClose: () => {
+          history.push("/cliente/alterar_senha");
+        },
+      });
+
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

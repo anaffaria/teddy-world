@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 
 interface RebemberPassProps {
   rememberPass: string;
