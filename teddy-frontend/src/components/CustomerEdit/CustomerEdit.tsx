@@ -90,7 +90,7 @@ function CustomerEdit(customer: Customer) {
       if (address.addressType !== addressType) return [];
       return (
         <li key={index}>
-          {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city}-${address.state}, CEP: ${address.postalCode}`}
+          {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city} - ${address.state}, CEP: ${address.postalCode}`}
           <div className="row mt-3 mb-4 d-flex justify-content-end">
             <div className="mr-3 ml-2">
               <button
@@ -238,6 +238,8 @@ function CustomerEdit(customer: Customer) {
 
                   <span>Endereços de Cobrança:</span>
                   <ul className="m-0 p-0 mt-3">{mapAddresses(0)}</ul>
+
+                  
                 </div>
               </>
             )}
