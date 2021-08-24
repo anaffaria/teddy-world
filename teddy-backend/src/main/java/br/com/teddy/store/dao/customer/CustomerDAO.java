@@ -58,8 +58,8 @@ public class CustomerDAO implements IDAO {
         customerExisting.setPassword(encryptedPassword);
         customerExisting.setUpdatedAt(LocalDateTime.now());
 
-        if(null != customerNew.getPassword() && !passwordEncoder.matches(customerNew.getPassword(), encryptedPassword)) {
-            customerExisting.setPassword(passwordEncoder.encode(customerNew.getPassword()));
+        if(null != customerNew.getNewPassword()) {
+            customerExisting.setPassword(passwordEncoder.encode(customerNew.getNewPassword()));
         }
 
         return customerRepository.save(customerExisting);

@@ -42,6 +42,9 @@ public class Customer extends DomainEntity{
     @Transient
     private String passwordConfirm;
 
+    @Transient
+    private String newPassword;
+
     @OneToMany(mappedBy = "customer", targetEntity = Address.class)
     private List<Address> addressList;
 }
