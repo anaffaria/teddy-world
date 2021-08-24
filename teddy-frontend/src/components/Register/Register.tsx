@@ -2,13 +2,13 @@ import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-import InputText from "../Form/InputText";
-import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
-import { axiosInstance } from "../../service/serviceInstance";
-import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { Customer } from "../CustomerAccount/CustomerAccount";
+
+import InputText from "../Form/InputText";
+import * as Yup from "yup";
+import Swal from "sweetalert2";
 
 function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -29,7 +29,7 @@ function Register() {
           .test(
             "gender",
             "Seleção obrigatória",
-            (value = "") => Number(value) > 0
+            (value = "") => Number(value) >= 0
           )
           .required("Sexo é obrigatório"),
         telNumber: Yup.string().required("Telefone é obrigatório."),
@@ -127,10 +127,10 @@ function Register() {
                   id="gender"
                   className="form-control select_product"
                 >
-                  <option>Selecione</option>
-                  <option value="1">Feminino</option>
-                  <option value="2">Masculino</option>
-                  <option value="3">Indefinido</option>
+                  <option value="">Selecione</option>
+                  <option value="0">Feminino</option>
+                  <option value="1">Masculino</option>
+                  <option value="2">Indefinido</option>
                 </Select>
               </div>
 

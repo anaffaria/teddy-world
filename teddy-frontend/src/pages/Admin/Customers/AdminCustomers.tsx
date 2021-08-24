@@ -6,23 +6,26 @@ import { BiHash } from "react-icons/bi";
 import { useEffect } from "react";
 import { axiosInstance } from "../../../service/serviceInstance";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+
 
 export interface Customer {
-  id: number;
-  createdAt: string;
-  deletedAt: string;
-  fullName: string;
-  birthDate: string;
-  email: string;
-  cpf: string;
-  telephone: string;
-  gender: string;
-  addressList: [];
+  id?: number;
+  createdAt?: string;
+  deletedAt?: string;
+  fullName?: string;
+  birthDate?: string;
+  email?: string;
+  cpf?: string;
+  telNumber?: string;
+  gender?: number;
 }
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState<Array<Customer>>([]);
-
+  const { id } = useParams<{ id: string }>();
+  
   useEffect(() => {
     axiosInstance
       .get("customers")
@@ -99,9 +102,27 @@ function AdminCustomers() {
                         <td>{customer.fullName}</td>
                         <td>{customer.cpf}</td>
                         <td>{customer.email}</td>
-                        <td>Ouro</td>
+                        <td></td>
                         <td>
-                          <span className="btn-sm btn btn-outline-danger">
+                          <span className="btn-sm btn btn-outline-danger" onClick={() => {
+                            axiosInstance
+                            .delete(`/customer/${id}`)
+                            .then((resp) => {
+                              if (resp.data.hasError) throw new Error();
+                              Swal.fire({
+                                icon: "success",
+                                title: "Dados Atualizados!",
+                              });
+                            })
+                            .catch((err) => {
+                              console.log(err);
+                              Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                              });
+                            });
+                          }}>
                             <BsTrashFill fontSize={20} /> Desativar
                           </span>
                         </td>
