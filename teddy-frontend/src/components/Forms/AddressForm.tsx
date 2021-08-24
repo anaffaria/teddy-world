@@ -6,7 +6,6 @@ import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import axios from "axios";
 import { UfToName } from "../Utils/ParseUfToName";
-import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { Customer } from "../CustomerAccount/CustomerAccount";
@@ -104,7 +103,6 @@ export function AddressForm({
       const onSuccess = (resp: any) => {
         setCustomer?.((prev: Customer) => {
           const newCustomerAddress = Object.assign({}, prev);
-          console.log(resp);
 
           if (address?.id) {
             let oldAddressIndex = newCustomerAddress.addressList?.findIndex(
@@ -113,7 +111,6 @@ export function AddressForm({
 
             if (oldAddressIndex && newCustomerAddress.addressList) {
               newCustomerAddress.addressList[oldAddressIndex] = resp?.data;
-              console.log(newCustomerAddress.addressList[oldAddressIndex]);
             }
             return newCustomerAddress;
           }

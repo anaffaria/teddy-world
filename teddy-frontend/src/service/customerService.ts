@@ -51,6 +51,27 @@ export async function SaveCustomer({
   return customer;
 }
 
+export async function UpdatePassword({
+  onSuccess,
+  onError,
+  data,
+}: ServiceTypes<Customer>) {
+  let customer = undefined;
+  axiosInstance
+    .patch("/customer", data)
+    .then((resp) => {
+      if (resp.data?.hasError) throw new Error(resp.data?.message);
+      onSuccess?.(resp);
+      customer = resp.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.(err);
+    });
+
+  return customer;
+}
+
 // export async function DeleteCustomer({
 //   id,
 //   onError,

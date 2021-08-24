@@ -86,9 +86,8 @@ function CustomerEdit(customer: Customer) {
   }, [customer]);
 
   function mapAddresses(addressType: number) {
-    console.log(customer.addressList)
     return customer.addressList?.map((address, index) => {
-      if (address.addressType !== addressType) return;
+      if (address.addressType !== addressType) return [];
       return (
         <li key={index}>
           {`${address.street}, nº ${address.number} - ${address.neighborhood}, ${address.city}-${address.state}, CEP: ${address.postalCode}`}

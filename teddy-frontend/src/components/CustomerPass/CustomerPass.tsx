@@ -1,19 +1,44 @@
-import CustomerAccount from "../CustomerAccount/CustomerAccount";
-import { useHistory } from "react-router-dom";
+import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
+import { useHistory, useParams } from "react-router-dom";
 import "./CustomerPass.css";
 import InputText from "../Form/InputText";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { Form } from "@unform/web";
+import { GetCustomer, UpdatePassword } from "../../service/customerService";
+import Swal from "sweetalert2";
 
 interface CustumerPassProps {
   password: string;
   newPassword: string;
-  CompareNewPassword: string;
+  passwordConfirm: string;
+  id?: number;
 }
 
 function CustomerPass() {
+  const [customer, setCustomer] = useState<Customer>();
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    Swal.fire({
+      title: "Aguarde um momento",
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false,
+    });
+
+    const success = () => {
+      setTimeout(() => {
+        Swal.close();
+      }, 1000);
+    };
+
+    GetCustomer({ id, onSuccess: success }).then((resp) => setCustomer(resp));
+  }, [id]);
+
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
 
@@ -26,7 +51,7 @@ function CustomerPass() {
         newPassword: Yup.string()
           .min(8, "A senha deve conter 8 dígitos")
           .required("Nova Senha é obrigatória."),
-        CompareNewPassword: Yup.string()
+        passwordConfirm: Yup.string()
           .min(8, "A senha deve conter 8 dígitos")
           .required("Confirmação da senha é obrigatória."),
       });
@@ -37,7 +62,29 @@ function CustomerPass() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/alterar_dados");
+      data.id = customer?.id;
+
+      const onSuccess = () => {
+        Swal.fire({
+          icon: "success",
+          title: "Dados Atualizados!",
+        });
+      };
+
+      const onError = (resp: any) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          html: `<h5>Algo deu errado por aqui ;( Entre em contato com o administrador</h5>
+            <p>${resp}</p>`,
+        });
+      };
+
+      console.log(data);
+
+      UpdatePassword({ data, onError, onSuccess });
+
+      // history.push("/cliente/alterar_dados");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -86,7 +133,7 @@ function CustomerPass() {
               <label>Repita sua nova senha</label>
               <InputText
                 type="password"
-                name="CompareNewPassword"
+                name="passwordConfirm"
                 className="form-control"
                 placeholder="repita a nova senha"
               />
