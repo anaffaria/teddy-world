@@ -2,12 +2,15 @@ package br.com.teddy.store.facade;
 
 import br.com.teddy.store.dao.IDAO;
 import br.com.teddy.store.dao.address.AddressDAO;
+import br.com.teddy.store.dao.creditcard.CreditCardDAO;
 import br.com.teddy.store.dao.customer.CustomerDAO;
 import br.com.teddy.store.domain.Address;
+import br.com.teddy.store.domain.CreditCard;
 import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.strategy.IStrategy;
 import br.com.teddy.store.strategy.UpdateFields;
 import br.com.teddy.store.strategy.address.AddressConstraints;
+import br.com.teddy.store.strategy.creditcard.CreditCardConstraints;
 import br.com.teddy.store.strategy.customer.CustomerConstraints;
 import br.com.teddy.store.strategy.customer.CustomerUpdatePassword;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,12 @@ public abstract class AbstractFacade {
 
     @Autowired
     private AddressConstraints addressConstraints;
+
+    @Autowired
+    private CreditCardDAO creditCardDAO;
+
+    @Autowired
+    private CreditCardConstraints creditCardConstraints;
 
     public void initialize() {
 
@@ -79,6 +88,24 @@ public abstract class AbstractFacade {
         mapKeyAddress.put("UPDATE", bnsRulesUpdateAddress);
 
         businessRule.put(Address.class.getName(), mapKeyAddress);
+
+        //----------------------- Hash CreditCard --------------------------//
+
+        daos.put(CreditCard.class.getName(), creditCardDAO);
+
+        List<IStrategy> bnsRulesCreditCard = new ArrayList<>();
+        List<IStrategy> bnsRulesUpdateCreditCard = new ArrayList<>();
+
+        bnsRulesCreditCard .add(creditCardConstraints);
+        bnsRulesUpdateCreditCard .add(creditCardConstraints);
+
+        Map<String,List<IStrategy>> mapKeyCreditCard = new HashMap<>();
+
+        mapKeyCreditCard.put("CREATE", bnsRulesCreditCard);
+        mapKeyCreditCard.put("UPDATE", bnsRulesUpdateCreditCard);
+
+        businessRule.put(CreditCard.class.getName(), mapKeyCreditCard);
+
 
     }
 }

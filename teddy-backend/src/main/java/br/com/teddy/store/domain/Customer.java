@@ -49,4 +49,7 @@ public class Customer extends DomainEntity{
 
     @OneToMany(mappedBy = "customer", targetEntity = Address.class)
     private List<Address> addressList;
+
+    @OneToMany(mappedBy = "customer", targetEntity = CreditCard.class)
+    private List<CreditCard> creditCardList;
 }
