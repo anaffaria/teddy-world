@@ -1,14 +1,18 @@
 import { useRef } from "react";
 import { Form } from "@unform/web";
-import InputText from "../Form/InputText";
-import * as Yup from "yup";
-import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
-import * as CardValidator from "card-validator";
 import { Select } from "../Form/SelectInput";
 import { useState } from "react";
+import { SaveCreditCard } from "../../service/cardsService";
+import InputText from "../Form/InputText";
+import * as Yup from "yup";
+import * as CardValidator from "card-validator";
+import Swal from "sweetalert2";
 
-interface CreditCard {
+export interface CreditCard {
+  id?: string;
+  createdAt?: string;
+  deletedAt?: string;
   cardHolder: string;
   creditCardNumber: string;
   cardMonth: string;
@@ -20,7 +24,9 @@ interface CreditCard {
 
 export function CreditCardForm() {
   const formRef = useRef<FormHandles>(null);
-  const history = useHistory();
+  
+  const [creditCard, setCreditCard] = useState<CreditCard>();
+
   const [cardFlag, setCardFlag] = useState<string | undefined>("")
 
   async function handleSubmit(data: CreditCard) {
@@ -66,7 +72,26 @@ export function CreditCardForm() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/pedidos");
+      data.id = creditCard?.id;
+
+      const onSuccess = () => {
+        Swal.fire({
+          icon: "success",
+          title: "Cartão Salvo!",
+        });
+      };
+
+      const onError = (resp: any) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          html: `<h5>Algo deu errado por aqui</h5>
+            <p>${resp}</p>`,
+        });
+      };
+
+      SaveCreditCard({ data, onSuccess, onError });
+
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

@@ -135,11 +135,13 @@ export function AddressForm({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+          text: `<h5>Algo deu errado por aqui</h5>
+          <p>${resp}</p>`,
         });
       };
 
       SaveAddress({ data, onError, onSuccess });
+
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {

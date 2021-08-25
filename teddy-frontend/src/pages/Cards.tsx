@@ -1,18 +1,34 @@
-import { useState } from "react";
-import { Table } from "react-bootstrap";
+
 import { AiOutlineCreditCard, AiOutlineDelete } from "react-icons/ai";
 import { BiCalendarHeart } from "react-icons/bi";
 import { IoMdAddCircle } from "react-icons/io";
 import { TiSortNumerically } from "react-icons/ti";
-import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 import { ModalTeddy } from "../components/Modal/Modal";
 import { CreditCardForm } from "../components/Forms/CreditCardForm";
+import { useState } from "react";
+import { Table } from "react-bootstrap";
+import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
+
+export interface CreditCard {
+  id?: string;
+  createdAt?: string;
+  deletedAt?: string;
+  cardHolder: string;
+  creditCardNumber: string;
+  cardMonth: string;
+  cardYear: string;
+  cardSecurity: string;
+  cardFavourite: boolean;
+  cardFlag: string;
+}
 
 function Cards() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  
 
   return (
     <CustomerAccount>
@@ -33,21 +49,23 @@ function Cards() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="align-middle">
-                <span>25/07/2021 10:30:00</span>
-              </td>
-              <td className="align-middle">****1234</td>
-              <td className="align-middle">MasterCard</td>
-              <td className="align-middle">
-                <div className="d-flex m-auto">
-                  <div className="m-auto btn btn-sm btn-outline-danger">
-                    <AiOutlineDelete fontSize={24} className="m-auto" />
-                    <span className="m-auto">Excluir</span>
+            
+              <tr>
+                <td className="align-middle">
+                  <span></span>
+                </td>
+                <td className="align-middle"></td>
+                <td className="align-middle"></td>
+                <td className="align-middle">
+                  <div className="d-flex m-auto">
+                    <div className="m-auto btn btn-sm btn-outline-danger">
+                      <AiOutlineDelete fontSize={24} className="m-auto" />
+                      <button className="m-auto">Excluir</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            
           </tbody>
         </Table>
 

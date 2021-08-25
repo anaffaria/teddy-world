@@ -63,7 +63,7 @@ function CustomerEdit(customer: Customer) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+          text: "Algo deu errado por aqui!",
         });
       };
 

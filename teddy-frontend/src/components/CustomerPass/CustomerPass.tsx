@@ -1,13 +1,13 @@
 import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
 import { useHistory, useParams } from "react-router-dom";
-import "./CustomerPass.css";
 import InputText from "../Form/InputText";
 import { useEffect, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
-import * as Yup from "yup";
 import { Form } from "@unform/web";
 import { GetCustomer, UpdatePassword } from "../../service/customerService";
+import "./CustomerPass.css";
 import Swal from "sweetalert2";
+import * as Yup from "yup";
 
 interface CustumerPassProps {
   password: string;
@@ -75,7 +75,7 @@ function CustomerPass() {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          html: `<h5>Algo deu errado por aqui ;( Entre em contato com o administrador</h5>
+          html: `<h5>Algo deu errado por aqui</h5>
             <p>${resp}</p>`,
         });
       };
