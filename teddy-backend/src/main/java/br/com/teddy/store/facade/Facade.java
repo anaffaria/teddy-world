@@ -94,6 +94,9 @@ public class Facade extends AbstractFacade implements IFacade{
     @Override
     public List<AttrResponseDTO> list(DomainEntity domainEntity) {
         super.initialize();
+        stringBuilder.setLength(0);
+        FactoryResponseDTO.hasError = false;
+        FactoryResponseDTO.message = "";
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
 
@@ -106,6 +109,9 @@ public class Facade extends AbstractFacade implements IFacade{
     @Override
     public AttrResponseDTO get(DomainEntity domainEntity) {
         super.initialize();
+        stringBuilder.setLength(0);
+        FactoryResponseDTO.hasError = false;
+        FactoryResponseDTO.message = "";
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
 

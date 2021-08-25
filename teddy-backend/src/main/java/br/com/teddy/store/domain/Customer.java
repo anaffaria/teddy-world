@@ -2,6 +2,7 @@ package br.com.teddy.store.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +20,7 @@ import java.util.List;
 @Setter
 @ToString
 @Entity(name = "_customer")
+@Where(clause = "deleted_at is null")
 public class Customer extends DomainEntity{
     @NotNull(message = "Nome não pode ser vazio")
     @NotBlank(message = "Nome não pode estar em branco")

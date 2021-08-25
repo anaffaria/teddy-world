@@ -7,8 +7,6 @@ import { useEffect } from "react";
 import { axiosInstance } from "../../../service/serviceInstance";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
-
 
 export interface Customer {
   id?: number;
@@ -24,8 +22,7 @@ export interface Customer {
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState<Array<Customer>>([]);
-  const { id } = useParams<{ id: string }>();
-  
+
   useEffect(() => {
     axiosInstance
       .get("customers")
@@ -62,7 +59,6 @@ function AdminCustomers() {
                     <input type="text" className="form-control" />
                   </div>
 
-
                   <div className="form-group">
                     <label htmlFor="products">E-mail</label>
                     <input type="text" className="form-control" />
@@ -97,34 +93,37 @@ function AdminCustomers() {
                 <tbody>
                   {customers.map((customer, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>{customer.id}</td>
                         <td>{customer.fullName}</td>
                         <td>{customer.cpf}</td>
                         <td>{customer.email}</td>
                         <td></td>
                         <td>
-                          <span className="btn-sm btn btn-outline-danger" onClick={() => {
-                            axiosInstance
-                            .delete(`/customer/${id}`)
-                            .then((resp) => {
-                              if (resp.data.hasError) throw new Error();
-                              Swal.fire({
-                                icon: "success",
-                                title: "Dados Atualizados!",
-                              });
-                            })
-                            .catch((err) => {
-                              console.log(err);
-                              Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-                              });
-                            });
-                          }}>
+                          <button
+                            className="btn-sm btn btn-outline-danger"
+                            onClick={() => {
+                              axiosInstance
+                                .delete(`/customer/${customer.id}`)
+                                .then((resp) => {
+                                  if (resp.data.hasError) throw new Error();
+                                  Swal.fire({
+                                    icon: "success",
+                                    title: "Dados Atualizados!",
+                                  });
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                  Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                                  });
+                                });
+                            }}
+                          >
                             <BsTrashFill fontSize={20} /> Desativar
-                          </span>
+                          </button>
                         </td>
                       </tr>
                     );
