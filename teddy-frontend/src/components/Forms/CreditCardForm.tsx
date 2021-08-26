@@ -134,6 +134,7 @@ export function CreditCardForm() {
         <InputText
           type="text"
           name="creditCardNumber"
+          id="creditCardNumber"
           className="form-control"
           placeholder="1234-1234-1234-1234"
           onChange={(val) => {
@@ -152,6 +153,7 @@ export function CreditCardForm() {
           type="text"
           className="form-control"
           name="cardHolder"
+          id="cardHolder"
           placeholder="Nome do Titular do Cartão"
         />
       </div>
@@ -163,6 +165,7 @@ export function CreditCardForm() {
             type="number"
             className="form-control"
             name="cardMonth"
+            id="cardMonth"
             step="1"
             min="1"
             placeholder="12"
@@ -175,6 +178,7 @@ export function CreditCardForm() {
             type="number"
             className="form-control"
             name="cardYear"
+            id="cardYear"
             step="1"
             min="1"
             placeholder="2021"
@@ -187,6 +191,7 @@ export function CreditCardForm() {
         <InputText
           className="form-control"
           name="cardSecurity"
+          id="cardSecurity"
           placeholder="0000"
         />
       </div>
@@ -196,6 +201,7 @@ export function CreditCardForm() {
         <InputText
           className="form-control"
           name="cardFlag"
+          id="cardFlag"
           placeholder="MasterCard"
           defaultValue={cardFlag}
         />

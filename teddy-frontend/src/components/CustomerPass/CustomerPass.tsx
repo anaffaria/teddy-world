@@ -134,6 +134,7 @@ function CustomerPass() {
               <InputText
                 type="password"
                 name="passwordConfirm"
+                id="passwordConfirm"
                 className="form-control"
                 placeholder="repita a nova senha"
               />

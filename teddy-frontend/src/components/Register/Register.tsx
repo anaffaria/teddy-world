@@ -24,6 +24,7 @@ function Register() {
           .required("E-mail é obrigatório."),
         cpf: Yup.string()
           .min(11, "Digite um CPF válido.")
+          .max(11, "Digite um CPF válido.")
           .required("CPF é obrigatório"),
         gender: Yup.string()
           .test(
@@ -98,6 +99,7 @@ function Register() {
                   className="form-control"
                   placeholder="Nome completo "
                   name="fullName"
+                  id="fullName"
                 />
               </div>
               <div className="col-12 col-sm-12  mt-2">
@@ -107,6 +109,7 @@ function Register() {
                   className="form-control"
                   placeholder="email@"
                   name="email"
+                  id="email"
                 />
               </div>
 
@@ -117,6 +120,7 @@ function Register() {
                   className="form-control"
                   placeholder="CPF"
                   name="cpf"
+                  id="cpf"
                 />
               </div>
 
@@ -135,12 +139,12 @@ function Register() {
               </div>
 
               <div className="col-6 col-sm-6  mt-2">
-                <label>Telefone principal</label>
+                <label>Telefone</label>
                 <InputText
                   type="text"
                   name="telNumber"
                   className="form-control"
-                  placeholder="Telefone Principal"
+                  id="telNumber"
                 />
               </div>
 
@@ -150,6 +154,7 @@ function Register() {
                   type="date"
                   className="form-control"
                   name="birthDate"
+                  id="birthDate"
                 />
               </div>
 
@@ -160,6 +165,7 @@ function Register() {
                   className="form-control"
                   placeholder="senha"
                   name="password"
+                  id="password"
                 />
               </div>
 
@@ -170,6 +176,7 @@ function Register() {
                   className="form-control"
                   placeholder="confirmar senha"
                   name="passwordConfirm"
+                  id="passwordConfirm"
                 />
               </div>
 
