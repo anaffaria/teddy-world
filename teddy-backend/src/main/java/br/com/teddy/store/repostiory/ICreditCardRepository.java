@@ -1,7 +1,7 @@
 package br.com.teddy.store.repostiory;
 
 import br.com.teddy.store.domain.CreditCard;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ICreditCardRepository extends CrudRepository<CreditCard, Long> {
+public interface ICreditCardRepository extends JpaRepository<CreditCard, Long> {
 }
