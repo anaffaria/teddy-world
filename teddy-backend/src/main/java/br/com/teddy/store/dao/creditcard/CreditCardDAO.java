@@ -7,6 +7,7 @@ import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.DomainEntity;
 
 import br.com.teddy.store.repostiory.ICreditCardRepository;
+import org.hibernate.annotations.Where;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class CreditCardDAO implements IDAO {
     public DomainEntity create(DomainEntity domainEntity) {
         CreditCard creditCard = (CreditCard) domainEntity;
 
-         return iCreditCardRepository.save(creditCard);
+         return iCreditCardRepository.saveAndFlush(creditCard);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class CreditCardDAO implements IDAO {
         CreditCard creditCard = (CreditCard) get(id);
         creditCard.setDeletedAt(LocalDateTime.now());
 
-        return iCreditCardRepository.save(creditCard);
+        return iCreditCardRepository.saveAndFlush(creditCard);
     }
 
     @Override

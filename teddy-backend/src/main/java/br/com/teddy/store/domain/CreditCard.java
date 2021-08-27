@@ -1,6 +1,7 @@
 package br.com.teddy.store.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Entity(name = "_creditcard")
+@Where(clause = "deleted_at is null")
 public class CreditCard extends DomainEntity{
 
     private String creditCardNumber;
