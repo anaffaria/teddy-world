@@ -1,4 +1,3 @@
-
 import { AiOutlineCreditCard, AiOutlineDelete } from "react-icons/ai";
 import { BiCalendarHeart } from "react-icons/bi";
 import { IoMdAddCircle } from "react-icons/io";
@@ -8,6 +7,9 @@ import { CreditCardForm } from "../components/Forms/CreditCardForm";
 import { useState } from "react";
 import { Table } from "react-bootstrap";
 import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { axiosInstance } from "../service/serviceInstance";
 
 export interface CreditCard {
   id?: string;
@@ -24,11 +26,24 @@ export interface CreditCard {
 
 function Cards() {
   const [show, setShow] = useState(false);
+  const [cards, setCards] = useState<CreditCard[]>([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    axiosInstance
+      .get(`creditcards/customer/${id}`)
+      .then((resp) => {
+        console.log(resp.data);
+        setCards(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   return (
     <CustomerAccount>
@@ -49,23 +64,27 @@ function Cards() {
             </tr>
           </thead>
           <tbody>
-            
-              <tr>
-                <td className="align-middle">
-                  <span></span>
-                </td>
-                <td className="align-middle"></td>
-                <td className="align-middle"></td>
-                <td className="align-middle">
-                  <div className="d-flex m-auto">
-                    <div className="m-auto btn btn-sm btn-outline-danger">
-                      <AiOutlineDelete fontSize={24} className="m-auto" />
-                      <button className="m-auto">Excluir</button>
+            {cards.map((el, index) => {
+              return (
+                <tr>
+                  <td className="align-middle">
+                    <span>{el.createdAt}</span>
+                  </td>
+                  <td className="align-middle">{el.creditCardNumber}</td>
+                  <td className="align-middle">{el.cardFlag}</td>
+                  <td className="align-middle">
+                    <div className="d-flex m-auto">
+                      <div className="m-auto">
+                        <button className="m-auto btn btn-sm btn-outline-danger">
+                          <AiOutlineDelete fontSize={24} className="m-auto" />
+                          Excluir
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
 
@@ -92,7 +111,7 @@ function Cards() {
         show={show}
         title="Adicionar Novo Cartão"
       >
-        <CreditCardForm />
+        <CreditCardForm customer={{ id: Number(id) }} />
       </ModalTeddy>
     </CustomerAccount>
   );

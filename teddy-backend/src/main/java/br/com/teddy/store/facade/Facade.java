@@ -139,4 +139,16 @@ public class Facade extends AbstractFacade implements IFacade{
 
         return FactoryResponseDTO.createDTO(dao.update(domainEntity), "UPDATE_PASSWORD");
     }
+
+    public AttrResponseDTO getAllCreditCardByCustomer(DomainEntity domainEntity) {
+        super.initialize();
+        stringBuilder.setLength(0);
+        FactoryResponseDTO.hasError = false;
+        FactoryResponseDTO.message = "";
+        String className = domainEntity.getClass().getName();
+        IDAO dao = daos.get(className);
+
+        return FactoryResponseDTO.createDTO(dao.get(domainEntity.getId()), "GET");
+    }
+
 }

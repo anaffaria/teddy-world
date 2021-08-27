@@ -111,6 +111,15 @@ function AdminCustomers() {
                                     icon: "success",
                                     title: "Dados Atualizados!",
                                   });
+
+                                  setCustomers((prev) => {
+                                    let customersList = Object.assign(prev, {});
+                                    customersList = customersList.filter(
+                                      (el) => el.id !== customer.id
+                                    );
+                                    console.log(customersList);
+                                    return customersList;
+                                  });
                                 })
                                 .catch((err) => {
                                   console.log(err);

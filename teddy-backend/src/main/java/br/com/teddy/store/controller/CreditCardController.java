@@ -39,4 +39,15 @@ public class CreditCardController {
     public ResponseEntity getAllCreditCard() {
         return ResponseEntity.ok(facade.list(new CreditCard()));
     }
+
+    @GetMapping("/creditcards/customer/{id}")
+    public ResponseEntity getAllCreditCardByCustomer(@PathVariable Long id) {
+        CreditCard creditCard = new CreditCard();
+        Customer customer = new Customer();
+
+        customer.setId(id);
+        creditCard.setCustomer(customer);
+
+        return ResponseEntity.ok(facade.list(creditCard));
+    }
 }

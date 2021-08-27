@@ -43,8 +43,8 @@ public class CreditCardDAO implements IDAO {
     @Override
     public List<DomainEntity> list(DomainEntity domainEntity) {
         List<DomainEntity> domains = new ArrayList<>();
-
-        iCreditCardRepository.findAll().forEach(e -> domains.add(e));
+        CreditCard creditCard = (CreditCard) domainEntity;
+        iCreditCardRepository.findCreditCardByCustomerId(creditCard.getCustomer().getId()).forEach(e -> domains.add(e));
 
         return domains;
     }

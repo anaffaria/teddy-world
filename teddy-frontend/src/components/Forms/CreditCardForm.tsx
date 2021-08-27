@@ -13,21 +13,24 @@ export interface CreditCard {
   id?: string;
   createdAt?: string;
   deletedAt?: string;
-  cardHolder: string;
-  creditCardNumber: string;
-  cardMonth: string;
-  cardYear: string;
-  cardSecurity: string;
-  cardFavourite: boolean;
-  cardFlag: string;
+  cardHolder?: string;
+  creditCardNumber?: string;
+  cardMonth?: string;
+  cardYear?: string;
+  cardSecurity?: string;
+  cardFavourite?: boolean;
+  cardFlag?: string;
+  customer?: {
+    id: number;
+  };
 }
 
-export function CreditCardForm() {
+export function CreditCardForm(creditCardProp: CreditCard) {
   const formRef = useRef<FormHandles>(null);
-  
-  const [creditCard, setCreditCard] = useState<CreditCard>();
 
-  const [cardFlag, setCardFlag] = useState<string | undefined>("")
+  const [creditCard, setCreditCard] = useState(creditCardProp);
+
+  const [cardFlag, setCardFlag] = useState<string | undefined>("");
 
   async function handleSubmit(data: CreditCard) {
     try {
@@ -46,7 +49,7 @@ export function CreditCardForm() {
             "Mês do cartão de crédito",
             "Cartão de crédito é inválido",
             (value) =>
-              CardValidator.expirationDate(value + data.cardYear).isValid
+              CardValidator.expirationDate(value + data.cardYear!).isValid
           ),
         cardYear: Yup.string()
           .required("Ano do cartão é obrigatório")
@@ -54,7 +57,7 @@ export function CreditCardForm() {
             "Ano do cartão de crédito",
             "Cartão de crédito é inválido",
             (value) =>
-              CardValidator.expirationDate(data.cardMonth + value).isValid
+              CardValidator.expirationDate(data.cardMonth! + value).isValid
           ),
         cardSecurity: Yup.string()
           .required("CVV obrigatório")
@@ -63,7 +66,7 @@ export function CreditCardForm() {
             "Código de segurança é inválido",
             (value) => CardValidator.cvv(value).isValid
           ),
-        cardFlag: Yup.string().required("Bandeira é obrigatória")
+        cardFlag: Yup.string().required("Bandeira é obrigatória"),
       });
 
       await schema.validate(data, {
@@ -73,6 +76,10 @@ export function CreditCardForm() {
       formRef.current?.setErrors({});
 
       data.id = creditCard?.id;
+
+      if (creditCard.customer?.id) {
+        data.customer = { id: creditCard.customer.id };
+      }
 
       const onSuccess = () => {
         Swal.fire({
@@ -91,7 +98,6 @@ export function CreditCardForm() {
       };
 
       SaveCreditCard({ data, onSuccess, onError });
-
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -108,7 +114,8 @@ export function CreditCardForm() {
   function cardFlags(number: string) {
     var re: { [key: string]: RegExp } = {
       electron: /^(4026|417500|4405|4508|4844|4913|4917)\d+$/,
-      maestro: /^(5018|5020|5038|5612|5893|6304|6759|6761|6762|6763|0604|6390)\d+$/,
+      maestro:
+        /^(5018|5020|5038|5612|5893|6304|6759|6761|6762|6763|0604|6390)\d+$/,
       dankort: /^(5019)\d+$/,
       interpayment: /^(636)\d+$/,
       unionpay: /^(62|88)\d+$/,
@@ -117,12 +124,12 @@ export function CreditCardForm() {
       amex: /^3[47][0-9]{13}$/,
       diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
       discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
-      jcb: /^(?:2131|1800|35\d{3})\d{11}$/
-    }
+      jcb: /^(?:2131|1800|35\d{3})\d{11}$/,
+    };
 
     for (var key in re) {
       if (re[key].test(number)) {
-        return key.toLocaleUpperCase()
+        return key.toLocaleUpperCase();
       }
     }
   }
@@ -139,7 +146,9 @@ export function CreditCardForm() {
           placeholder="1234-1234-1234-1234"
           onChange={(val) => {
             if (val.currentTarget.value?.length > 14) {
-              let number = val.currentTarget.value.replaceAll("-", '').replaceAll(/^\s+|\s+$/g, "");
+              let number = val.currentTarget.value
+                .replaceAll("-", "")
+                .replaceAll(/^\s+|\s+$/g, "");
               let flag = cardFlags(number);
               setCardFlag(flag);
             }
