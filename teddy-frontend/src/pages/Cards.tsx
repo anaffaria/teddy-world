@@ -37,7 +37,6 @@ function Cards() {
     axiosInstance
       .get(`creditcards/customer/${id}`)
       .then((resp) => {
-        console.log(resp.data);
         setCards(resp.data);
       })
       .catch((err) => {
@@ -66,7 +65,7 @@ function Cards() {
           <tbody>
             {cards.map((el, index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <td className="align-middle">
                     <span>{el.createdAt}</span>
                   </td>
@@ -75,7 +74,27 @@ function Cards() {
                   <td className="align-middle">
                     <div className="d-flex m-auto">
                       <div className="m-auto">
-                        <button className="m-auto btn btn-sm btn-outline-danger">
+                        <button
+                          className="m-auto btn btn-sm btn-outline-danger"
+                          onClick={() => {
+                            axiosInstance
+                              .delete(`/creditcard/${el.id}`)
+                              .then((resp: any) => {
+                                setCards((prev) => {
+                                  let newCreditCards = Object.assign([], prev);
+
+                                  newCreditCards = newCreditCards.filter(
+                                    (card: CreditCard) => card?.id !== el.id
+                                  );
+
+                                  return newCreditCards;
+                                });
+                              })
+                              .catch((err: any) => {
+                                console.log(err);
+                              });
+                          }}
+                        >
                           <AiOutlineDelete fontSize={24} className="m-auto" />
                           Excluir
                         </button>
@@ -111,7 +130,13 @@ function Cards() {
         show={show}
         title="Adicionar Novo Cartão"
       >
-        <CreditCardForm customer={{ id: Number(id) }} />
+        <CreditCardForm
+          customer={{ id: Number(id) }}
+          toggleModal={() => {
+            setShow((prev) => !prev);
+          }}
+          handleCards={setCards}
+        />
       </ModalTeddy>
     </CustomerAccount>
   );

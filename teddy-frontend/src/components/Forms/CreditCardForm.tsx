@@ -23,6 +23,8 @@ export interface CreditCard {
   customer?: {
     id: number;
   };
+  toggleModal?: Function;
+  handleCards?: Function;
 }
 
 export function CreditCardForm(creditCardProp: CreditCard) {
@@ -81,10 +83,17 @@ export function CreditCardForm(creditCardProp: CreditCard) {
         data.customer = { id: creditCard.customer.id };
       }
 
-      const onSuccess = () => {
+      const onSuccess = (resp: any) => {
         Swal.fire({
           icon: "success",
           title: "Cartão Salvo!",
+        });
+
+        creditCardProp?.toggleModal?.();
+        creditCardProp?.handleCards?.((prev: CreditCard[]) => {
+          let newCustomerCards = Object.assign([], prev);
+          newCustomerCards.push(resp.data);
+          return newCustomerCards;
         });
       };
 
