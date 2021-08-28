@@ -95,6 +95,7 @@ function CustomerEdit(customer: Customer) {
             <div className="mr-3 ml-2">
               <button
                 className="btn-sm btn btn-outline-primary"
+                id="editar"
                 onClick={() => {
                   setAddress(address);
                   setIsOpenForm(true);
@@ -107,6 +108,7 @@ function CustomerEdit(customer: Customer) {
             <div className="mr-3 ml-2">
               <button
                 className="btn-sm btn btn-outline-danger"
+                id="excluir"
                 onClick={() => {
                   axiosInstance
                     .delete(`/address/${address.id}`)
@@ -160,6 +162,7 @@ function CustomerEdit(customer: Customer) {
                     className="form-control"
                     placeholder="E-mail"
                     name="email"
+                    id="email"
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
@@ -169,6 +172,7 @@ function CustomerEdit(customer: Customer) {
                     className="form-control"
                     placeholder="Nome"
                     name="fullName"
+                    id="nome"
                   />
                 </div>
 
@@ -179,6 +183,7 @@ function CustomerEdit(customer: Customer) {
                     className="form-control"
                     placeholder="CPF"
                     name="cpf"
+                    id="cpf"
                     disabled
                   />
                 </div>
@@ -201,6 +206,7 @@ function CustomerEdit(customer: Customer) {
                   <label>Telefone principal</label>
                   <InputText
                     type="text"
+                    id="telNumber"
                     name="telNumber"
                     className="form-control"
                     placeholder="Telefone primario"
@@ -210,6 +216,7 @@ function CustomerEdit(customer: Customer) {
                   <label>Data de nascimento:</label>
                   <InputText
                     type="date"
+                    id="birthDate"
                     className="form-control"
                     name="birthDate"
                   />
@@ -218,6 +225,7 @@ function CustomerEdit(customer: Customer) {
                 <div className="col mt-5 mb-5 d-flex justify-content-end">
                   <button
                     type="submit"
+                    id="alterarCadastro"
                     className="buttom btn-block custumer_edit-buttom"
                   >
                     Alterar cadastro
@@ -274,7 +282,7 @@ function CustomerEdit(customer: Customer) {
                   size={40}
                   color={"#FA98AF"}
                 />
-                <label className=" col-12 font-weight-bold text-center">
+                <label className=" col-12 font-weight-bold text-center" id="adicionarNovoEndereco">
                   Adicionar novo endereço
                 </label>
               </div>

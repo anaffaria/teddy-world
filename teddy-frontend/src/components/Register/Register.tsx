@@ -189,7 +189,7 @@ function Register() {
                   </Link>
                 </div>
                 <div>
-                  <button type="submit" className="layout-buttom">
+                  <button type="submit" id="cadastrar" className="layout-buttom">
                     Cadastrar
                   </button>
                 </div>
