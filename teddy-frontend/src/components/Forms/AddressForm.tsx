@@ -109,7 +109,10 @@ export function AddressForm({
               (el) => el.id === address.id
             );
 
-            if (oldAddressIndex && newCustomerAddress.addressList) {
+            if (
+              oldAddressIndex !== undefined &&
+              newCustomerAddress.addressList
+            ) {
               newCustomerAddress.addressList[oldAddressIndex] = resp?.data;
             }
             return newCustomerAddress;
@@ -141,7 +144,6 @@ export function AddressForm({
       };
 
       SaveAddress({ data, onError, onSuccess });
-
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {
@@ -177,37 +179,41 @@ export function AddressForm({
 
       <div className="form-group">
         <label htmlFor="street">Logradouro</label>
-        <InputText name="street" className="form-control" id="street"/>
+        <InputText name="street" className="form-control" id="street" />
       </div>
 
       <div className="form-group">
         <label htmlFor="number">Número</label>
-        <InputText name="number" className="form-control" id="number"/>
+        <InputText name="number" className="form-control" id="number" />
       </div>
 
       <div className="form-group">
         <label htmlFor="neighborhood">Bairro</label>
-        <InputText name="neighborhood" className="form-control" id="neighborhood" />
+        <InputText
+          name="neighborhood"
+          className="form-control"
+          id="neighborhood"
+        />
       </div>
 
       <div className="form-group">
         <label htmlFor="city">Cidade</label>
-        <InputText name="city" className="form-control" id="city"/>
+        <InputText name="city" className="form-control" id="city" />
       </div>
 
       <div className="form-group">
         <label htmlFor="complement">Complemento</label>
-        <InputText name="complement" className="form-control" id="complement"/>
+        <InputText name="complement" className="form-control" id="complement" />
       </div>
 
       <div className="form-group">
         <label htmlFor="state">Estado</label>
-        <InputText name="state" className="form-control" id="state"/>
+        <InputText name="state" className="form-control" id="state" />
       </div>
 
       <div className="form-group">
         <label htmlFor="country">País</label>
-        <InputText name="country" className="form-control" id="country"/>
+        <InputText name="country" className="form-control" id="country" />
       </div>
 
       <div className="form-group">

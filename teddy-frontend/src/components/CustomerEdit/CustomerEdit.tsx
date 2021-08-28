@@ -111,7 +111,7 @@ function CustomerEdit(customer: Customer) {
                   axiosInstance
                     .delete(`/address/${address.id}`)
                     .then((resp) => {
-                      if (resp.data.hasError) throw new Error();
+                      if (resp.data.hasError) throw new Error(resp.data?.message);
                       Swal.fire({
                         icon: "success",
                         title: "Dados Atualizados!",
