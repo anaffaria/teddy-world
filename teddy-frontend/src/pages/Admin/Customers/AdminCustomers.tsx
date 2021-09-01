@@ -109,7 +109,7 @@ function AdminCustomers() {
                                   if (resp.data.hasError) throw new Error();
                                   Swal.fire({
                                     icon: "success",
-                                    title: "Dados Atualizados!",
+                                    title: "Usuário desativado com sucesso!",
                                   });
 
                                   setCustomers((prev) => {

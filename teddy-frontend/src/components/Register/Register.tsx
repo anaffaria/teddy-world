@@ -72,7 +72,7 @@ function Register() {
         });
       };
 
-      const customer = SaveCustomer({ onSuccess, onError, data });
+      SaveCustomer({ onSuccess, onError, data });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
