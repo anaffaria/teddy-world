@@ -112,6 +112,7 @@ public class Facade extends AbstractFacade implements IFacade{
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
         FactoryResponseDTO.message = "";
+
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
 
