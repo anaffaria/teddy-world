@@ -9,15 +9,8 @@ import img2 from "../components/TopProducts/img/img2.jpg";
 import img3 from "../components/TopProducts/img/img3.jpg";
 import img4 from "../components/TopProducts/img/img4.jpg";
 import UserOff from "../components/UserOff/UserOff";
-import { useCustomer } from "../providers/Customer";
 
 function Home() {
-  const { customer, setCustomer } = useCustomer();
-  console.log(customer);
-
-  useEffect(() => {
-    setCustomer({ name: "huehueheue" });
-  }, []);
   const products = [
     {
       price: 69.9,

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { axiosInstance } from "../../service/serviceInstance";
 import { Address } from "../Forms/AddressForm";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 export interface CustomerAccountProps {
   children?: React.ReactNode;
@@ -28,19 +29,8 @@ export interface Customer {
 }
 
 function CustomerAccount({ children }: CustomerAccountProps) {
-  const [customer, setCustomer] = useState<Customer>();
+  const { customer } = useCustomer() as CustomerContextTiping;
   const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    axiosInstance
-      .get(`customer/${id}`)
-      .then((response) => {
-        setCustomer(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [id]);
 
   return (
     <>

@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CustomerEditComponent from "../components/CustomerEdit/CustomerEdit";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { GetCustomer } from "../service/customerService";
-import { Customer } from "../components/CustomerAccount/CustomerAccount";
+import { CustomerContextTiping, useCustomer } from "../providers/Customer";
 
 function CustomerEdit() {
-  const [customer, setCustomer] = useState<Customer>();
+  const { setCustomer } = useCustomer() as CustomerContextTiping;
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -24,11 +24,11 @@ function CustomerEdit() {
     };
 
     GetCustomer({ id, onSuccess: success }).then((resp) => setCustomer(resp));
-  }, [id]);
+  }, [id, setCustomer]);
 
   return (
     <>
-      <CustomerEditComponent {...customer} setCustomer={setCustomer} />
+      <CustomerEditComponent/>
     </>
   );
 }
