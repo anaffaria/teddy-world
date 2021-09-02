@@ -4,9 +4,6 @@ import Footer from "../Footer/Footer";
 import "./CustomerAccount.css";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
-import { axiosInstance } from "../../service/serviceInstance";
 import { Address } from "../Forms/AddressForm";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 

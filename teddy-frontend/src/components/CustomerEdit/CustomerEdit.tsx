@@ -14,7 +14,6 @@ import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
-import { Prev } from "react-bootstrap/esm/PageItem";
 
 function CustomerEdit() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
@@ -74,8 +73,8 @@ function CustomerEdit() {
       SaveCustomer({ data, onSuccess, onError });
       setCustomer((prev) => {
         data.addressList = prev?.addressList;
-        return data
-      })
+        return data;
+      });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -90,8 +89,7 @@ function CustomerEdit() {
   }
 
   useEffect(() => {
-    if(customer)
-      formRef?.current?.setData(customer);
+    if (customer) formRef?.current?.setData(customer);
   }, [customer]);
 
   function mapAddresses(addressType: number) {
@@ -255,9 +253,7 @@ function CustomerEdit() {
               <aside>
                 <AddressForm
                   className="mt-2"
-                  customer={customer}
                   address={address}
-                  setCustomer={setCustomer}
                   setIsFormOpen={setIsOpenForm}
                 />
                 <button

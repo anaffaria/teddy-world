@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import QuickLinks from "../components/QuickLinks/QuickLinks";
 import Showcase from "../components/Showcase/Showcase";
 import Inform from "../components/Inform/Inform";

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { Customer } from "../CustomerAccount/CustomerAccount";
 import { SaveAddress } from "../../service/addressService";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 enum AddressType {
   BILLING = 0,
@@ -34,19 +35,12 @@ export interface Address {
 
 interface AddressFormProps {
   className?: string;
-  customer?: Customer;
   address?: Address;
-  setCustomer?: Function;
   setIsFormOpen?: Function;
 }
 
-export function AddressForm({
-  className,
-  customer,
-  address,
-  setCustomer,
-  setIsFormOpen,
-}: AddressFormProps) {
+export function AddressForm({ className, setIsFormOpen, address }: AddressFormProps) {
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const formRef = useRef<FormHandles>(null);
   const [customerAddress, setCustomerAddress] = useState<Customer>();
 
@@ -101,7 +95,7 @@ export function AddressForm({
       data.id = address?.id;
 
       const onSuccess = (resp: any) => {
-        setCustomer?.((prev: Customer) => {
+        setCustomer?.((prev) => {
           const newCustomerAddress = Object.assign({}, prev);
 
           if (address?.id) {
