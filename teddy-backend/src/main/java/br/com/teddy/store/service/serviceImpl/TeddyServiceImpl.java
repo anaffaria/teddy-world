@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.validation.Validator;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,16 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
         Teddy newTeddy = teddy.saveAndFlush(object);
 
         return FactoryResponseDTO.createDTO(newTeddy, "CREATE");
+    }
+
+    @Override
+    public AttrResponseDTO delete(Long id) {
+        Teddy oldTeddy = teddy.getById(id);
+
+        oldTeddy.setDeletedAt(LocalDateTime.now());
+        oldTeddy = teddy.saveAndFlush(oldTeddy);
+
+        return FactoryResponseDTO.createDTO(oldTeddy, "DELETE");
     }
 
     @Override

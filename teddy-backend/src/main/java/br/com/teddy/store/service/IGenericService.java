@@ -8,5 +8,5 @@ public interface IGenericService <T>{
     public List<AttrResponseDTO> findAll();
     public AttrResponseDTO findById(Long id);
     public AttrResponseDTO saveAndFlush(T object);
-
+    public AttrResponseDTO delete(Long id);
 }

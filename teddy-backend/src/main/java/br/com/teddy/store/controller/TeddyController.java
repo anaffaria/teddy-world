@@ -31,4 +31,9 @@ public class TeddyController {
     public ResponseEntity getTeddy(@PathVariable Long id) {
         return ResponseEntity.ok(teddyGenericService.findById(id));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteTeddy(@PathVariable Long id) {
+        return ResponseEntity.ok(teddyGenericService.delete(id));
+    }
 }
