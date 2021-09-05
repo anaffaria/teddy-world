@@ -1,12 +1,10 @@
 package br.com.teddy.store.dto;
 
-import br.com.teddy.store.domain.Address;
-import br.com.teddy.store.domain.CreditCard;
-import br.com.teddy.store.domain.Customer;
-import br.com.teddy.store.domain.DomainEntity;
+import br.com.teddy.store.domain.*;
 import br.com.teddy.store.dto.address.AddressDTO;
 import br.com.teddy.store.dto.creditcard.CreditCardDTO;
 import br.com.teddy.store.dto.customer.CustomerDTO;
+import br.com.teddy.store.dto.teddy.TeddyDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +32,10 @@ public abstract class FactoryResponseDTO {
 
         if(domainEntity instanceof CreditCard){
             return new CreditCardDTO((CreditCard) domainEntity);
+        }
+
+        if(domainEntity instanceof Teddy) {
+            return new TeddyDTO((Teddy) domainEntity, method);
         }
 
         return null;

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-
 public class CreditCardController {
     @Autowired
     private Facade facade;

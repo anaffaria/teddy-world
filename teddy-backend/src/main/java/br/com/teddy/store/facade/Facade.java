@@ -30,7 +30,7 @@ public class Facade extends AbstractFacade implements IFacade{
         super.initialize();
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
 
         String className = domainEntity.getClass().getName();
         Map<String, List<IStrategy>> entityMap = businessRule.get(className);
@@ -54,7 +54,7 @@ public class Facade extends AbstractFacade implements IFacade{
     public AttrResponseDTO delete(DomainEntity domainEntity) {
         super.initialize();
         stringBuilder.setLength(0);
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
         FactoryResponseDTO.hasError = false;
 
         String className = domainEntity.getClass().getName();
@@ -70,7 +70,7 @@ public class Facade extends AbstractFacade implements IFacade{
         super.initialize();
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
 
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
@@ -96,7 +96,7 @@ public class Facade extends AbstractFacade implements IFacade{
         super.initialize();
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
 
@@ -111,7 +111,7 @@ public class Facade extends AbstractFacade implements IFacade{
         super.initialize();
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
 
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
@@ -123,7 +123,7 @@ public class Facade extends AbstractFacade implements IFacade{
         super.initialize();
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
 
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
@@ -145,7 +145,7 @@ public class Facade extends AbstractFacade implements IFacade{
         super.initialize();
         stringBuilder.setLength(0);
         FactoryResponseDTO.hasError = false;
-        FactoryResponseDTO.message = "";
+        FactoryResponseDTO.message = null;
         String className = domainEntity.getClass().getName();
         IDAO dao = daos.get(className);
 
