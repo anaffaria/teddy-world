@@ -38,6 +38,7 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
     @Override
     public AttrResponseDTO saveAndFlush(Teddy object) {
         StringBuilder errorsMessages = new StringBuilder();
+        Teddy oldTeddy = teddy.findById(object.getId()).get();
 
         validator.validate(object).forEach(e -> errorsMessages.append(e.getMessage() + ","));
 
@@ -46,6 +47,11 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
             FactoryResponseDTO.hasError = true;
             FactoryResponseDTO.message = errorsMessages.toString();
             return FactoryResponseDTO.createDTO(object, "CREATE");
+        }
+
+        if(null != object.getId()) {
+            object.setUpdatedAt(LocalDateTime.now());
+            object.setCreatedAt(oldTeddy.getCreatedAt());
         }
 
         Teddy newTeddy = teddy.saveAndFlush(object);

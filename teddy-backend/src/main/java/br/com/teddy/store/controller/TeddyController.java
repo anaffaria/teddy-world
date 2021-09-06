@@ -5,10 +5,7 @@ import br.com.teddy.store.service.IGenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/teddy")
@@ -35,5 +32,10 @@ public class TeddyController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTeddy(@PathVariable Long id) {
         return ResponseEntity.ok(teddyGenericService.delete(id));
+    }
+
+    @PutMapping("")
+    public ResponseEntity updateTeddy(@RequestBody Teddy teddy) {
+        return ResponseEntity.ok(teddyGenericService.saveAndFlush(teddy));
     }
 }
