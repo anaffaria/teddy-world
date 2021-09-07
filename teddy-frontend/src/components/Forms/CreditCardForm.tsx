@@ -157,6 +157,7 @@ export function CreditCardForm(creditCardProp: CreditCard) {
             if (val.currentTarget.value?.length > 14) {
               let number = val.currentTarget.value
                 .replaceAll("-", "")
+                .replaceAll(" ", "")
                 .replaceAll(/^\s+|\s+$/g, "");
               let flag = cardFlags(number);
               setCardFlag(flag);

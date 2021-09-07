@@ -6,7 +6,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductList.css";
 
-interface ListProductsProps {
+export interface Teddy {
+  id?: number;
+  createdAt?: string;
+  deletedAt?: string;
+  fullName?: string;
   listproducts: Array<{
     image: string;
     title?: string;
@@ -22,7 +26,7 @@ interface ListProductsProps {
   };
 }
 
-function ProductList({ listproducts, listfilter }: ListProductsProps) {
+function ProductList({ listproducts, listfilter }: Teddy) {
   const [valRange, setValRange] = useState<number>(0);
 
   function renderProductsList() {
