@@ -6,7 +6,6 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,6 +17,7 @@ public class Teddy extends DomainEntity{
 
     @NotNull
     @NotBlank(message = "A pelucia deve conter ao menos uma imagem")
+    @Column(columnDefinition = "TEXT")
     private String image;
 
     @NotNull
