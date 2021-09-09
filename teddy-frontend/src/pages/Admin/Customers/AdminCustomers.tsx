@@ -77,8 +77,8 @@ function AdminCustomers() {
                   <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
-              <Table responsive hover>
-                <thead>
+              <Table responsive hover >
+                <thead className="text-truncate">
                   <tr>
                     <th>
                       <BiHash fontSize={20} />
@@ -86,7 +86,7 @@ function AdminCustomers() {
                     <th>Nome</th>
                     <th>CPF</th>
                     <th>E-mail</th>
-                    <th>Classificação do cliente</th>
+                    <th>Classificação</th>
                     <th>Exclusão</th>
                   </tr>
                 </thead>

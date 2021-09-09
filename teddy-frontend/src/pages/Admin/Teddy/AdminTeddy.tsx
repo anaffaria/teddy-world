@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 import { Teddy } from "../../../Types/Teddy";
 import { axiosInstance } from "../../../service/serviceInstance";
+import { BiHash } from "react-icons/bi";
 import Swal from "sweetalert2";
 
 function AdminTeddy() {
@@ -84,7 +85,7 @@ function AdminTeddy() {
               <Table responsive hover>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th><BiHash fontSize={20} /></th>
                     <th>Nome</th>
                     <th>Valor</th>
                     <th>Estoque</th>
