@@ -1,32 +1,28 @@
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
-import { useHistory } from "react-router-dom";
-import { FormHandles } from "@unform/core";
-import { useRef } from "react";
 import * as Yup from "yup";
-import { Form } from "@unform/web";
 import InputText from "../../../components/Form/InputText";
 import CreatableSelect from "../../../components/Form/ReactSelect";
+import { useHistory } from "react-router-dom";
+import { FormHandles } from "@unform/core";
+import { useRef, useState } from "react";
+import { Form } from "@unform/web";
 import { Select } from "../../../components/Form/SelectInput";
+import { Teddy } from "../../../Types/Teddy";
+import Swal from "sweetalert2";
+import { SaveTeddy } from "../../../service/teddyService";
 
-interface TeddyForm {
-  title: string;
-  subtitle: string;
-  price: number;
-  categories: Array<string>;
-  colors: Array<string>;
-  size: string;
-  reason?: string;
-  status?: boolean;
-}
 
 export function NewTeddy() {
+
+
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
-  async function handleSubmit(data: TeddyForm) {
+  async function handleSubmit(data: Teddy) {
     try {
       const schema = Yup.object().shape({});
+        
 
       await schema.validate(data, {
         abortEarly: false,
@@ -34,7 +30,22 @@ export function NewTeddy() {
 
       formRef.current?.setErrors({});
 
-      // history.push("/cliente/pedidos");
+      const onSuccess = () => {
+        Swal.fire({
+          icon: "success",
+          title: "Dados Atualizados!",
+        });
+      };
+
+      const onError = () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo deu errado por aqui!",
+        });
+      };
+
+      SaveTeddy({ data, onSuccess, onError });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -67,24 +78,8 @@ export function NewTeddy() {
                 className="form-style"
               >
                 <div className="form-group">
-                  <label htmlFor="title">Imagens da Pelúcia</label>
-
-                  <div className="custom-file">
-                    <label
-                      className="custom-file-label"
-                      htmlFor="inputGroupFile04"
-                    >
-                      Escolha as imagens
-                    </label>
-                    <InputText
-                      type="file"
-                      className="custom-file-input"
-                      id="inputGroupFile04"
-                      name="images"
-                      multiple
-                      aria-describedby="inputGroupFileAddon04"
-                    />
-                  </div>
+                  <label htmlFor="image">Url da imagem:</label>
+                  <InputText name="image" className="form-control" placeholder="http://" />
                 </div>
 
                 <div className="form-group">

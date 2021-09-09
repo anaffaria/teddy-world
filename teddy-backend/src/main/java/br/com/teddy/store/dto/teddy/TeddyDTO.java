@@ -39,5 +39,6 @@ public class TeddyDTO extends AttrResponseDTO {
         this.amount = teddy.getAmountAvailable();
         this.id = teddy.getId();
         this.deletedAt = teddy.getDeletedAt();
+        this.amount = teddy.getAmount();
     }
 }
