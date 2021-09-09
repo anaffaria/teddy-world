@@ -5,32 +5,22 @@ import Footer from "../Footer/Footer";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductList.css";
+import { Category, Color, Size, Teddy } from "../../Types/Teddy";
 
-export interface Teddy {
-  id?: number;
-  createdAt?: string;
-  deletedAt?: string;
-  fullName?: string;
-  listproducts: Array<{
-    image: string;
-    title?: string;
-    subtitle: string;
-    productUrl: string;
-    price: number;
-  }>;
-
-  listfilter: {
-    categories: string[];
-    colors: string[];
-    sizes: string[];
+interface ProductListProps {
+  teddys?: Array<Teddy>;
+  filters: {
+    colors: Color[],
+    categories: Category[],
+    sizes: Size[]
   };
 }
 
-function ProductList({ listproducts, listfilter }: Teddy) {
+function ProductList({ filters, teddys }: ProductListProps) {
   const [valRange, setValRange] = useState<number>(0);
 
   function renderProductsList() {
-    return listproducts.map((el, index) => {
+    return teddys?.map((el, index) => {
       return (
         <div className="col-xs-12 mt-1 col-sm-3 col-md-3 col-lg-3" key={index}>
           <div className="card border-0">
@@ -49,13 +39,13 @@ function ProductList({ listproducts, listfilter }: Teddy) {
   }
 
   function renderCategories() {
-    console.info(listfilter);
-    return listfilter.categories.map((element: string, index: number) => {
+    console.info(filters);
+    return filters.categories.map((element, index: number) => {
       return (
         <li key={index}>
           <div className="form-check ">
-            <input className="form-check-input" type="checkbox" value="" />
-            <label className="form-check-label">{element}</label>
+            <input className="form-check-input" type="checkbox" value={element.id} />
+            <label className="form-check-label">{element.name}</label>
           </div>
         </li>
       );
@@ -63,12 +53,12 @@ function ProductList({ listproducts, listfilter }: Teddy) {
   }
 
   function renderColors() {
-    return listfilter.colors.map((element, index) => {
+    return filters.colors.map((element, index) => {
       return (
         <li key={index}>
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" />
-            <label className="form-check-label">{element}</label>
+            <input className="form-check-input" type="checkbox" value={element.id} />
+            <label className="form-check-label">{element.name}</label>
           </div>
         </li>
       );
@@ -76,11 +66,11 @@ function ProductList({ listproducts, listfilter }: Teddy) {
   }
 
   function renderSizes() {
-    return listfilter.sizes.map((element, index) => {
+    return filters.sizes.map((element, index) => {
       return (
         <li key={index}>
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" />
+            <input className="form-check-input" type="checkbox" value={Size[element]} />
             <label className="form-check-label">{element}</label>
           </div>
         </li>

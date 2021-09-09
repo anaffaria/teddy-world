@@ -1,4 +1,5 @@
-import { Teddy } from "../components/ProductList/ProductList";
+
+import { Teddy } from "../Types/Teddy";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 
@@ -19,6 +20,24 @@ export async function GetTeddy({
       onError?.();
     });
   return teddy;
+}
+
+export async function ListTeddy({
+  onSuccess,
+  onError,
+}: ServiceTypes<Teddy>) {
+  let teddys = undefined;
+  await axiosInstance
+    .get(`/teddy`)
+    .then((response) => {
+      teddys = response.data;
+      onSuccess?.();
+    })
+    .catch((err) => {
+      console.error(err);
+      onError?.();
+    });
+  return teddys;
 }
 
 export async function SaveTeddy({
