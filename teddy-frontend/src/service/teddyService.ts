@@ -10,7 +10,7 @@ export async function GetTeddy({
 }: ServiceTypes<Teddy>) {
   let teddy = undefined;
   await axiosInstance
-    .get(`teddy/${id}`)
+    .get(`/teddy/${id}`)
     .then((response) => {
       teddy = response.data;
       onSuccess?.();

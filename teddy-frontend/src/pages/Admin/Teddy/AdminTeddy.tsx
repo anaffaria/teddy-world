@@ -5,8 +5,25 @@ import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useLayoutEffect, useState } from "react";
+import { Teddy } from "../../../Types/Teddy";
+import { axiosInstance } from "../../../service/serviceInstance";
+import Swal from "sweetalert2";
 
 function AdminTeddy() {
+  const [teddy, setTeddy] = useState<Array<Teddy>>([]);
+
+  useLayoutEffect(() => {
+    axiosInstance
+      .get("teddy")
+      .then((response) => {
+        setTeddy(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <>
       <div className="topbar"></div>
@@ -16,7 +33,10 @@ function AdminTeddy() {
           <div className="container">
             <div className="d-flex ">
               <h3>Lista de Pelúcias </h3>
-              <Link to='pelucias/new' className="btn-sm btn btn-outline-success ml-auto mb-1">
+              <Link
+                to="pelucias/new"
+                className="btn-sm btn btn-outline-success ml-auto mb-1"
+              >
                 <IoMdAddCircleOutline fontSize={25} /> Nova Pelúcia
               </Link>
             </div>
@@ -58,45 +78,75 @@ function AdminTeddy() {
                     </select>
                   </div>
 
-                  <button className="buttom btn-block">
-                    Pesquisar
-                  </button>
+                  <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
               <Table responsive hover>
                 <thead>
                   <tr>
+                    <th>#</th>
                     <th>Nome</th>
                     <th>Valor</th>
-                    <th>Categoria</th>
-                    <th>Tamanho</th>
                     <th>Estoque</th>
                     <th>Edição</th>
                     <th>Exclusão</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>Leão</td>
-                    <td>
-                      <label>R$</label> 200,0
-                    </td>
-                    <td>pelucia</td>
-                    <td>0cm a 27cm</td>
-                    <td>100</td>
-                    
-                    <td>
-                      <span className="btn-sm btn btn-outline-primary">
-                        <BiEditAlt fontSize={20} />
-                        Editar
-                      </span>
-                    </td>
-                    <td>
-                      <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Excluir
-                      </span>
-                    </td>
-                  </tr>
+                <tbody className="text-truncate">
+                  {teddy.map((teddy, index) => {
+                    return (
+                      <tr>
+                        <td>{teddy.id}</td>
+                        <td>{teddy.title}</td>
+                        <td>
+                          <label>R$ </label>
+                          {teddy.price}
+                        </td>
+                        <td>{teddy.amount}</td>
+                        <td>
+                          <span className="btn-sm btn btn-outline-primary">
+                            <BiEditAlt fontSize={20} />
+                            Editar
+                          </span>
+                        </td>
+                        <td>
+                          <button
+                            className="btn-sm btn btn-outline-danger"
+                            onClick={() => {
+                              axiosInstance
+                                .delete(`/teddy/${teddy.id}`)
+                                .then((resp) => {
+                                  if (resp.data.hasError) throw new Error();
+                                  Swal.fire({
+                                    icon: "success",
+                                    title: "Dados Atualizados!",
+                                  });
+
+                                  setTeddy((prev) => {
+                                    let teddyList = Object.assign(prev, {});
+                                    teddyList = teddyList.filter(
+                                      (el) => el.id !== teddy.id
+                                    );
+                                    console.log(teddyList);
+                                    return teddyList;
+                                  });
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                  Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                                  });
+                                });
+                            }}
+                          >
+                            <BsTrashFill fontSize={20} /> Excluir
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </div>

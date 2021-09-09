@@ -90,7 +90,7 @@ function AdminCustomers() {
                     <th>Exclusão</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-truncate">
                   {customers.map((customer, index) => {
                     return (
                       <tr key={index}>
