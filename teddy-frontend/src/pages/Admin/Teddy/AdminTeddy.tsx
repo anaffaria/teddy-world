@@ -5,25 +5,25 @@ import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Teddy } from "../../../Types/Teddy";
 import { axiosInstance } from "../../../service/serviceInstance";
 import { BiHash } from "react-icons/bi";
 import Swal from "sweetalert2";
+import { ListTeddy } from "../../../service/teddyService";
 
 function AdminTeddy() {
-  const [teddies, setTeddies] = useState<Array<Teddy>>([]);
-
-  useLayoutEffect(() => {
-    axiosInstance
-      .get("teddy")
-      .then((response) => {
-        setTeddies(response.data);
+  const [teddies, setTeddies] = useState<Array<Teddy>>();
+  
+  useEffect(() => {
+    ListTeddy({})
+      .then((resp) => {
+        setTeddies(resp);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.log(err));
+    
   }, []);
+
 
   return (
     <>
@@ -89,21 +89,26 @@ function AdminTeddy() {
                       <BiHash fontSize={20} />
                     </th>
                     <th>Nome</th>
-                    <th>Valor</th>
+                    <th>Preço Real</th>
+                    <th>Preço de Fabrica</th>
                     <th>Estoque</th>
                     <th>Edição</th>
                     <th>Exclusão</th>
                   </tr>
                 </thead>
                 <tbody className="text-truncate">
-                  {teddies.map((teddy, index) => {
+                  {teddies?.map((teddy, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>{teddy.id}</td>
                         <td>{teddy.title}</td>
                         <td>
                           <label>R$ </label>
-                          {teddy.price}
+                          {teddy.priceReal}
+                        </td>
+                        <td>
+                          <label>R$ </label>
+                          {teddy.priceFactory}
                         </td>
                         <td>{teddy.amount}</td>
                         <td>

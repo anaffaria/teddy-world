@@ -29,7 +29,10 @@ public class Teddy extends DomainEntity{
     private String subtitle;
 
     @NotNull
-    private Double price;
+    private Double priceReal;
+
+    @NotNull
+    private Double priceFactory;
 
     @ManyToMany
     private List<Color> color;
@@ -61,7 +64,11 @@ public class Teddy extends DomainEntity{
         if(image.trim().length() <= 0)
             stringBuilder.append("Insira uma url válida, ");
 
-        if(price.doubleValue() <= 10)
+        if(priceReal < priceFactory){
+            stringBuilder.append("O Preçi Real da pelúcia precisa ser maior que o de Preço de Fabrica, ");
+        }
+
+        if(priceFactory.doubleValue() <= 10)
             stringBuilder.append("Preço da pelucia deve ser maior que 10, ");
 
         if(!isActive() && reason.trim().length() < 5)

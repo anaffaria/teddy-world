@@ -5,7 +5,7 @@ import InputText from "../../../components/Form/InputText";
 import CreatableSelect from "../../../components/Form/ReactSelect";
 import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Form } from "@unform/web";
 import { Select } from "../../../components/Form/SelectInput";
 import { Category, Color, Teddy } from "../../../Types/Teddy";
@@ -13,11 +13,12 @@ import Swal from "sweetalert2";
 import { GetTeddy, SaveTeddy } from "../../../service/teddyService";
 import { useParams } from "react-router-dom";
 
+
 export function NewTeddy() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const [teddy, setTeddy] = useState<Teddy>();
+
 
   useEffect(() => {
     if (!id) return;
@@ -26,6 +27,7 @@ export function NewTeddy() {
         if (resp) formRef.current?.setData(resp);
       })
       .catch((err) => console.log(err));
+
   }, [id]);
 
   async function handleSubmit(data: Teddy) {
@@ -34,10 +36,11 @@ export function NewTeddy() {
         image: Yup.string().required("Imagem é obrigatório"),
         title: Yup.string().required("Título é obrigatório"),
         subtitle: Yup.string().required("Subtítulo é obrigatório"),
-        price: Yup.string().required("Preço é obrigatório"),
+        priceReal: Yup.string().required("Preço real é obrigatório"),
+        priceFactory: Yup.string().required("Preço de fabrica é obrigatório"),
         // color: Yup.string().required("Cor é obrigatório"),
         // category: Yup.string().required("Categoria é obrigatório"),
-        // amount: Yup.string().required("Quantidade é obrigatório"),
+        amount: Yup.string().required("Quantidade é obrigatório"),
         size: Yup.string().required("Tamanho é obrigatório"),
       });
 
@@ -71,7 +74,7 @@ export function NewTeddy() {
       }) as Color[];
 
       if (id) data.id = Number(id);
-      
+
       // TODO: react-select breaking when get backend info
       SaveTeddy({ data, onSuccess, onError });
     } catch (error) {
@@ -125,13 +128,36 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="price">Preço da Pelúcia</label>
-                  <InputText name="price" className="form-control" />
+                  <label htmlFor="priceReal">Preço Real da Pelúcia</label>
+                  <InputText name="priceReal" className="form-control" />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="priceFactory">
+                    Preço de Fabrica da Pelúcia
+                  </label>
+                  <InputText name="priceFactory" className="form-control" />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="amount">Quantidade de Estoque</label>
+                  <InputText name="amount" className="form-control" />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="size">Tamanho da Pelúcia</label>
-                  <InputText name="size" className="form-control" />
+                  <Select
+                    name="size"
+                    id="size"
+                    className="form-control select_product"
+                  >
+                    <option value="">Selecione</option>
+                    <option value="oneSize">0cm a 20cm</option>
+                    <option value="twoSize">21cm a 40cm</option>
+                    <option value="treeSize">41cm a 60cm</option>
+                    <option value="fourSize">61cm a 90cm</option>
+                    <option value="fiveSize">91cm a 2metros</option>
+                  </Select>
                 </div>
 
                 <div className="form-group">
@@ -140,7 +166,7 @@ export function NewTeddy() {
                     name="category"
                     multiple
                     options={[
-                      { label: "Elefante", value: "1" },
+                      { label: "Girrafa", value: "1" },
                       { label: "Urso", value: "2" },
                       { label: "Panda", value: "3" },
                       { label: "Unicórnio", value: "4" },

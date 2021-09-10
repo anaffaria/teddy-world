@@ -21,18 +21,17 @@ function ProductList({ filters, teddys }: ProductListProps) {
   const [valRange, setValRange] = useState<number>(0);
 
   function renderProductsList() {
-    return teddys?.map((product, index) => {
+    return teddys?.map((el, index) => {
       return (
         <div className="cards mt-2 col-sm-3 border-0 " key={index}>
             <Link to="/produto" className="product_link">
-              <img className="card-img-top rounded" src={product.image} alt="Card cap" />
+              <img className="card-img-top rounded" src={el.image} alt="Card cap" />
               <div className="card-body p-1 mt-2">
-                <h5 className="card-title card-title text-truncate" data-toggle="tooltip" title={product.title} >{product.title}</h5>
-                 <h6 className="card-subtitle mb-2 text-muted text-truncate" data-toggle="tooltip" title={product.subtitle}>{product.subtitle}</h6>
-                <label className="card-text font-weight-bold"><FaRegMoneyBillAlt size={22} className="mb-1 price"/> R$ {product.price}</label>
+                <h5 className="card-title card-title text-truncate" data-toggle="tooltip" title={el.title} >{el.title}</h5>
+                 <h6 className="card-subtitle mb-2 text-muted text-truncate" data-toggle="tooltip" title={el.subtitle}>{el.subtitle}</h6>
+                <label className="card-text font-weight-bold"><FaRegMoneyBillAlt size={22} className="mb-1 price"/> R$ {el.priceFactory}</label>
               </div>
             </Link>
-
         </div>
       );
     });
@@ -40,12 +39,12 @@ function ProductList({ filters, teddys }: ProductListProps) {
 
   function renderCategories() {
     console.info(filters);
-    return filters?.categories?.map((category, index: number) => {
+    return filters?.categories?.map((el, index) => {
       return (
         <li key={index}>
           <div className="form-check ">
-            <input className="form-check-input" type="checkbox" value={category.id} />
-            <label className="form-check-label">{category.name}</label>
+            <input className="form-check-input" type="checkbox" value={el.id} />
+            <label className="form-check-label">{el.name}</label>
           </div>
         </li>
       );
@@ -53,12 +52,12 @@ function ProductList({ filters, teddys }: ProductListProps) {
   }
 
   function renderColors() {
-    return filters?.colors?.map((color, index) => {
+    return filters?.colors?.map((el, index) => {
       return (
         <li key={index}>
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" value={color.id} />
-            <label className="form-check-label">{color.name}</label>
+            <input className="form-check-input" type="checkbox" value={el.id} />
+            <label className="form-check-label">{el.name}</label>
           </div>
         </li>
       );
@@ -66,12 +65,12 @@ function ProductList({ filters, teddys }: ProductListProps) {
   }
 
   function renderSizes() {
-    return filters?.sizes?.map((elementSize, index) => {
+    return filters?.sizes?.map((el, index) => {
       return (
         <li key={index}>
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" value={Size[elementSize]} />
-            <label className="form-check-label">{elementSize}</label>
+            <input className="form-check-input" type="checkbox" value={Size[el]} />
+            <label className="form-check-label">{el}</label>
           </div>
         </li>
       );

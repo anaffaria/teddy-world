@@ -3,7 +3,8 @@ export interface Teddy {
   image: string;
   title: string;
   subtitle: string;
-  price: number;
+  priceReal: number;
+  priceFactory: number;
   color: Array<Color>;
   category: Array<Category>;
   size: Size;

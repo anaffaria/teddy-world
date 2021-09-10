@@ -1,4 +1,4 @@
-import { Color } from "react-bootstrap/esm/types";
+import { Color } from "../Types/Teddy";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 

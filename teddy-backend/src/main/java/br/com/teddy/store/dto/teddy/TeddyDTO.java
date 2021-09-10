@@ -20,7 +20,8 @@ public class TeddyDTO extends AttrResponseDTO {
     private String image;
     private String title;
     private String subtitle;
-    private Double price;
+    private Double priceReal;
+    private Double priceFactory;
     private List<Color> color;
     private List<Category> category;
     private Size size;
@@ -31,7 +32,8 @@ public class TeddyDTO extends AttrResponseDTO {
         this.image = teddy.getImage();
         this.title = teddy.getTitle();
         this.subtitle = teddy.getSubtitle();
-        this.price = teddy.getPrice();
+        this.priceReal = teddy.getPriceReal();
+        this.priceFactory = teddy.getPriceFactory();
         this.color = teddy.getColor();
         this.category = teddy.getCategory();
         this.size = teddy.getSize();
