@@ -11,9 +11,9 @@ import {FaRegMoneyBillAlt} from "react-icons/fa";
 interface ProductListProps {
   teddys?: Array<Teddy>;
   filters: {
-    colors: Color[],
-    categories: Category[],
-    sizes: Size[]
+    categories?: Category[],
+    colors?: Color[],
+    sizes?: Size[]
   };
 }
 
@@ -40,7 +40,7 @@ function ProductList({ filters, teddys }: ProductListProps) {
 
   function renderCategories() {
     console.info(filters);
-    return filters.categories.map((category, index: number) => {
+    return filters?.categories?.map((category, index: number) => {
       return (
         <li key={index}>
           <div className="form-check ">
@@ -53,7 +53,7 @@ function ProductList({ filters, teddys }: ProductListProps) {
   }
 
   function renderColors() {
-    return filters.colors.map((color, index) => {
+    return filters?.colors?.map((color, index) => {
       return (
         <li key={index}>
           <div className="form-check">
@@ -66,7 +66,7 @@ function ProductList({ filters, teddys }: ProductListProps) {
   }
 
   function renderSizes() {
-    return filters.sizes.map((elementSize, index) => {
+    return filters?.sizes?.map((elementSize, index) => {
       return (
         <li key={index}>
           <div className="form-check">

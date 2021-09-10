@@ -8,21 +8,26 @@ import { FormHandles } from "@unform/core";
 import { useRef, useState } from "react";
 import { Form } from "@unform/web";
 import { Select } from "../../../components/Form/SelectInput";
-import { Teddy } from "../../../Types/Teddy";
+import { Category, Color, Teddy } from "../../../Types/Teddy";
 import Swal from "sweetalert2";
 import { SaveTeddy } from "../../../service/teddyService";
 
-
 export function NewTeddy() {
-
-
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
   async function handleSubmit(data: Teddy) {
     try {
-      const schema = Yup.object().shape({});
-        
+      const schema = Yup.object().shape({
+        image: Yup.string().required("Imagem é obrigatório"),
+        title: Yup.string().required("Título é obrigatório"),
+        subtitle: Yup.string().required("Subtítulo é obrigatório"),
+        price: Yup.string().required("Preço é obrigatório"),
+        // color: Yup.string().required("Cor é obrigatório"),
+        // category: Yup.string().required("Categoria é obrigatório"),
+        // amount: Yup.string().required("Quantidade é obrigatório"),
+        size: Yup.string().required("Tamanho é obrigatório"),
+      });
 
       await schema.validate(data, {
         abortEarly: false,
@@ -44,6 +49,14 @@ export function NewTeddy() {
           text: "Algo deu errado por aqui!",
         });
       };
+
+      data.category = data.category.map((category: any, index) => {
+        return { id: category.value };
+      }) as Category[];
+
+      data.color = data.color.map((color: any, index) => {
+        return { id: color.value };
+      }) as Color[];
 
       SaveTeddy({ data, onSuccess, onError });
     } catch (error) {
@@ -79,7 +92,11 @@ export function NewTeddy() {
               >
                 <div className="form-group">
                   <label htmlFor="image">Url da imagem:</label>
-                  <InputText name="image" className="form-control" placeholder="http://" />
+                  <InputText
+                    name="image"
+                    className="form-control"
+                    placeholder="http://"
+                  />
                 </div>
 
                 <div className="form-group">
@@ -88,8 +105,8 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="subTitle">Subtítulo da Pelúcia</label>
-                  <InputText name="subTitle" className="form-control" />
+                  <label htmlFor="subtitle">Subtítulo da Pelúcia</label>
+                  <InputText name="subtitle" className="form-control" />
                 </div>
 
                 <div className="form-group">
@@ -103,9 +120,9 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="categories">Categoria da Pelúcia</label>
+                  <label htmlFor="category">Categoria da Pelúcia</label>
                   <CreatableSelect
-                    name="categories"
+                    name="category"
                     multiple
                     options={[
                       { label: "Elefante", value: "1" },
@@ -117,9 +134,9 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="colors">Cor da Pelúcia</label>
+                  <label htmlFor="color">Cor da Pelúcia</label>
                   <CreatableSelect
-                    name="colors"
+                    name="color"
                     multiple
                     options={[
                       { label: "Bege", value: "1" },

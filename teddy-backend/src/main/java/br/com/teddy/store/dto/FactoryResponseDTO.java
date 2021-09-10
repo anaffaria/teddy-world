@@ -2,6 +2,7 @@ package br.com.teddy.store.dto;
 
 import br.com.teddy.store.domain.*;
 import br.com.teddy.store.dto.address.AddressDTO;
+import br.com.teddy.store.dto.color.ColorDTO;
 import br.com.teddy.store.dto.creditcard.CreditCardDTO;
 import br.com.teddy.store.dto.customer.CustomerDTO;
 import br.com.teddy.store.dto.teddy.TeddyDTO;
@@ -36,6 +37,10 @@ public abstract class FactoryResponseDTO {
 
         if(domainEntity instanceof Teddy) {
             return new TeddyDTO((Teddy) domainEntity, method);
+        }
+
+        if(domainEntity instanceof Color) {
+            return new ColorDTO((Color) domainEntity);
         }
 
         return null;
