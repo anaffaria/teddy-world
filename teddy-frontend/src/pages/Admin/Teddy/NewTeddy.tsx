@@ -5,16 +5,28 @@ import InputText from "../../../components/Form/InputText";
 import CreatableSelect from "../../../components/Form/ReactSelect";
 import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "@unform/web";
 import { Select } from "../../../components/Form/SelectInput";
 import { Category, Color, Teddy } from "../../../Types/Teddy";
 import Swal from "sweetalert2";
-import { SaveTeddy } from "../../../service/teddyService";
+import { GetTeddy, SaveTeddy } from "../../../service/teddyService";
+import { useParams } from "react-router-dom";
 
 export function NewTeddy() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
+  const { id } = useParams<{ id: string }>();
+  const [teddy, setTeddy] = useState<Teddy>();
+
+  useEffect(() => {
+    if (!id) return;
+    GetTeddy({ id: id })
+      .then((resp: any) => {
+        if (resp) formRef.current?.setData(resp);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
 
   async function handleSubmit(data: Teddy) {
     try {
@@ -58,6 +70,9 @@ export function NewTeddy() {
         return { id: color.value };
       }) as Color[];
 
+      if (id) data.id = Number(id);
+      
+      // TODO: react-select breaking when get backend info
       SaveTeddy({ data, onSuccess, onError });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

@@ -12,13 +12,13 @@ import { BiHash } from "react-icons/bi";
 import Swal from "sweetalert2";
 
 function AdminTeddy() {
-  const [teddy, setTeddy] = useState<Array<Teddy>>([]);
+  const [teddies, setTeddies] = useState<Array<Teddy>>([]);
 
   useLayoutEffect(() => {
     axiosInstance
       .get("teddy")
       .then((response) => {
-        setTeddy(response.data);
+        setTeddies(response.data);
       })
       .catch((err) => {
         console.error(err);
@@ -85,7 +85,9 @@ function AdminTeddy() {
               <Table responsive hover>
                 <thead>
                   <tr>
-                    <th><BiHash fontSize={20} /></th>
+                    <th>
+                      <BiHash fontSize={20} />
+                    </th>
                     <th>Nome</th>
                     <th>Valor</th>
                     <th>Estoque</th>
@@ -94,7 +96,7 @@ function AdminTeddy() {
                   </tr>
                 </thead>
                 <tbody className="text-truncate">
-                  {teddy.map((teddy, index) => {
+                  {teddies.map((teddy, index) => {
                     return (
                       <tr>
                         <td>{teddy.id}</td>
@@ -105,10 +107,13 @@ function AdminTeddy() {
                         </td>
                         <td>{teddy.amount}</td>
                         <td>
-                          <span className="btn-sm btn btn-outline-primary">
+                          <Link
+                            className="btn-sm btn btn-outline-primary"
+                            to={`pelucias/edit/${teddy.id}`}
+                          >
                             <BiEditAlt fontSize={20} />
                             Editar
-                          </span>
+                          </Link>
                         </td>
                         <td>
                           <button
@@ -123,7 +128,7 @@ function AdminTeddy() {
                                     title: "Dados Atualizados!",
                                   });
 
-                                  setTeddy((prev) => {
+                                  setTeddies((prev) => {
                                     let teddyList = Object.assign(prev, {});
                                     teddyList = teddyList.filter(
                                       (el) => el.id !== teddy.id

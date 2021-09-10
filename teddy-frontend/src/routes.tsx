@@ -44,6 +44,7 @@ function Routes() {
         <Route path="/admin" exact component={AdminIndex} />
         <Route path="/admin/pelucias" exact component={AdminTeddy} />
         <Route path="/admin/pelucias/new" component={NewTeddy} />
+        <Route path="/admin/pelucias/edit/:id" component={NewTeddy} />
         <Route path="/admin/pedidos" component={AdminOrders} />
         <Route path="/admin/devolucoes" exact component={AdminDevolutions} />
         <Route path="/admin/devolucoes/:id/edit" component={EditDevolution} />
