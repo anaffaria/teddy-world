@@ -3,31 +3,64 @@ import "../../../assets/Global.css";
 import * as Yup from "yup";
 import InputText from "../../../components/Form/InputText";
 import CreatableSelect from "../../../components/Form/ReactSelect";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "@unform/web";
 import { Select } from "../../../components/Form/SelectInput";
 import { Category, Color, Teddy } from "../../../Types/Teddy";
 import Swal from "sweetalert2";
 import { GetTeddy, SaveTeddy } from "../../../service/teddyService";
 import { useParams } from "react-router-dom";
-
+import { ListColor } from "../../../service/colorService";
+import { ListCategory } from "../../../service/categoryService";
 
 export function NewTeddy() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
 
+  const [listCategory, setListCategory] = useState<Array<Category>>();
+  const [listColor, setListColor] = useState<Array<Color>>();
 
   useEffect(() => {
-    if (!id) return;
-    GetTeddy({ id: id })
-      .then((resp: any) => {
-        if (resp) formRef.current?.setData(resp);
+    if (id) {
+      GetTeddy({ id: id })
+        .then((resp) => {
+          if (resp) {
+            const teddy = Object.assign(resp, {});
+
+            teddy.category = resp.category.map((el) => {
+              return {
+                label: el.name,
+                value: el.id,
+              };
+            }) as Category[];
+
+            teddy.color = resp.color.map((el) => {
+              return {
+                label: el.name,
+                value: el.id,
+              };
+            }) as Color[];
+
+            formRef.current?.setData(teddy);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    ListColor({})
+      .then((resp) => {
+        setListColor(resp);
       })
       .catch((err) => console.log(err));
 
+    ListCategory({})
+      .then((resp) => {
+        setListCategory(resp);
+      })
+      .catch((err) => console.log(err));
   }, [id]);
 
   async function handleSubmit(data: Teddy) {
@@ -75,7 +108,6 @@ export function NewTeddy() {
 
       if (id) data.id = Number(id);
 
-      // TODO: react-select breaking when get backend info
       SaveTeddy({ data, onSuccess, onError });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
@@ -165,12 +197,9 @@ export function NewTeddy() {
                   <CreatableSelect
                     name="category"
                     multiple
-                    options={[
-                      { label: "Girrafa", value: "1" },
-                      { label: "Urso", value: "2" },
-                      { label: "Panda", value: "3" },
-                      { label: "Unicórnio", value: "4" },
-                    ]}
+                    options={listCategory?.map((el) => {
+                      return { label: el.name, value: el.id };
+                    })}
                   />
                 </div>
 
@@ -179,13 +208,9 @@ export function NewTeddy() {
                   <CreatableSelect
                     name="color"
                     multiple
-                    options={[
-                      { label: "Bege", value: "1" },
-                      { label: "Branco", value: "2" },
-                      { label: "Caramelo", value: "3" },
-                      { label: "Cinza", value: "4" },
-                      { label: "Colorido", value: "5" },
-                    ]}
+                    options={listColor?.map((el) => {
+                      return { label: el.name, value: el.id };
+                    })}
                   />
                 </div>
 
@@ -209,14 +234,12 @@ export function NewTeddy() {
 
                 <div className="d-flex justify-content-between mt-5">
                   <button className="buttom">Criar Pelúcia</button>
-                  <button
+                  <Link
                     className="btn btn-secondary"
-                    onClick={() => {
-                      history.goBack();
-                    }}
+                    to="/admin/pelucias"
                   >
                     Voltar
-                  </button>
+                  </Link>
                 </div>
               </Form>
             </div>

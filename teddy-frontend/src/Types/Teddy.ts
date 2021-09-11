@@ -12,13 +12,13 @@ export interface Teddy {
 }
 
 export interface Color {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }
 
 export interface Category {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }
 
 export enum Size {

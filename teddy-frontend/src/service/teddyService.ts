@@ -8,7 +8,7 @@ export async function GetTeddy({
   id,
   onError,
 }: ServiceTypes<Teddy>) {
-  let teddy = undefined;
+  let teddy: Teddy | undefined;
   await axiosInstance
     .get(`/teddy/${id}`)
     .then((response) => {
