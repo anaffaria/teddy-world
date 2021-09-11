@@ -3,7 +3,7 @@ import "../../../assets/Global.css";
 import * as Yup from "yup";
 import InputText from "../../../components/Form/InputText";
 import CreatableSelect from "../../../components/Form/ReactSelect";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FormHandles } from "@unform/core";
 import { useEffect, useRef, useState } from "react";
 import { Form } from "@unform/web";
@@ -17,7 +17,6 @@ import { ListCategory } from "../../../service/categoryService";
 
 export function NewTeddy() {
   const formRef = useRef<FormHandles>(null);
-  const history = useHistory();
   const { id } = useParams<{ id: string }>();
 
   const [listCategory, setListCategory] = useState<Array<Category>>();
@@ -90,11 +89,11 @@ export function NewTeddy() {
         });
       };
 
-      const onError = () => {
+      const onError = (resp: string) => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Algo deu errado por aqui!",
+          text: `${resp}`,
         });
       };
 
@@ -130,7 +129,7 @@ export function NewTeddy() {
         <div className="main-content-admin">
           <div className="container">
             <div className="d-flex ">
-              <h3>Cadastrar Nova Pelúcia </h3>
+              <h3>{id? "Atualizar": "Criar nova"} Pelúcia </h3>
             </div>
 
             <hr />
@@ -150,24 +149,22 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="title">Nome da Pelúcia</label>
+                  <label htmlFor="title">Nome</label>
                   <InputText name="title" className="form-control" />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="subtitle">Subtítulo da Pelúcia</label>
+                  <label htmlFor="subtitle">Subtítulo</label>
                   <InputText name="subtitle" className="form-control" />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="priceReal">Preço Real da Pelúcia</label>
+                  <label htmlFor="priceReal">Preço de Varejo</label>
                   <InputText name="priceReal" className="form-control" />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="priceFactory">
-                    Preço de Fabrica da Pelúcia
-                  </label>
+                  <label htmlFor="priceFactory">Preço de Fabrica</label>
                   <InputText name="priceFactory" className="form-control" />
                 </div>
 
@@ -177,7 +174,7 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="size">Tamanho da Pelúcia</label>
+                  <label htmlFor="size">Tamanho</label>
                   <Select
                     name="size"
                     id="size"
@@ -193,7 +190,7 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="category">Categoria da Pelúcia</label>
+                  <label htmlFor="category">Categoria</label>
                   <CreatableSelect
                     name="category"
                     multiple
@@ -204,7 +201,7 @@ export function NewTeddy() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="color">Cor da Pelúcia</label>
+                  <label htmlFor="color">Cor</label>
                   <CreatableSelect
                     name="color"
                     multiple
@@ -233,11 +230,8 @@ export function NewTeddy() {
                 </div>
 
                 <div className="d-flex justify-content-between mt-5">
-                  <button className="buttom">Criar Pelúcia</button>
-                  <Link
-                    className="btn btn-secondary"
-                    to="/admin/pelucias"
-                  >
+                  <button className="buttom">{id? "Editar" : "Criar"} Pelúcia</button>
+                  <Link className="btn btn-secondary" to="/admin/pelucias">
                     Voltar
                   </Link>
                 </div>

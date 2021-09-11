@@ -60,6 +60,7 @@ export async function SaveTeddy({
   })
     .then((resp) => {
       teddy = resp.data;
+      if(resp.data?.hasError) throw new Error(resp.data?.message)
       onSuccess?.(resp);
     })
     .catch((err) => {

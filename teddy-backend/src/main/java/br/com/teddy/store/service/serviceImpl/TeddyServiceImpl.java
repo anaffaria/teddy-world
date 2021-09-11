@@ -25,6 +25,7 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
 
     @Override
     public List<AttrResponseDTO> findAll() {
+        beforeEach();
         List<AttrResponseDTO> responseDTOList = new ArrayList<>();
         teddy.findAll(Sort.by("title")).forEach(t -> responseDTOList.add(FactoryResponseDTO.createDTO(t, "LIST")));
         return responseDTOList;
@@ -32,14 +33,18 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
 
     @Override
     public AttrResponseDTO findById(Long id) {
+        beforeEach();
         return FactoryResponseDTO.createDTO(teddy.findById(id).get(), "GET");
     }
 
     @Override
     public AttrResponseDTO saveAndFlush(Teddy object) {
+        beforeEach();
         StringBuilder errorsMessages = new StringBuilder();
 
         validator.validate(object).forEach(e -> errorsMessages.append(e.getMessage() + ","));
+
+        errorsMessages.append(object.validate());
 
         if(errorsMessages.length() > 0){
             System.err.println(errorsMessages);
@@ -62,6 +67,7 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
 
     @Override
     public AttrResponseDTO delete(Long id) {
+        beforeEach();
         Teddy oldTeddy = teddy.getById(id);
 
         oldTeddy.setDeletedAt(LocalDateTime.now());
@@ -72,6 +78,13 @@ public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
 
     @Override
     public List<Teddy> findAllByActiveTrue() {
+        beforeEach();
         return teddy.findAllByActiveTrue(Sort.by("title"));
     }
+
+    public void beforeEach() {
+        FactoryResponseDTO.hasError = false;
+        FactoryResponseDTO.message = null;
+    }
+
 }

@@ -65,14 +65,14 @@ public class Teddy extends DomainEntity{
             stringBuilder.append("Insira uma url válida, ");
 
         if(priceReal < priceFactory){
-            stringBuilder.append("O Preçi Real da pelúcia precisa ser maior que o de Preço de Fabrica, ");
+            stringBuilder.append("O Preço Real da pelúcia precisa ser maior que o de Preço de Fabrica, ");
         }
 
         if(priceFactory.doubleValue() <= 10)
             stringBuilder.append("Preço da pelucia deve ser maior que 10, ");
 
-        if(!isActive() && reason.trim().length() < 5)
-            stringBuilder.append("Para desativar uma pelúcia é necessário uma justificativa(5 caractéres minimo)");
+//        if(!isActive() && reason.trim().length() < 5)
+//            stringBuilder.append("Para desativar uma pelúcia é necessário uma justificativa(5 caractéres minimo)");
 
         return stringBuilder.toString();
     }
