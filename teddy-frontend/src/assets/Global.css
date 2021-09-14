@@ -85,15 +85,13 @@
 }
 .group-scroll::-webkit-scrollbar {
   width: 8px;
-  margin-right: -100px;
 }
 
 .group-scroll::-webkit-scrollbar-track {
-  background: transparent;
+  background: #E9E9E9;
 }
 
 .group-scroll::-webkit-scrollbar-thumb {
-  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
   background: #A6D9FF;
   border-radius: 20px;
 }

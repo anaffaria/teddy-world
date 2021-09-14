@@ -93,7 +93,7 @@ function Product( {teddy} : ProductListProps) {
                       </div>
 
                       <div className="w-100 ml-3">
-                        <Link to="/produto" className="w-100">
+                        <Link to={"/produto/" + teddy?.id} className="w-100">
                           <button
                             type="submit"
                             className="product-buttom text-center w-100"

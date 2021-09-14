@@ -192,6 +192,7 @@ export function NewTeddy() {
                 <div className="form-group">
                   <label htmlFor="category">Categoria</label>
                   <CreatableSelect
+                    id="cetegory"
                     name="category"
                     multiple
                     options={listCategory?.map((el) => {
@@ -203,6 +204,7 @@ export function NewTeddy() {
                 <div className="form-group">
                   <label htmlFor="color">Cor</label>
                   <CreatableSelect
+                    id="color"
                     name="color"
                     multiple
                     options={listColor?.map((el) => {
