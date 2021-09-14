@@ -28,13 +28,13 @@ function Product( {teddy} : ProductListProps) {
           <div className="row mt-5">
             <div className="col-sm-2 col-lg-1 ">
               <div className="card">
-                <img className="card-img-top" src={teddy?.image} alt="Card cap" />
+                <img className="card-img-top " src={teddy?.image} alt="Card cap" />
               </div>
             </div>
 
             <div className="col-sm">
               <div className="card border-0">
-                <img className="card-img-top" src={teddy?.image} alt="Card cap" />
+                <img className="card-img-top rounded" src={teddy?.image} alt="Card cap" />
               </div>
             </div>
 
