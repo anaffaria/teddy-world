@@ -1,4 +1,4 @@
-import { Customer } from "../components/CustomerAccount/CustomerAccount";
+import { Customer } from "../types/customer";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 
@@ -71,22 +71,3 @@ export async function UpdatePassword({
 
   return customer;
 }
-
-// export async function DeleteCustomer({
-//   id,
-//   onError,
-//   onSuccess,
-// }: CustomerServiceProps) {
-//   let customer = undefined;
-//   axiosInstance
-//     .delete(`/customer/${id}`)
-//     .then((resp) => {
-//       customer = resp.data;
-//       onSuccess?.(resp);
-//     })
-//     .catch((resp) => {
-//       console.log(err);
-//       onError?.(err);
-//     });
-//   return customer;
-// }

@@ -8,29 +8,10 @@ import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import * as CardValidator from "card-validator";
 import Swal from "sweetalert2";
-
-export interface CreditCard {
-  id?: string;
-  createdAt?: string;
-  deletedAt?: string;
-  cardHolder?: string;
-  creditCardNumber?: string;
-  cardMonth?: string;
-  cardYear?: string;
-  cardSecurity?: string;
-  cardFavourite?: boolean;
-  cardFlag?: string;
-  customer?: {
-    id: number;
-  };
-  toggleModal?: Function;
-  handleCards?: Function;
-}
+import { CreditCard } from "../../types/card";
 
 export function CreditCardForm(creditCardProp: CreditCard) {
   const formRef = useRef<FormHandles>(null);
-
-  const [creditCard, setCreditCard] = useState(creditCardProp);
 
   const [cardFlag, setCardFlag] = useState<string | undefined>("");
 
@@ -77,10 +58,8 @@ export function CreditCardForm(creditCardProp: CreditCard) {
 
       formRef.current?.setErrors({});
 
-      data.id = creditCard?.id;
-
-      if (creditCard.customer?.id) {
-        data.customer = { id: creditCard.customer.id };
+      if (creditCardProp.customer?.id) {
+        data.customer = { id: creditCardProp.customer.id };
       }
 
       const onSuccess = (resp: any) => {

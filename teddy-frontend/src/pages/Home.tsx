@@ -10,7 +10,6 @@ import img4 from "../components/TopProducts/img/img4.jpg";
 import UserOff from "../components/UserOff/UserOff";
 
 function Home() {
-
   const products = [
     {
       price: 69.9,
@@ -43,7 +42,7 @@ function Home() {
   ];
   return (
     <>
-      <UserOff/>
+      <UserOff />
       <QuickLinks />
       <Showcase />
       <Inform />

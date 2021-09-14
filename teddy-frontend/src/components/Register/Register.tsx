@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Select } from "../Form/SelectInput";
 import { SaveCustomer } from "../../service/customerService";
-import { Customer } from "../CustomerAccount/CustomerAccount";
 
 import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
+import { Customer } from "../../types/customer";
 
 function Register() {
   const formRef = useRef<FormHandles>(null);

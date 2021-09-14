@@ -1,10 +1,10 @@
-import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
+import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
-import { Address, AddressForm } from "../Forms/AddressForm";
+import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
@@ -13,8 +13,12 @@ import { Select } from "../Form/SelectInput";
 import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { Address, Customer } from "../../types/customer";
 
-function CustomerEdit(customer: Customer) {
+function CustomerEdit() {
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>();
 
@@ -50,7 +54,7 @@ function CustomerEdit(customer: Customer) {
 
       formRef.current?.setErrors({});
 
-      data.id = customer.id;
+      data.id = customer?.id;
 
       const onSuccess = () => {
         Swal.fire({
@@ -68,6 +72,10 @@ function CustomerEdit(customer: Customer) {
       };
 
       SaveCustomer({ data, onSuccess, onError });
+      setCustomer((prev) => {
+        data.addressList = prev?.addressList;
+        return data;
+      });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -82,11 +90,11 @@ function CustomerEdit(customer: Customer) {
   }
 
   useEffect(() => {
-    formRef?.current?.setData(customer);
+    if (customer) formRef?.current?.setData(customer);
   }, [customer]);
 
   function mapAddresses(addressType: number) {
-    return customer.addressList?.map((address, index) => {
+    return customer?.addressList?.map((address, index) => {
       if (address.addressType !== addressType) return [];
       return (
         <li key={index}>
@@ -113,7 +121,8 @@ function CustomerEdit(customer: Customer) {
                   axiosInstance
                     .delete(`/address/${address.id}`)
                     .then((resp) => {
-                      if (resp.data.hasError) throw new Error(resp.data?.message);
+                      if (resp.data.hasError)
+                        throw new Error(resp.data?.message);
                       Swal.fire({
                         icon: "success",
                         title: "Dados Atualizados!",
@@ -127,16 +136,13 @@ function CustomerEdit(customer: Customer) {
                         text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
                       });
                     });
-                  if (customer.setCustomer) {
-                    customer.setCustomer((prev) => {
-                      const newCustomerAddress = Object.assign({}, prev);
-                      newCustomerAddress.addressList =
-                        prev?.addressList?.filter(
-                          (el) => el.id !== address.id
-                        ) || [];
-                      return newCustomerAddress;
-                    });
-                  }
+                  setCustomer((prev) => {
+                    const newCustomerAddress = Object.assign({}, prev);
+                    newCustomerAddress.addressList =
+                      prev?.addressList?.filter((el) => el.id !== address.id) ||
+                      [];
+                    return newCustomerAddress;
+                  });
                 }}
               >
                 <BsTrashFill fontSize={20} /> Excluir
@@ -246,8 +252,6 @@ function CustomerEdit(customer: Customer) {
 
                   <span>Endereços de Cobrança:</span>
                   <ul className="m-0 p-0 mt-3">{mapAddresses(0)}</ul>
-
-                  
                 </div>
               </>
             )}
@@ -255,9 +259,7 @@ function CustomerEdit(customer: Customer) {
               <aside>
                 <AddressForm
                   className="mt-2"
-                  customer={customer}
                   address={address}
-                  setCustomer={customer.setCustomer}
                   setIsFormOpen={setIsOpenForm}
                 />
                 <button
