@@ -8,21 +8,7 @@ import { AiFillSound } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 
-export interface CustomerContactUsProps {
-  children?: React.ReactNode;
-}
-
-/*
-interface ListContactUsProps {
-  devolution: string;
-  name: string;
-  numberRequest: string;
-  email: string;
-  subject: string;
-  justification: string;
-}
-*/
-function CustomerContactUs({ children }: CustomerContactUsProps) {
+function CustomerContactUs() {
   const history = useHistory();
 
   async function handleSubmit() {

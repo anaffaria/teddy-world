@@ -1,4 +1,4 @@
-import { CreditCard } from "../components/Forms/CreditCardForm";
+import { CreditCard } from "../types/card";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 
@@ -48,10 +48,6 @@ export async function SaveCreditCard({
 }: ServiceTypes<CreditCard>) {
   let creditCard = undefined;
   let SaveCreditCard = axiosInstance.post;
-
-  if (data?.id) {
-    SaveCreditCard = axiosInstance.put;
-  }
 
   await SaveCreditCard("/creditcard", data)
     .then((resp) => {

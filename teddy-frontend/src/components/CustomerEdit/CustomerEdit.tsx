@@ -1,10 +1,10 @@
-import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
+import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
-import { Address, AddressForm } from "../Forms/AddressForm";
+import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
@@ -14,6 +14,7 @@ import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { Address, Customer } from "../../types/customer";
 
 function CustomerEdit() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
@@ -133,16 +134,13 @@ function CustomerEdit() {
                         text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
                       });
                     });
-                  if (customer.setCustomer) {
-                    customer.setCustomer((prev) => {
-                      const newCustomerAddress = Object.assign({}, prev);
-                      newCustomerAddress.addressList =
-                        prev?.addressList?.filter(
-                          (el) => el.id !== address.id
-                        ) || [];
-                      return newCustomerAddress;
-                    });
-                  }
+                  setCustomer((prev) => {
+                    const newCustomerAddress = Object.assign({}, prev);
+                    newCustomerAddress.addressList =
+                      prev?.addressList?.filter((el) => el.id !== address.id) ||
+                      [];
+                    return newCustomerAddress;
+                  });
                 }}
               >
                 <BsTrashFill fontSize={20} /> Excluir
