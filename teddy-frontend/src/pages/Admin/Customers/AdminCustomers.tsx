@@ -7,18 +7,8 @@ import { useEffect } from "react";
 import { axiosInstance } from "../../../service/serviceInstance";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { Customer } from "../../../types/customer";
 
-export interface Customer {
-  id?: number;
-  createdAt?: string;
-  deletedAt?: string;
-  fullName?: string;
-  birthDate?: string;
-  email?: string;
-  cpf?: string;
-  telNumber?: string;
-  gender?: number;
-}
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState<Array<Customer>>([]);
@@ -109,7 +99,7 @@ function AdminCustomers() {
                                   if (resp.data.hasError) throw new Error();
                                   Swal.fire({
                                     icon: "success",
-                                    title: "Dados Atualizados!",
+                                    title: "Usuário desativado com sucesso!",
                                   });
 
                                   setCustomers((prev) => {

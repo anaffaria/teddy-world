@@ -8,29 +8,13 @@ import axios from "axios";
 import { UfToName } from "../Utils/ParseUfToName";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { Customer } from "../CustomerAccount/CustomerAccount";
 import { SaveAddress } from "../../service/addressService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { Address, Customer } from "../../types/customer";
 
 enum AddressType {
   BILLING = 0,
   DELIVERY = 1,
-}
-
-export interface Address {
-  id?: string;
-  postalCode: string;
-  street: string;
-  complement: string;
-  number: string;
-  state: string;
-  city: string;
-  neighborhood: string;
-  country: string;
-  addressType: AddressType;
-  customer: {
-    id: number;
-  };
 }
 
 interface AddressFormProps {

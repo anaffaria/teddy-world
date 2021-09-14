@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Select } from "../Form/SelectInput";
 import { SaveCustomer } from "../../service/customerService";
-import { Customer } from "../CustomerAccount/CustomerAccount";
 
 import InputText from "../Form/InputText";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
+import { Customer } from "../../types/customer";
 
 function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -72,7 +72,7 @@ function Register() {
         });
       };
 
-     SaveCustomer({ onSuccess, onError, data });
+      SaveCustomer({ onSuccess, onError, data });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -189,7 +189,7 @@ function Register() {
                   </Link>
                 </div>
                 <div>
-                  <button type="submit" className="layout-buttom">
+                  <button type="submit" id="cadastrar" className="layout-buttom">
                     Cadastrar
                   </button>
                 </div>
