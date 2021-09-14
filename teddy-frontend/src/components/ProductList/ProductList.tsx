@@ -24,7 +24,7 @@ function ProductList({ filters, teddys }: ProductListProps) {
     return teddys?.map((el, index) => {
       return (
         <div className="cards mt-2 col-sm-3 border-0 " key={index}>
-            <Link to="/produto" className="product_link">
+            <Link to="/produto/:id" className="product_link">
               <img className="card-img-top rounded" src={el.image} alt="Card cap" />
               <div className="card-body p-1 mt-2">
                 <h5 className="card-title card-title text-truncate" data-toggle="tooltip" title={el.title} >{el.title}</h5>

@@ -9,9 +9,14 @@ import { Accordion, Card } from "react-bootstrap";
 import { useState } from "react";
 import { HiShieldCheck } from "react-icons/hi";
 import { RiBearSmileFill } from "react-icons/ri";
-
+import {  Category, Color, Size, Teddy } from "../../Types/Teddy";
 import "./Product.css";
-function Product() {
+
+interface ProductListProps {
+  teddy?: Teddy;
+}
+
+function Product( {teddy} : ProductListProps) {
   const [amount, setAmount] = useState<number>(0);
 
   return (
@@ -23,26 +28,26 @@ function Product() {
           <div className="row mt-5">
             <div className="col-sm-2 col-lg-1 ">
               <div className="card">
-                <img className="card-img-top" src={Img1} alt="Card cap" />
+                <img className="card-img-top" src={teddy?.image} alt="Card cap" />
               </div>
             </div>
 
             <div className="col-sm">
               <div className="card border-0">
-                <img className="card-img-top" src={Img1} alt="Card cap" />
+                <img className="card-img-top" src={teddy?.image} alt="Card cap" />
               </div>
             </div>
 
             <div className="col-sm ">
               <div className="card border-0">
                 <div className="card-body p-0 mx-5">
-                  <h5 className="card-title-product p-0">Leão de Pelúcia</h5>
+                  <h5 className="card-title-product p-0">{}</h5>
                   <div className="card-text-product">
                     <div className="card-text-info">
-                      de <s>R$ 72,92</s>
+                      de <s>R$ {teddy?.priceReal}</s>
                       <br />
                       <MdPayment size={30} className="icons" />
-                      <p className="product-value"> R$ 69.90</p>
+                      <p className="product-value"> R$ {teddy?.priceFactory}</p>
                     </div>
                   </div>
 
