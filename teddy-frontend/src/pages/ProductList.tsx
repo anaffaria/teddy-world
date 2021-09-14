@@ -31,7 +31,6 @@ function ProductList() {
   }, []);
 
   const filterproducts = {
-    // TODO: Get values from backend
     categories: listCategory,
     colors: listColor,
     sizes: [Size.oneSize, Size.twoSize, Size.treeSize, Size.fourSize, Size.fiveSize]
