@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Customer } from "../components/CustomerAccount/CustomerAccount";
+import { Customer } from "../types/customer";
 
 export interface CustomerContextTiping {
   setCustomer: React.Dispatch<React.SetStateAction<Customer | undefined>>;

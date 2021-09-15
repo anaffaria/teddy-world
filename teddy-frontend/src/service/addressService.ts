@@ -1,4 +1,4 @@
-import { Address } from "../components/Forms/AddressForm";
+import { Address } from "../types/customer";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 

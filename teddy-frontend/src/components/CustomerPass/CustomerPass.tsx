@@ -1,5 +1,5 @@
-import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
-import { useHistory, useParams } from "react-router-dom";
+import CustomerAccount from "../CustomerAccount/CustomerAccount";
+import { useParams } from "react-router-dom";
 import InputText from "../Form/InputText";
 import { useEffect, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
@@ -8,6 +8,7 @@ import { GetCustomer, UpdatePassword } from "../../service/customerService";
 import "./CustomerPass.css";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
+import { Customer } from "../../types/customer";
 
 interface CustumerPassProps {
   password: string;
@@ -39,7 +40,6 @@ function CustomerPass() {
     GetCustomer({ id, onSuccess: success }).then((resp) => setCustomer(resp));
   }, [id]);
 
-  const history = useHistory();
   const formRef = useRef<FormHandles>(null);
 
   async function handleSubmit(data: CustumerPassProps) {

@@ -1,10 +1,10 @@
-import CustomerAccount, { Customer } from "../CustomerAccount/CustomerAccount";
+import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { IoMdAddCircle } from "react-icons/io";
 import "./CustomerEdit.css";
 import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
-import { Address, AddressForm } from "../Forms/AddressForm";
+import { AddressForm } from "../Forms/AddressForm";
 import { Form } from "@unform/web";
 import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
@@ -14,6 +14,7 @@ import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { Address, Customer } from "../../types/customer";
 
 function CustomerEdit() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
@@ -102,6 +103,7 @@ function CustomerEdit() {
             <div className="mr-3 ml-2">
               <button
                 className="btn-sm btn btn-outline-primary"
+                id="editar"
                 onClick={() => {
                   setAddress(address);
                   setIsOpenForm(true);
@@ -114,6 +116,7 @@ function CustomerEdit() {
             <div className="mr-3 ml-2">
               <button
                 className="btn-sm btn btn-outline-danger"
+                id="excluir"
                 onClick={() => {
                   axiosInstance
                     .delete(`/address/${address.id}`)
@@ -133,16 +136,13 @@ function CustomerEdit() {
                         text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
                       });
                     });
-                  if (customer.setCustomer) {
-                    customer.setCustomer((prev) => {
-                      const newCustomerAddress = Object.assign({}, prev);
-                      newCustomerAddress.addressList =
-                        prev?.addressList?.filter(
-                          (el) => el.id !== address.id
-                        ) || [];
-                      return newCustomerAddress;
-                    });
-                  }
+                  setCustomer((prev) => {
+                    const newCustomerAddress = Object.assign({}, prev);
+                    newCustomerAddress.addressList =
+                      prev?.addressList?.filter((el) => el.id !== address.id) ||
+                      [];
+                    return newCustomerAddress;
+                  });
                 }}
               >
                 <BsTrashFill fontSize={20} /> Excluir
@@ -168,6 +168,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="E-mail"
                     name="email"
+                    id="email"
                   />
                 </div>
                 <div className="col-12 col-sm-12  mt-2">
@@ -177,6 +178,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="Nome"
                     name="fullName"
+                    id="nome"
                   />
                 </div>
 
@@ -187,6 +189,7 @@ function CustomerEdit() {
                     className="form-control"
                     placeholder="CPF"
                     name="cpf"
+                    id="cpf"
                     disabled
                   />
                 </div>
@@ -209,6 +212,7 @@ function CustomerEdit() {
                   <label>Telefone principal</label>
                   <InputText
                     type="text"
+                    id="telNumber"
                     name="telNumber"
                     className="form-control"
                     placeholder="Telefone primario"
@@ -218,6 +222,7 @@ function CustomerEdit() {
                   <label>Data de nascimento:</label>
                   <InputText
                     type="date"
+                    id="birthDate"
                     className="form-control"
                     name="birthDate"
                   />
@@ -226,6 +231,7 @@ function CustomerEdit() {
                 <div className="col mt-5 mb-5 d-flex justify-content-end">
                   <button
                     type="submit"
+                    id="alterarCadastro"
                     className="buttom btn-block custumer_edit-buttom"
                   >
                     Alterar cadastro
@@ -278,7 +284,7 @@ function CustomerEdit() {
                   size={40}
                   color={"#FA98AF"}
                 />
-                <label className=" col-12 font-weight-bold text-center">
+                <label className=" col-12 font-weight-bold text-center" id="adicionarNovoEndereco">
                   Adicionar novo endereço
                 </label>
               </div>
