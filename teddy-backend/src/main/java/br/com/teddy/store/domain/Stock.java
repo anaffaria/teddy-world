@@ -27,6 +27,6 @@ public class Stock extends DomainEntity{
 
     @NotNull
     @NotBlank(message = "Código do produto não pode ser vazio")
-
     private String productCode;
+
 }

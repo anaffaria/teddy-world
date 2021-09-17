@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TeddyServiceImpl implements IGenericService<Teddy>, ITeddyService {
+public class TeddyService implements IGenericService<Teddy>, ITeddyService {
     @Autowired
     ITeddyRepository teddy;
 

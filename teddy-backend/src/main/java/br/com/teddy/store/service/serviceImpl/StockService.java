@@ -1,28 +1,26 @@
 package br.com.teddy.store.service.serviceImpl;
 
-import br.com.teddy.store.domain.Color;
+import br.com.teddy.store.domain.Stock;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.dto.FactoryResponseDTO;
-import br.com.teddy.store.repostiory.IColorRepository;
-import br.com.teddy.store.service.IColorService;
+import br.com.teddy.store.repostiory.IStocksRepository;
+import br.com.teddy.store.service.IStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class ColorServiceImpl implements IColorService {
+public class StockService implements IStockService {
+
     @Autowired
-    IColorRepository colorRepository;
+    IStocksRepository stocks;
+
 
 
     @Override
     public List<AttrResponseDTO> findAll() {
-        List<AttrResponseDTO> responseDTOList = new ArrayList<>();
-        colorRepository.findAll(Sort.by("name")).forEach(t -> responseDTOList.add(FactoryResponseDTO.createDTO(t, "LIST")));
-        return responseDTOList;
+        return null;
     }
 
     @Override
@@ -31,7 +29,7 @@ public class ColorServiceImpl implements IColorService {
     }
 
     @Override
-    public AttrResponseDTO saveAndFlush(Color object) {
+    public AttrResponseDTO saveAndFlush(Stock object) {
         return null;
     }
 

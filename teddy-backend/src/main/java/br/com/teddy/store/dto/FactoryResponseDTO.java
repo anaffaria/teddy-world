@@ -6,6 +6,7 @@ import br.com.teddy.store.dto.category.CategoryDTO;
 import br.com.teddy.store.dto.color.ColorDTO;
 import br.com.teddy.store.dto.creditcard.CreditCardDTO;
 import br.com.teddy.store.dto.customer.CustomerDTO;
+import br.com.teddy.store.dto.stock.StockDTO;
 import br.com.teddy.store.dto.teddy.TeddyDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,6 +49,9 @@ public abstract class FactoryResponseDTO {
             return new CategoryDTO((Category) domainEntity);
         }
 
+        if(domainEntity instanceof Stock){
+            return new StockDTO((Stock) domainEntity);
+        }
         return null;
     }
 
