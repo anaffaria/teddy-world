@@ -27,6 +27,7 @@ public class TeddyDTO extends AttrResponseDTO {
     private Size size;
     private boolean active;
     private Integer amount;
+    private Integer amountAvailable;
 
     public TeddyDTO(Teddy teddy, String method) {
         this.image = teddy.getImage();
@@ -39,6 +40,7 @@ public class TeddyDTO extends AttrResponseDTO {
         this.size = teddy.getSize();
         this.active = teddy.isActive();
         this.amount = teddy.getAmountAvailable();
+        this.amountAvailable = teddy.getAmountAvailable();
         this.id = teddy.getId();
         this.deletedAt = teddy.getDeletedAt();
         this.amount = teddy.getAmount();

@@ -8,7 +8,11 @@ import { useState } from "react";
 import { HiShieldCheck } from "react-icons/hi";
 import { RiBearSmileFill } from "react-icons/ri";
 import { Teddy } from "../../Types/Teddy";
+import { AddCartItem } from "../../service/cartService";
+import { useParams } from "react-router";
+import Swal from 'sweetalert2'
 import "./Product.css";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -16,9 +20,35 @@ interface ProductListProps {
 
 function Product({ teddy }: ProductListProps) {
   const [amount, setAmount] = useState<number>(0);
+  const { id } = useParams<{ id: string }>();
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   function addProductChart() {
     console.log("Clicked add chart");
+
+    const data = {
+      teddy: {
+        id: id,
+      },
+      amount: amount,
+    };
+
+    function onSuccess() {
+      Swal.fire({
+        icon: "success",
+        title: "Dados Atualizados!",
+      });
+    }
+
+    function onError(message: string) {
+      Swal.fire({
+        icon: "error",
+        title: `${message}`,
+      });
+    }
+
+    console.log("Payload:", data);
+    AddCartItem({ data, onSuccess, onError, id: `${customer?.id}` });
   }
 
   function addProductAndProceedCheckout() {
@@ -66,8 +96,13 @@ function Product({ teddy }: ProductListProps) {
                   </div>
 
                   <div className="card-text">
-                    <p className="">
+                    <p>
                       Garantia: <label> de 1 mês</label>
+                    </p>
+
+                    <p>
+                      Quantidade Disponível:{" "}
+                      <label>{teddy?.amountAvailable}</label>
                     </p>
 
                     <div className="d-flex justify-content-between">

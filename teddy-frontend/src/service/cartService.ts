@@ -1,5 +1,4 @@
 import { Item } from "../Types/cart";
-import { Customer } from "../types/customer";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 

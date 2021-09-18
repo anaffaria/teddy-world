@@ -9,6 +9,7 @@ export interface Teddy {
   category: Array<Category>;
   size: Size;
   amount: number;
+  amountAvailable: number;
 }
 
 export interface Color {
