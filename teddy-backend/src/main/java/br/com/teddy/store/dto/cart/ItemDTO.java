@@ -11,10 +11,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ItemDTO {
+    private Long id;
     private TeddyItemDTO teddyItemDTO;
     private Integer amount;
 
     public ItemDTO(Item item) {
+        this.id = item.getId();
         this.teddyItemDTO = new TeddyItemDTO(item.getTeddy());
         this.amount = item.getAmount();
     }

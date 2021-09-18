@@ -4,6 +4,6 @@ import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.Item;
 
 public interface ICartService {
-    void addCartItem(Long idCustomer, Item item);
-    void removeCartItem(Customer customer, Long idItem);
+    void addCartItem(Long idCustomer, Item item) throws Exception;
+    void removeCartItem(Long idCustomer, Long idItem);
 }
