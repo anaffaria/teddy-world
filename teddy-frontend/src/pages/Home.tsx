@@ -7,7 +7,7 @@ import img1 from "../components/TopProducts/img/img1.jpg";
 import img2 from "../components/TopProducts/img/img2.jpg";
 import img3 from "../components/TopProducts/img/img3.jpg";
 import img4 from "../components/TopProducts/img/img4.jpg";
-import UserOff from "../components/UserOff/UserOff";
+import { ToggleUser } from "../components/ToggleUser/ToggleUser";
 
 function Home() {
   const products = [
@@ -42,7 +42,7 @@ function Home() {
   ];
   return (
     <>
-      <UserOff />
+      <ToggleUser />
       <QuickLinks />
       <Showcase />
       <Inform />

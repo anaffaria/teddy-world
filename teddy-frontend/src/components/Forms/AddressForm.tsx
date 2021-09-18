@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { SaveAddress } from "../../service/addressService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { Address, Customer } from "../../types/customer";
+import { useHistory } from "react-router";
 
 enum AddressType {
   BILLING = 0,
@@ -23,10 +24,16 @@ interface AddressFormProps {
   setIsFormOpen?: Function;
 }
 
-export function AddressForm({ className, setIsFormOpen, address }: AddressFormProps) {
+export function AddressForm({
+  className,
+  setIsFormOpen,
+  address,
+}: AddressFormProps) {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const formRef = useRef<FormHandles>(null);
   const [customerAddress, setCustomerAddress] = useState<Customer>();
+  const token = sessionStorage.getItem("token");
+  const history = useHistory()
 
   useEffect(() => {
     setCustomerAddress(customer);
@@ -121,7 +128,17 @@ export function AddressForm({ className, setIsFormOpen, address }: AddressFormPr
         });
       };
 
-      SaveAddress({ data, onError, onSuccess });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+
+        history.push("/login");
+        return;
+      }
+
+      SaveAddress({ data, onError, onSuccess, token });
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {

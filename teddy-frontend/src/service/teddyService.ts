@@ -44,6 +44,7 @@ export async function SaveTeddy({
   onSuccess,
   onError,
   data,
+  token
 }: ServiceTypes<Teddy>) {
   let teddy = undefined;
   let teddySave = axiosInstance.post;
@@ -56,6 +57,7 @@ export async function SaveTeddy({
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
+      Authorization: `Bearer ${token}`
     },
   })
     .then((resp) => {
@@ -75,10 +77,15 @@ export async function UpdateTeddy({
   onSuccess,
   onError,
   data,
+  token
 }: ServiceTypes<Teddy>) {
   let teddy = undefined;
   axiosInstance
-    .patch("/teddy", data)
+    .patch("/teddy", data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
       onSuccess?.(resp);

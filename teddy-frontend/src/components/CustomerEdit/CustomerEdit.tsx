@@ -15,14 +15,15 @@ import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { Address, Customer } from "../../types/customer";
+import { useHistory } from "react-router";
 
 function CustomerEdit() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
-
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>();
-
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
+  const token = sessionStorage.getItem("token");
 
   async function handleSubmit(data: Customer) {
     try {
@@ -71,7 +72,17 @@ function CustomerEdit() {
         });
       };
 
-      SaveCustomer({ data, onSuccess, onError });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+  
+        history.push("/login");
+        return;
+      }
+
+      SaveCustomer({ data, onSuccess, onError, token });
       setCustomer((prev) => {
         data.addressList = prev?.addressList;
         return data;

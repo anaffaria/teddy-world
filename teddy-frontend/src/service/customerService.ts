@@ -6,10 +6,15 @@ export async function GetCustomer({
   onSuccess,
   id,
   onError,
+  token,
 }: ServiceTypes<Customer>) {
   let customer = undefined;
   await axiosInstance
-    .get(`customer/${id}`)
+    .get(`customer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     .then((response) => {
       customer = response.data;
       onSuccess?.();
@@ -25,6 +30,7 @@ export async function SaveCustomer({
   onSuccess,
   onError,
   data,
+  token
 }: ServiceTypes<Customer>) {
   let customer = undefined;
   let customerSave = axiosInstance.post;
@@ -37,6 +43,7 @@ export async function SaveCustomer({
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
+      Authorization: `Bearer ${token}`
     },
   })
     .then((resp) => {
@@ -55,10 +62,15 @@ export async function UpdatePassword({
   onSuccess,
   onError,
   data,
+  token,
 }: ServiceTypes<Customer>) {
   let customer = undefined;
   axiosInstance
-    .patch("/customer", data)
+    .patch("/customer", data, {
+      headers: {
+        Authorizarion: `Bearer ${token}`,
+      },
+    })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
       onSuccess?.(resp);

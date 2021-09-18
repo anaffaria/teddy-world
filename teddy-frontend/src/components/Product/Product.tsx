@@ -1,4 +1,3 @@
-import UserOff from "../UserOff/UserOff";
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
 import { MdPayment } from "react-icons/md";
@@ -13,6 +12,7 @@ import { useParams } from "react-router";
 import Swal from 'sweetalert2'
 import "./Product.css";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { ToggleUser } from "../ToggleUser/ToggleUser";
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -57,7 +57,7 @@ function Product({ teddy }: ProductListProps) {
 
   return (
     <>
-      <UserOff />
+      <ToggleUser />
       <QuickLinks />
       <main>
         <div className="container ">

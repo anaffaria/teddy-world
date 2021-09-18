@@ -14,13 +14,15 @@ import { GetTeddy, SaveTeddy } from "../../../service/teddyService";
 import { useParams } from "react-router-dom";
 import { ListColor } from "../../../service/colorService";
 import { ListCategory } from "../../../service/categoryService";
+import { useHistory } from "react-router";
 
 export function NewTeddy() {
   const formRef = useRef<FormHandles>(null);
   const { id } = useParams<{ id: string }>();
-
+  const history = useHistory();
   const [listCategory, setListCategory] = useState<Array<Category>>();
   const [listColor, setListColor] = useState<Array<Color>>();
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     if (id) {
@@ -107,7 +109,17 @@ export function NewTeddy() {
 
       if (id) data.id = Number(id);
 
-      SaveTeddy({ data, onSuccess, onError });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+
+        history.push("/login");
+        return;
+      }
+
+      SaveTeddy({ data, onSuccess, onError, token });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
