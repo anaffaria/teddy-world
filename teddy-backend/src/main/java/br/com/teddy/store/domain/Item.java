@@ -1,9 +1,6 @@
 package br.com.teddy.store.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
@@ -15,6 +12,7 @@ import javax.persistence.ManyToOne;
 @Setter
 @Entity(name = "_item")
 @Where(clause = "deleted_at is null")
+@ToString
 public class Item extends DomainEntity{
 
     @ManyToOne

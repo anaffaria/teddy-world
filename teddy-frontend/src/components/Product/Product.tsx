@@ -1,23 +1,29 @@
 import UserOff from "../UserOff/UserOff";
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
-
-import Img1 from "../../components/Product/img/img1.jpg";
 import { MdPayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Accordion, Card } from "react-bootstrap";
 import { useState } from "react";
 import { HiShieldCheck } from "react-icons/hi";
 import { RiBearSmileFill } from "react-icons/ri";
-import {  Category, Color, Size, Teddy } from "../../Types/Teddy";
+import { Teddy } from "../../Types/Teddy";
 import "./Product.css";
 
 interface ProductListProps {
   teddy?: Teddy;
 }
 
-function Product( {teddy} : ProductListProps) {
+function Product({ teddy }: ProductListProps) {
   const [amount, setAmount] = useState<number>(0);
+
+  function addProductChart() {
+    console.log("Clicked add chart");
+  }
+
+  function addProductAndProceedCheckout() {
+    console.log("Clicked add item and proceed to checkout");
+  }
 
   return (
     <>
@@ -28,13 +34,21 @@ function Product( {teddy} : ProductListProps) {
           <div className="row mt-5">
             <div className="col-sm-2 col-lg-1 ">
               <div className="card">
-                <img className="card-img-top " src={teddy?.image} alt="Card cap" />
+                <img
+                  className="card-img-top "
+                  src={teddy?.image}
+                  alt="Card cap"
+                />
               </div>
             </div>
 
             <div className="col-sm">
               <div className="card border-0">
-                <img className="card-img-top rounded" src={teddy?.image} alt="Card cap" />
+                <img
+                  className="card-img-top rounded"
+                  src={teddy?.image}
+                  alt="Card cap"
+                />
               </div>
             </div>
 
@@ -79,7 +93,7 @@ function Product( {teddy} : ProductListProps) {
                           </div>
 
                           <div
-                            className="w-100 h-100 m-auto d-flex"
+                            className="w-100 h-100 m-auto d-flex minus-border-button"
                             onClick={() => {
                               setAmount((prev: number) => {
                                 if (prev <= 0) return 0;
@@ -97,6 +111,7 @@ function Product( {teddy} : ProductListProps) {
                           <button
                             type="submit"
                             className="product-buttom text-center w-100"
+                            onClick={addProductChart}
                           >
                             Adicionar ao Carrinho
                           </button>
@@ -104,14 +119,13 @@ function Product( {teddy} : ProductListProps) {
                       </div>
 
                       <div className="w-70 ml-3">
-                        <Link to="/cliente/1/checkout" className="w-100">
-                          <button
-                            type="submit"
-                            className="product-buttom text-center w-100"
-                          >
-                            Comprar
-                          </button>
-                        </Link>
+                        <button
+                          type="submit"
+                          className="product-buttom text-center w-100"
+                          onClick={addProductAndProceedCheckout}
+                        >
+                          Comprar
+                        </button>
                       </div>
                     </div>
 

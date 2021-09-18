@@ -2,15 +2,19 @@ package br.com.teddy.store.service.serviceImpl;
 
 import br.com.teddy.store.domain.Cart;
 import br.com.teddy.store.domain.Customer;
+import br.com.teddy.store.domain.Item;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.repostiory.ICategoryRepository;
+import br.com.teddy.store.repostiory.ICustomerRepository;
 import br.com.teddy.store.repostiory.ITeddyRepository;
 import br.com.teddy.store.service.ICartService;
 import br.com.teddy.store.service.IGenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CartService implements IGenericService<Cart>, ICartService {
 
     @Autowired
@@ -20,11 +24,15 @@ public class CartService implements IGenericService<Cart>, ICartService {
     ITeddyRepository  teddy;
 
     @Autowired
-    private Customer customer;
+    ICustomerRepository customers;
 
     @Override
-    public void addCartItem(Customer customer, Long idTeddy, Integer amount) {
-
+    public void addCartItem(Long idCustomer, Item item) {
+        Customer customer = customers.findById(idCustomer).get();
+        if(null != customer) {
+            customer.getCart().getItemList().add(item);
+        }
+        customers.saveAndFlush(customer);
     }
 
     @Override

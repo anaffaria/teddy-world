@@ -15,7 +15,6 @@ import java.util.List;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -52,4 +51,12 @@ public class Customer extends DomainEntity{
 
     @OneToMany(mappedBy = "customer", targetEntity = CreditCard.class)
     private List<CreditCard> creditCardList;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Cart cart;
+
+    // TODO: add roles and wallet
+    public Customer() {
+        this.cart = new Cart();
+    }
 }
