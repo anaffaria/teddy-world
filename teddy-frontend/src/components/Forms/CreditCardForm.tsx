@@ -9,11 +9,13 @@ import * as Yup from "yup";
 import * as CardValidator from "card-validator";
 import Swal from "sweetalert2";
 import { CreditCard } from "../../types/card";
+import { useHistory } from "react-router";
 
 export function CreditCardForm(creditCardProp: CreditCard) {
   const formRef = useRef<FormHandles>(null);
-
+  const token = sessionStorage.getItem("token");
   const [cardFlag, setCardFlag] = useState<string | undefined>("");
+  const history = useHistory();
 
   async function handleSubmit(data: CreditCard) {
     try {
@@ -85,7 +87,17 @@ export function CreditCardForm(creditCardProp: CreditCard) {
         });
       };
 
-      SaveCreditCard({ data, onSuccess, onError });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+
+        history.push("/login");
+        return;
+      }
+
+      SaveCreditCard({ data, onSuccess, onError, token });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

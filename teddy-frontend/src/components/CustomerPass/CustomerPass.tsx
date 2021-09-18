@@ -9,6 +9,7 @@ import "./CustomerPass.css";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
 import { Customer } from "../../types/customer";
+import { useHistory } from "react-router";
 
 interface CustumerPassProps {
   password: string;
@@ -20,6 +21,8 @@ interface CustumerPassProps {
 function CustomerPass() {
   const [customer, setCustomer] = useState<Customer>();
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     Swal.fire({
@@ -37,8 +40,20 @@ function CustomerPass() {
       }, 1000);
     };
 
-    GetCustomer({ id, onSuccess: success }).then((resp) => setCustomer(resp));
-  }, [id]);
+    if (token === null) {
+      Swal.fire({
+        icon: "warning",
+        title: "Você precisa estar logado para acessar este recurso",
+      });
+
+      history.push("/login");
+      return;
+    }
+
+    GetCustomer({ id, onSuccess: success, token }).then((resp) =>
+      setCustomer(resp)
+    );
+  }, [id, history, token]);
 
   const formRef = useRef<FormHandles>(null);
 
@@ -82,9 +97,17 @@ function CustomerPass() {
 
       console.log(data);
 
-      UpdatePassword({ data, onError, onSuccess });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
 
-      // history.push("/cliente/alterar_dados");
+        history.push("/login");
+        return;
+      }
+
+      UpdatePassword({ data, onError, onSuccess, token });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

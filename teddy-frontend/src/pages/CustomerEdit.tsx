@@ -4,10 +4,12 @@ import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { GetCustomer } from "../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../providers/Customer";
+import { useHistory } from "react-router";
 
 function CustomerEdit() {
-  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const { setCustomer } = useCustomer() as CustomerContextTiping;
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
 
   useEffect(() => {
     Swal.fire({
@@ -23,19 +25,26 @@ function CustomerEdit() {
       }, 2000);
     };
 
-    const token = sessionStorage.getItem("token")
+    const token = sessionStorage.getItem("token");
 
-    console.log(token)
-    if(token === null) {
+    if (token === null) {
+      Swal.fire({
+        icon: "warning",
+        title: "Você precisa estar logado para acessar este recurso",
+      });
+
+      history.push("/login");
       return
     }
 
-    GetCustomer({ id, onSuccess: success, token}).then((resp) => setCustomer(resp));
-  }, [id, setCustomer]);
+    GetCustomer({ id, onSuccess: success, token }).then((resp) =>
+      setCustomer(resp)
+    );
+  }, [id, setCustomer, history]);
 
   return (
     <>
-      <CustomerEditComponent/>
+      <CustomerEditComponent />
     </>
   );
 }

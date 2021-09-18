@@ -12,7 +12,7 @@ import { Customer } from "../../types/customer";
 
 function Register() {
   const formRef = useRef<FormHandles>(null);
-
+  const token = sessionStorage.getItem("token");
   const history = useHistory();
 
   async function handleSubmit(data: Customer) {
@@ -72,7 +72,17 @@ function Register() {
         });
       };
 
-      SaveCustomer({ onSuccess, onError, data });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+
+        history.push("/login");
+        return;
+      }
+
+      SaveCustomer({ onSuccess, onError, data, token });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

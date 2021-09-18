@@ -14,6 +14,7 @@ export async function SaveAddress({
   onSuccess,
   onError,
   data,
+  token
 }: ServiceTypes<Address>) {
   let address = undefined;
   let saveAddress = axiosInstance.post;
@@ -22,7 +23,11 @@ export async function SaveAddress({
     saveAddress = axiosInstance.put;
   }
 
-  await saveAddress("/address", data)
+  await saveAddress("/address", data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
       onSuccess?.(resp);

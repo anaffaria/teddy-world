@@ -17,9 +17,7 @@ export async function Authenticate({
   await axiosInstance
     .post(`/authenticate`, { username, password })
     .then((response) => {
-      console.log()
-      sessionStorage.setItem("token", response.data?.jwtResponse?.token)
-      
+      sessionStorage.setItem("token", response.data?.jwtResponse?.token)      
       onSuccess?.(response.data);
     })
     .catch((err: Error) => {

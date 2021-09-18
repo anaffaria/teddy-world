@@ -7,10 +7,15 @@ export async function GetCreditCard({
   onSuccess,
   id,
   onError,
+  token
 }: ServiceTypes<CreditCard>) {
   let creditCard = undefined;
   await axiosInstance
-    .get(`creditcard/${id}`)
+    .get(`creditcard/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then((response) => {
       creditCard = response.data;
       onSuccess?.();
@@ -26,10 +31,15 @@ export async function GetAllCreditCard({
   onSuccess,
   id,
   onError,
+  token
 }: ServiceTypes<CreditCard>) {
   let creditCard = undefined;
   await axiosInstance
-    .get(`creditcards`)
+    .get(`creditcards`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then((response) => {
       creditCard = response.data;
       onSuccess?.();
@@ -45,11 +55,16 @@ export async function SaveCreditCard({
   onSuccess,
   onError,
   data,
+  token
 }: ServiceTypes<CreditCard>) {
   let creditCard = undefined;
   let SaveCreditCard = axiosInstance.post;
 
-  await SaveCreditCard("/creditcard", data)
+  await SaveCreditCard("/creditcard", data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
       onSuccess?.(resp);
