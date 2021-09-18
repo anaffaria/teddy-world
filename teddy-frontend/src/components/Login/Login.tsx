@@ -18,7 +18,7 @@ interface LoginProps {
 function Login() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
-  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const { setCustomer } = useCustomer() as CustomerContextTiping;
 
   async function handleSubmit(data: LoginProps) {
     try {

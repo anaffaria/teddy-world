@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import { axiosInstance } from "./serviceInstance";
 
 export interface LoginProps {
