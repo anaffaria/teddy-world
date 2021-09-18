@@ -15,7 +15,6 @@ import java.util.List;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -27,7 +26,7 @@ public class Customer extends DomainEntity{
     private String fullName;
 
     @Email(message = "Insira um e-mail válido")
-//    @Column(unique = true)
+    @Column(unique = true)
     private String email;
 
     private String cpf;
@@ -54,4 +53,9 @@ public class Customer extends DomainEntity{
 
     @OneToMany(mappedBy = "customer", targetEntity = CreditCard.class)
     private List<CreditCard> creditCardList;
+
+    public Customer() {
+        this.setRoles("CUSTOMER");
+    }
+
 }

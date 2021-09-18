@@ -15,7 +15,7 @@ function Product() {
         setTeddy(resp);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   return (
     <>

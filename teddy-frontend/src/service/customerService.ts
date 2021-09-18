@@ -6,10 +6,15 @@ export async function GetCustomer({
   onSuccess,
   id,
   onError,
+  token
 }: ServiceTypes<Customer>) {
   let customer = undefined;
   await axiosInstance
-    .get(`customer/${id}`)
+    .get(`customer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then((response) => {
       customer = response.data;
       onSuccess?.();

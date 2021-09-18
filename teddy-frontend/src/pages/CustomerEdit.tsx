@@ -6,7 +6,7 @@ import { GetCustomer } from "../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../providers/Customer";
 
 function CustomerEdit() {
-  const { setCustomer } = useCustomer() as CustomerContextTiping;
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -23,7 +23,14 @@ function CustomerEdit() {
       }, 2000);
     };
 
-    GetCustomer({ id, onSuccess: success }).then((resp) => setCustomer(resp));
+    const token = sessionStorage.getItem("token")
+
+    console.log(token)
+    if(token === null) {
+      return
+    }
+
+    GetCustomer({ id, onSuccess: success, token}).then((resp) => setCustomer(resp));
   }, [id, setCustomer]);
 
   return (
