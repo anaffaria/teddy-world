@@ -7,6 +7,7 @@ import br.com.teddy.store.domain.Teddy;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.repostiory.ICategoryRepository;
 import br.com.teddy.store.repostiory.ICustomerRepository;
+import br.com.teddy.store.repostiory.IItemsRepository;
 import br.com.teddy.store.repostiory.ITeddyRepository;
 import br.com.teddy.store.service.ICartService;
 import br.com.teddy.store.service.IGenericService;
@@ -29,6 +30,9 @@ public class CartService implements IGenericService<Cart>, ICartService {
     @Autowired
     ICustomerRepository customers;
 
+    @Autowired
+    IItemsRepository iItemsRepository;
+
     @Override
     public void addCartItem(Long idCustomer, Item item) throws Exception {
         Customer customer = customers.findById(idCustomer).get();
@@ -46,9 +50,13 @@ public class CartService implements IGenericService<Cart>, ICartService {
     @Override
     public void removeCartItem(Long idCustomer, Long idItem) {
         Customer customer = customers.findById(idCustomer).get();
+        Item item = iItemsRepository.getById(idItem);
+        Teddy teddy = item.getTeddy();
 
         List<Item> items = customer.getCart().getItemList().stream().filter(i -> i.getId() != idItem).collect(Collectors.toList());
         customer.getCart().setItemList(items);
+
+        teddy.setAmountAvailable(teddy.getAmountAvailable() + item.getAmount());
 
         customers.saveAndFlush(customer);
     }
