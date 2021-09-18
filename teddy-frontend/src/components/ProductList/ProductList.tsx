@@ -1,4 +1,3 @@
-import UserOff from "../UserOff/UserOff";
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
 
@@ -7,6 +6,7 @@ import { Link } from "react-router-dom";
 import "./ProductList.css";
 import { Category, Color, Size, Teddy } from "../../Types/Teddy";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { ToggleUser } from "../ToggleUser/ToggleUser";
 
 interface ProductListProps {
   teddys?: Array<Teddy>;
@@ -138,7 +138,7 @@ function ProductList({ filters, teddys }: ProductListProps) {
 
   return (
     <>
-      <UserOff />
+      <ToggleUser />
       <QuickLinks />
       <main>
         <div className="container mt-2">

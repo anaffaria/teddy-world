@@ -1,16 +1,14 @@
-import UserOff from "../UserOff/UserOff";
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
-
-import Img1 from "../../components/Product/img/img1.jpg";
 import { MdPayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Accordion, Card } from "react-bootstrap";
 import { useState } from "react";
 import { HiShieldCheck } from "react-icons/hi";
 import { RiBearSmileFill } from "react-icons/ri";
-import {  Category, Color, Size, Teddy } from "../../Types/Teddy";
+import { Teddy } from "../../Types/Teddy";
 import "./Product.css";
+import { ToggleUser } from "../ToggleUser/ToggleUser";
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -21,7 +19,7 @@ function Product( {teddy} : ProductListProps) {
 
   return (
     <>
-      <UserOff />
+      <ToggleUser />
       <QuickLinks />
       <main>
         <div className="container ">

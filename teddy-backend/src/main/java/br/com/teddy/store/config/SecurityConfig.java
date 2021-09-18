@@ -70,14 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/").permitAll();
 
-        //
-
         http.csrf().disable()
-// Não cheque essas requisições
-                .authorizeRequests().antMatchers("/authenticate",
-                        "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-                        "/configuration/**", "/swagger-ui.html", "/webjars/**", "/customer").permitAll().
-// Qualquer outra requisição deve ser checada
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/teddy/**").permitAll()
+                .antMatchers("/authenticate", "/customer").permitAll().
         anyRequest().authenticated().and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
