@@ -2,11 +2,13 @@ import { Item } from "../Types/cart";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 
+
 export async function AddCartItem({
   onSuccess,
   onError,
   data,
-  id
+  id, 
+  token 
 }: ServiceTypes<Item>) {
   let item = undefined;
 
@@ -14,6 +16,7 @@ export async function AddCartItem({
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
+      Authorization: `Bearer ${token}`
     },
   })
     .then((resp) => {

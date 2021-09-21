@@ -24,11 +24,12 @@ function Product({ teddy }: ProductListProps) {
   const { id } = useParams<{ id: string }>();
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const history = useHistory();
+  const token = sessionStorage.getItem("token");
 
   function addProductChart() {
     console.log("Clicked add chart");
 
-    const data = {
+    const data = {                                                               
       teddy: {
         id: id,
       },
@@ -49,6 +50,15 @@ function Product({ teddy }: ProductListProps) {
       });
     }
 
+    if (token === null) {
+      Swal.fire({
+        icon: "warning",
+        title: "Você precisa estar logado para acessar este recurso",
+      });
+      return;
+    }
+
+    // TODO: remove it later
     console.log("Payload:", data);
 
     let customer_id: any = undefined;
@@ -68,9 +78,8 @@ function Product({ teddy }: ProductListProps) {
         return customer;
       });
     }
-    console.log("ooie")
 
-    AddCartItem({ data, onSuccess, onError, id: customer_id });
+    AddCartItem({ data, onSuccess, onError, id: `${customer?.id}`, token});
   }
 
   function addProductAndProceedCheckout() {
