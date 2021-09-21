@@ -14,6 +14,7 @@ import "./Product.css";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { ToggleUser } from "../ToggleUser/ToggleUser";
 import { Customer } from "../../types/customer";
+import { number } from "card-validator";
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -27,9 +28,27 @@ function Product({ teddy }: ProductListProps) {
   const token = sessionStorage.getItem("token");
 
   function addProductChart() {
-    console.log("Clicked add chart");
+    let customer_id: any = undefined;
 
-    const data = {                                                               
+    if (customer?.id === undefined) {
+      customer_id = sessionStorage.getItem("customer_id");
+      if (customer_id === null && customer_id === undefined) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para efetuar essa operação",
+        });
+        history.push("/login");
+      }
+
+      setCustomer((prev: any) => {
+        console.log(prev)
+        let customer = Object.assign({}, prev);
+        customer.id = Number(customer_id);
+        return customer;
+      });
+    }
+
+    const data = {
       teddy: {
         id: id,
       },
@@ -40,6 +59,18 @@ function Product({ teddy }: ProductListProps) {
       Swal.fire({
         icon: "success",
         title: "Dados Atualizados!",
+      });
+
+      setCustomer((prev) => {
+        console.log(prev)
+        let customer = Object.assign({}, prev);
+        customer?.cart?.itemDTOS.push({
+          teddy: {
+            id,
+          },
+          amount,
+        });
+        return customer;
       });
     }
 
@@ -61,25 +92,13 @@ function Product({ teddy }: ProductListProps) {
     // TODO: remove it later
     console.log("Payload:", data);
 
-    let customer_id: any = undefined;
-    if (customer?.id === undefined) {
-      customer_id = sessionStorage.getItem("customer_id");
-      if (customer_id === null && customer_id === undefined) {
-        Swal.fire({
-          icon: "warning",
-          title: "Você precisa estar logado para efetuar essa operação",
-        });
-        history.push("/login");
-      }
-
-      setCustomer((prev: any) => {
-        let customer = Object.assign({}, prev);
-        customer.id = Number(customer_id);
-        return customer;
-      });
-    }
-
-    AddCartItem({ data, onSuccess, onError, id: `${customer?.id}`, token});
+    AddCartItem({
+      data,
+      onSuccess,
+      onError,
+      id: `${customer_id ? customer_id : customer?.id}`,
+      token,
+    });
   }
 
   function addProductAndProceedCheckout() {

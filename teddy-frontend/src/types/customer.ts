@@ -1,3 +1,5 @@
+import { Teddy } from "./Teddy";
+
 export interface Customer {
   id?: number;
   createdAt?: string;
@@ -9,6 +11,15 @@ export interface Customer {
   telNumber?: string;
   gender?: number;
   addressList?: Array<Address>;
+  cart?: {
+    itemDTOS: Array<{
+      teddy: {
+        id: string
+      },
+      amount: number
+      id?: number,
+    }>
+  }
 }
 
 export interface Address {

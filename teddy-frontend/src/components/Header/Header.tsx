@@ -6,12 +6,15 @@ import "./Header.css";
 
 // Import
 import { Link } from "react-router-dom";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 export interface HeaderProps {
   children?: React.ReactNode;
 }
 
 function Header({ children }: HeaderProps) {
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+
   return (
     <>
       <div className="header-line" />
@@ -39,7 +42,7 @@ function Header({ children }: HeaderProps) {
             <FiShoppingBag fontSize={37}></FiShoppingBag>
           </div>
           <div className="hearder-shopping-circle">
-            <span className="shopping-bag-count">0</span>
+            <span className="shopping-bag-count">{customer?.cart?.itemDTOS.length}</span>
             <GiPlainCircle fontSize={22}></GiPlainCircle>
           </div>
         </div>
