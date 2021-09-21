@@ -8,11 +8,12 @@ import { HiShieldCheck } from "react-icons/hi";
 import { RiBearSmileFill } from "react-icons/ri";
 import { Teddy } from "../../Types/Teddy";
 import { AddCartItem } from "../../service/cartService";
-import { useParams } from "react-router";
-import Swal from 'sweetalert2'
+import { useHistory, useParams } from "react-router";
+import Swal from "sweetalert2";
 import "./Product.css";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { ToggleUser } from "../ToggleUser/ToggleUser";
+import { Customer } from "../../types/customer";
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -22,6 +23,7 @@ function Product({ teddy }: ProductListProps) {
   const [amount, setAmount] = useState<number>(0);
   const { id } = useParams<{ id: string }>();
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const history = useHistory();
 
   function addProductChart() {
     console.log("Clicked add chart");
@@ -48,7 +50,27 @@ function Product({ teddy }: ProductListProps) {
     }
 
     console.log("Payload:", data);
-    AddCartItem({ data, onSuccess, onError, id: `${customer?.id}` });
+
+    let customer_id: any = undefined;
+    if (customer?.id === undefined) {
+      customer_id = sessionStorage.getItem("customer_id");
+      if (customer_id === null && customer_id === undefined) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para efetuar essa operação",
+        });
+        history.push("/login");
+      }
+
+      setCustomer((prev: any) => {
+        let customer = Object.assign({}, prev);
+        customer.id = Number(customer_id);
+        return customer;
+      });
+    }
+    console.log("ooie")
+
+    AddCartItem({ data, onSuccess, onError, id: customer_id });
   }
 
   function addProductAndProceedCheckout() {

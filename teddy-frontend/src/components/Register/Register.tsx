@@ -59,7 +59,7 @@ function Register() {
           title: "Parabéns",
           text: "Sua conta foi criada com sucesso!",
           didClose: () => {
-            history.push(`/cliente/${resp?.data?.id}/pedidos`);
+            history.push(`/login`);
           },
         });
       };
