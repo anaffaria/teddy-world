@@ -17,7 +17,7 @@ export async function GetCustomer({
     })
     .then((response) => {
       customer = response.data;
-      onSuccess?.();
+      onSuccess?.(response);
     })
     .catch((err) => {
       console.error(err);

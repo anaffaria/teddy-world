@@ -10,11 +10,16 @@ import { Teddy } from "../../Types/Teddy";
 import { AddCartItem } from "../../service/cartService";
 import { useHistory, useParams } from "react-router";
 import Swal from "sweetalert2";
-import "./Product.css";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { ToggleUser } from "../ToggleUser/ToggleUser";
-import { Customer } from "../../types/customer";
-import { number } from "card-validator";
+import "./Product.css";
+import { GetCustomer } from "../../service/customerService";
+
+/*
+  Possible logics to solve this fettucine
+  Every time when the users logged in search for his info and set his data.
+  If his data is empty or missing info, get his info from backend
+*/
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -30,22 +35,12 @@ function Product({ teddy }: ProductListProps) {
   function addProductChart() {
     let customer_id: any = undefined;
 
-    if (customer?.id === undefined) {
-      customer_id = sessionStorage.getItem("customer_id");
-      if (customer_id === null && customer_id === undefined) {
-        Swal.fire({
-          icon: "warning",
-          title: "Você precisa estar logado para efetuar essa operação",
-        });
-        history.push("/login");
-      }
-
-      setCustomer((prev: any) => {
-        console.log(prev)
-        let customer = Object.assign({}, prev);
-        customer.id = Number(customer_id);
-        return customer;
+    if (customer?.id) {
+      Swal.fire({
+        icon: "warning",
+        title: "Você precisa estar logado para efetuar essa operação",
       });
+      history.push("/login");
     }
 
     const data = {

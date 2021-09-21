@@ -8,37 +8,42 @@ import { CgArrowsExchangeAlt } from "react-icons/cg";
 import { RiUserHeartLine } from "react-icons/ri";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { RiBearSmileLine } from "react-icons/ri";
-import '../../assets/Global.css'
+import "../../assets/Global.css";
 
 function AdminNavBar() {
+  function handleLogoff() {
+    console.log('olaaa')
+    sessionStorage.clear();
+  }
+
   const links = [
     {
-      icon: <GoGraph  className="navbar-icon"></GoGraph>,
+      icon: <GoGraph className="navbar-icon"></GoGraph>,
       text: "Dashboard",
       link: "/admin",
     },
     {
-      icon: <RiBearSmileLine  className="navbar-icon"></RiBearSmileLine>,
+      icon: <RiBearSmileLine className="navbar-icon"></RiBearSmileLine>,
       text: "Pelúcias",
       link: "/admin/pelucias",
     },
     {
-      icon: <FiShoppingBag  className="navbar-icon" ></FiShoppingBag>,
+      icon: <FiShoppingBag className="navbar-icon"></FiShoppingBag>,
       text: "Pedidos",
       link: "/admin/pedidos",
     },
     {
-      icon: <CgArrowsExchangeAlt  className="navbar-icon"></CgArrowsExchangeAlt>,
+      icon: <CgArrowsExchangeAlt className="navbar-icon"></CgArrowsExchangeAlt>,
       text: "Devoluções",
       link: "/admin/devolucoes",
     },
     {
-      icon: <RiUserHeartLine  className="navbar-icon"></RiUserHeartLine>,
+      icon: <RiUserHeartLine className="navbar-icon"></RiUserHeartLine>,
       text: "Clientes",
       link: "/admin/clientes",
     },
     {
-      icon: <IoPricetagsOutline  className="navbar-icon"></IoPricetagsOutline>,
+      icon: <IoPricetagsOutline className="navbar-icon"></IoPricetagsOutline>,
       text: "Cupons",
       link: "/admin/cupons",
     },
@@ -79,7 +84,7 @@ function AdminNavBar() {
             <IoExitOutline fontSize={24}></IoExitOutline>
           </div>
           <div className="navbar-footer-text">
-            <span>Sair</span>
+            <button onClick={handleLogoff}>Sair</button>
           </div>
         </div>
       </div>
