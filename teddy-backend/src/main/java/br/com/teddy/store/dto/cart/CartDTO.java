@@ -18,7 +18,9 @@ public class CartDTO {
 
     public CartDTO(Cart cart) {
         ArrayList<ItemDTO> itemDTOArrayList = new ArrayList<>();
-        cart.getItemList().forEach(i -> itemDTOArrayList.add(new ItemDTO(i)));
+        if(cart.getItemList() != null) {
+            cart.getItemList().forEach(i -> itemDTOArrayList.add(new ItemDTO(i)));
+        }
 
         this.itemDTOS = itemDTOArrayList;
     }

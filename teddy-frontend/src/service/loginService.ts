@@ -20,6 +20,7 @@ export async function Authenticate({
       onSuccess?.(response.data);
     })
     .catch((err: Error) => {
+      console.log(err)
       onError?.();
     });
 }
