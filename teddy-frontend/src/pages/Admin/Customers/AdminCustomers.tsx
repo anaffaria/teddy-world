@@ -8,21 +8,25 @@ import { axiosInstance } from "../../../service/serviceInstance";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { Customer } from "../../../types/customer";
-
+import {
+  InactiveCustomer,
+  ListCustomers,
+} from "../../../service/customerService";
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState<Array<Customer>>([]);
+  const token = sessionStorage.getItem("token") || "";
 
   useEffect(() => {
-    axiosInstance
-      .get("customers")
-      .then((response) => {
-        setCustomers(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    const onSuccess = (response: any) => {
+      setCustomers(response.data);
+    };
+
+    ListCustomers({
+      onSuccess,
+      token,
+    });
+  }, [token]);
 
   return (
     <>
@@ -67,7 +71,7 @@ function AdminCustomers() {
                   <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
-              <Table responsive hover >
+              <Table responsive hover>
                 <thead className="text-truncate">
                   <tr>
                     <th>
@@ -93,32 +97,36 @@ function AdminCustomers() {
                           <button
                             className="btn-sm btn btn-outline-danger"
                             onClick={() => {
-                              axiosInstance
-                                .delete(`/customer/${customer.id}`)
-                                .then((resp) => {
-                                  if (resp.data.hasError) throw new Error();
-                                  Swal.fire({
-                                    icon: "success",
-                                    title: "Usuário desativado com sucesso!",
-                                  });
-
-                                  setCustomers((prev) => {
-                                    let customersList = Object.assign(prev, {});
-                                    customersList = customersList.filter(
-                                      (el) => el.id !== customer.id
-                                    );
-                                    console.log(customersList);
-                                    return customersList;
-                                  });
-                                })
-                                .catch((err) => {
-                                  console.log(err);
-                                  Swal.fire({
-                                    icon: "error",
-                                    title: "Oops...",
-                                    text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-                                  });
+                              const onSuccess = () => {
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Usuário desativado com sucesso!",
                                 });
+
+                                setCustomers((prev) => {
+                                  let customersList = Object.assign(prev, {});
+                                  customersList = customersList.filter(
+                                    (el) => el.id !== customer.id
+                                  );
+                                  console.log(customersList);
+                                  return customersList;
+                                });
+                              };
+
+                              const onError = () => {
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                                });
+                              };
+
+                              InactiveCustomer({
+                                token,
+                                id: `${customer.id}`,
+                                onSuccess,
+                                onError,
+                              });
                             }}
                           >
                             <BsTrashFill fontSize={20} /> Desativar

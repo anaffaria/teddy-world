@@ -30,7 +30,7 @@ export async function SaveCustomer({
   onSuccess,
   onError,
   data,
-  token
+  token,
 }: ServiceTypes<Customer>) {
   let customer = undefined;
   let customerSave = axiosInstance.post;
@@ -43,7 +43,7 @@ export async function SaveCustomer({
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((resp) => {
@@ -82,4 +82,46 @@ export async function UpdatePassword({
     });
 
   return customer;
+}
+
+export async function ListCustomers({
+  onSuccess,
+  onError,
+  token,
+}: ServiceTypes<Customer>) {
+  axiosInstance
+    .get("customers", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      onSuccess?.(response);
+    })
+    .catch((err) => {
+      onError?.();
+      console.error(err);
+    });
+}
+
+export async function InactiveCustomer({
+  onSuccess,
+  onError,
+  token,
+  id
+}: ServiceTypes<Customer>) {
+  axiosInstance
+    .delete(`/customer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((resp) => {
+      if (resp.data.hasError) throw new Error();
+      onSuccess?.()
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.()
+    });
 }
