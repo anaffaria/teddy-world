@@ -10,7 +10,6 @@ import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
-import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";

@@ -10,6 +10,7 @@ import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { axiosInstance } from "../service/serviceInstance";
+import { DeleteCard, GetCreditCardByUser } from "../service/cardsService";
 
 export interface CreditCard {
   id?: string;
@@ -27,6 +28,7 @@ export interface CreditCard {
 function Cards() {
   const [show, setShow] = useState(false);
   const [cards, setCards] = useState<CreditCard[]>([]);
+  const token = sessionStorage.getItem("token") || "";
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,15 +36,15 @@ function Cards() {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    axiosInstance
-      .get(`creditcards/customer/${id}`)
-      .then((resp) => {
-        setCards(resp.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+    const onSuccess = (resp: any) => {
+      setCards(resp.data);
+    };
+    GetCreditCardByUser({
+      id,
+      onSuccess,
+      token,
+    });
+  }, [id, token]);
 
   return (
     <CustomerAccount>
@@ -77,22 +79,23 @@ function Cards() {
                         <button
                           className="m-auto btn btn-sm btn-outline-danger"
                           onClick={() => {
-                            axiosInstance
-                              .delete(`/creditcard/${el.id}`)
-                              .then((resp: any) => {
-                                setCards((prev) => {
-                                  let newCreditCards = Object.assign([], prev);
+                            const onSuccess = () => {
+                              setCards((prev) => {
+                                let newCreditCards = Object.assign([], prev);
 
-                                  newCreditCards = newCreditCards.filter(
-                                    (card: CreditCard) => card?.id !== el.id
-                                  );
+                                newCreditCards = newCreditCards.filter(
+                                  (card: CreditCard) => card?.id !== el.id
+                                );
 
-                                  return newCreditCards;
-                                });
-                              })
-                              .catch((err: any) => {
-                                console.log(err);
+                                return newCreditCards;
                               });
+                            };
+
+                            DeleteCard({
+                              onSuccess,
+                              id: el.id,
+                              token,
+                            });
                           }}
                         >
                           <AiOutlineDelete fontSize={24} className="m-auto" />
