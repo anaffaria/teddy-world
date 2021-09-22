@@ -1,7 +1,7 @@
 import logoImg from "../../assets/logo.svg";
 import { FiShoppingBag } from "react-icons/fi";
 import { HiOutlineSearch } from "react-icons/hi";
-import { GiPlainCircle } from "react-icons/gi";
+import { GiBlackBar, GiPlainCircle } from "react-icons/gi";
 import "./Header.css";
 
 // Import
@@ -37,15 +37,20 @@ function Header({ children }: HeaderProps) {
 
         <div className="header-user d-flex  align-items-center">{children}</div>
 
-        <div className="hearder-shopping-bag d-flex align-items-center">
-          <div>
-            <FiShoppingBag fontSize={37}></FiShoppingBag>
+        <Link to={`/customer/${customer?.id}/checkout`}>
+          <div className="hearder-shopping-bag d-flex align-items-center">
+            <div>
+              <FiShoppingBag fontSize={37} color={'212529'}></FiShoppingBag>
+            </div>
+
+            <div className="hearder-shopping-circle">
+              <span className="shopping-bag-count">
+                {customer?.cart?.itemDTOS.length}
+              </span>
+              <GiPlainCircle fontSize={22}></GiPlainCircle>
+            </div>
           </div>
-          <div className="hearder-shopping-circle">
-            <span className="shopping-bag-count">{customer?.cart?.itemDTOS.length}</span>
-            <GiPlainCircle fontSize={22}></GiPlainCircle>
-          </div>
-        </div>
+        </Link>
       </div>
     </>
   );
