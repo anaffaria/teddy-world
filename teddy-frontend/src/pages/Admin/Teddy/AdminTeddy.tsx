@@ -7,23 +7,21 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Teddy } from "../../../Types/Teddy";
-import { axiosInstance } from "../../../service/serviceInstance";
 import { BiHash } from "react-icons/bi";
 import Swal from "sweetalert2";
-import { ListTeddy } from "../../../service/teddyService";
+import { DeleteTeddy, ListTeddy } from "../../../service/teddyService";
 
 function AdminTeddy() {
   const [teddies, setTeddies] = useState<Array<Teddy>>();
-  
+  const token = sessionStorage.getItem("token") || "";
+
   useEffect(() => {
     ListTeddy({})
       .then((resp) => {
         setTeddies(resp);
       })
       .catch((err) => console.log(err));
-    
   }, []);
-
 
   return (
     <>
@@ -124,32 +122,36 @@ function AdminTeddy() {
                           <button
                             className="btn-sm btn btn-outline-danger"
                             onClick={() => {
-                              axiosInstance
-                                .delete(`/teddy/${teddy.id}`)
-                                .then((resp) => {
-                                  if (resp.data.hasError) throw new Error();
-                                  Swal.fire({
-                                    icon: "success",
-                                    title: "Dados Atualizados!",
-                                  });
-
-                                  setTeddies((prev) => {
-                                    let teddyList = Object.assign(prev, {});
-                                    teddyList = teddyList.filter(
-                                      (el) => el.id !== teddy.id
-                                    );
-                                    console.log(teddyList);
-                                    return teddyList;
-                                  });
-                                })
-                                .catch((err) => {
-                                  console.log(err);
-                                  Swal.fire({
-                                    icon: "error",
-                                    title: "Oops...",
-                                    text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-                                  });
+                              const onSuccess = () => {
+                                Swal.fire({
+                                  icon: "success",
+                                  title: "Dados Atualizados!",
                                 });
+
+                                setTeddies((prev) => {
+                                  let teddyList = Object.assign(prev, {});
+                                  teddyList = teddyList.filter(
+                                    (el) => el.id !== teddy.id
+                                  );
+                                  console.log(teddyList);
+                                  return teddyList;
+                                });
+                              };
+
+                              const onError = () => {
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                                });
+                              };
+
+                              DeleteTeddy({
+                                onSuccess,
+                                token,
+                                id: `${teddy.id}`,
+                                onError,
+                              });
                             }}
                           >
                             <BsTrashFill fontSize={20} /> Excluir

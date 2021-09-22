@@ -1,4 +1,3 @@
-
 import { Teddy } from "../Types/Teddy";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
@@ -22,10 +21,7 @@ export async function GetTeddy({
   return teddy;
 }
 
-export async function ListTeddy({
-  onSuccess,
-  onError,
-}: ServiceTypes<Teddy>) {
+export async function ListTeddy({ onSuccess, onError }: ServiceTypes<Teddy>) {
   let teddys = undefined;
   await axiosInstance
     .get(`/teddy`)
@@ -44,7 +40,7 @@ export async function SaveTeddy({
   onSuccess,
   onError,
   data,
-  token
+  token,
 }: ServiceTypes<Teddy>) {
   let teddy = undefined;
   let teddySave = axiosInstance.post;
@@ -57,12 +53,12 @@ export async function SaveTeddy({
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((resp) => {
       teddy = resp.data;
-      if(resp.data?.hasError) throw new Error(resp.data?.message)
+      if (resp.data?.hasError) throw new Error(resp.data?.message);
       onSuccess?.(resp);
     })
     .catch((err) => {
@@ -77,14 +73,14 @@ export async function UpdateTeddy({
   onSuccess,
   onError,
   data,
-  token
+  token,
 }: ServiceTypes<Teddy>) {
   let teddy = undefined;
   axiosInstance
     .patch("/teddy", data, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
@@ -97,4 +93,28 @@ export async function UpdateTeddy({
     });
 
   return teddy;
+}
+
+export async function DeleteTeddy({
+  onSuccess,
+  onError,
+  data,
+  token,
+  id,
+}: ServiceTypes<Teddy>) {
+  console.log(token)
+  axiosInstance
+    .delete(`/teddy/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((resp) => {
+      if (resp.data.hasError) throw new Error();
+      onSuccess?.();
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.();
+    });
 }
