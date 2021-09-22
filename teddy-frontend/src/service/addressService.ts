@@ -14,7 +14,7 @@ export async function SaveAddress({
   onSuccess,
   onError,
   data,
-  token
+  token,
 }: ServiceTypes<Address>) {
   let address = undefined;
   let saveAddress = axiosInstance.post;
@@ -25,8 +25,8 @@ export async function SaveAddress({
 
   await saveAddress("/address", data, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
@@ -39,4 +39,26 @@ export async function SaveAddress({
     });
 
   return address;
+}
+
+export async function DeleteAddress({
+  onSuccess,
+  onError,
+  token,
+  id
+}: ServiceTypes<Address>) {
+  axiosInstance
+    .delete(`/address/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((resp) => {
+      if (resp.data.hasError) throw new Error(resp.data?.message);
+      onSuccess?.()
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.()
+    });
 }
