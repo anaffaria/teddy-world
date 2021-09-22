@@ -1,7 +1,6 @@
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
 import { MdPayment } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { Accordion, Card } from "react-bootstrap";
 import { useState } from "react";
 import { HiShieldCheck } from "react-icons/hi";
@@ -26,6 +25,7 @@ function Product({ teddy }: ProductListProps) {
   const token = sessionStorage.getItem("token");
 
   function addProductChart() {
+    console.log(customer)
     if (customer === undefined) {
       history.push("/login");
       Swal.fire({
@@ -34,6 +34,47 @@ function Product({ teddy }: ProductListProps) {
       });
       return
     }
+
+    const data = {
+      teddy: {
+        id: id,
+      },
+      amount: amount,
+    };
+
+    function onSuccess() {
+      Swal.fire({
+        icon: "success",
+        title: "Dados Atualizados!",
+      });
+
+      setCustomer((prev) => {
+        console.log(prev);
+        let customer = Object.assign({}, prev);
+        customer?.cart?.itemDTOS.push({
+          teddy: {
+            id,
+          },
+          amount,
+        });
+        return customer;
+      });
+    }
+
+    function onError(message: string) {
+      Swal.fire({
+        icon: "error",
+        title: `${message}`,
+      });
+    }
+
+    AddCartItem({
+      data,
+      onSuccess,
+      onError,
+      id: `${customer?.id}`,
+      token: token ? token : "",
+    });
   }
 
   function addProductAndProceedCheckout() {

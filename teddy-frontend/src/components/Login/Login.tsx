@@ -9,6 +9,7 @@ import { Authenticate } from "../../service/loginService";
 import "./Login.css";
 import Swal from "sweetalert2";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { GetCustomer } from "../../service/customerService";
 
 interface LoginProps {
   username: string;
@@ -42,14 +43,28 @@ function Login() {
         });
       };
 
+      const onSuccess = () => {
+        const customer_id = sessionStorage.getItem("customer_id")!
+        const token = sessionStorage.getItem("token")!
+
+        function onSuccessAuth(response: any) {
+          setCustomer(response?.data)
+          history.goBack()
+        }
+
+        GetCustomer({
+          id: customer_id, 
+          onSuccess: onSuccessAuth,
+          token
+        })
+      }
+
       Authenticate({
         username: data.username,
         password: data.password,
         onError,
-      }).then((response: any) => {
-        setCustomer(response)
-        history.goBack()
-      });
+        onSuccess
+      })
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
