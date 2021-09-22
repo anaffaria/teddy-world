@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Form } from "@unform/web";
 import Img1 from "../Product/img/img1.jpg";
@@ -11,6 +11,12 @@ import { Select } from "../Form/SelectInput";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { IoMdTrash } from "react-icons/io";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { GetCustomer } from "../../service/customerService";
+import Swal from "sweetalert2";
+import InputText from "../Form/InputText";
+import { isNamedExports } from "typescript";
+import { RemoveItem } from "../../service/cartService";
 
 interface CheckoutSubmit {
   document: string;
@@ -22,13 +28,37 @@ interface CheckoutSubmit {
 function Checkout() {
   const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
   const [showNewAddress, setShowNewAddress] = useState(false);
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   const handleClosePayment = () => setShowNewPaymentMethod(false);
   const handleCloseAddress = () => setShowNewAddress(false);
 
   const formRef = useRef<FormHandles>(null);
-
   const history = useHistory();
+  const token = sessionStorage.getItem("token") || "";
+
+  useEffect(() => {
+    Swal.fire({
+      title: "Aguarde um momento",
+      html: "<p>Estamos buscando suas informações.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
+      allowOutsideClick: false,
+      showConfirmButton: false,
+    });
+
+    const onSuccess = (resp: any) => {
+      setTimeout(() => {
+        Swal.close();
+      }, 2000);
+
+      setCustomer(resp.data);
+    };
+
+    GetCustomer({
+      id: `${customer?.id}`,
+      onSuccess,
+      token,
+    });
+  }, [customer?.id, setCustomer, token]);
 
   async function handleSubmit(data: CheckoutSubmit) {
     try {
@@ -77,6 +107,78 @@ function Checkout() {
     }
   }
 
+  async function deleteCartItem(id?: number) {
+    const onSuccess = () => {
+      Swal.fire({
+        icon: "success",
+        title: "Removido com sucesso",
+      });
+
+      setCustomer((prev) => {
+        const newCustomer = Object.assign({}, prev);
+        newCustomer.cart!.itemDTOS! =
+          newCustomer.cart?.itemDTOS.filter((el) => el.id !== id) || [];
+
+        return newCustomer;
+      });
+    };
+    const onError = () => {
+      Swal.fire({
+        icon: "error",
+        title: "Falha na operação",
+      });
+    };
+
+    RemoveItem({
+      onSuccess,
+      onError,
+      data: {
+        id,
+      },
+      token,
+      id: `${customer?.id}`
+    });
+  }
+
+  function renderCartItems() {
+    return customer?.cart?.itemDTOS?.map((el, index) => (
+      <tr key={index}>
+        <td style={{ verticalAlign: "middle" }}>{index}</td>
+        <td className="d-flex">
+          <figure style={{ width: 73, height: 73, margin: 0 }}>
+            <img
+              src={el.teddyItemDTO?.image}
+              alt={el.teddyItemDTO?.title}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </figure>
+          <span className="mt-auto mb-auto ml-3">{el.teddyItemDTO?.title}</span>
+        </td>
+        <td style={{ verticalAlign: "middle" }}>
+          <input
+            className="form-control"
+            type="number"
+            defaultValue={el?.amount}
+          />
+        </td>
+        <td style={{ verticalAlign: "middle" }}>
+          R$: {el.teddyItemDTO?.priceFactory}
+        </td>
+        <td style={{ verticalAlign: "middle" }}>
+          R$:{" "}
+          {el?.teddyItemDTO?.priceFactory
+            ? el?.teddyItemDTO?.priceFactory * el.amount
+            : 0}
+        </td>
+        <td style={{ verticalAlign: "middle" }}>
+          <span onClick={() => deleteCartItem(el?.id)}>
+            <IoMdTrash size={20} className="icon" /> Excluir
+          </span>
+        </td>
+      </tr>
+    ));
+  }
+
   return (
     <>
       <Table bordered hover>
@@ -90,71 +192,7 @@ function Checkout() {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td style={{ verticalAlign: "middle" }}>1</td>
-            <td className="d-flex">
-              <figure style={{ width: 73, height: 73, margin: 0 }}>
-                <img
-                  src={Img1}
-                  alt="lion"
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </figure>
-              <span className="mt-auto mb-auto ml-3">Leão de Pelúcia - M</span>
-            </td>
-            <td style={{ verticalAlign: "middle" }}>
-              <input className="form-control" type="number" defaultValue={2} />
-            </td>
-            <td style={{ verticalAlign: "middle" }}>R$: 69,9</td>
-            <td style={{ verticalAlign: "middle" }}>R$: 139,8</td>
-            <td style={{ verticalAlign: "middle" }}>
-              <IoMdTrash size={20} className="icon" /> Excluir
-            </td>
-          </tr>
-          <tr>
-            <td style={{ verticalAlign: "middle" }}>2</td>
-            <td className="d-flex">
-              <figure style={{ width: 73, height: 73, margin: 0 }}>
-                <img
-                  src={Img1}
-                  alt="lion"
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </figure>
-              <span className="mt-auto mb-auto ml-3">Leão de Pelúcia - M</span>
-            </td>
-            <td style={{ verticalAlign: "middle" }}>
-              <input className="form-control" type="number" defaultValue={2} />
-            </td>
-            <td style={{ verticalAlign: "middle" }}>R$: 69,9</td>
-            <td style={{ verticalAlign: "middle" }}>R$: 139,8</td>
-            <td style={{ verticalAlign: "middle" }}>
-              <IoMdTrash size={20} className="icon" /> Excluir
-            </td>
-          </tr>
-          <tr>
-            <td style={{ verticalAlign: "middle" }}>3</td>
-            <td className="d-flex">
-              <figure style={{ width: 73, height: 73, margin: 0 }}>
-                <img
-                  src={Img1}
-                  alt="lion"
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </figure>
-              <span className="mt-auto mb-auto ml-3">Leão de Pelúcia - M</span>
-            </td>
-            <td style={{ verticalAlign: "middle" }}>
-              <input className="form-control" type="number" defaultValue={2} />
-            </td>
-            <td style={{ verticalAlign: "middle" }}>R$: 69,9</td>
-            <td style={{ verticalAlign: "middle" }}>R$: 139,8</td>
-            <td style={{ verticalAlign: "middle" }}>
-              <IoMdTrash size={20} className="icon" /> Excluir
-            </td>
-          </tr>
-        </tbody>
+        <tbody>{renderCartItems()}</tbody>
       </Table>
 
       <section className="d-flex flex-wrap w-100 justify-content-around mt-5">
@@ -170,11 +208,13 @@ function Checkout() {
             </div>
 
             <div className="form-group">
-              <label>Documento</label>
-              <Select name="document" defaultValue="" className="form-control">
-                <option value="">Selecione</option>
-                <option value={1}>RG: 00.000.000.0</option>
-              </Select>
+              <label>CPF: </label>
+              <InputText
+                name="cpf"
+                defaultValue={customer?.cpf}
+                className="form-control"
+                disabled
+              />
             </div>
 
             <div className="text-center mt-5">

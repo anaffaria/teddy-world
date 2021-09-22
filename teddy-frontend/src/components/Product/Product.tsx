@@ -59,7 +59,7 @@ function Product({ teddy }: ProductListProps) {
         console.log(prev);
         let customer = Object.assign({}, prev);
         customer?.cart?.itemDTOS.push({
-          teddy: {
+          teddyItemDTO: {
             id,
           },
           amount,

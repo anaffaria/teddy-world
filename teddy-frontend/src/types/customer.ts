@@ -11,13 +11,20 @@ export interface Customer {
   addressList?: Array<Address>;
   cart?: {
     itemDTOS: Array<{
-      teddy: {
-        id: string
-      },
-      amount: number
-      id?: number,
-    }>
-  }
+      teddyItemDTO: {
+        id?: string;
+        image?: string;
+        title?: string;
+        subtile?: string;
+        priceReal?: number;
+        priceFactory?: number;
+        size?: string;
+        amountAvailable?: number;
+      };
+      amount: number;
+      id?: number;
+    }>;
+  };
 }
 
 export interface Address {

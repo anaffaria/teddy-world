@@ -35,11 +35,16 @@ export async function RemoveItem({
   onSuccess,
   onError,
   data,
-  id
-}: ServiceTypes<Item>) {
+  id,
+  token
+}: ServiceTypes<any>) {
   let cart = undefined;
   axiosInstance
-    .patch(`/customer/${id}/cart`, data)
+    .patch(`/customer/${id}/cart`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then((resp) => {
       if (resp.data?.hasError) throw new Error(resp.data?.message);
       onSuccess?.(resp);

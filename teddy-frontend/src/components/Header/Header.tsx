@@ -13,7 +13,7 @@ export interface HeaderProps {
 }
 
 function Header({ children }: HeaderProps) {
-  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const { customer } = useCustomer() as CustomerContextTiping;
 
   return (
     <>
@@ -37,7 +37,7 @@ function Header({ children }: HeaderProps) {
 
         <div className="header-user d-flex  align-items-center">{children}</div>
 
-        <Link to={`/customer/${customer?.id}/checkout`}>
+        <Link to={`/cliente/${customer?.id}/checkout`}>
           <div className="hearder-shopping-bag d-flex align-items-center">
             <div>
               <FiShoppingBag fontSize={37} color={'212529'}></FiShoppingBag>
