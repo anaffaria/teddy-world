@@ -25,14 +25,21 @@ function Product({ teddy }: ProductListProps) {
   const token = sessionStorage.getItem("token");
 
   function addProductChart() {
-    console.log(customer)
     if (customer === undefined) {
       history.push("/login");
       Swal.fire({
         icon: "warning",
         title: "Você precisa estar logado para efetuar essa operação",
       });
-      return
+      return;
+    }
+
+    if (amount <= 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Quantidade não pode ser 0",
+      });
+      return;
     }
 
     const data = {
@@ -75,10 +82,6 @@ function Product({ teddy }: ProductListProps) {
       id: `${customer?.id}`,
       token: token ? token : "",
     });
-  }
-
-  function addProductAndProceedCheckout() {
-    console.log("Clicked add item and proceed to checkout");
   }
 
   return (
@@ -138,8 +141,17 @@ function Product({ teddy }: ProductListProps) {
                           id="quantity"
                           name="quantity"
                           min="1"
-                          max="20"
+                          max={teddy?.amountAvailable}
                           step="1"
+                          onChange={(event) => {
+                            try {
+                              const userAmount = Number(event.target.value);
+                              if (userAmount > teddy!.amountAvailable) return;
+                              setAmount(userAmount);
+                            } catch (error) {
+                              console.log(error);
+                            }
+                          }}
                           value={amount}
                           className="product-amount"
                         />
@@ -147,7 +159,11 @@ function Product({ teddy }: ProductListProps) {
                           <div
                             className="w-100 h-100 m-auto d-flex plus-border-button"
                             onClick={() => {
-                              setAmount((prev: number) => prev + 1);
+                              setAmount((prev: number) => {
+                                if (prev >= teddy!.amountAvailable)
+                                  return prev;
+                                return prev + 1;
+                              });
                             }}
                           >
                             <span>+</span>
@@ -174,16 +190,6 @@ function Product({ teddy }: ProductListProps) {
                           onClick={addProductChart}
                         >
                           Adicionar ao Carrinho
-                        </button>
-                      </div>
-
-                      <div className="w-70 ml-3">
-                        <button
-                          type="submit"
-                          className="product-buttom text-center w-100"
-                          onClick={addProductAndProceedCheckout}
-                        >
-                          Comprar
                         </button>
                       </div>
                     </div>
