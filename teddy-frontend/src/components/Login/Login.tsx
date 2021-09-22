@@ -35,14 +35,6 @@ function Login() {
 
       formRef.current?.setErrors({});
 
-      const onSuccess = (response: any) => {
-        console.log(response);
-        setCustomer({
-          id: response?.id,
-        });
-        history.push(`/cliente/${response?.id}/pedidos`);
-      };
-
       const onError = () => {
         Swal.fire({
           icon: "error",
@@ -53,8 +45,10 @@ function Login() {
       Authenticate({
         username: data.username,
         password: data.password,
-        onSuccess,
         onError,
+      }).then((response: any) => {
+        setCustomer(response)
+        history.goBack()
       });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

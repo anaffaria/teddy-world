@@ -1,5 +1,3 @@
-import { Teddy } from "./Teddy";
-
 export interface Customer {
   id?: number;
   createdAt?: string;

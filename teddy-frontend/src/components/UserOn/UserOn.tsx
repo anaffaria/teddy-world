@@ -8,7 +8,7 @@ export interface UserOnProps {
 }
 
 function UserOn({ children }: UserOnProps) {
-  const { setCustomer } = useCustomer() as CustomerContextTiping;
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   function handleLogoff() {
     sessionStorage.clear();
@@ -28,7 +28,10 @@ function UserOn({ children }: UserOnProps) {
               <span>Atendimento</span>
             </Link>
             <div>
-              <Link to="/login" className="nav-link-header">
+              <Link
+                to={`/cliente/${customer?.id}/alterar_dados`}
+                className="nav-link-header"
+              >
                 <span>Minha Conta</span>
               </Link>{" "}
               /

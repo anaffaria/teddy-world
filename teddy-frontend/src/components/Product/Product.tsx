@@ -13,13 +13,6 @@ import Swal from "sweetalert2";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { ToggleUser } from "../ToggleUser/ToggleUser";
 import "./Product.css";
-import { GetCustomer } from "../../service/customerService";
-
-/*
-  Possible logics to solve this fettucine
-  Every time when the users logged in search for his info and set his data.
-  If his data is empty or missing info, get his info from backend
-*/
 
 interface ProductListProps {
   teddy?: Teddy;
@@ -33,67 +26,14 @@ function Product({ teddy }: ProductListProps) {
   const token = sessionStorage.getItem("token");
 
   function addProductChart() {
-    let customer_id: any = undefined;
-
-    if (customer?.id) {
+    if (customer === undefined) {
+      history.push("/login");
       Swal.fire({
         icon: "warning",
         title: "Você precisa estar logado para efetuar essa operação",
       });
-      history.push("/login");
+      return
     }
-
-    const data = {
-      teddy: {
-        id: id,
-      },
-      amount: amount,
-    };
-
-    function onSuccess() {
-      Swal.fire({
-        icon: "success",
-        title: "Dados Atualizados!",
-      });
-
-      setCustomer((prev) => {
-        console.log(prev)
-        let customer = Object.assign({}, prev);
-        customer?.cart?.itemDTOS.push({
-          teddy: {
-            id,
-          },
-          amount,
-        });
-        return customer;
-      });
-    }
-
-    function onError(message: string) {
-      Swal.fire({
-        icon: "error",
-        title: `${message}`,
-      });
-    }
-
-    if (token === null) {
-      Swal.fire({
-        icon: "warning",
-        title: "Você precisa estar logado para acessar este recurso",
-      });
-      return;
-    }
-
-    // TODO: remove it later
-    console.log("Payload:", data);
-
-    AddCartItem({
-      data,
-      onSuccess,
-      onError,
-      id: `${customer_id ? customer_id : customer?.id}`,
-      token,
-    });
   }
 
   function addProductAndProceedCheckout() {
@@ -187,15 +127,13 @@ function Product({ teddy }: ProductListProps) {
                       </div>
 
                       <div className="w-100 ml-3">
-                        <Link to={"/produto/" + teddy?.id} className="w-100">
-                          <button
-                            type="submit"
-                            className="product-buttom text-center w-100"
-                            onClick={addProductChart}
-                          >
-                            Adicionar ao Carrinho
-                          </button>
-                        </Link>
+                        <button
+                          type="submit"
+                          className="product-buttom text-center w-100"
+                          onClick={addProductChart}
+                        >
+                          Adicionar ao Carrinho
+                        </button>
                       </div>
 
                       <div className="w-70 ml-3">
