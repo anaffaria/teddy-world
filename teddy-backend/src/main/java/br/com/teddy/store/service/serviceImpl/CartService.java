@@ -42,6 +42,10 @@ public class CartService implements IGenericService<Cart>, ICartService {
             throw new Exception("Insufficient teddy amount available");
         }
 
+        if(!item.valid()) {
+            throw new Exception("Item is not a valid, verify parameters");
+        }
+
         customer.getCart().getItemList().add(item);
         teddy.setAmountAvailable(teddy.getAmountAvailable() - item.getAmount());
         customers.saveAndFlush(customer);
