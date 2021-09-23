@@ -158,6 +158,8 @@ function Checkout() {
           <input
             className="form-control"
             type="number"
+            min={1}
+            max={el.teddyItemDTO.amountAvailable}
             defaultValue={el?.amount}
           />
         </td>
