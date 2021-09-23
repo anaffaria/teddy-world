@@ -75,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/teddy/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/color").permitAll()
                 .antMatchers(HttpMethod.GET, "/category").permitAll()
+                .antMatchers(HttpMethod.GET, "/admin/**").permitAll()
                 .antMatchers("/authenticate", "/customer").permitAll().
         anyRequest().authenticated().and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

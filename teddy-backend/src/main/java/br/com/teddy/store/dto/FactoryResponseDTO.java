@@ -4,6 +4,7 @@ import br.com.teddy.store.domain.*;
 import br.com.teddy.store.dto.address.AddressDTO;
 import br.com.teddy.store.dto.category.CategoryDTO;
 import br.com.teddy.store.dto.color.ColorDTO;
+import br.com.teddy.store.dto.coupon.CouponDTO;
 import br.com.teddy.store.dto.creditcard.CreditCardDTO;
 import br.com.teddy.store.dto.customer.CustomerDTO;
 import br.com.teddy.store.dto.stock.StockDTO;
@@ -51,6 +52,10 @@ public abstract class FactoryResponseDTO {
 
         if(domainEntity instanceof Stock){
             return new StockDTO((Stock) domainEntity);
+        }
+
+        if(domainEntity instanceof Coupon){
+            return new CouponDTO((Coupon) domainEntity);
         }
         return null;
     }

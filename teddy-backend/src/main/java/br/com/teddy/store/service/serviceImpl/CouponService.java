@@ -2,36 +2,43 @@ package br.com.teddy.store.service.serviceImpl;
 
 import br.com.teddy.store.domain.Coupon;
 import br.com.teddy.store.dto.AttrResponseDTO;
-import br.com.teddy.store.repostiory.ICategoryRepository;
+import br.com.teddy.store.dto.FactoryResponseDTO;
+import br.com.teddy.store.repostiory.ICouponsRepository;
 import br.com.teddy.store.service.ICouponService;
 import br.com.teddy.store.service.IGenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CouponService implements IGenericService<Coupon>, ICouponService {
 
     @Autowired
-    ICategoryRepository coupons;
+    ICouponsRepository coupons;
 
     @Override
     public List<Coupon> findByCodeAndAmountGreaterThan(String code, Integer amount) {
-        return null;
+        return coupons.findByCodeAndAmountGreaterThan(code, amount = 0);
     }
 
     @Override
     public List<AttrResponseDTO> findAll() {
-        return null;
+        List<AttrResponseDTO> responseDTOList = new ArrayList<>();
+        coupons.findAll(Sort.by("code")).forEach(t -> responseDTOList.add(FactoryResponseDTO.createDTO(t, "LIST")));
+        return responseDTOList;
     }
 
     @Override
-    public AttrResponseDTO findById(Long id) {
-        return null;
+    public AttrResponseDTO findById(Long id)  {
+        return FactoryResponseDTO.createDTO(coupons.findById(id).get(), "GET");
     }
 
     @Override
     public AttrResponseDTO saveAndFlush(Coupon object) {
-        return null;
+        return FactoryResponseDTO.createDTO( coupons.saveAndFlush(object), "CREATE");
     }
 
     @Override
