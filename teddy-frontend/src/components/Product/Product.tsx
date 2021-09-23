@@ -11,6 +11,8 @@ import { useHistory, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { ToggleUser } from "../ToggleUser/ToggleUser";
+import { IoIosArrowBack } from "react-icons/io";
+import { Link } from "react-router-dom";
 import "./Product.css";
 
 interface ProductListProps {
@@ -88,9 +90,15 @@ function Product({ teddy }: ProductListProps) {
     <>
       <ToggleUser />
       <QuickLinks />
+
       <main>
         <div className="container ">
           <div className="row mt-5">
+            <Link to="/produtos">
+              <div className="goBack ">
+                <IoIosArrowBack size={35} />
+              </div>
+            </Link>
             <div className="col-sm-2 col-lg-1 ">
               <div className="card">
                 <img
@@ -160,8 +168,7 @@ function Product({ teddy }: ProductListProps) {
                             className="w-100 h-100 m-auto d-flex plus-border-button"
                             onClick={() => {
                               setAmount((prev: number) => {
-                                if (prev >= teddy!.amountAvailable)
-                                  return prev;
+                                if (prev >= teddy!.amountAvailable) return prev;
                                 return prev + 1;
                               });
                             }}
