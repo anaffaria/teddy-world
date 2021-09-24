@@ -31,4 +31,10 @@ public class CartController {
 
         return ResponseEntity.ok("ok");
     }
+
+    @PatchMapping("/amount")
+    public ResponseEntity updateCartItemAmount(@PathVariable Long id, @RequestBody Item item) {
+        cartService.updateCartItemAmount(id, item);
+        return ResponseEntity.ok("ok");
+    }
 }

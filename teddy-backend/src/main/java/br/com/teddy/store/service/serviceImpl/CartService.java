@@ -66,6 +66,17 @@ public class CartService implements IGenericService<Cart>, ICartService {
     }
 
     @Override
+    public void updateCartItemAmount(Long idCustomer, Item item) {
+        Item cartItem = iItemsRepository.getById(item.getId());
+        Teddy teddy = cartItem.getTeddy();
+
+        teddy.setAmountAvailable(teddy.getAmountAvailable() + (cartItem.getAmount() - item.getAmount()));
+        cartItem.setAmount(item.getAmount());
+
+        iItemsRepository.saveAndFlush(cartItem);
+    }
+
+    @Override
     public List<AttrResponseDTO> findAll() {
         return null;
     }

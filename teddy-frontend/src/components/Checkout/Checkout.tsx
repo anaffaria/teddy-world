@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import InputText from "../Form/InputText";
 import { isNamedExports } from "typescript";
 import { RemoveItem } from "../../service/cartService";
+import { setTimeout } from "timers";
 
 interface CheckoutSubmit {
   document: string;
@@ -28,6 +29,7 @@ interface CheckoutSubmit {
 function Checkout() {
   const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
   const [showNewAddress, setShowNewAddress] = useState(false);
+  const [isChangingAmount, setIsChangingAmount] = useState(false);
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   const handleClosePayment = () => setShowNewPaymentMethod(false);
@@ -136,8 +138,27 @@ function Checkout() {
         id,
       },
       token,
-      id: `${customer?.id}`
+      id: `${customer?.id}`,
     });
+  }
+
+  function handleChangeAmount(amount: any) {
+    Swal.fire({
+      title: "Aguarde um momento",
+      html: "<p>Estamos buscando suas informações.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
+      allowOutsideClick: false,
+      showConfirmButton: false,
+    });
+
+    //backend-request
+    const onSuccess = () => {
+      setTimeout(() => {
+        console.log("Changed Amount")
+        Swal.close();
+      }, 1000);
+    };
+
+    onSuccess()
   }
 
   function renderCartItems() {
@@ -161,6 +182,23 @@ function Checkout() {
             min={1}
             max={el.teddyItemDTO.amountAvailable}
             defaultValue={el?.amount}
+            onBlur={(e) => {
+              setCustomer((prev) => {
+                const newCustomer = Object.assign({}, prev);
+
+                newCustomer!.cart!.itemDTOS! = newCustomer.cart!.itemDTOS.map(
+                  (item) => {
+                    if (item.id === el.id) {
+                      item.amount = Number(e.target.value);
+                    }
+                    return item;
+                  }
+                );
+
+                return newCustomer;
+              });
+              handleChangeAmount(e.target.value);
+            }}
           />
         </td>
         <td style={{ verticalAlign: "middle" }}>
