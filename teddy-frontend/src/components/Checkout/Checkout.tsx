@@ -1,26 +1,23 @@
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
-import { Form } from "@unform/web";
-import Img1 from "../Product/img/img1.jpg";
-import "./Checkout.css";
-import { ModalTeddy } from "../Modal/Modal";
-import { CreditCardForm } from "../Forms/CreditCardForm";
-import { AddressForm } from "../Forms/AddressForm";
-import { FormHandles } from "@unform/core";
-import { Select } from "../Form/SelectInput";
-import { useHistory } from "react-router-dom";
-import * as Yup from "yup";
-import { IoMdTrash } from "react-icons/io";
-import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
-import { GetCustomer } from "../../service/customerService";
-import Swal from "sweetalert2";
-import InputText from "../Form/InputText";
-import { RemoveItem } from "../../service/cartService";
-import { setTimeout } from "timers";
-import { IoIosArrowBack } from "react-icons/io";
-import { GiWallet } from "react-icons/gi";
 import { AiTwotoneWallet } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { GiWallet } from "react-icons/gi";
+import { IoIosArrowBack, IoMdTrash } from "react-icons/io";
+import { Link, useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import { setTimeout } from "timers";
+import * as Yup from "yup";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { RemoveItem, UpdateItemAmount } from "../../service/cartService";
+import { GetCustomer } from "../../service/customerService";
+import InputText from "../Form/InputText";
+import { Select } from "../Form/SelectInput";
+import { AddressForm } from "../Forms/AddressForm";
+import { CreditCardForm } from "../Forms/CreditCardForm";
+import { ModalTeddy } from "../Modal/Modal";
+import "./Checkout.css";
 
 interface CheckoutSubmit {
   document: string;
@@ -126,6 +123,7 @@ function Checkout() {
         return newCustomer;
       });
     };
+
     const onError = () => {
       Swal.fire({
         icon: "error",
@@ -144,7 +142,7 @@ function Checkout() {
     });
   }
 
-  function handleChangeAmount(amount: any) {
+  function handleChangeAmount(amount: string, itemID: number) {
     Swal.fire({
       title: "Aguarde um momento",
       html: "<p>Estamos buscando suas informações.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
@@ -152,15 +150,28 @@ function Checkout() {
       showConfirmButton: false,
     });
 
-    //backend-request
     const onSuccess = () => {
       setTimeout(() => {
-        console.log("Changed Amount")
         Swal.close();
       }, 1000);
     };
+    const onError = () => {
+      Swal.fire({
+        icon: "error",
+        title: "Falha na operação",
+      });
+    };
 
-    onSuccess()
+    UpdateItemAmount({
+      id: `${customer?.id}`,
+      token,
+      onSuccess,
+      onError,
+      data: {
+        amount,
+        id: itemID
+      }
+    });
   }
 
   function renderCartItems() {
@@ -192,6 +203,7 @@ function Checkout() {
                   (item) => {
                     if (item.id === el.id) {
                       item.amount = Number(e.target.value);
+                      handleChangeAmount(e.target.value, el.id!);
                     }
                     return item;
                   }
@@ -199,7 +211,6 @@ function Checkout() {
 
                 return newCustomer;
               });
-              handleChangeAmount(e.target.value);
             }}
           />
         </td>

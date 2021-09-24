@@ -40,6 +40,33 @@ export async function RemoveItem({
 }: ServiceTypes<any>) {
   let cart = undefined;
   axiosInstance
+    .delete(`/customer/${id}/cart/${data.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((resp) => {
+      if (resp.data?.hasError) throw new Error(resp.data?.message);
+      onSuccess?.(resp);
+      cart = resp.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.(err);
+    });
+
+  return cart;
+}
+
+export async function UpdateItemAmount({
+  onSuccess,
+  onError,
+  data,
+  id,
+  token
+}: ServiceTypes<any>) {
+  let cart = undefined;
+  axiosInstance
     .patch(`/customer/${id}/cart`, data, {
       headers: {
         Authorization: `Bearer ${token}`

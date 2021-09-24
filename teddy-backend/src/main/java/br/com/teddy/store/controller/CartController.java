@@ -25,14 +25,14 @@ public class CartController {
         return ResponseEntity.ok(item);
     }
 
-    @PatchMapping("")
-    public ResponseEntity removeCartItem(@PathVariable Long id, @RequestBody Item item) {
-        cartService.removeCartItem(id, item.getId());
+    @DeleteMapping("/{id}")
+    public ResponseEntity removeCartItem(@PathVariable Long id, @PathVariable Long itemID) {
+        cartService.removeCartItem(id, itemID);
 
         return ResponseEntity.ok("ok");
     }
 
-    @PatchMapping("/amount")
+    @PatchMapping("")
     public ResponseEntity updateCartItemAmount(@PathVariable Long id, @RequestBody Item item) {
         cartService.updateCartItemAmount(id, item);
         return ResponseEntity.ok("ok");
