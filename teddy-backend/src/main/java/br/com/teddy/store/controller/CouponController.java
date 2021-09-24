@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class CouponController {
 
     @Autowired
-    IGenericService<Coupon> couponService;
-
+    ICouponService couponService;
 
     @Autowired
     ICustomerService customers;
