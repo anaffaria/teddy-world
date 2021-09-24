@@ -17,6 +17,7 @@ public class CouponDTO extends AttrResponseDTO {
     private Double value;
 
     public CouponDTO(Coupon coupon) {
+        this.id = coupon.getId();
         this.code = coupon.getCode();
         this.amount = coupon.getAmount();
         this.value = coupon.getValue();
