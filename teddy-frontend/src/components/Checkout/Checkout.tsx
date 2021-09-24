@@ -15,9 +15,12 @@ import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { GetCustomer } from "../../service/customerService";
 import Swal from "sweetalert2";
 import InputText from "../Form/InputText";
-import { isNamedExports } from "typescript";
 import { RemoveItem } from "../../service/cartService";
 import { setTimeout } from "timers";
+import { IoIosArrowBack } from "react-icons/io";
+import { GiWallet } from "react-icons/gi";
+import { AiTwotoneWallet } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 interface CheckoutSubmit {
   document: string;
@@ -29,7 +32,6 @@ interface CheckoutSubmit {
 function Checkout() {
   const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
   const [showNewAddress, setShowNewAddress] = useState(false);
-  const [isChangingAmount, setIsChangingAmount] = useState(false);
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   const handleClosePayment = () => setShowNewPaymentMethod(false);
@@ -235,6 +237,26 @@ function Checkout() {
         <tbody>{renderCartItems()}</tbody>
       </Table>
 
+      <div className="d-flex justify-content-between">
+        <Link to={"/produtos"}>
+          <div className="goBack ml-3">
+            <IoIosArrowBack size={35} />
+          </div>
+        </Link>
+        <div className="row col-sm-4  mr-4">
+          <div className="mr-4">
+            <p className="font-weight-bold">Saldo disponivel</p>
+            <GiWallet size={35} />
+            <span className="ml-2 mb-1">R$: 50:00</span>
+          </div>
+          <div className=" mr-4">
+            <p className="font-weight-bold">Saldo Restante</p>
+            <AiTwotoneWallet size={35} />
+            <span className="ml-2 mb-1">R$: 50:00</span>
+          </div>
+        </div>
+      </div>
+
       <section className="d-flex flex-wrap w-100 justify-content-around mt-5">
         <Form
           ref={formRef}
@@ -324,6 +346,22 @@ function Checkout() {
 
         <aside className="checkout-info col-sm-12 col-md-3">
           <div className="text-center">
+            <h4>Opções de desconto</h4>
+            <hr />
+          </div>
+          <div className="form-group mt-2">
+            <label>Carteira</label>
+            <input
+              className="form-control"
+              defaultValue="Usar da carteira: R$"
+            />
+          </div>
+          <div className="form-group mt-2">
+            <label>Cupom de Desconto</label>
+            <input className="form-control" defaultValue="COUPON502021" />
+          </div>
+
+          <div className="text-center">
             <h4>Resumo da compra</h4>
             <hr />
           </div>
@@ -368,11 +406,6 @@ function Checkout() {
             </div>
 
             <hr />
-
-            <div className="form-group mt-2">
-              <label>Cupom de Desconto</label>
-              <input className="form-control" defaultValue="COUPON502021" />
-            </div>
           </div>
         </aside>
       </section>
