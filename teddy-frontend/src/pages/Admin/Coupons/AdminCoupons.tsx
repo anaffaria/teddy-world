@@ -5,8 +5,25 @@ import { BiEditAlt } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { Coupon } from "../../../Types/coupon";
+import { useEffect, useState } from "react";
+import { ListCoupon } from "../../../service/couponService";
 
 function AdminCoupons() {
+  const [coupons, setCoupons] = useState<Array<Coupon>>();
+  const token = sessionStorage.getItem("token") || "";
+
+  useEffect(() => {
+    const onSuccess = (response: any) => {
+      console.log(response.data)
+      setCoupons(response.data);
+    };
+
+    ListCoupon({
+      onSuccess,
+      token,
+    });
+  }, [token]);
   return (
     <>
       <div className="topbar"></div>
@@ -79,26 +96,30 @@ function AdminCoupons() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>
-                      <label>R$</label> 200,0
-                    </td>
-                    <td>24/07/2021</td>
-                    <td>100</td>
+                  {coupons?.map((coupons, index) => {
+                    return <tr key={index}>
+                        <td>{coupons?.code}</td>
+                        <td>
+                          <label>R$</label> {coupons?.value}
+                        </td>
+                        <td>{coupons?.createdAt}</td>
+                        <td>{coupons?.amount}</td>
 
-                    <td>
-                      <span className="btn-sm btn btn-outline-primary">
-                        <BiEditAlt fontSize={20} />
-                        Editar
-                      </span>
-                    </td>
-                    <td>
-                      <span className="btn-sm btn btn-outline-danger">
-                        <BsTrashFill fontSize={20} /> Editar
-                      </span>
-                    </td>
-                  </tr>
+                        <td>
+                          <span className="btn-sm btn btn-outline-primary">
+                            <Link to={`/admin/coupons/${coupons?.id}`}>
+                            <BiEditAlt fontSize={20} />
+                            Editar
+                            </Link>
+                          </span>
+                        </td>
+                        <td>
+                          <span className="btn-sm btn btn-outline-danger">
+                            <BsTrashFill fontSize={20} /> Excluir
+                          </span>
+                        </td>
+                    </tr>;
+                  })}
                 </tbody>
               </Table>
             </div>
