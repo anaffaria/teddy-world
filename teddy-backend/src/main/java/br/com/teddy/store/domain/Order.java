@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +23,7 @@ import java.util.List;
 @Where(clause = "deleted_at is null")
 public class Order extends DomainEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date deliveryDate;
+    private LocalDateTime deliveryDate;
 
     private Double total;
 
@@ -35,8 +35,7 @@ public class Order extends DomainEntity{
     @JoinColumn(name="customer_id")
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name="status_id")
+    @Enumerated(EnumType.ORDINAL)
     private Status status;
 
     @ManyToOne

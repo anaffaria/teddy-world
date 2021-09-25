@@ -57,9 +57,13 @@ public class Customer extends DomainEntity{
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Cart cart;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Wallet wallet;
+
     public Customer() {
         this.setRoles("CUSTOMER");
         this.cart = new Cart();
+        this.wallet = new Wallet();
     }
 
 }

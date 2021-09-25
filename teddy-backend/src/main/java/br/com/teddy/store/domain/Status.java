@@ -1,20 +1,16 @@
 package br.com.teddy.store.domain;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Where;
-
-import javax.persistence.Entity;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Setter
-@Entity(name = "_status")
-@Where(clause = "deleted_at is null")
-public class Status extends DomainEntity{
-    private String status;
+public enum Status {
+    PROCESSING("0cm a 20cm"), DELIVERY_PROCESS("21cm a 40cm"),
+    DELIVERED("41cm a 60cm"), WAITING_CHANGE("61cm a 90cm"),
+    CHANGE_REFUSED("91cm a 2metros"), CHANGE_APPROVED("61cm a 90cm"),
+    CHANGE_PROCESS("61cm a 90cm");
 
+    private final String description;
 }

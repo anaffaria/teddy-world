@@ -2,17 +2,12 @@ package br.com.teddy.store.service.serviceImpl;
 
 import br.com.teddy.store.domain.Status;
 import br.com.teddy.store.dto.AttrResponseDTO;
-import br.com.teddy.store.repostiory.IStatusesRepository;
 import br.com.teddy.store.service.IGenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class StatusService implements IGenericService<Status> {
-
-    @Autowired
-    IStatusesRepository statuses;
-
     @Override
     public List<AttrResponseDTO> findAll() {
         return null;

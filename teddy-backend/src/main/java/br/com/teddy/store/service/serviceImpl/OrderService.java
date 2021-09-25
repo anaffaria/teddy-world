@@ -19,9 +19,6 @@ public class OrderService implements IOrderService {
     IOrdersRepository orders;
 
     @Autowired
-    IStatusesRepository statuses;
-
-    @Autowired
     ICreditCardRepository creditCards;
 
     @Autowired
