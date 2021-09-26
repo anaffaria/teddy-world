@@ -38,14 +38,13 @@ public class Order extends DomainEntity{
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @ManyToOne
-    @JoinColumn(name="address_id")
-    private Address address;
+    @ManyToMany
+    private List<Address> addressList;
 
     @OneToOne
     private Tracking tracking;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
     private List<PaymentMethod> paymentMethodList;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -61,4 +60,23 @@ public class Order extends DomainEntity{
     @Transient
     private Integer amount;
 
+    @Override
+    @Transient
+    public String validate() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Double totalReceived = paymentMethodList.stream().mapToDouble(p -> p.getPaymentValue()).sum();
+        Double totalItemsValue = itemList.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
+
+        if(null == total || total <= 0) {
+            stringBuilder.append("O valor total da compra não pode ser nulo ou menor que 0");
+        }
+
+        if(addressList.size() < 2) {
+            stringBuilder.append("Para solicitar o pedido é necessário 1 endereço para entrega e outro para cobrança");
+        }
+
+
+
+        return stringBuilder.toString();
+    }
 }
