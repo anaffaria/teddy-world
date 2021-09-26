@@ -13,14 +13,6 @@ import lombok.Setter;
 public class CreditCardDTO extends AttrResponseDTO {
     private String creditCardNumber;
 
-    private String cardHolder;
-
-    private String cardMonth;
-
-    private String cardYear;
-
-    private String cardSecurity;
-
     private String cardFavourite;
 
     private String cardFlag;
@@ -29,11 +21,7 @@ public class CreditCardDTO extends AttrResponseDTO {
         this.id = creditCard.getId();
         this.createdAt = creditCard.getCreatedAt();
         this.deletedAt = creditCard.getDeletedAt();
-        this.creditCardNumber = creditCard.getCreditCardNumber();
-        this.cardHolder = creditCard.getCardHolder();
-        this.cardMonth = creditCard.getCardMonth();
-        this.cardYear = creditCard.getCardYear();
-        this.cardSecurity = creditCard.getCardSecurity();
+        this.creditCardNumber = creditCard.getCreditCardNumber().substring(creditCard.getCreditCardNumber().length() - 4);
         this.cardFavourite = creditCard.getCardFavourite();
         this.cardFlag = creditCard.getCardFlag();
     }

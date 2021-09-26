@@ -1,10 +1,12 @@
 package br.com.teddy.store.dto.customer;
 
 import br.com.teddy.store.domain.Cart;
+import br.com.teddy.store.domain.CreditCard;
 import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.dto.address.AddressDTO;
 import br.com.teddy.store.dto.cart.CartDTO;
+import br.com.teddy.store.dto.creditcard.CreditCardDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,7 @@ public class CustomerDTO extends AttrResponseDTO {
     private Integer gender;
     private List<AddressDTO> addressList = new ArrayList<>();
     private CartDTO cart;
+    private List<CreditCardDTO> creditCardList = new ArrayList<>();
 
     public CustomerDTO(Customer customer, String method) {
         this.id = customer.getId();
@@ -42,6 +45,7 @@ public class CustomerDTO extends AttrResponseDTO {
 
         if(method.equals("GET")){
             customer.getAddressList().forEach(a -> addressList.add(new AddressDTO(a)));
+            customer.getCreditCardList().forEach(c -> creditCardList.add(new CreditCardDTO(c)));
         }
     }
 }
