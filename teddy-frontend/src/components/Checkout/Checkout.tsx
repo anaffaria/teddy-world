@@ -169,8 +169,8 @@ function Checkout() {
       onError,
       data: {
         amount,
-        id: itemID
-      }
+        id: itemID,
+      },
     });
   }
 
@@ -230,6 +230,17 @@ function Checkout() {
         </td>
       </tr>
     ));
+  }
+
+  function renderAddresses(type: number) {
+    return customer?.addressList?.map((address, index) => {
+      if (address?.addressType === type) return undefined;
+      return (
+        <option key={index} value={address?.id}>
+          {address.street}
+        </option>
+      );
+    });
   }
 
   return (
@@ -306,7 +317,7 @@ function Checkout() {
                 }}
               >
                 <option value="">Selecione</option>
-                <option value={1}>Endereço de Entrega 1</option>
+                {renderAddresses(0)}
                 <option value={-1}>Cadastrar novo endereço</option>
               </Select>
             </div>
@@ -322,7 +333,7 @@ function Checkout() {
                 }}
               >
                 <option value="">Selecione</option>
-                <option value={1}>Endereço de Cobrança 1</option>
+                {renderAddresses(1)}
                 <option value={-1}>Cadastrar novo endereço</option>
               </Select>
             </div>
@@ -344,7 +355,13 @@ function Checkout() {
                 }}
               >
                 <option value="">Selecione</option>
-                <option value={1}>****1234</option>
+                {customer?.creditCardList?.map((creditCard, index) => {
+                  return (
+                    <option value={creditCard.id}>
+                      ****{creditCard.creditCardNumber} - {creditCard.cardFlag}
+                    </option>
+                  );
+                })}
                 <option value={-1}>Cadastrar novo cartão</option>
               </Select>
             </div>

@@ -1,3 +1,5 @@
+import { CreditCard } from "./card";
+
 export interface Customer {
   id?: number;
   createdAt?: string;
@@ -9,6 +11,7 @@ export interface Customer {
   telNumber?: string;
   gender?: number;
   addressList?: Array<Address>;
+  creditCardList?: Array<CreditCard>;
   cart?: {
     itemDTOS: Array<{
       teddyItemDTO: {
@@ -25,6 +28,7 @@ export interface Customer {
       id?: number;
     }>;
   };
+  orders?: {};
 }
 
 export interface Address {

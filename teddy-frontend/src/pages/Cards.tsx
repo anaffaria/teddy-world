@@ -71,7 +71,7 @@ function Cards() {
                   <td className="align-middle">
                     <span>{el.createdAt}</span>
                   </td>
-                  <td className="align-middle">{el.creditCardNumber}</td>
+                  <td className="align-middle">****{el.creditCardNumber}</td>
                   <td className="align-middle">{el.cardFlag}</td>
                   <td className="align-middle">
                     <div className="d-flex m-auto">
