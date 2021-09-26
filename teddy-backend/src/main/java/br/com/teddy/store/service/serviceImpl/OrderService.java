@@ -86,6 +86,10 @@ public class OrderService implements IOrderService {
 
         Order newOrder = orders.save(object);
 
+        customer.getCart().getItemList().clear();
+
+        customers.save(customer);
+
         return FactoryResponseDTO.createDTO(newOrder, "CREATE");
     }
 
