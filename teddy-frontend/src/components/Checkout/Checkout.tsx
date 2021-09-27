@@ -83,7 +83,8 @@ function Checkout() {
           totalCartItemsValue +
           element?.amount! * element?.teddyItemDTO?.priceFactory!;
       }
-      if (coupon) return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
+      if (coupon)
+        return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
       return totalCartItemsValue + shippingTax;
     });
   }, [customer, shippingTax, coupon]);
@@ -146,8 +147,8 @@ function Checkout() {
         paymentMethodList: data.paymentMethodList,
       };
 
-      if(coupon?.[0]?.id) {
-        finalData.coupon = coupon[0]
+      if (coupon?.[0]?.id) {
+        finalData.coupon = coupon[0];
       }
 
       await schema.validate(data, {
@@ -174,7 +175,7 @@ function Checkout() {
         data: finalData,
       });
 
-      //history.push("/cliente/pedidos");
+      history.push(`/cliente/${customer?.id}/pedidos`);
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {

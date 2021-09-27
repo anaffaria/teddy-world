@@ -100,7 +100,9 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order updateOrder(Order object) {
-        return null;
+        Order order = orders.findById(object.getId()).get();
+        order.setStatus(object.getStatus());
+        return orders.saveAndFlush(order);
     }
 
     @Override

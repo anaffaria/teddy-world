@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Status {
-    PROCESSING("Processando"), DELIVERY_PROCESS("Em Processo de Entrega"),
+    PROCESSING("Processando"), DELIVERY_PROCESS("Em Transporte"),
     DELIVERED("Entregue"), WAITING_CHANGE("Aguardando Troca"),
     CHANGE_REFUSED("Troca Recusada"), CHANGE_APPROVED("Troca Aprovada"),
     CHANGE_PROCESS("Em Processo de Troca");

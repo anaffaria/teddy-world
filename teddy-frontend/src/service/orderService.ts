@@ -1,4 +1,3 @@
-import { Coupon } from "../Types/coupon";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 
@@ -7,18 +6,18 @@ export async function GetOrders({
   id,
   onError,
 }: ServiceTypes<any>) {
-  let coupon: any | undefined;
+  let orders: any | undefined;
   await axiosInstance
     .get(`/admin/orders`)
     .then((response) => {
-      coupon = response.data;
+      orders = response.data;
       onSuccess?.(response);
     })
     .catch((err) => {
       console.error(err);
       onError?.(err);
     });
-  return coupon;
+  return orders;
 }
 
 export async function UpdateOrder({
@@ -26,24 +25,23 @@ export async function UpdateOrder({
   onError,
   data,
   token,
-}: ServiceTypes<Coupon>) {
+}: ServiceTypes<any>) {
   let coupon = undefined;
-  let SaveCoupon = axiosInstance.post;
-
-  await SaveCoupon("/admin/cupons", data, {
+  await axiosInstance
+  .patch(`/admin/orders`, data, {
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   })
-    .then((resp) => {
-      if (resp.data?.hasError) throw new Error(resp.data?.message);
-      onSuccess?.(resp);
-      coupon = resp.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      onError?.(err);
-    });
+  .then((response) => {
+    coupon = response.data;
+    onSuccess?.(response);
+  })
+  .catch((err) => {
+    console.error(err);
+    onError?.(err);
+  });
+return coupon;
 
   return coupon;
 }
