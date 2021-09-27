@@ -2,6 +2,8 @@ package br.com.teddy.store.dto.order;
 
 import br.com.teddy.store.domain.*;
 import br.com.teddy.store.dto.AttrResponseDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +17,13 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderDTO extends AttrResponseDTO {
+    private Long id;
     private LocalDateTime deliveryDate;
+    private LocalDateTime createdAt;
     private Double total;
     private Double shippingTax;
     private Customer customer;
-    private Status status;
+    private String status;
     private List<Address> addressList;
     private Tracking tracking;
     private List<PaymentMethod> paymentMethodList;
@@ -27,14 +31,13 @@ public class OrderDTO extends AttrResponseDTO {
     private Devolution devolution;
 
     public OrderDTO(Order order) {
+        this.id = order.getId();
+        this.createdAt = order.getCreatedAt();
         this.deliveryDate = order.getDeliveryDate();
         this.total = order.getTotal();
         this.shippingTax = order.getShippingTax();
-        this.customer = order.getCustomer();
-        this.status = order.getStatus();
-        this.addressList = order.getAddressList();
+        this.status = order.getStatus().getDescription();
         this.tracking = order.getTracking();
-        this.paymentMethodList = order.getPaymentMethodList();
         this.itemList = order.getItemList();
         this.devolution = order.getDevolution();
     }

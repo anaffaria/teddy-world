@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "_order")
@@ -59,6 +58,10 @@ public class Order extends DomainEntity{
 
     @Transient
     private Integer amount;
+
+    public Order() {
+        this.status = Status.PROCESSING;
+    }
 
     @Override
     @Transient

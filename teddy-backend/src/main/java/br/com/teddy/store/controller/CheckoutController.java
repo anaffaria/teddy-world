@@ -1,6 +1,7 @@
 package br.com.teddy.store.controller;
 
 import br.com.teddy.store.domain.Order;
+import br.com.teddy.store.service.ICouponService;
 import br.com.teddy.store.service.IFretenatorService;
 import br.com.teddy.store.service.IOrderService;
 import br.com.teddy.store.utils.correiostools.Fretenator;
@@ -21,6 +22,9 @@ public class CheckoutController {
     @Autowired
     IOrderService orderService;
 
+    @Autowired
+    ICouponService couponService;
+
     @GetMapping("/calculatetax")
     public ResponseEntity calculateTax(@RequestParam("postalcode") String postalCode) {
         try {
@@ -33,5 +37,10 @@ public class CheckoutController {
     @PostMapping("/order")
     public ResponseEntity createOrder(@RequestBody Order order) {
         return ResponseEntity.ok(orderService.saveAndFlush(order));
+    }
+
+    @GetMapping("/cupons/code")
+    public ResponseEntity getCouponByCode(@RequestParam String code){
+        return ResponseEntity.ok(couponService.findByCodeAndAmountGreaterThan(code, 0));
     }
 }

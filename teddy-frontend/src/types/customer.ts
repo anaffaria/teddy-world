@@ -1,4 +1,5 @@
 import { CreditCard } from "./card";
+import { Teddy } from "./Teddy";
 
 export interface Customer {
   id?: number;
@@ -28,7 +29,25 @@ export interface Customer {
       id?: number;
     }>;
   };
-  orders?: {};
+  ordersDTOS?: Array<{
+    id: number;
+    createdAt: null;
+    deletedAt: null;
+    deliveryDate: null;
+    total: number;
+    shippingTax: number;
+    status: string;
+    itemList: [
+      {
+        id: number;
+        createdAt: string;
+        updatedAt: string;
+        teddy: Teddy;
+        amount: number;
+      }
+    ];
+    devolution: null;
+  }>;
 }
 
 export interface Address {

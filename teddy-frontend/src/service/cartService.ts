@@ -84,3 +84,57 @@ export async function UpdateItemAmount({
 
   return cart;
 }
+
+export async function CalculateTax({
+  onSuccess,
+  onError,
+  data,
+  id,
+  token
+}: ServiceTypes<any>) {
+  let cart = undefined;
+  axiosInstance
+    .get(`/customer/${id}/cart/calculatetax?postalcode=${data?.postalCode}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((resp) => {
+      if (resp.data?.hasError) throw new Error(resp.data?.message);
+      onSuccess?.(resp);
+      cart = resp.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.(err);
+    });
+
+  return cart;
+}
+
+export async function FindCoupon({
+  onSuccess,
+  onError,
+  data,
+  id,
+  token
+}: ServiceTypes<any>) {
+  let cart = undefined;
+  axiosInstance
+    .get(`/customer/${id}/cart/cupons/code?code=${data?.code}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((resp) => {
+      if (resp.data?.hasError) throw new Error(resp.data?.message);
+      onSuccess?.(resp);
+      cart = resp.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      onError?.(err);
+    });
+
+  return cart;
+}

@@ -1,4 +1,4 @@
-import { Checkout } from "../Types/checkout";
+import { CheckoutType } from "../Types/checkout";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
 
@@ -8,10 +8,10 @@ export async function FinishCheckout({
   data,
   id,
   token
-}: ServiceTypes<Checkout>) {
+}: ServiceTypes<CheckoutType>) {
   let checkout = undefined;
   axiosInstance
-    .post(`/customer/${id}/cart/order`, {
+    .post(`/customer/${id}/cart/order`, data, {
       headers: {
         Authorization: `Bearer ${token}`
       }

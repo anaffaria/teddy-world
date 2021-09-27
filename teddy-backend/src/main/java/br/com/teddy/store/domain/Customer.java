@@ -60,6 +60,9 @@ public class Customer extends DomainEntity{
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Wallet wallet;
 
+    @OneToMany(mappedBy = "customer", targetEntity = Order.class)
+    private List<Order> orderList;
+
     public Customer() {
         this.setRoles("CUSTOMER");
         this.cart = new Cart();

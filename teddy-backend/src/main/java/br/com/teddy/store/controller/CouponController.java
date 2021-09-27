@@ -28,5 +28,4 @@ public class CouponController {
     public ResponseEntity createCupon(@RequestBody Coupon coupon){
         return ResponseEntity.ok(couponService.saveAndFlush(coupon));
     }
-
 }

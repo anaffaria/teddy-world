@@ -10,8 +10,16 @@ import Swal from "sweetalert2";
 import { setTimeout } from "timers";
 import * as Yup from "yup";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
-import { RemoveItem, UpdateItemAmount } from "../../service/cartService";
+import {
+  CalculateTax,
+  FindCoupon,
+  RemoveItem,
+  UpdateItemAmount,
+} from "../../service/cartService";
+import { FinishCheckout } from "../../service/checkoutService";
 import { GetCustomer } from "../../service/customerService";
+import { CheckoutType, PaymentMethod } from "../../Types/checkout";
+import { Coupon } from "../../Types/coupon";
 import InputText from "../Form/InputText";
 import { Select } from "../Form/SelectInput";
 import { AddressForm } from "../Forms/AddressForm";
@@ -23,12 +31,16 @@ interface CheckoutSubmit {
   document: string;
   deliveryAddress: string;
   billingAddress: string;
-  paymentMethod: string;
+  paymentMethodList: PaymentMethod[];
 }
 
 function Checkout() {
   const [showNewPaymentMethod, setShowNewPaymentMethod] = useState(false);
   const [showNewAddress, setShowNewAddress] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState(1);
+  const [shippingTax, setShippingTax] = useState(0);
+  const [subTotal, setSubtotal] = useState(0);
+  const [coupon, setCoupon] = useState<Coupon[]>();
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   const handleClosePayment = () => setShowNewPaymentMethod(false);
@@ -61,10 +73,48 @@ function Checkout() {
     });
   }, [customer?.id, setCustomer, token]);
 
+  useEffect(() => {
+    setSubtotal(() => {
+      let totalCartItemsValue = 0;
+
+      for (let i = 0; i < customer?.cart?.itemDTOS?.length!; i++) {
+        const element = customer?.cart?.itemDTOS?.[i];
+        totalCartItemsValue =
+          totalCartItemsValue +
+          element?.amount! * element?.teddyItemDTO?.priceFactory!;
+      }
+      if (coupon) return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
+      return totalCartItemsValue + shippingTax;
+    });
+  }, [customer, shippingTax, coupon]);
+
+  function handleTax(postalCode: string) {
+    const address = customer?.addressList?.filter(
+      (el) => Number(el.id) === Number(postalCode)
+    );
+
+    const onSuccess = (resp: any) => {
+      setShippingTax(resp.data);
+      console.log(resp);
+    };
+
+    const onError = (err: any) => {
+      console.log(err);
+    };
+
+    CalculateTax({
+      onSuccess,
+      onError,
+      data: {
+        postalCode: address?.[0]?.postalCode,
+      },
+      token,
+    });
+  }
+
   async function handleSubmit(data: CheckoutSubmit) {
     try {
       const schema = Yup.object().shape({
-        document: Yup.string().required("O documento é obrigatório"),
         deliveryAddress: Yup.string()
           .required("Endereço de entrega é obrigatório")
           .test(
@@ -79,14 +129,26 @@ function Checkout() {
             "Endereço de cobrança inválido",
             (value = "") => Number(value) > 0
           ),
-        paymentMethod: Yup.string()
-          .required("Método de pagamento é obrigatório")
-          .test(
-            "Pagamento",
-            "Método de Pagamento inválido",
-            (value = "") => Number(value) > 0
-          ),
       });
+
+      const addresses = customer?.addressList?.filter((address) => {
+        return (
+          Number(address.id) === Number(data.deliveryAddress) ||
+          Number(address.id) === Number(data.billingAddress)
+        );
+      });
+
+      const finalData: CheckoutType = {
+        shippingTax,
+        customer: customer,
+        addressList: addresses,
+        total: subTotal,
+        paymentMethodList: data.paymentMethodList,
+      };
+
+      if(coupon?.[0]?.id) {
+        finalData.coupon = coupon[0]
+      }
 
       await schema.validate(data, {
         abortEarly: false,
@@ -94,8 +156,27 @@ function Checkout() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/pedidos");
+      const onSuccess = () => {
+        Swal.fire({
+          icon: "success",
+        });
+      };
+
+      const onError = (err: any) => {
+        console.log(err);
+      };
+
+      FinishCheckout({
+        onSuccess,
+        onError,
+        token,
+        id: `${customer?.id}`,
+        data: finalData,
+      });
+
+      //history.push("/cliente/pedidos");
     } catch (error) {
+      console.log(error);
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
 
@@ -243,6 +324,66 @@ function Checkout() {
     });
   }
 
+  function searchCoupon(value: string) {
+    const onSuccess = (resp: any) => {
+      console.log(resp);
+      setCoupon(resp.data);
+    };
+
+    const onError = (err: any) => {
+      console.log(err);
+    };
+
+    FindCoupon({
+      data: { code: value },
+      onError,
+      onSuccess,
+      token,
+    });
+  }
+
+  function renderPaymentMethods() {
+    const elements: any[] = [];
+    for (let i = 0; i < paymentAmount; i++) {
+      elements.push(
+        <>
+          <div className="form-group">
+            <label>Método de Pagamento</label>
+            <Select
+              defaultValue=""
+              name={`paymentMethodList[${i}].creditCard.id`}
+              className="form-control"
+              onChange={(val) => {
+                if (val.currentTarget.value === "-1")
+                  setShowNewPaymentMethod(true);
+              }}
+            >
+              <option value="">Selecione</option>
+              {customer?.creditCardList?.map((creditCard, index) => {
+                return (
+                  <option value={creditCard.id} key={index}>
+                    ****{creditCard.creditCardNumber} - {creditCard.cardFlag}
+                  </option>
+                );
+              })}
+              <option value={-1}>Cadastrar novo cartão</option>
+            </Select>
+          </div>
+
+          <div className="form-group">
+            <label>Valor do Pagamento</label>
+            <InputText
+              name={`paymentMethodList[${i}].paymentValue`}
+              className="form-control"
+              type="number"
+            />
+          </div>
+        </>
+      );
+    }
+    return elements;
+  }
+
   return (
     <>
       <Table bordered hover>
@@ -265,7 +406,7 @@ function Checkout() {
             <IoIosArrowBack size={35} />
           </div>
         </Link>
-        <div className="row col-sm-4  mr-4">
+        {/* <div className="row col-sm-4  mr-4">
           <div className="mr-4">
             <p className="font-weight-bold">Saldo disponivel</p>
             <GiWallet size={35} />
@@ -276,7 +417,7 @@ function Checkout() {
             <AiTwotoneWallet size={35} />
             <span className="ml-2 mb-1">R$: 50:00</span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <section className="d-flex flex-wrap w-100 justify-content-around mt-5">
@@ -314,6 +455,7 @@ function Checkout() {
                 name="deliveryAddress"
                 onChange={(val) => {
                   if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                  handleTax(val.target.value);
                 }}
               >
                 <option value="">Selecione</option>
@@ -343,28 +485,16 @@ function Checkout() {
               <hr />
             </div>
 
-            <div className="form-group">
-              <label>Método de Pagamento</label>
-              <Select
-                defaultValue=""
-                name="paymentMethod"
-                className="form-control"
-                onChange={(val) => {
-                  if (val.currentTarget.value === "-1")
-                    setShowNewPaymentMethod(true);
-                }}
-              >
-                <option value="">Selecione</option>
-                {customer?.creditCardList?.map((creditCard, index) => {
-                  return (
-                    <option value={creditCard.id}>
-                      ****{creditCard.creditCardNumber} - {creditCard.cardFlag}
-                    </option>
-                  );
-                })}
-                <option value={-1}>Cadastrar novo cartão</option>
-              </Select>
-            </div>
+            {paymentAmount && renderPaymentMethods()}
+
+            <span
+              onClick={() => {
+                setPaymentAmount((prev) => prev + 1);
+              }}
+              className="btn btn-block btn-success"
+            >
+              Adicionar mais um cartão
+            </span>
 
             <div className="d-flex">
               <button className="button-checkout">Finalizar Compra</button>
@@ -378,15 +508,13 @@ function Checkout() {
             <hr />
           </div>
           <div className="form-group mt-2">
-            <label>Carteira</label>
+            <label>Cupom de Desconto</label>
             <input
               className="form-control"
-              defaultValue="Usar da carteira: R$"
+              onChange={(e) => {
+                searchCoupon(e.target.value);
+              }}
             />
-          </div>
-          <div className="form-group mt-2">
-            <label>Cupom de Desconto</label>
-            <input className="form-control" defaultValue="COUPON502021" />
           </div>
 
           <div className="text-center">
@@ -398,23 +526,25 @@ function Checkout() {
             <strong className="w-100">Subtotal</strong>
             <div className="d-flex">
               <span>R$:</span>
-              <span>419,14</span>
+              <span>{subTotal}</span>
             </div>
           </div>
 
           <div className="d-flex space-between mt-2">
             <strong className="w-100">Valor do Frete</strong>
             <span>R$:</span>
-            <span>23,00</span>
+            <span>{shippingTax}</span>
           </div>
 
-          <div className="d-flex space-between mt-2">
-            <strong className="w-100">Valor do desconto</strong>
-            <span>R$:</span>
-            <span>23,00</span>
-          </div>
+          {coupon && (
+            <div className="d-flex space-between mt-2">
+              <strong className="w-100">Valor do desconto</strong>
+              <span>R$:</span>
+              <span>{coupon[0]?.value}</span>
+            </div>
+          )}
 
-          <div>
+          {/* <div>
             <div className="d-flex space-between mt-2">
               <strong className="w-100">Saldo na carteira</strong>
               <span>R$:</span>
@@ -435,6 +565,7 @@ function Checkout() {
 
             <hr />
           </div>
+         */}
         </aside>
       </section>
 

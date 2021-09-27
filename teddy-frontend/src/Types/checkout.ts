@@ -1,18 +1,21 @@
-import { Address } from "cluster";
-import { CreditCard } from "./card";
-import { Customer } from "./customer";
 
-export interface Checkout {
+import { Coupon } from "./coupon";
+import { Address, Customer } from "./customer";
+
+export interface CheckoutType {
   id?: number;
-  total: number;
-  shippingTax: number;
+  total?: number;
+  shippingTax?: number;
   customer?: Customer;
-  status: number;
+  status?: number;
   addressList?: Array<Address>;
   paymentMethodList?: Array<PaymentMethod>;
+  coupon?: Coupon;
 }
 
 export interface PaymentMethod {
-  paymentValue: number;
-  creditCard: CreditCard;
+  paymentValue?: number;
+  creditCard?: {
+    id: string
+  };
 }
