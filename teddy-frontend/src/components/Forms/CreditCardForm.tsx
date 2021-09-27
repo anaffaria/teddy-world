@@ -63,8 +63,8 @@ export function CreditCardForm(creditCardProp: CreditCard) {
 
       formRef.current?.setErrors({});
 
-      if (creditCardProp.customer?.id) {
-        data.customer = { id: creditCardProp.customer.id };
+      if (customer?.id) {
+        data.customer = { id: customer.id };
       }
 
       const onSuccess = (resp: any) => {
