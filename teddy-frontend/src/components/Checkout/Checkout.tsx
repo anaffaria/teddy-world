@@ -161,6 +161,8 @@ function Checkout() {
         Swal.fire({
           icon: "success",
         });
+
+        history.push(`/cliente/${customer?.id}/pedidos`);
       };
 
       const onError = (err: any) => {
@@ -174,8 +176,6 @@ function Checkout() {
         id: `${customer?.id}`,
         data: finalData,
       });
-
-      history.push(`/cliente/${customer?.id}/pedidos`);
     } catch (error) {
       console.log(error);
       if (error instanceof Yup.ValidationError) {

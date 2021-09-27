@@ -10,11 +10,14 @@ import * as CardValidator from "card-validator";
 import Swal from "sweetalert2";
 import { CreditCard } from "../../types/card";
 import { useHistory } from "react-router";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { Customer } from "../../types/customer";
 
 export function CreditCardForm(creditCardProp: CreditCard) {
   const formRef = useRef<FormHandles>(null);
   const token = sessionStorage.getItem("token");
   const [cardFlag, setCardFlag] = useState<string | undefined>("");
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const history = useHistory();
 
   async function handleSubmit(data: CreditCard) {
@@ -70,12 +73,12 @@ export function CreditCardForm(creditCardProp: CreditCard) {
           title: "Cartão Salvo!",
         });
 
-        creditCardProp?.toggleModal?.();
-        creditCardProp?.handleCards?.((prev: CreditCard[]) => {
-          let newCustomerCards = Object.assign([], prev);
-          newCustomerCards.push(resp.data);
-          return newCustomerCards;
-        });
+        setCustomer((prev: any) => {
+          const newCustomer = Object.assign({}, prev)
+          newCustomer.creditCardList?.push(resp.data)
+
+          return newCustomer;
+        })
       };
 
       const onError = (resp: any) => {

@@ -33,6 +33,4 @@ public class Coupon extends DomainEntity{
     @Min(value = 1, message = "O Valor deve ser maior que 0")
     private Double value;
 
-    @OneToMany(mappedBy = "coupon", targetEntity = Order.class)
-    private List<Order> orderList;
 }
