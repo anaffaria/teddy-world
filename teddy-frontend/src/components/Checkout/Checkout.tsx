@@ -377,6 +377,7 @@ function Checkout() {
               name={`paymentMethodList[${i}].paymentValue`}
               className="form-control"
               type="number"
+              step="0.01"
             />
           </div>
         </>
