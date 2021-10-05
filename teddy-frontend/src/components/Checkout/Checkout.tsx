@@ -240,7 +240,7 @@ function Checkout() {
   function handleChangeAmount(amount: string, itemID: number) {
     Swal.fire({
       title: "Aguarde um momento",
-      html: "<p>Estamos buscando suas informações.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
+      html: "<p>Atualizando quantidade.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
       allowOutsideClick: false,
       showConfirmButton: false,
     });
@@ -319,7 +319,10 @@ function Checkout() {
             : 0}
         </td>
         <td style={{ verticalAlign: "middle" }}>
-          <span onClick={() => deleteCartItem(el?.id)}>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => deleteCartItem(el?.id)}
+          >
             <IoMdTrash size={20} className="icon" /> Excluir
           </span>
         </td>
@@ -421,18 +424,6 @@ function Checkout() {
             <IoIosArrowBack size={35} />
           </div>
         </Link>
-        {/* <div className="row col-sm-4  mr-4">
-          <div className="mr-4">
-            <p className="font-weight-bold">Saldo disponivel</p>
-            <GiWallet size={35} />
-            <span className="ml-2 mb-1">R$: 50:00</span>
-          </div>
-          <div className=" mr-4">
-            <p className="font-weight-bold">Saldo Restante</p>
-            <AiTwotoneWallet size={35} />
-            <span className="ml-2 mb-1">R$: 50:00</span>
-          </div>
-        </div> */}
       </div>
 
       <section className="d-flex flex-wrap w-100 justify-content-around mt-5">
