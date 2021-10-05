@@ -28,7 +28,7 @@ export interface CreditCard {
 function Cards() {
   const [show, setShow] = useState(false);
   const [cards, setCards] = useState<CreditCard[]>([]);
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { Customer } from "../types/customer";
 import { axiosInstance } from "./serviceInstance";
 import { ServiceTypes } from "./serviceTypes";
@@ -19,9 +20,9 @@ export async function GetCustomer({
       customer = response.data;
       onSuccess?.(response);
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       console.error(err);
-      onError?.();
+      onError?.(err);
     });
   return customer;
 }

@@ -32,7 +32,7 @@ export function AddressForm({
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const formRef = useRef<FormHandles>(null);
   const [customerAddress, setCustomerAddress] = useState<Customer>();
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const history = useHistory()
 
   useEffect(() => {

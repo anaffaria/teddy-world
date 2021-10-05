@@ -15,7 +15,7 @@ import {
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState<Array<Customer>>([]);
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     const onSuccess = (response: any) => {

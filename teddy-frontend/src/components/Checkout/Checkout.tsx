@@ -1,5 +1,6 @@
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
+import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
 import { AiTwotoneWallet } from "react-icons/ai";
@@ -48,7 +49,7 @@ function Checkout() {
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     Swal.fire({
@@ -66,12 +67,24 @@ function Checkout() {
       setCustomer(resp.data);
     };
 
+    const onError = (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        Swal.fire({
+          icon: "warning",
+          title: "Para acessar esse recurso é necessário realizar login",
+        });
+
+        history.push("/login");
+      }
+    };
+
     GetCustomer({
       id: `${customer?.id}`,
       onSuccess,
       token,
+      onError,
     });
-  }, [customer?.id, setCustomer, token]);
+  }, [customer?.id, setCustomer, token, history]);
 
   useEffect(() => {
     setSubtotal(() => {

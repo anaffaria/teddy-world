@@ -22,7 +22,7 @@ export function NewTeddy() {
   const history = useHistory();
   const [listCategory, setListCategory] = useState<Array<Category>>();
   const [listColor, setListColor] = useState<Array<Color>>();
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (id) {

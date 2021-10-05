@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { GetCustomer } from "../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../providers/Customer";
 import { useHistory } from "react-router";
+import { AxiosError } from "axios";
 
 function CustomerEdit() {
   const { setCustomer } = useCustomer() as CustomerContextTiping;
@@ -25,19 +26,18 @@ function CustomerEdit() {
       }, 2000);
     };
 
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token") || "";
 
-    if (token === null) {
+    const onError = (err: AxiosError) => {
       Swal.fire({
         icon: "warning",
         title: "Você precisa estar logado para acessar este recurso",
       });
 
       history.push("/login");
-      return
-    }
+    };
 
-    GetCustomer({ id, onSuccess: success, token }).then((resp) =>
+    GetCustomer({ id, onSuccess: success, token, onError }).then((resp) =>
       setCustomer(resp)
     );
   }, [id, setCustomer, history]);
