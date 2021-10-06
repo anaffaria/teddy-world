@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { Redirect, Route, useHistory } from "react-router";
+import { Route, useHistory } from "react-router";
 import Swal from "sweetalert2";
 import { GetAuthAdmin } from "../../../service/adminService";
-import { GetCustomer } from "../../../service/customerService";
 
 export interface AuthAdminProps {
   Component: () => JSX.Element;
   path: string;
+  exact?: boolean;
 }
 
-export const AuthAdmin: React.FC<AuthAdminProps> = ({ Component, path }) => {
+export const AuthAdmin: React.FC<AuthAdminProps> = ({ Component, path, exact }) => {
   const token = localStorage.getItem("token") || "";
   const history = useHistory();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,5 +38,5 @@ export const AuthAdmin: React.FC<AuthAdminProps> = ({ Component, path }) => {
     GetAuthAdmin({ token, onSuccess, onError });
   }, [setIsAuthenticated, token, history]);
 
-  return isAuthenticated ? <Route component={Component} path={path} /> : <></>;
+  return isAuthenticated ? <Route component={Component} path={path} exact={exact}/> : <></>;
 };
