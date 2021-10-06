@@ -3,9 +3,7 @@ import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
 import { BsTrashFill } from "react-icons/bs";
 import { BiHash } from "react-icons/bi";
-import { useEffect } from "react";
-import { axiosInstance } from "../../../service/serviceInstance";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Customer } from "../../../types/customer";
 import {

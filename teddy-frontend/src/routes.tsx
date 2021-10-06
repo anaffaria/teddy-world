@@ -21,7 +21,7 @@ import AdminCoupons from "./pages/Admin/Coupons/AdminCoupons";
 import { NewTeddy } from "./pages/Admin/Teddy/NewTeddy";
 import AdminCouponsNew from "./pages/Admin/Coupons/NewCoupons";
 import { EditDevolution } from "./pages/Admin/Devolutions/EditDevolutions";
-
+import { AuthAdmin } from "./pages/Admin/Middleware/AuthMiddle";
 
 function Routes() {
   return (
@@ -41,7 +41,7 @@ function Routes() {
         <Route path="/cliente/:id/checkout" component={Checkout} />
         <Route path="/cliente/:id/cartao" component={Cards} />
 
-        <Route path="/admin" exact component={AdminIndex} />
+        <AuthAdmin Component={AdminIndex} path="/admin"/>
         <Route path="/admin/pelucias" exact component={AdminTeddy} />
         <Route path="/admin/pelucias/new" component={NewTeddy} />
         <Route path="/admin/pelucias/edit/:id" component={NewTeddy} />
@@ -51,7 +51,6 @@ function Routes() {
         <Route path="/admin/clientes" component={AdminCustomers} />
         <Route path="/admin/cupons" exact component={AdminCoupons} />
         <Route path="/admin/cupons/new" component={AdminCouponsNew} />
-        
       </Switch>
     </BrowserRouter>
   );
