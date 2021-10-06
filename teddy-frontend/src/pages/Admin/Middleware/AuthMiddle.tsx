@@ -4,12 +4,12 @@ import Swal from "sweetalert2";
 import { GetAuthAdmin } from "../../../service/adminService";
 
 export interface AuthAdminProps {
-  Component: () => JSX.Element;
+  component: () => JSX.Element;
   path: string;
   exact?: boolean;
 }
 
-export const AuthAdmin: React.FC<AuthAdminProps> = ({ Component, path, exact }) => {
+export const AuthAdmin: React.FC<AuthAdminProps> = ({ component, path, exact }) => {
   const token = localStorage.getItem("token") || "";
   const history = useHistory();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,5 +38,5 @@ export const AuthAdmin: React.FC<AuthAdminProps> = ({ Component, path, exact }) 
     GetAuthAdmin({ token, onSuccess, onError });
   }, [setIsAuthenticated, token, history]);
 
-  return isAuthenticated ? <Route component={Component} path={path} exact={exact}/> : <></>;
+  return isAuthenticated ? <Route component={component} path={path} exact={exact}/> : <></>;
 };
