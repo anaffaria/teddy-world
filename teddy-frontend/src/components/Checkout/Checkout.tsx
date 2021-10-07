@@ -153,8 +153,8 @@ function Checkout() {
 
               paymentMethodTotal += Number(paymentMethod.paymentValue);
             });
-
-            if(paymentMethodTotal !== subTotal) return false
+            console.log(paymentMethodTotal)
+            if(Number(paymentMethodTotal.toFixed(2)) !== subTotal) return false
 
             return true;
           }
