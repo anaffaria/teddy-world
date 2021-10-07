@@ -269,7 +269,7 @@ function Checkout() {
 
   function renderCartItems() {
     return customer?.cart?.itemDTOS?.map((el, index) => (
-      <tr key={index}>
+      <tr key={el.id}>
         <td style={{ verticalAlign: "middle" }}>{index}</td>
         <td className="d-flex">
           <figure style={{ width: 73, height: 73, margin: 0 }}>
@@ -295,8 +295,15 @@ function Checkout() {
                 newCustomer!.cart!.itemDTOS! = newCustomer.cart!.itemDTOS.map(
                   (item) => {
                     if (item.id === el.id) {
-                      item.amount = Number(e.target.value);
-                      handleChangeAmount(e.target.value, el.id!);
+                      const userAmount = e.target.value;
+                      
+                      if (Number(userAmount) <= 0) {
+                        e.target.value = `${item.amount}`;
+                        return item;
+                      }
+
+                      item.amount = Number(userAmount);
+                      handleChangeAmount(userAmount, el.id!);
                     }
                     return item;
                   }
