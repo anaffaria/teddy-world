@@ -96,7 +96,7 @@ function Checkout() {
       }
       if (coupon)
         return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
-      return totalCartItemsValue + shippingTax;
+      return Number((totalCartItemsValue + shippingTax).toFixed(2));
     });
   }, [customer, shippingTax, coupon]);
 
@@ -141,8 +141,25 @@ function Checkout() {
             "Endereço de cobrança inválido",
             (value = "") => Number(value) > 0
           ),
-      });
+        paymentMethodList: Yup.array().test(
+          "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
+          "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
+          (value) => {
+            const paymentMethods = value as PaymentMethod[];
+            let paymentMethodTotal = 0;
 
+            paymentMethods.forEach((paymentMethod) => {
+              if (paymentMethod!.creditCard!.id!.length! <= 0) return false;
+
+              paymentMethodTotal += Number(paymentMethod.paymentValue);
+            });
+
+            if(paymentMethodTotal !== subTotal) return false
+
+            return true;
+          }
+        ),
+      });
       const addresses = customer?.addressList?.filter((address) => {
         return (
           Number(address.id) === Number(data.deliveryAddress) ||
@@ -193,6 +210,15 @@ function Checkout() {
         const errorMessage: { [key: string]: string } = {};
 
         error.inner.forEach((err) => {
+          // Logic to send error to each field of paymentValue
+          if (Array.isArray(err?.params?.originalValue)) {
+            err?.params?.originalValue.forEach((value, index) => {
+              if (err.path)
+                errorMessage[`${err.path}[${index}].paymentValue`] =
+                  err.message;
+            });
+          }
+
           if (err.path) errorMessage[err.path] = err.message;
         });
 
@@ -296,7 +322,7 @@ function Checkout() {
                   (item) => {
                     if (item.id === el.id) {
                       const userAmount = e.target.value;
-                      
+
                       if (Number(userAmount) <= 0) {
                         e.target.value = `${item.amount}`;
                         return item;
