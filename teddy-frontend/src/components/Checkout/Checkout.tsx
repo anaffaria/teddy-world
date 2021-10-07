@@ -188,6 +188,7 @@ function Checkout() {
       const onSuccess = () => {
         Swal.fire({
           icon: "success",
+          title: "Pedido realizado com sucesso!"
         });
 
         history.push(`/cliente/${customer?.id}/pedidos`);

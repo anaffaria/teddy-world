@@ -6,9 +6,32 @@ import { AiOutlineBarcode } from "react-icons/ai";
 import { ImPriceTags } from "react-icons/im";
 import { AiFillCreditCard } from "react-icons/ai";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { useEffect } from "react";
+import { GetCustomer } from "../../service/customerService";
+import Swal from "sweetalert2";
+import { useHistory } from "react-router";
 
 function CustumerOrders() {
-  const { customer } = useCustomer() as CustomerContextTiping;
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const token = localStorage.getItem("token") || "";
+  const history = useHistory();
+
+  useEffect(() => {
+    const onSuccess = (resp: any) => {
+      setCustomer(resp.data);
+    };
+
+    const onError = (err: any) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops... Tivemos um erro por aqui.",
+      });
+
+      history.push("/login");
+    };
+
+    GetCustomer({ onError, onSuccess, token, id: `${customer?.id}` });
+  }, [token, customer?.id, setCustomer, history]);
 
   function renderOrders() {
     return customer?.ordersDTOS?.map((order, index) => {
@@ -45,9 +68,7 @@ function CustumerOrders() {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {renderOrders()}
-          </tbody>
+          <tbody>{renderOrders()}</tbody>
         </Table>
       </CustomerAccount>
     </>
