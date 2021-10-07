@@ -3,7 +3,6 @@ import { ServiceTypes } from "./serviceTypes";
 
 export async function GetOrders({
   onSuccess,
-  id,
   onError,
 }: ServiceTypes<any>) {
   let orders: any | undefined;
@@ -42,6 +41,4 @@ export async function UpdateOrder({
     onError?.(err);
   });
 return coupon;
-
-  return coupon;
 }

@@ -41,7 +41,7 @@ function Routes() {
         <Route path="/cliente/:id/checkout" component={Checkout} />
         <Route path="/cliente/:id/cartao" component={Cards} />
 
-        <AuthAdmin Component={AdminIndex} path="/admin"/>
+        <AuthAdmin component={AdminIndex} path="/admin"/>
         <Route path="/admin/pelucias" exact component={AdminTeddy} />
         <Route path="/admin/pelucias/new" component={NewTeddy} />
         <Route path="/admin/pelucias/edit/:id" component={NewTeddy} />

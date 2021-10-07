@@ -3,8 +3,6 @@ import { Form } from "@unform/web";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
-import { AiTwotoneWallet } from "react-icons/ai";
-import { GiWallet } from "react-icons/gi";
 import { IoIosArrowBack, IoMdTrash } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";

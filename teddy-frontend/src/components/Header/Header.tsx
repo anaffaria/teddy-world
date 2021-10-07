@@ -1,7 +1,7 @@
 import logoImg from "../../assets/logo.svg";
 import { FiShoppingBag } from "react-icons/fi";
 import { HiOutlineSearch } from "react-icons/hi";
-import { GiBlackBar, GiPlainCircle } from "react-icons/gi";
+import { GiPlainCircle } from "react-icons/gi";
 import "./Header.css";
 
 // Import

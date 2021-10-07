@@ -9,7 +9,6 @@ import { Table } from "react-bootstrap";
 import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { axiosInstance } from "../service/serviceInstance";
 import { DeleteCard, GetCreditCardByUser } from "../service/cardsService";
 
 export interface CreditCard {

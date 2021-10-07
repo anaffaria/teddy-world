@@ -11,7 +11,6 @@ import Swal from "sweetalert2";
 import { CreditCard } from "../../types/card";
 import { useHistory } from "react-router";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
-import { Customer } from "../../types/customer";
 
 export function CreditCardForm(creditCardProp: CreditCard) {
   const formRef = useRef<FormHandles>(null);

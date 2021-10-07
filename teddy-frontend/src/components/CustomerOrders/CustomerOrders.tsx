@@ -8,7 +8,7 @@ import { AiFillCreditCard } from "react-icons/ai";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 function CustumerOrders() {
-  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const { customer } = useCustomer() as CustomerContextTiping;
 
   function renderOrders() {
     return customer?.ordersDTOS?.map((order, index) => {
