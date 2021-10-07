@@ -1,11 +1,11 @@
 import Checkout from "../components/Checkout/Checkout";
 import Footer from "../components/Footer/Footer";
-import UserOn from "../components/UserOn/UserOn";
+import { ToggleUser } from "../components/ToggleUser/ToggleUser";
 
 function CheckoutPage() {
   return (
     <>
-      <UserOn />
+      <ToggleUser />
 
       <Checkout />
 

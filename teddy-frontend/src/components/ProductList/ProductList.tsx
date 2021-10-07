@@ -1,57 +1,69 @@
-import UserOff from "../UserOff/UserOff";
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductList.css";
+import { Category, Color, Size, Teddy } from "../../Types/Teddy";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { ToggleUser } from "../ToggleUser/ToggleUser";
 
-interface ListProductsProps {
-  listproducts: Array<{
-    image: string;
-    title?: string;
-    subtitle: string;
-    productUrl: string;
-    price: number;
-  }>;
-
-  listfilter: {
-    categories: string[];
-    colors: string[];
-    sizes: string[];
+interface ProductListProps {
+  teddys?: Array<Teddy>;
+  filters: {
+    categories?: Category[];
+    colors?: Color[];
+    sizes?: Size[];
   };
 }
 
-function ProductList({ listproducts, listfilter }: ListProductsProps) {
+function ProductList({ filters, teddys }: ProductListProps) {
   const [valRange, setValRange] = useState<number>(0);
 
   function renderProductsList() {
-    return listproducts.map((el, index) => {
+    return teddys?.map((el, index) => {
       return (
-        <div className="col-xs-12 mt-1 col-sm-3 col-md-3 col-lg-3" key={index}>
-          <div className="card border-0">
-            <Link to="/produto" className="product_link">
-              <img className="card-img-top" src={el.image} alt="Card cap" />
-              <div className="card-body ">
-                <h5 className="card-title">{el.title}</h5>
-                <p className="card-text">{el.subtitle}</p>
-                <p className="card-text">R$: {el.price}</p>
-              </div>
-            </Link>
-          </div>
+        <div className="cards mt-2 col-sm-3 border-0 " key={index}>
+          <Link to={"/produto/" + el.id} className="product_link">
+            <img
+              className="card-img-top rounded"
+              src={el.image}
+              alt="Card cap"
+            />
+            <div className="card-body p-1 mt-2">
+              <h5
+                className="card-title card-title text-truncate"
+                data-toggle="tooltip"
+                title={el.title}
+              >
+                {el.title}
+              </h5>
+              <h6
+                className="card-subtitle mb-2 text-muted text-truncate"
+                data-toggle="tooltip"
+                title={el.subtitle}
+              >
+                {el.subtitle}
+              </h6>
+              <label className="card-text font-weight-bold">
+                <FaRegMoneyBillAlt size={22} className="mb-1 price" /> R${" "}
+                {el.priceFactory}
+              </label>
+            </div>
+          </Link>
         </div>
       );
     });
   }
 
   function renderCategories() {
-    console.info(listfilter);
-    return listfilter.categories.map((element: string, index: number) => {
+    console.info(filters);
+    return filters?.categories?.map((el, index) => {
       return (
         <li key={index}>
           <div className="form-check ">
-            <input className="form-check-input" type="checkbox" value="" />
-            <label className="form-check-label">{element}</label>
+            <input className="form-check-input" type="checkbox" value={el.id} />
+            <label className="form-check-label">{el.name}</label>
           </div>
         </li>
       );
@@ -59,12 +71,12 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
   }
 
   function renderColors() {
-    return listfilter.colors.map((element, index) => {
+    return filters?.colors?.map((el, index) => {
       return (
         <li key={index}>
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" />
-            <label className="form-check-label">{element}</label>
+            <input className="form-check-input" type="checkbox" value={el.id} />
+            <label className="form-check-label">{el.name}</label>
           </div>
         </li>
       );
@@ -72,12 +84,16 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
   }
 
   function renderSizes() {
-    return listfilter.sizes.map((element, index) => {
+    return filters?.sizes?.map((el, index) => {
       return (
         <li key={index}>
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" />
-            <label className="form-check-label">{element}</label>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value={Size[el]}
+            />
+            <label className="form-check-label">{el}</label>
           </div>
         </li>
       );
@@ -94,7 +110,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Categoria</h6>
-          <ul className="list-group">{renderCategories()}</ul>
+          <ul className="list-group group-scroll">{renderCategories()}</ul>
         </div>
 
         <div
@@ -104,7 +120,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Cor</h6>
-          <ul className="list-group">{renderColors()}</ul>
+          <ul className="list-group group-scroll">{renderColors()}</ul>
         </div>
 
         <div
@@ -114,7 +130,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
           className="scrollspy-example"
         >
           <h6 className="w-100 mt-2">Tamanho</h6>
-          <ul className="list-group ">{renderSizes()}</ul>
+          <ul className="list-group">{renderSizes()}</ul>
         </div>
       </>
     );
@@ -122,7 +138,7 @@ function ProductList({ listproducts, listfilter }: ListProductsProps) {
 
   return (
     <>
-      <UserOff />
+      <ToggleUser />
       <QuickLinks />
       <main>
         <div className="container mt-2">

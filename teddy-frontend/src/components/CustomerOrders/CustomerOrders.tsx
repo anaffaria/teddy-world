@@ -5,8 +5,26 @@ import { BiTimeFive } from "react-icons/bi";
 import { AiOutlineBarcode } from "react-icons/ai";
 import { ImPriceTags } from "react-icons/im";
 import { AiFillCreditCard } from "react-icons/ai";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 function CustumerOrders() {
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+
+  function renderOrders() {
+    return customer?.ordersDTOS?.map((order, index) => {
+      return (
+        <tr>
+          <td>{order.createdAt}</td>
+          <td>{order.id}</td>
+          <td>
+            <label>R$</label> {order.total}
+          </td>
+          <td>{order.status}</td>
+        </tr>
+      );
+    });
+  }
+
   return (
     <>
       <CustomerAccount>
@@ -28,14 +46,7 @@ function CustumerOrders() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>00:01</td>
-              <td>001</td>
-              <td>
-                <label>R$</label> 69.90
-              </td>
-              <td>Pago</td>
-            </tr>
+            {renderOrders()}
           </tbody>
         </Table>
       </CustomerAccount>

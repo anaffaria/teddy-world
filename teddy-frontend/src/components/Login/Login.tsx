@@ -1,26 +1,30 @@
 import { Link, useHistory } from "react-router-dom";
 import logoImg from "../../assets/logo.svg";
 import { Form } from "@unform/web";
-
-import "./Login.css";
 import InputText from "../Form/InputText";
 import { useRef } from "react";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
+import { Authenticate } from "../../service/loginService";
+import "./Login.css";
+import Swal from "sweetalert2";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { GetCustomer } from "../../service/customerService";
 
 interface LoginProps {
-  email: string;
+  username: string;
   password: string;
 }
 
 function Login() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
+  const { setCustomer } = useCustomer() as CustomerContextTiping;
 
   async function handleSubmit(data: LoginProps) {
     try {
       const schema = Yup.object().shape({
-        email: Yup.string()
+        username: Yup.string()
           .email("Digite um e-mail válido.")
           .required("E-mail é obrigatório."),
         password: Yup.string().required("Senha é obrigatória."),
@@ -32,7 +36,35 @@ function Login() {
 
       formRef.current?.setErrors({});
 
-      history.push("/cliente/pedidos");
+      const onError = () => {
+        Swal.fire({
+          icon: "error",
+          title: "Login e/ou senha incorreta",
+        });
+      };
+
+      const onSuccess = () => {
+        const customer_id = sessionStorage.getItem("customer_id")!
+        const token = sessionStorage.getItem("token")!
+
+        function onSuccessAuth(response: any) {
+          setCustomer(response?.data)
+          history.goBack()
+        }
+
+        GetCustomer({
+          id: customer_id, 
+          onSuccess: onSuccessAuth,
+          token
+        })
+      }
+
+      Authenticate({
+        username: data.username,
+        password: data.password,
+        onError,
+        onSuccess
+      })
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -59,8 +91,8 @@ function Login() {
               <label className="form-label">E-mail</label>
               <InputText
                 type="email"
-                name="email"
-                id="email"
+                name="username"
+                id="username"
                 className="form-control"
               />
             </div>
@@ -89,7 +121,6 @@ function Login() {
                 </button>
               </div>
             </div>
-
 
             <div className="row mb-2 mt-4">
               <div className="col text-center">

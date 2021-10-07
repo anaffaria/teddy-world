@@ -1,17 +1,20 @@
 import logoImg from "../../assets/logo.svg";
 import { FiShoppingBag } from "react-icons/fi";
 import { HiOutlineSearch } from "react-icons/hi";
-import { GiPlainCircle } from "react-icons/gi";
+import { GiBlackBar, GiPlainCircle } from "react-icons/gi";
 import "./Header.css";
 
 // Import
 import { Link } from "react-router-dom";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 export interface HeaderProps {
   children?: React.ReactNode;
 }
 
 function Header({ children }: HeaderProps) {
+  const { customer } = useCustomer() as CustomerContextTiping;
+
   return (
     <>
       <div className="header-line" />
@@ -34,15 +37,20 @@ function Header({ children }: HeaderProps) {
 
         <div className="header-user d-flex  align-items-center">{children}</div>
 
-        <div className="hearder-shopping-bag d-flex align-items-center">
-          <div>
-            <FiShoppingBag fontSize={37}></FiShoppingBag>
+        <Link to={`/cliente/${customer?.id}/checkout`}>
+          <div className="hearder-shopping-bag d-flex align-items-center">
+            <div>
+              <FiShoppingBag fontSize={37} color={'212529'}></FiShoppingBag>
+            </div>
+
+            <div className="hearder-shopping-circle">
+              <span className="shopping-bag-count">
+                {customer?.cart?.itemDTOS.length}
+              </span>
+              <GiPlainCircle fontSize={22}></GiPlainCircle>
+            </div>
           </div>
-          <div className="hearder-shopping-circle">
-            <span className="shopping-bag-count">0</span>
-            <GiPlainCircle fontSize={22}></GiPlainCircle>
-          </div>
-        </div>
+        </Link>
       </div>
     </>
   );

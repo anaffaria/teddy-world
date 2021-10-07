@@ -1,10 +1,10 @@
-import UserOn from "../UserOn/UserOn";
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Footer from "../Footer/Footer";
 import "./CustomerAccount.css";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { ToggleUser } from "../ToggleUser/ToggleUser";
 
 export interface CustomerAccountProps {
   children?: React.ReactNode;
@@ -16,7 +16,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
 
   return (
     <>
-      <UserOn />
+      <ToggleUser />
       <QuickLinks />
       <main>
         <div className="container ">

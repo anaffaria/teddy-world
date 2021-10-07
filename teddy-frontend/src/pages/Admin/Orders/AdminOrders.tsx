@@ -1,8 +1,108 @@
 import { Table } from "react-bootstrap";
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
+import { useEffect, useState } from "react";
+import { GetOrders, UpdateOrder } from "../../../service/orderService";
+import { Order } from "../../../Types/order";
 
 function AdminOrders() {
+  const [orders, setOrders] = useState<Array<Order>>();
+  const token = sessionStorage.getItem("token") || "";
+
+  useEffect(() => {
+    const onSuccess = (resp: any) => {
+      setOrders(resp.data);
+    };
+
+    const onError = (err: any) => {
+      console.log(err);
+    };
+
+    GetOrders({
+      onSuccess,
+      onError,
+      token,
+    });
+  }, [token]);
+
+  function switchOrder(key: string) {
+    switch (key) {
+      case "Processando":
+        return "0";
+      case "Em Transporte":
+        return "1";
+      case "Entregue":
+        return "2";
+      case "Aguardando Troca":
+        return "3";
+      case "Troca Recusada":
+        return "4";
+      case "Troca Aprovada":
+        return "5";
+      case "Em Processo de Troca":
+        return "6";
+      default:
+        break;
+    }
+  }
+
+  function handleChangeStatus(value: string, id: number) {
+    const onSuccess = (resp: any) => {
+      console.log(resp);
+    };
+
+    const onError = (err: any) => {
+      console.log(err);
+    };
+
+    UpdateOrder({
+      onSuccess,
+      onError,
+      token,
+      data: {
+        id,
+        status: value,
+      },
+    });
+  }
+
+  function renderTable() {
+    return orders?.map((order, index) => {
+      return (
+        <tr key={index}>
+          <td>{order.id}</td>
+          <td>
+            <label>R$</label> {order.total}
+          </td>
+          <td>{order.createdAt}</td>
+          <td className="d-flex flex-column">
+            {order.itemList.map((item) => {
+              return `${item.amount}* ${item.teddy.title} = ${
+                item.amount * item.teddy.priceFactory
+              }`;
+            })}
+          </td>
+          <td style={{ width: 150 }}>
+            <select
+              defaultValue={switchOrder(order.status)}
+              className="form-control"
+              onChange={(e) => handleChangeStatus(e.target.value, order.id)}
+            >
+              <option value="">Selecione</option>
+              <option value="0">Processando</option>
+              <option value="1">Em Transporte</option>
+              <option value="2">Entregue</option>
+              <option value="3">Aguardando Troca</option>
+              <option value="4">Troca Recusada</option>
+              <option value="5">Troca Aprovada</option>
+              <option value="6">Em Processo de Troca</option>
+            </select>
+          </td>
+        </tr>
+      );
+    });
+  }
+
   return (
     <>
       <div className="topbar"></div>
@@ -78,9 +178,7 @@ function AdminOrders() {
                     />
                   </div>
 
-                  <button className="buttom btn-block">
-                    Pesquisar
-                  </button>
+                  <button className="buttom btn-block">Pesquisar</button>
                 </form>
               </aside>
               <Table responsive hover>
@@ -93,30 +191,7 @@ function AdminOrders() {
                     <th>Situação</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>123456</td>
-                    <td>
-                      <label>R$</label> 200,0
-                    </td>
-                    <td>24/07/2021 - 20:54:00</td>
-                    <td className="d-flex flex-column">
-                      <span>2* Leão = 100,0</span>
-                      <span>1* Girafa = 50,0</span>
-                      <span>1* Elefante = 50,0</span>
-                    </td>
-                    <td style={{width: 150}}>
-                      <select defaultValue="" className="form-control">
-                        <option value="">Selecione</option>
-                        <option value="delivered">Entregue</option>
-                        <option value="proccessing">
-                          Processando Pagamento
-                        </option>
-                        <option value="transporting">Em Transporte</option>
-                      </select>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody>{renderTable()}</tbody>
               </Table>
             </div>
           </div>

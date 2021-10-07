@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { GetCustomer } from "../service/customerService";
 import { Customer } from "../types/customer";
 
 export interface CustomerContextTiping {
@@ -18,10 +19,13 @@ export const CustomerProvider = (props: any) => {
   const [customer, setCustomer] = useState<Customer>();
 
   useEffect(() => {
-    const customerStorage = localStorage.getItem("customer");
+    const token = sessionStorage.getItem("token");
+    const id = sessionStorage.getItem("customer_id");
 
-    if (customerStorage) {
-      setCustomer(JSON.parse(customerStorage));
+    if (token !== null && id !== null) {
+      GetCustomer({ id, token }).then((resp) => {
+        setCustomer(resp);
+      });
       return;
     }
 

@@ -10,19 +10,20 @@ import InputText from "../Form/InputText";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { Select } from "../Form/SelectInput";
-import { axiosInstance } from "../../service/serviceInstance";
 import Swal from "sweetalert2";
 import { SaveCustomer } from "../../service/customerService";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { Address, Customer } from "../../types/customer";
+import { useHistory } from "react-router";
+import { DeleteAddress } from "../../service/addressService";
 
 function CustomerEdit() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
-
   const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>();
-
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
+  const token = sessionStorage.getItem("token") || '';
 
   async function handleSubmit(data: Customer) {
     try {
@@ -71,7 +72,17 @@ function CustomerEdit() {
         });
       };
 
-      SaveCustomer({ data, onSuccess, onError });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+
+        history.push("/login");
+        return;
+      }
+
+      SaveCustomer({ data, onSuccess, onError, token });
       setCustomer((prev) => {
         data.addressList = prev?.addressList;
         return data;
@@ -118,31 +129,31 @@ function CustomerEdit() {
                 className="btn-sm btn btn-outline-danger"
                 id="excluir"
                 onClick={() => {
-                  axiosInstance
-                    .delete(`/address/${address.id}`)
-                    .then((resp) => {
-                      if (resp.data.hasError)
-                        throw new Error(resp.data?.message);
-                      Swal.fire({
-                        icon: "success",
-                        title: "Dados Atualizados!",
-                      });
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
-                      });
+                  const onSuccess = () => {
+                    Swal.fire({
+                      icon: "success",
+                      title: "Dados Atualizados!",
                     });
-                  setCustomer((prev) => {
-                    const newCustomerAddress = Object.assign({}, prev);
-                    newCustomerAddress.addressList =
-                      prev?.addressList?.filter((el) => el.id !== address.id) ||
-                      [];
-                    return newCustomerAddress;
-                  });
+
+                    setCustomer((prev) => {
+                      const newCustomerAddress = Object.assign({}, prev);
+                      newCustomerAddress.addressList =
+                        prev?.addressList?.filter(
+                          (el) => el.id !== address.id
+                        ) || [];
+                      return newCustomerAddress;
+                    });
+                  };
+
+                  const onError = () => {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Algo deu errado por aqui ;( Entre em contato com o administrador",
+                    });
+                  };
+
+                  DeleteAddress({ id: address?.id, onSuccess, onError, token });
                 }}
               >
                 <BsTrashFill fontSize={20} /> Excluir
@@ -284,7 +295,10 @@ function CustomerEdit() {
                   size={40}
                   color={"#FA98AF"}
                 />
-                <label className=" col-12 font-weight-bold text-center" id="adicionarNovoEndereco">
+                <label
+                  className=" col-12 font-weight-bold text-center"
+                  id="adicionarNovoEndereco"
+                >
                   Adicionar novo endereço
                 </label>
               </div>

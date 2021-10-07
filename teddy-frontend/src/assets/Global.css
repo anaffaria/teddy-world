@@ -6,7 +6,7 @@
 .swal2-loader {
   border-color: #fa98af transparent #fa98af transparent;
 }
-.swal2-styled.swal2-confirm{
+.swal2-styled.swal2-confirm {
   background-color: #fa98af;
   border: none;
 }
@@ -76,4 +76,26 @@
   padding: 0 30px;
   width: 100%;
   margin-bottom: 50px;
+}
+
+.group-scroll {
+  max-height: 100px;
+  overflow: auto;
+  
+}
+.group-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.group-scroll::-webkit-scrollbar-track {
+  background: #E9E9E9;
+}
+
+.group-scroll::-webkit-scrollbar-thumb {
+  background: #A6D9FF;
+  border-radius: 20px;
+}
+
+.goBack{
+  color: #fa98af;
 }

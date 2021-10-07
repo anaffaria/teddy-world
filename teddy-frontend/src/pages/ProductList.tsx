@@ -1,54 +1,44 @@
+import { useEffect } from "react";
+import { useState } from "react";
 import ProductListComponent from "../components/ProductList/ProductList";
-
-import img1 from "../components/TopProducts/img/img1.jpg";
-import img2 from "../components/TopProducts/img/img2.jpg";
-import img3 from "../components/TopProducts/img/img3.jpg";
-import img4 from "../components/TopProducts/img/img4.jpg";
+import { ListColor } from "../service/colorService";
+import { ListTeddy } from "../service/teddyService";
+import { ListCategory } from "../service/categoryService";
+import { Category, Color, Size, Teddy } from "../Types/Teddy";
 
 function ProductList() {
-  const listproducts = [
-    {
-      price: 69.9,
-      title: "Leão de Pelúcia",
-      subtitle: "25 cm - M Decoração Quarto Bebê",
-      image: img1,
-      productUrl: "#",
-    },
-    {
-      price: 69.9,
-      title: "Elefante de Pelúcia",
-      subtitle: "25 cm - M Decoração Quarto Bebê",
-      image: img2,
-      productUrl: "#",
-    },
-    {
-      price: 69.9,
-      title: "Girafa de Pelúcia",
-      subtitle: "25 cm - M Decoração Quarto Bebê",
-      image: img3,
-      productUrl: "#",
-    },
-    {
-      price: 69.9,
-      title: "Onça de Pelúcia",
-      subtitle: "25 cm - M Decoração Quarto Bebê",
-      image: img4,
-      productUrl: "#",
-    },
-  ];
+  const [listTeddy, setListTeddy] = useState<Array<Teddy>>();
+  const [listColor, setListColor] = useState<Array<Color>>();
+  const [listCategory, setListCategory] = useState<Array<Category>>();
+
+  useEffect(() => {
+    ListTeddy({})
+      .then((resp) => {
+        setListTeddy(resp);
+      })
+      .catch((err) => console.log(err));
+
+    ListColor({}).then((resp) => {
+      setListColor(resp);
+    })
+    .catch((err) => console.log(err));
+
+    ListCategory({}).then((resp) => {
+      setListCategory(resp);
+    })
+    .catch((err) => console.log(err));
+    
+  }, []);
 
   const filterproducts = {
-    categories: ["Elefante", "Urso", "Panda", "Unicórnio"],
-    colors: ["Bege", "Branco", "Caramelo", "Cinza", "Marrom", "Colorido"],
-    sizes: ["0 cm a 20 cm", "21 cm a 40 cm", "41 cm a 60 cm"],
+    categories: listCategory,
+    colors: listColor,
+    sizes: [Size.oneSize, Size.twoSize, Size.treeSize, Size.fourSize, Size.fiveSize]
   };
 
   return (
     <>
-      <ProductListComponent
-        listproducts={listproducts}
-        listfilter={filterproducts}
-      />
+      <ProductListComponent teddys={listTeddy} filters={filterproducts} />
     </>
   );
 }

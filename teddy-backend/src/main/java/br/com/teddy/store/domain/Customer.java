@@ -15,7 +15,6 @@ import java.util.List;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -27,7 +26,7 @@ public class Customer extends DomainEntity{
     private String fullName;
 
     @Email(message = "Insira um e-mail válido")
-//    @Column(unique = true)
+    @Column(unique = true)
     private String email;
 
     private String cpf;
@@ -47,9 +46,27 @@ public class Customer extends DomainEntity{
     @Transient
     private String newPassword;
 
+    private String roles;
+
     @OneToMany(mappedBy = "customer", targetEntity = Address.class)
     private List<Address> addressList;
 
     @OneToMany(mappedBy = "customer", targetEntity = CreditCard.class)
     private List<CreditCard> creditCardList;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Cart cart;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Wallet wallet;
+
+    @OneToMany(mappedBy = "customer", targetEntity = Order.class)
+    private List<Order> orderList;
+
+    public Customer() {
+        this.setRoles("CUSTOMER");
+        this.cart = new Cart();
+        this.wallet = new Wallet();
+    }
+
 }

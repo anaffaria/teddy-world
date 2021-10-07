@@ -1,12 +1,20 @@
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import Header from "../Header/Header";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 export interface UserOnProps {
   children?: React.ReactNode;
 }
 
 function UserOn({ children }: UserOnProps) {
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+
+  function handleLogoff() {
+    sessionStorage.clear();
+    setCustomer(undefined);
+  }
+
   return (
     <>
       <Header>
@@ -20,12 +28,15 @@ function UserOn({ children }: UserOnProps) {
               <span>Atendimento</span>
             </Link>
             <div>
-              <Link to="/login" className="nav-link-header">
+              <Link
+                to={`/cliente/${customer?.id}/alterar_dados`}
+                className="nav-link-header"
+              >
                 <span>Minha Conta</span>
               </Link>{" "}
               /
               <Link to="/" className="nav-link-header">
-                <span>Sair</span>
+                <span onClick={handleLogoff}>Sair</span>
               </Link>
             </div>
           </div>

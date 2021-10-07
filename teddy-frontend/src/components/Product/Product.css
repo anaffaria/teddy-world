@@ -86,3 +86,7 @@
   height: 19px;
   border-bottom: 1px solid #fa98af;
 }
+
+.plus-border-button:active, .minus-border-button:active {
+  background-color: #fa98af;
+}

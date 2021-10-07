@@ -3,4 +3,5 @@ export interface ServiceTypes<T> {
   onError?: Function;
   id?: string;
   data?: T;
+  token?: string
 }

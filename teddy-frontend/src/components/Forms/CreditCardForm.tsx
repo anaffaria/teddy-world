@@ -9,11 +9,16 @@ import * as Yup from "yup";
 import * as CardValidator from "card-validator";
 import Swal from "sweetalert2";
 import { CreditCard } from "../../types/card";
+import { useHistory } from "react-router";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import { Customer } from "../../types/customer";
 
 export function CreditCardForm(creditCardProp: CreditCard) {
   const formRef = useRef<FormHandles>(null);
-
+  const token = sessionStorage.getItem("token");
   const [cardFlag, setCardFlag] = useState<string | undefined>("");
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const history = useHistory();
 
   async function handleSubmit(data: CreditCard) {
     try {
@@ -58,8 +63,8 @@ export function CreditCardForm(creditCardProp: CreditCard) {
 
       formRef.current?.setErrors({});
 
-      if (creditCardProp.customer?.id) {
-        data.customer = { id: creditCardProp.customer.id };
+      if (customer?.id) {
+        data.customer = { id: customer.id };
       }
 
       const onSuccess = (resp: any) => {
@@ -68,12 +73,12 @@ export function CreditCardForm(creditCardProp: CreditCard) {
           title: "Cartão Salvo!",
         });
 
-        creditCardProp?.toggleModal?.();
-        creditCardProp?.handleCards?.((prev: CreditCard[]) => {
-          let newCustomerCards = Object.assign([], prev);
-          newCustomerCards.push(resp.data);
-          return newCustomerCards;
-        });
+        setCustomer((prev: any) => {
+          const newCustomer = Object.assign({}, prev)
+          newCustomer.creditCardList?.push(resp.data)
+
+          return newCustomer;
+        })
       };
 
       const onError = (resp: any) => {
@@ -85,7 +90,17 @@ export function CreditCardForm(creditCardProp: CreditCard) {
         });
       };
 
-      SaveCreditCard({ data, onSuccess, onError });
+      if (token === null) {
+        Swal.fire({
+          icon: "warning",
+          title: "Você precisa estar logado para acessar este recurso",
+        });
+
+        history.push("/login");
+        return;
+      }
+
+      SaveCreditCard({ data, onSuccess, onError, token });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};

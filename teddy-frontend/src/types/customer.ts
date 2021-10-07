@@ -1,3 +1,6 @@
+import { CreditCard } from "./card";
+import { Teddy } from "./Teddy";
+
 export interface Customer {
   id?: number;
   createdAt?: string;
@@ -9,6 +12,42 @@ export interface Customer {
   telNumber?: string;
   gender?: number;
   addressList?: Array<Address>;
+  creditCardList?: Array<CreditCard>;
+  cart?: {
+    itemDTOS: Array<{
+      teddyItemDTO: {
+        id?: string;
+        image?: string;
+        title?: string;
+        subtile?: string;
+        priceReal?: number;
+        priceFactory?: number;
+        size?: string;
+        amountAvailable?: number;
+      };
+      amount: number;
+      id?: number;
+    }>;
+  };
+  ordersDTOS?: Array<{
+    id: number;
+    createdAt: null;
+    deletedAt: null;
+    deliveryDate: null;
+    total: number;
+    shippingTax: number;
+    status: string;
+    itemList: [
+      {
+        id: number;
+        createdAt: string;
+        updatedAt: string;
+        teddy: Teddy;
+        amount: number;
+      }
+    ];
+    devolution: null;
+  }>;
 }
 
 export interface Address {

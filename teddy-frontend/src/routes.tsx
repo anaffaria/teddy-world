@@ -33,7 +33,7 @@ function Routes() {
         <Route path="/recuperarsenha" component={RememberPass} />
         <Route path="/atendimento" exact component={CustomerContactUs} />
         <Route path="/atendimento/novo" component={ContactUs} />
-        <Route path="/produto" component={Product} />
+        <Route path="/produto/:id" component={Product} />
         <Route path="/produtos" component={ProductList} />
         <Route path="/cliente/:id/alterar_dados" component={CustomerEdit} />
         <Route path="/cliente/:id/alterar_senha" component={CustomerPass} />
@@ -44,6 +44,7 @@ function Routes() {
         <Route path="/admin" exact component={AdminIndex} />
         <Route path="/admin/pelucias" exact component={AdminTeddy} />
         <Route path="/admin/pelucias/new" component={NewTeddy} />
+        <Route path="/admin/pelucias/edit/:id" component={NewTeddy} />
         <Route path="/admin/pedidos" component={AdminOrders} />
         <Route path="/admin/devolucoes" exact component={AdminDevolutions} />
         <Route path="/admin/devolucoes/:id/edit" component={EditDevolution} />
