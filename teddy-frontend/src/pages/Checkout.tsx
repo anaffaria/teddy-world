@@ -7,6 +7,7 @@ function CheckoutPage() {
     <>
       <ToggleUser />
 
+      {/* {customer.cartDTO.length > 0 ? <Checkout /> : "Criar novo componente para carrinho vazio"} */}
       <Checkout />
 
       <Footer />
