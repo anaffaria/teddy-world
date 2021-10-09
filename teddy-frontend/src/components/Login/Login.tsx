@@ -49,7 +49,7 @@ function Login() {
 
         function onSuccessAuth(response: any) {
           setCustomer(response?.data)
-          history.go(-2)
+          history.push("/")
         }
 
         GetCustomer({
