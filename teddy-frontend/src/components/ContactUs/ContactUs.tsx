@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { Form } from "@unform/web";
 import { Select } from "../Form/SelectInput";
 import TextArea from "../Form/TextArea";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 
 interface ContactUsProps {
@@ -21,6 +22,7 @@ interface ContactUsProps {
 function ContactUs() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
+  const {customer, setCustomer} = useCustomer() as CustomerContextTiping
 
   async function handleSubmit(data: ContactUsProps) {
     try {
@@ -112,15 +114,6 @@ function ContactUs() {
                   />
                 </div>
 
-                <div className="col-12 col-sm-12  mt-2">
-                  <label>Assunto</label>
-                  <InputText
-                    name="subject"
-                    type="text"
-                    className="form-control"
-                    placeholder="Ex: devolução do produto"
-                  />
-                </div>
                 <div className="col-12 col-sm-12  mt-2">
                   <label>Justificativa</label>
                   <TextArea

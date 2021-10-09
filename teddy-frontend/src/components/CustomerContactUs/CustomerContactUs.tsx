@@ -7,9 +7,11 @@ import { AiFillMessage } from "react-icons/ai";
 import { AiFillSound } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
 function CustomerContactUs() {
   const history = useHistory();
+  const {customer, setCustomer} = useCustomer() as CustomerContextTiping
 
   async function handleSubmit() {
     history.push("/atendimento/novo");
