@@ -64,7 +64,7 @@ public class Customer extends DomainEntity{
     private List<Order> orderList;
 
     public Customer() {
-        this.setRoles("CUSTOMER");
+        this.setRoles("ROLE_CUSTOMER");
         this.cart = new Cart();
         this.wallet = new Wallet();
     }
