@@ -11,7 +11,7 @@ import { ListCoupon } from "../../../service/couponService";
 
 function AdminCoupons() {
   const [coupons, setCoupons] = useState<Array<Coupon>>();
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     const onSuccess = (response: any) => {

@@ -7,7 +7,7 @@ import { Order } from "../../../Types/order";
 
 function AdminOrders() {
   const [orders, setOrders] = useState<Array<Order>>();
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     const onSuccess = (resp: any) => {

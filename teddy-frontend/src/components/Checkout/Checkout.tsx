@@ -1,9 +1,8 @@
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
+import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
-import { AiTwotoneWallet } from "react-icons/ai";
-import { GiWallet } from "react-icons/gi";
 import { IoIosArrowBack, IoMdTrash } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -48,7 +47,7 @@ function Checkout() {
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     Swal.fire({
@@ -66,12 +65,24 @@ function Checkout() {
       setCustomer(resp.data);
     };
 
+    const onError = (err: AxiosError) => {
+      if (err.response?.status === 401) {
+        Swal.fire({
+          icon: "warning",
+          title: "Para acessar esse recurso é necessário realizar login",
+        });
+
+        history.push("/login");
+      }
+    };
+
     GetCustomer({
       id: `${customer?.id}`,
       onSuccess,
       token,
+      onError,
     });
-  }, [customer?.id, setCustomer, token]);
+  }, [customer?.id, setCustomer, token, history]);
 
   useEffect(() => {
     setSubtotal(() => {
@@ -85,7 +96,7 @@ function Checkout() {
       }
       if (coupon)
         return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
-      return totalCartItemsValue + shippingTax;
+      return Number((totalCartItemsValue + shippingTax).toFixed(2));
     });
   }, [customer, shippingTax, coupon]);
 
@@ -130,8 +141,26 @@ function Checkout() {
             "Endereço de cobrança inválido",
             (value = "") => Number(value) > 0
           ),
-      });
+        paymentMethodList: Yup.array().test(
+          "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
+          "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
+          (value) => {
+            const paymentMethods = value as PaymentMethod[];
+            let paymentMethodTotal = 0;
 
+            paymentMethods.forEach((paymentMethod) => {
+              if (paymentMethod!.creditCard!.id!.length! <= 0) return false;
+
+              paymentMethodTotal += Number(paymentMethod.paymentValue);
+            });
+            console.log(paymentMethodTotal);
+            if (Number(paymentMethodTotal.toFixed(2)) !== subTotal)
+              return false;
+
+            return true;
+          }
+        ),
+      });
       const addresses = customer?.addressList?.filter((address) => {
         return (
           Number(address.id) === Number(data.deliveryAddress) ||
@@ -160,6 +189,7 @@ function Checkout() {
       const onSuccess = () => {
         Swal.fire({
           icon: "success",
+          title: "Pedido realizado com sucesso!",
         });
 
         history.push(`/cliente/${customer?.id}/pedidos`);
@@ -182,6 +212,15 @@ function Checkout() {
         const errorMessage: { [key: string]: string } = {};
 
         error.inner.forEach((err) => {
+          // Logic to send error to each field of paymentValue
+          if (Array.isArray(err?.params?.originalValue)) {
+            err?.params?.originalValue.forEach((value, index) => {
+              if (err.path)
+                errorMessage[`${err.path}[${index}].paymentValue`] =
+                  err.message;
+            });
+          }
+
           if (err.path) errorMessage[err.path] = err.message;
         });
 
@@ -227,7 +266,7 @@ function Checkout() {
   function handleChangeAmount(amount: string, itemID: number) {
     Swal.fire({
       title: "Aguarde um momento",
-      html: "<p>Estamos buscando suas informações.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
+      html: "<p>Atualizando quantidade.</p><img width=150 height=150 src='https://i.pinimg.com/originals/2f/74/25/2f742539b8b1ad66d11d56600b27c8c3.gif'></img>",
       allowOutsideClick: false,
       showConfirmButton: false,
     });
@@ -258,7 +297,7 @@ function Checkout() {
 
   function renderCartItems() {
     return customer?.cart?.itemDTOS?.map((el, index) => (
-      <tr key={index}>
+      <tr key={el.id}>
         <td style={{ verticalAlign: "middle" }}>{index}</td>
         <td className="d-flex">
           <figure style={{ width: 73, height: 73, margin: 0 }}>
@@ -284,8 +323,15 @@ function Checkout() {
                 newCustomer!.cart!.itemDTOS! = newCustomer.cart!.itemDTOS.map(
                   (item) => {
                     if (item.id === el.id) {
-                      item.amount = Number(e.target.value);
-                      handleChangeAmount(e.target.value, el.id!);
+                      const userAmount = e.target.value;
+
+                      if (Number(userAmount) <= 0) {
+                        e.target.value = `${item.amount}`;
+                        return item;
+                      }
+
+                      item.amount = Number(userAmount);
+                      handleChangeAmount(userAmount, el.id!);
                     }
                     return item;
                   }
@@ -306,7 +352,10 @@ function Checkout() {
             : 0}
         </td>
         <td style={{ verticalAlign: "middle" }}>
-          <span onClick={() => deleteCartItem(el?.id)}>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => deleteCartItem(el?.id)}
+          >
             <IoMdTrash size={20} className="icon" /> Excluir
           </span>
         </td>
@@ -355,8 +404,10 @@ function Checkout() {
               name={`paymentMethodList[${i}].creditCard.id`}
               className="form-control"
               onChange={(val) => {
-                if (val.currentTarget.value === "-1")
+                if (val.currentTarget.value === "-1"){
                   setShowNewPaymentMethod(true);
+                  val.currentTarget.value = ""
+                }
               }}
             >
               <option value="">Selecione</option>
@@ -408,18 +459,6 @@ function Checkout() {
             <IoIosArrowBack size={35} />
           </div>
         </Link>
-        {/* <div className="row col-sm-4  mr-4">
-          <div className="mr-4">
-            <p className="font-weight-bold">Saldo disponivel</p>
-            <GiWallet size={35} />
-            <span className="ml-2 mb-1">R$: 50:00</span>
-          </div>
-          <div className=" mr-4">
-            <p className="font-weight-bold">Saldo Restante</p>
-            <AiTwotoneWallet size={35} />
-            <span className="ml-2 mb-1">R$: 50:00</span>
-          </div>
-        </div> */}
       </div>
 
       <section className="d-flex flex-wrap w-100 justify-content-around mt-5">
@@ -525,14 +564,6 @@ function Checkout() {
           </div>
 
           <div className="d-flex space-between mt-2">
-            <strong className="w-100">Subtotal</strong>
-            <div className="d-flex">
-              <span>R$:</span>
-              <span>{subTotal}</span>
-            </div>
-          </div>
-
-          <div className="d-flex space-between mt-2">
             <strong className="w-100">Valor do Frete</strong>
             <span>R$:</span>
             <span>{shippingTax}</span>
@@ -545,6 +576,14 @@ function Checkout() {
               <span>{coupon[0]?.value}</span>
             </div>
           )}
+
+          <div className="d-flex space-between mt-2">
+            <strong className="w-100">Subtotal</strong>
+            <div className="d-flex">
+              <span>R$:</span>
+              <span>{subTotal}</span>
+            </div>
+          </div>
 
           {/* <div>
             <div className="d-flex space-between mt-2">

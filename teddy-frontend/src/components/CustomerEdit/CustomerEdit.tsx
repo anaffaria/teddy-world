@@ -23,7 +23,7 @@ function CustomerEdit() {
   const [address, setAddress] = useState<Address>();
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-  const token = sessionStorage.getItem("token") || '';
+  const token = localStorage.getItem("token") || '';
 
   async function handleSubmit(data: Customer) {
     try {

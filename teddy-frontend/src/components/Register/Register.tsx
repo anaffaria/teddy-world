@@ -12,7 +12,6 @@ import { Customer } from "../../types/customer";
 
 function Register() {
   const formRef = useRef<FormHandles>(null);
-  const token = sessionStorage.getItem("token");
   const history = useHistory();
 
   async function handleSubmit(data: Customer) {

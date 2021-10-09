@@ -16,7 +16,7 @@ export function NewCouponForm() {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const [coupon, setCoupon] = useState<Coupon>();
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
   
   useEffect(() =>{
     GetCoupon({id: id})

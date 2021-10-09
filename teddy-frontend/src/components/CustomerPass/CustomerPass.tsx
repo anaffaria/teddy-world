@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 import { Customer } from "../../types/customer";
 import { useHistory } from "react-router";
+import { AxiosError } from "axios";
 
 interface CustumerPassProps {
   password: string;
@@ -22,7 +23,7 @@ function CustomerPass() {
   const [customer, setCustomer] = useState<Customer>();
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     Swal.fire({
@@ -40,17 +41,16 @@ function CustomerPass() {
       }, 1000);
     };
 
-    if (token === null) {
+    const onError = (err: AxiosError) => {
       Swal.fire({
         icon: "warning",
         title: "Você precisa estar logado para acessar este recurso",
       });
 
       history.push("/login");
-      return;
     }
 
-    GetCustomer({ id, onSuccess: success, token }).then((resp) =>
+    GetCustomer({ id, onSuccess: success, token, onError }).then((resp) =>
       setCustomer(resp)
     );
   }, [id, history, token]);

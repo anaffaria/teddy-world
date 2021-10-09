@@ -13,7 +13,7 @@ import "../../assets/Global.css";
 function AdminNavBar() {
   function handleLogoff() {
     console.log('olaaa')
-    sessionStorage.clear();
+    localStorage.clear();
   }
 
   const links = [

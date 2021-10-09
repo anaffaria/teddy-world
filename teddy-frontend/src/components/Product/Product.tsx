@@ -24,7 +24,7 @@ function Product({ teddy }: ProductListProps) {
   const { id } = useParams<{ id: string }>();
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const history = useHistory();
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   function addProductChart() {
     if (customer === undefined) {

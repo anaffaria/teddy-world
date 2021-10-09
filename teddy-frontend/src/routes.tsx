@@ -21,7 +21,7 @@ import AdminCoupons from "./pages/Admin/Coupons/AdminCoupons";
 import { NewTeddy } from "./pages/Admin/Teddy/NewTeddy";
 import AdminCouponsNew from "./pages/Admin/Coupons/NewCoupons";
 import { EditDevolution } from "./pages/Admin/Devolutions/EditDevolutions";
-
+import { AuthAdmin } from "./pages/Admin/Middleware/AuthMiddle";
 
 function Routes() {
   return (
@@ -41,17 +41,16 @@ function Routes() {
         <Route path="/cliente/:id/checkout" component={Checkout} />
         <Route path="/cliente/:id/cartao" component={Cards} />
 
-        <Route path="/admin" exact component={AdminIndex} />
-        <Route path="/admin/pelucias" exact component={AdminTeddy} />
-        <Route path="/admin/pelucias/new" component={NewTeddy} />
-        <Route path="/admin/pelucias/edit/:id" component={NewTeddy} />
-        <Route path="/admin/pedidos" component={AdminOrders} />
-        <Route path="/admin/devolucoes" exact component={AdminDevolutions} />
-        <Route path="/admin/devolucoes/:id/edit" component={EditDevolution} />
-        <Route path="/admin/clientes" component={AdminCustomers} />
-        <Route path="/admin/cupons" exact component={AdminCoupons} />
-        <Route path="/admin/cupons/new" component={AdminCouponsNew} />
-        
+        <AuthAdmin component={AdminIndex} path="/admin"/>
+        <AuthAdmin path="/admin/pelucias" exact component={AdminTeddy} />
+        <AuthAdmin path="/admin/pelucias/new" component={NewTeddy} />
+        <AuthAdmin path="/admin/pelucias/edit/:id" component={NewTeddy} />
+        <AuthAdmin path="/admin/pedidos" component={AdminOrders} />
+        <AuthAdmin path="/admin/devolucoes" exact component={AdminDevolutions} />
+        <AuthAdmin path="/admin/devolucoes/:id/edit" component={EditDevolution} />
+        <AuthAdmin path="/admin/clientes" component={AdminCustomers} />
+        <AuthAdmin path="/admin/cupons" exact component={AdminCoupons} />
+        <AuthAdmin path="/admin/cupons/new" component={AdminCouponsNew} />
       </Switch>
     </BrowserRouter>
   );

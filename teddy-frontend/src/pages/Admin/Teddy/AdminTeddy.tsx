@@ -13,7 +13,7 @@ import { DeleteTeddy, ListTeddy } from "../../../service/teddyService";
 
 function AdminTeddy() {
   const [teddies, setTeddies] = useState<Array<Teddy>>();
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     ListTeddy({})

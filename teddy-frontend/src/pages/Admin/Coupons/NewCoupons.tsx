@@ -1,8 +1,6 @@
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
 import { NewCouponForm } from "../../../components/Forms/NewCoupon";
-import { Coupon } from "../../../Types/coupon";
-import { useState } from "react";
 
 function AdminCouponsNew() {
   

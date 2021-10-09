@@ -75,9 +75,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/teddy/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/color").permitAll()
                 .antMatchers(HttpMethod.GET, "/category").permitAll()
-                .antMatchers(HttpMethod.GET, "/admin/**").permitAll()
-                .antMatchers("/authenticate", "/customer").permitAll().
-        anyRequest().authenticated().and().
+                .antMatchers("/authenticate", "/customer").permitAll()
+
+                .antMatchers("/customers").hasRole("ADMIN")
+                .antMatchers("/admin").hasRole("ADMIN")
+
+                .anyRequest().authenticated().and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

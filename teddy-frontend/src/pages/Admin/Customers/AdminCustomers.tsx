@@ -3,9 +3,7 @@ import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
 import { BsTrashFill } from "react-icons/bs";
 import { BiHash } from "react-icons/bi";
-import { useEffect } from "react";
-import { axiosInstance } from "../../../service/serviceInstance";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Customer } from "../../../types/customer";
 import {
@@ -15,7 +13,7 @@ import {
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState<Array<Customer>>([]);
-  const token = sessionStorage.getItem("token") || "";
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
     const onSuccess = (response: any) => {

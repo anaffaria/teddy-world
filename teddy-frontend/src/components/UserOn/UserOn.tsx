@@ -11,7 +11,7 @@ function UserOn({ children }: UserOnProps) {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   function handleLogoff() {
-    sessionStorage.clear();
+    localStorage.clear();
     setCustomer(undefined);
   }
 

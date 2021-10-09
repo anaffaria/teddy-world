@@ -19,8 +19,8 @@ export const CustomerProvider = (props: any) => {
   const [customer, setCustomer] = useState<Customer>();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const id = sessionStorage.getItem("customer_id");
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("customer_id");
 
     if (token !== null && id !== null) {
       GetCustomer({ id, token }).then((resp) => {

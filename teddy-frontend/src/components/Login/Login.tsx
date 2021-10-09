@@ -44,12 +44,12 @@ function Login() {
       };
 
       const onSuccess = () => {
-        const customer_id = sessionStorage.getItem("customer_id")!
-        const token = sessionStorage.getItem("token")!
+        const customer_id = localStorage.getItem("customer_id")!
+        const token = localStorage.getItem("token")!
 
         function onSuccessAuth(response: any) {
           setCustomer(response?.data)
-          history.goBack()
+          history.push("/")
         }
 
         GetCustomer({
