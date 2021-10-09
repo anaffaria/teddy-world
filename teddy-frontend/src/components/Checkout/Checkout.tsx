@@ -153,8 +153,9 @@ function Checkout() {
 
               paymentMethodTotal += Number(paymentMethod.paymentValue);
             });
-            console.log(paymentMethodTotal)
-            if(Number(paymentMethodTotal.toFixed(2)) !== subTotal) return false
+            console.log(paymentMethodTotal);
+            if (Number(paymentMethodTotal.toFixed(2)) !== subTotal)
+              return false;
 
             return true;
           }
@@ -188,7 +189,7 @@ function Checkout() {
       const onSuccess = () => {
         Swal.fire({
           icon: "success",
-          title: "Pedido realizado com sucesso!"
+          title: "Pedido realizado com sucesso!",
         });
 
         history.push(`/cliente/${customer?.id}/pedidos`);
@@ -403,8 +404,10 @@ function Checkout() {
               name={`paymentMethodList[${i}].creditCard.id`}
               className="form-control"
               onChange={(val) => {
-                if (val.currentTarget.value === "-1")
+                if (val.currentTarget.value === "-1"){
                   setShowNewPaymentMethod(true);
+                  val.currentTarget.value = ""
+                }
               }}
             >
               <option value="">Selecione</option>
@@ -561,14 +564,6 @@ function Checkout() {
           </div>
 
           <div className="d-flex space-between mt-2">
-            <strong className="w-100">Subtotal</strong>
-            <div className="d-flex">
-              <span>R$:</span>
-              <span>{subTotal}</span>
-            </div>
-          </div>
-
-          <div className="d-flex space-between mt-2">
             <strong className="w-100">Valor do Frete</strong>
             <span>R$:</span>
             <span>{shippingTax}</span>
@@ -581,6 +576,14 @@ function Checkout() {
               <span>{coupon[0]?.value}</span>
             </div>
           )}
+
+          <div className="d-flex space-between mt-2">
+            <strong className="w-100">Subtotal</strong>
+            <div className="d-flex">
+              <span>R$:</span>
+              <span>{subTotal}</span>
+            </div>
+          </div>
 
           {/* <div>
             <div className="d-flex space-between mt-2">
