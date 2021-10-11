@@ -153,7 +153,6 @@ function Checkout() {
 
               paymentMethodTotal += Number(paymentMethod.paymentValue);
             });
-            console.log(paymentMethodTotal);
             if (Number(paymentMethodTotal.toFixed(2)) !== subTotal)
               return false;
 
@@ -404,9 +403,9 @@ function Checkout() {
               name={`paymentMethodList[${i}].creditCard.id`}
               className="form-control"
               onChange={(val) => {
-                if (val.currentTarget.value === "-1"){
+                if (val.currentTarget.value === "-1") {
                   setShowNewPaymentMethod(true);
-                  val.currentTarget.value = ""
+                  val.currentTarget.value = "";
                 }
               }}
             >
@@ -495,7 +494,11 @@ function Checkout() {
                 className="form-control"
                 name="deliveryAddress"
                 onChange={(val) => {
-                  if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                  if (val.currentTarget.value === "-1") {
+                    setShowNewAddress(true);
+                    val.currentTarget.value = "";
+                    return
+                  }
                   handleTax(val.target.value);
                 }}
               >
@@ -512,7 +515,10 @@ function Checkout() {
                 name="billingAddress"
                 className="form-control"
                 onChange={(val) => {
-                  if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                  if (val.currentTarget.value === "-1") {
+                    setShowNewAddress(true);
+                    val.currentTarget.value = "";
+                  }
                 }}
               >
                 <option value="">Selecione</option>
