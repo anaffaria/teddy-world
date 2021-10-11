@@ -84,7 +84,7 @@ function AdminNavBar() {
             <IoExitOutline fontSize={24}></IoExitOutline>
           </div>
           <div className="navbar-footer-text">
-            <button onClick={handleLogoff}>Sair</button>
+            <button onClick={handleLogoff} className='btn-logoff-admin'>Sair</button>
           </div>
         </div>
       </div>
