@@ -51,7 +51,7 @@ export interface Customer {
   devolutions?: Array<{
     id?: number;
     createdAt?: string;
-    statusDevolution?: "WAITING_ANSWER";
+    statusDevolution?: string;
     order?: {
       id: number;
     };

@@ -3,15 +3,17 @@ import CustomerAccount from "../CustomerAccount/CustomerAccount";
 import { Table } from "react-bootstrap";
 import { AiOutlineBarcode } from "react-icons/ai";
 import { AiOutlineUnorderedList } from "react-icons/ai";
-import { AiFillMessage } from "react-icons/ai";
 import { AiFillSound } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
-import { IoMdTrash } from "react-icons/io";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { useEffect } from "react";
 import { GetCustomerDevolutions } from "../../service/customerService";
 import Swal from "sweetalert2";
 import { AxiosError } from "axios";
+import {
+  StatusDevolution,
+  StatusBadge,
+} from "../../components/Utils/StatusesMap";
 
 function CustomerContactUs() {
   const history = useHistory();
@@ -64,7 +66,11 @@ function CustomerContactUs() {
           <td>{devolution.id}</td>
           <td>{devolution.createdAt}</td>
           <td>{devolution.order?.id}</td>
-          <td>{devolution.statusDevolution}</td>
+          <td>
+            <span className={StatusBadge.get(devolution!.statusDevolution!)}>
+              {StatusDevolution.get(devolution!.statusDevolution!)}
+            </span>
+          </td>
         </tr>
       );
     });
