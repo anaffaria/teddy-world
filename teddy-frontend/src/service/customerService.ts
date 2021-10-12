@@ -126,3 +126,24 @@ export async function InactiveCustomer({
       onError?.()
     });
 }
+
+export async function GetCustomerDevolutions({
+  onSuccess,
+  id,
+  onError,
+  token,
+}: ServiceTypes<Customer>) {
+  await axiosInstance
+    .get(`customer/${id}/devolution`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      onSuccess?.(response);
+    })
+    .catch((err: AxiosError) => {
+      console.error(err);
+      onError?.(err);
+    });
+}

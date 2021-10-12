@@ -46,7 +46,15 @@ export interface Customer {
         amount: number;
       }
     ];
-    devolution: null;
+    hasDevolution?: boolean;
+  }>;
+  devolutions?: Array<{
+    id?: number;
+    createdAt?: string;
+    statusDevolution?: "WAITING_ANSWER";
+    order?: {
+      id: number;
+    };
   }>;
 }
 

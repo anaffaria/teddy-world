@@ -91,9 +91,9 @@ function ContactUs() {
 
                 {/* TODO: Each order has 0..1 Devolution Request. -> Done
                           Create a transient boolean prop to say which order has devolution requested -> Done
-                          Filter select based on this prop.
+                          Filter select based on this prop. -> Done
                           Update only statuses of devolution request
-                          Add a flag of devolution request on front end orders table (custoemr and/or admin)
+                          Add a flag of devolution request on front end orders table (custoemr and/or admin) -> Done (customer)
                  */}
                 <div className="col-4 col-sm-4 mt-2">
                   <label>N° do pedido</label>

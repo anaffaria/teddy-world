@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { GetCustomer } from "../../service/customerService";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router";
+import { AxiosError } from "axios";
 
 function CustumerOrders() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
@@ -21,13 +22,15 @@ function CustumerOrders() {
       setCustomer(resp.data);
     };
 
-    const onError = (err: any) => {
+    const onError = (err: AxiosError) => {
       Swal.fire({
         icon: "error",
         title: "Oops... Tivemos um erro por aqui.",
       });
 
-      history.push("/login");
+      if(err.response!.status! >= 401 && err.response!.status! <= 403) {
+        history.push("/login");
+      }
     };
 
     GetCustomer({ onError, onSuccess, token, id: `${customer?.id}` });
@@ -43,6 +46,7 @@ function CustumerOrders() {
             <label>R$</label> {order.total}
           </td>
           <td>{order.status}</td>
+          <td>{order.hasDevolution && <span className='badge badge-warning'>Troca solicitada</span> }</td>
         </tr>
       );
     });
@@ -63,7 +67,7 @@ function CustumerOrders() {
               <th>
                 <ImPriceTags size={20} className="icon" /> Valor
               </th>
-              <th>
+              <th colSpan={2}>
                 <AiFillCreditCard size={20} className="icon" /> Situação
               </th>
             </tr>

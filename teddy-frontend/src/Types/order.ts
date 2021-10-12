@@ -17,5 +17,5 @@ export interface Order {
       amount: number;
     }
   ];
-  devolution: null;
+  devolution?: null;
 }
