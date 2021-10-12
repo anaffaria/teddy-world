@@ -9,7 +9,6 @@ import { Select } from "../Form/SelectInput";
 import TextArea from "../Form/TextArea";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
-
 interface ContactUsProps {
   devolution: string;
   name: string;
@@ -22,7 +21,7 @@ interface ContactUsProps {
 function ContactUs() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
-  const {customer, setCustomer} = useCustomer() as CustomerContextTiping
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
 
   async function handleSubmit(data: ContactUsProps) {
     try {
@@ -34,16 +33,11 @@ function ContactUs() {
             "Selecione uma opção",
             (value = "") => Number(value) > 0
           ),
-          name: Yup.string()
-          .required("Nome é obrigatório"),
-          numberRequest: Yup.string()
-          .required("N° pedido é obrigatório"),
-          email: Yup.string()
-          .required("E-mail é obrigatório"),
-          subject: Yup.string()
-          .required("Assunto é obrigatório"), 
-          justification: Yup.string()
-          .required("Justificativa obrigatória")
+        name: Yup.string().required("Nome é obrigatório"),
+        numberRequest: Yup.string().required("N° pedido é obrigatório"),
+        email: Yup.string().required("E-mail é obrigatório"),
+        subject: Yup.string().required("Assunto é obrigatório"),
+        justification: Yup.string().required("Justificativa obrigatória"),
       });
 
       await schema.validate(data, {
@@ -53,7 +47,7 @@ function ContactUs() {
       formRef.current?.setErrors({});
 
       history.push("/atendimento");
-    } catch (error) { 
+    } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
 
@@ -95,14 +89,21 @@ function ContactUs() {
                   />
                 </div>
 
+                {/* TODO: Each order has 0..1 Devolution Request. -> Done
+                          Create a transient boolean prop to say which order has devolution requested -> Done
+                          Filter select based on this prop.
+                          Update only statuses of devolution request
+                          Add a flag of devolution request on front end orders table (custoemr and/or admin)
+                 */}
                 <div className="col-4 col-sm-4 mt-2">
                   <label>N° do pedido</label>
-                  <InputText
+                  <Select
                     name="numberRequest"
-                    type="text"
                     className="form-control"
                     placeholder="Número do pedido"
-                  />
+                  >
+                    <option value="">Selecione</option>
+                  </Select>
                 </div>
                 <div className="col-8 col-sm-8 mt-2">
                   <label>E-mail</label>
