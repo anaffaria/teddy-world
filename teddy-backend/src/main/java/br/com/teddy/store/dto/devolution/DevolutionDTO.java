@@ -16,14 +16,19 @@ import lombok.Setter;
 public class DevolutionDTO extends AttrResponseDTO {
     private StatusDevolution statusDevolution;
     private Order order;
+    private String reason, answer;
 
-    public DevolutionDTO(Devolution devolution) {
+    public DevolutionDTO(Devolution devolution, String method) {
         this.statusDevolution = devolution.getStatusDevolution();
         this.id = devolution.getId();
         this.createdAt = devolution.getCreatedAt();
-        System.err.println(devolution.getOrder());
+        this.reason = devolution.getReason();
+        this.answer = devolution.getAnswer();
+
         Order customOrder = new Order();
         customOrder.setId(devolution.getOrder().getId());
+        customOrder.setItemList(devolution.getOrder().getItemList());
+        customOrder.setTotal(devolution.getOrder().getTotal());
 
         this.order = customOrder;
     }

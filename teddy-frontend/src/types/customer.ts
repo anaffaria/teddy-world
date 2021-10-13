@@ -1,4 +1,5 @@
 import { CreditCard } from "./card";
+import { Devolution } from "./devolution";
 import { Teddy } from "./Teddy";
 
 export interface Customer {
@@ -48,14 +49,7 @@ export interface Customer {
     ];
     hasDevolution?: boolean;
   }>;
-  devolutions?: Array<{
-    id?: number;
-    createdAt?: string;
-    statusDevolution?: string;
-    order?: {
-      id: number;
-    };
-  }>;
+  devolutions?: Array<Devolution>;
 }
 
 export interface Address {

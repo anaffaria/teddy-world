@@ -65,12 +65,14 @@ public class DevolutionService implements IDevolutionService {
 
     @Override
     public List<AttrResponseDTO> findAll() {
-        return null;
+        List<AttrResponseDTO> responseDTOList = new ArrayList<>();
+        devolutions.findAll().forEach(d -> responseDTOList.add(FactoryResponseDTO.createDTO(d, "LIST")));
+        return responseDTOList;
     }
 
     @Override
     public AttrResponseDTO findById(Long id) {
-        return null;
+        return FactoryResponseDTO.createDTO(devolutions.getById(id), "CREATE");
     }
 
     @Override

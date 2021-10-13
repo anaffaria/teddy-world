@@ -3,10 +3,14 @@ import "../../../assets/Global.css";
 import { Form } from "@unform/web";
 import { useHistory } from "react-router-dom";
 import { FormHandles } from "@unform/core";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import InputText from "../../../components/Form/InputText";
 import { Select } from "../../../components/Form/SelectInput";
+import { Devolution } from "../../../types/devolution";
+import { GetDevolutionRequest } from "../../../service/devolutionService";
+import { useParams } from "react-router-dom";
+import { StatusDevolution } from "../../../components/Utils/StatusesMap";
 
 interface DevolutionData {
   value: number;
@@ -15,6 +19,26 @@ interface DevolutionData {
 }
 
 export function EditDevolution() {
+  const [devolution, setDevolution] = useState<Devolution>();
+  const token = localStorage.getItem("token") || "";
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    if (!id) return;
+    const onSuccess = (resp: any) => {
+      setDevolution(resp.data);
+    };
+
+    const onError = () => {};
+
+    GetDevolutionRequest({
+      token,
+      id,
+      onError,
+      onSuccess,
+    });
+  }, [id, setDevolution, token]);
+
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
@@ -59,6 +83,38 @@ export function EditDevolution() {
     }
   }
 
+  const renderProducts = () => {
+    return devolution?.order?.itemList.map((item, index) => {
+      return (
+        <div className="form-group form-control h-auto">
+          <div className="d-flex">
+            <p className="mr-3">{item.teddy.title}</p>
+            <p>R$ {item.teddy.priceFactory} * {item.amount}</p>
+          </div>
+
+          <span>Total R$: </span>
+          <span>
+            {Number(item.teddy.priceFactory * item.amount).toFixed(2)}
+          </span>
+        </div>
+      );
+    });
+  };
+
+  const renderStatuses = () => {
+    const optionsList: JSX.Element[] = [];
+    StatusDevolution.forEach((key, value) => {
+      optionsList.push(
+        <option value={value} key={value}>
+          {key}
+        </option>
+      );
+    });
+    return optionsList.map((el, index) => {
+      return el;
+    });
+  };
+
   return (
     <>
       <div className="topbar"></div>
@@ -79,33 +135,15 @@ export function EditDevolution() {
               >
                 <div className="form-group">
                   <label htmlFor="orderId">Código da devolução</label>
-                  <p className="form-control">123456789</p>
+                  <p className="form-control">{devolution?.id}</p>
                 </div>
 
                 <span>Produtos:</span>
-                <div className="form-group form-control h-auto">
-                  <div className="d-flex">
-                    <p className="mr-3">Leão de Pelúcia</p>
-                    <p>R$ 69.90</p>
-                  </div>
-
-                  <div className="d-flex">
-                    <p className="mr-3">Elefante de Pelúcia</p>
-                    <p>R$ 69.90</p>
-                  </div>
-
-                  <div className="d-flex">
-                    <p className="mr-3">Girafa de Pelúcia</p>
-                    <p>R$ 69.90</p>
-                  </div>
-
-                  <span>Total R$: </span>
-                  <span>209,7</span>
-                </div>
+                {renderProducts()}
 
                 <span>Problema:</span>
                 <p className="form-group form-control h-auto">
-                  As pelúcias vieram rasgadas
+                  {devolution?.reason}
                 </p>
 
                 <div className="form-group">
@@ -123,11 +161,9 @@ export function EditDevolution() {
                   <Select
                     name="status"
                     className="form-control"
-                    defaultValue="open"
+                    defaultValue={devolution?.statusDevolution}
                   >
-                    <option value="open">Aguardando Resposta</option>
-                    <option value="finished">Respondida</option>
-                    <option value="refused">Recusada</option>
+                    {renderStatuses()}
                   </Select>
                 </div>
 

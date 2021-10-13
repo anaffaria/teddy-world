@@ -65,7 +65,7 @@ public abstract class FactoryResponseDTO {
         }
 
         if(domainEntity instanceof Devolution) {
-            return new DevolutionDTO((Devolution) domainEntity);
+            return new DevolutionDTO((Devolution) domainEntity, method);
         }
 
         return null;

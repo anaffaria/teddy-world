@@ -3,8 +3,58 @@ import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
 import "../../../assets/Global.css";
 import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ListDevolutionRequest } from "../../../service/devolutionService";
+import { Devolution } from "../../../types/devolution";
+import { StatusDevolution } from "../../../components/Utils/StatusesMap";
 
 function AdminDevolutions() {
+  const [devolutions, setDevolutions] = useState<Devolution[]>();
+  const token = localStorage.getItem("token") || "";
+
+  useEffect(() => {
+    if (!token) return;
+    const onSuccess = (resp: any) => {
+      setDevolutions(resp.data);
+    };
+
+    ListDevolutionRequest({
+      onSuccess,
+      token,
+    });
+  }, [token, setDevolutions]);
+
+  const renderDevolutions = () => {
+    return devolutions?.map((devolution, index) => {
+      return (
+        <tr>
+          <td>{devolution.id}</td>
+          <td>
+            <label>R$</label> {devolution.order?.total}
+          </td>
+          <td>{devolution.createdAt}</td>
+          <td className="d-flex flex-column">
+            {devolution.order?.itemList.map((item, index) => {
+              return (
+                <span>
+                  {item.amount}* {item.teddy.title} - {item.teddy.priceFactory}{" "}
+                  = {Number(item.amount * item.teddy.priceFactory).toFixed(2)}
+                </span>
+              );
+            })}
+          </td>
+          <td>{devolution.reason}</td>
+          <td>{StatusDevolution.get(devolution!.statusDevolution!)}</td>
+          <td>
+            <Link to={`devolucoes/${devolution.id}/edit`}>
+              <FiEdit3 fontSize={20} />
+            </Link>
+          </td>
+        </tr>
+      );
+    });
+  };
+
   return (
     <>
       <div className="topbar"></div>
@@ -75,25 +125,7 @@ function AdminDevolutions() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>123456</td>
-                    <td>
-                      <label>R$</label> 200,0
-                    </td>
-                    <td>24/07/2021 - 20:54:00</td>
-                    <td className="d-flex flex-column">
-                      <span>2* Leão = 100,0</span>
-                      <span>1* Girafa = 50,0</span>
-                      <span>1* Elefante = 50,0</span>
-                    </td>
-                    <td>Produto defeituoso</td>
-                    <td>Aceito</td>
-                    <td>
-                      <Link to='devolucoes/1/edit'>
-                        <FiEdit3 fontSize={20} />
-                      </Link>
-                    </td>
-                  </tr>
+                  {renderDevolutions()}
                 </tbody>
               </Table>
             </div>
