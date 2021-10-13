@@ -24,7 +24,7 @@ function UserOn({ children }: UserOnProps) {
           </div>
 
           <div className="d-flex flex-column header-user-info">
-            <Link to="/atendimento/novo" className="nav-link-header">
+            <Link to={`/atendimento/${customer?.id}/`} className="nav-link-header">
               <span>Atendimento</span>
             </Link>
             <div>

@@ -28,7 +28,7 @@ public class DevolutionService implements IDevolutionService {
     ICustomerRepository customers;
 
     @Override
-    public Devolution sendDevolutionRequest(Devolution devolution) throws Exception {
+    public AttrResponseDTO sendDevolutionRequest(Devolution devolution) throws Exception {
         try {
             devolutions.saveAndFlush(devolution);
         }catch (Exception e) {
@@ -42,18 +42,18 @@ public class DevolutionService implements IDevolutionService {
             }
             throw new Exception(e.getMessage());
         }
-        return devolution;
+        return FactoryResponseDTO.createDTO(devolution, "CREATE");
     }
 
     @Override
-    public Devolution updateDevolutionRequest(Devolution devolution, Double valueWallet) {
+    public AttrResponseDTO updateDevolutionRequest(Devolution devolution, Double valueWallet) {
         Customer customer = orders.findById(devolution.getOrder().getId()).get().getCustomer();
         Double currentCustomerWalletValue = customer.getWallet().getValue();
 
         customer.getWallet().setValue(currentCustomerWalletValue + valueWallet);
         customers.save(customer);
         devolutions.saveAndFlush(devolution);
-        return null;
+        return FactoryResponseDTO.createDTO(devolution, "UPDATE");
     }
 
     @Override

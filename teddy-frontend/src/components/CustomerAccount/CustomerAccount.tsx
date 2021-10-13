@@ -75,7 +75,7 @@ function CustomerAccount({ children }: CustomerAccountProps) {
                   <h6>Serviços</h6>
                   <div>
                     <Link
-                      to="/atendimento"
+                      to={`/atendimento/${customer?.id}`}
                       className="list-group-item costumer_account_link border-0"
                     >
                       Central de Atendimento

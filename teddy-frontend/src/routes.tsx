@@ -31,8 +31,8 @@ function Routes() {
         <Route path="/login" component={Login} />
         <Route path="/cadastro" component={Register} />
         <Route path="/recuperarsenha" component={RememberPass} />
-        <Route path="/atendimento" exact component={CustomerContactUs} />
-        <Route path="/atendimento/novo" component={ContactUs} />
+        <Route path="/atendimento/:id" exact component={CustomerContactUs} />
+        <Route path="/atendimento/:id/novo" component={ContactUs} />
         <Route path="/produto/:id" component={Product} />
         <Route path="/produtos" component={ProductList} />
         <Route path="/cliente/:id/alterar_dados" component={CustomerEdit} />

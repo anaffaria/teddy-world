@@ -20,11 +20,13 @@ function CustomerContactUs() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
   const token = localStorage.getItem("token") || "";
 
-  async function handleSubmit() {
-    history.push("/atendimento/novo");
+  async function handleOnClick() {
+    history.push(`/atendimento/${customer?.id}/novo`);
   }
 
   useEffect(() => {
+    if (!customer?.id || !setCustomer || !history || !token) return;
+
     const onSuccess = (response: any) => {
       setCustomer((prev) => {
         let customerNew = Object.assign({}, prev);
@@ -102,7 +104,7 @@ function CustomerContactUs() {
         <div className="col-sm-3 mt-5 mb-5">
           <button
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleOnClick}
             className="buttom btn-block custumer_edit-buttom"
           >
             Novo Atendimento

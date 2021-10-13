@@ -15,13 +15,12 @@ public class DevolutionController {
 
     @PostMapping("")
     public ResponseEntity requestDevolution(@PathVariable Long id, @RequestBody Devolution devolution) {
-
         try {
             devolutionService.sendDevolutionRequest(devolution);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(devolution);
     }
 
     @GetMapping("")

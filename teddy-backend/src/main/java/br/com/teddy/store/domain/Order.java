@@ -1,6 +1,7 @@
 package br.com.teddy.store.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,6 +52,7 @@ public class Order extends DomainEntity{
     private List<Item> itemList;
 
     @OneToOne(mappedBy = "order")
+    @JsonIgnore
     private Devolution devolution;
 
     @Transient
