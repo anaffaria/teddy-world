@@ -19,7 +19,7 @@ function ContactUs() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
-  const token = localStorage.getItem("token") || ''
+  const token = localStorage.getItem("token") || "";
 
   async function handleSubmit(data: ContactUsProps) {
     try {
@@ -43,35 +43,40 @@ function ContactUs() {
 
       const onSuccess = (resp: any) => {
         Swal.fire({
-          icon: 'success',
+          icon: "success",
           title: "Requisição enviada com sucesso",
-          titleText: "Agora é só aguardar que um de nossos colabores irá responder o seu pedido!"
-        })
+          titleText:
+            "Agora é só aguardar que um de nossos colabores irá responder o seu pedido!",
+        });
         history.push(`/atendimento/${customer?.id}`);
 
         setCustomer((prev) => {
-          const newCustomer = Object.assign({}, prev)
-          newCustomer.devolutions?.push(resp.data)
-          return newCustomer
-        })
-      }
+          const newCustomer = Object.assign({}, prev);
+          newCustomer.devolutions?.push(resp.data);
+          let index = newCustomer.ordersDTOS?.findIndex(
+            (order) => `${order.id}` === data.orderID
+          );
+          if (index) {
+            newCustomer!.ordersDTOS![index]!.hasDevolution = true;
+          }
+          return newCustomer;
+        });
+      };
 
       const onError = () => {
         Swal.fire({
           icon: "error",
-          title: "Deu ruim aqui :/"
-        })
-      }
+          title: "Deu ruim aqui :/",
+        });
+      };
 
       SendDevolutionRequest({
         onSuccess,
         onError,
         token,
         id: `${customer?.id}`,
-        data: finalData
-      })
-
-      
+        data: finalData,
+      });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
