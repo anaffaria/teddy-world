@@ -23,6 +23,28 @@ export async function SendDevolutionRequest({
     });
 }
 
+export async function UpdateDevolutionRequest({
+  onSuccess,
+  onError,
+  data,
+  token,
+  id,
+}: ServiceTypes<any>) {
+  await axiosInstance
+    .put(`/admin/devolutions/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      onSuccess?.(response);
+    })
+    .catch((err) => {
+      console.error(err);
+      onError?.(err);
+    });
+}
+
 export async function ListDevolutionRequest({
   onSuccess,
   onError,

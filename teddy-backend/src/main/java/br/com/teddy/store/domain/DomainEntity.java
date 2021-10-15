@@ -22,7 +22,11 @@ public abstract class DomainEntity {
     private LocalDateTime updatedAt;
 
     DomainEntity() {
-        this.createdAt = LocalDateTime.now();
+        if(null == this.id) {
+            this.createdAt = LocalDateTime.now();
+            return;
+        }
+        this.updatedAt = LocalDateTime.now();
     }
 
     public String validate(){

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IDevolutionService extends  IGenericService<Devolution>{
     AttrResponseDTO sendDevolutionRequest(Devolution devolution) throws Exception;
-    AttrResponseDTO updateDevolutionRequest(Devolution devolution, Double valueWallet);
+    AttrResponseDTO updateDevolutionRequest(Devolution devolution);
     List<AttrResponseDTO> findAllDevolutionByCustomerId(Long id);
 }

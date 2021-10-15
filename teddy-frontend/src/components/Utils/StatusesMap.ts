@@ -1,6 +1,6 @@
 export const StatusDevolution = new Map([
   ["WAITING_ANSWER", "Aguardando resposta"],
-  ["IN_PROCESS", "Aguardando resposta"],
+  ["IN_PROCESS", "Em processo de troca"],
   ["ACCEPTED", "Aceito"],
   ["REFUSED", "Recusado"],
 ]);

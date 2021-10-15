@@ -8,14 +8,20 @@ import * as Yup from "yup";
 import InputText from "../../../components/Form/InputText";
 import { Select } from "../../../components/Form/SelectInput";
 import { Devolution } from "../../../types/devolution";
-import { GetDevolutionRequest } from "../../../service/devolutionService";
+import {
+  GetDevolutionRequest,
+  UpdateDevolutionRequest,
+} from "../../../service/devolutionService";
 import { useParams } from "react-router-dom";
 import { StatusDevolution } from "../../../components/Utils/StatusesMap";
+import Swal from "sweetalert2";
 
 interface DevolutionData {
   value: number;
-  response: string;
-  status: string;
+  answer: string;
+  statusDevolution: string;
+  id?: string;
+  reason?: string;
 }
 
 export function EditDevolution() {
@@ -50,7 +56,7 @@ export function EditDevolution() {
           "Valor a ser devolvido é inválido",
           (value) => {
             const formData = formRef.current?.getData();
-            if (formData?.status === "finished") {
+            if (formData?.statusDevolution === "ACCEPTED") {
               try {
                 const numberValue = Number(value);
                 return numberValue > 0;
@@ -61,15 +67,57 @@ export function EditDevolution() {
             return true;
           }
         ),
+        answer: Yup.string().test(
+          "Resposta",
+          "A Resposta deve conter uma pequena descrição",
+          (value) => {
+            const formData = formRef.current?.getData();
+            if (
+              formData?.statusDevolution === "REFUSED" ||
+              formData?.statusDevolution === "ACCEPTED"
+            ) {
+              if (formData?.answer?.length <= 3) return false;
+            }
+            return true;
+          }
+        ),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
 
+      data.id = id;
+      data.reason = devolution?.reason;
+      if (!data.value) data.value = 0;
+
+      console.log(data);
+
       formRef.current?.setErrors({});
 
-      history.push("/admin/devolucoes");
+      const onSuccess = () => {
+        Swal.fire({
+          icon: "success",
+          title: "Dados salvos com sucesso :D",
+        });
+      };
+
+      const onError = () => {
+        Swal.fire({
+          icon: "error",
+          title: "Ooops, tivemos um erro por aqui ;/",
+        });
+      };
+
+      UpdateDevolutionRequest({
+        data,
+        token,
+        onError,
+        onSuccess,
+        id,
+      });
+
+      // history.push("/admin/devolucoes");
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -89,7 +137,9 @@ export function EditDevolution() {
         <div className="form-group form-control h-auto">
           <div className="d-flex">
             <p className="mr-3">{item.teddy.title}</p>
-            <p>R$ {item.teddy.priceFactory} * {item.amount}</p>
+            <p>
+              R$ {item.teddy.priceFactory} * {item.amount}
+            </p>
           </div>
 
           <span>Total R$: </span>
@@ -104,16 +154,19 @@ export function EditDevolution() {
   const renderStatuses = () => {
     const optionsList: JSX.Element[] = [];
     StatusDevolution.forEach((key, value) => {
+      console.log("default check ", devolution?.statusDevolution === value);
       optionsList.push(
         <option value={value} key={value}>
           {key}
         </option>
       );
     });
-    return optionsList.map((el, index) => {
+    return optionsList.map((el) => {
       return el;
     });
   };
+
+  if (!devolution) return <h1>Carregando</h1>;
 
   return (
     <>
@@ -132,6 +185,10 @@ export function EditDevolution() {
                 ref={formRef}
                 onSubmit={handleSubmit}
                 className="form-style"
+                initialData={{
+                  ...devolution,
+                  statusDevolution: devolution?.statusDevolution,
+                }}
               >
                 <div className="form-group">
                   <label htmlFor="orderId">Código da devolução</label>
@@ -147,8 +204,8 @@ export function EditDevolution() {
                 </p>
 
                 <div className="form-group">
-                  <label htmlFor="response">Resposta:</label>
-                  <InputText name="response" className="form-control" />
+                  <label htmlFor="answer">Resposta:</label>
+                  <InputText name="answer" className="form-control" />
                 </div>
 
                 <div className="form-group">
@@ -157,12 +214,8 @@ export function EditDevolution() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="status">Status:</label>
-                  <Select
-                    name="status"
-                    className="form-control"
-                    defaultValue={devolution?.statusDevolution}
-                  >
+                  <label htmlFor="statusDevolution">Status:</label>
+                  <Select name="statusDevolution" className="form-control">
                     {renderStatuses()}
                   </Select>
                 </div>
@@ -172,7 +225,7 @@ export function EditDevolution() {
                   <button
                     className="btn btn-secondary"
                     onClick={() => {
-                      history.goBack();
+                      history.push("/admin/devolucoes");
                     }}
                   >
                     Voltar

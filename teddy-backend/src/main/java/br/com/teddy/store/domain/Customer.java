@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity(name = "_customer")
 @Where(clause = "deleted_at is null")
 public class Customer extends DomainEntity{

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,11 +47,15 @@ public class DevolutionService implements IDevolutionService {
     }
 
     @Override
-    public AttrResponseDTO updateDevolutionRequest(Devolution devolution, Double valueWallet) {
-        Customer customer = orders.findById(devolution.getOrder().getId()).get().getCustomer();
+    public AttrResponseDTO updateDevolutionRequest(Devolution devolution) {
+        Devolution dev = devolutions.getById(devolution.getId());
+        Customer customer = dev.getOrder().getCustomer();
         Double currentCustomerWalletValue = customer.getWallet().getValue();
 
-        customer.getWallet().setValue(currentCustomerWalletValue + valueWallet);
+        devolution.setOrder(dev.getOrder());
+        devolution.setUpdatedAt(LocalDateTime.now());
+
+        customer.getWallet().setValue(currentCustomerWalletValue + devolution.getValue());
         customers.save(customer);
         devolutions.saveAndFlush(devolution);
         return FactoryResponseDTO.createDTO(devolution, "UPDATE");

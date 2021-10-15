@@ -32,7 +32,10 @@ public class Devolution extends DomainEntity{
     private Order order;
     private StatusDevolution statusDevolution;
 
+    private Double value;
+
     public Devolution() {
+        System.out.println(this.statusDevolution);
         this.statusDevolution = StatusDevolution.WAITING_ANSWER;
     }
 
