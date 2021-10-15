@@ -85,8 +85,10 @@ function Checkout() {
   }, [customer?.id, setCustomer, token, history]);
 
   useEffect(() => {
-    setSubtotal(() => {
+    setSubtotal((prev) => {
       let totalCartItemsValue = 0;
+
+      let calc;
 
       for (let i = 0; i < customer?.cart?.itemDTOS?.length!; i++) {
         const element = customer?.cart?.itemDTOS?.[i];
@@ -94,9 +96,21 @@ function Checkout() {
           totalCartItemsValue +
           element?.amount! * element?.teddyItemDTO?.priceFactory!;
       }
-      if (coupon)
-        return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
-      return Number((totalCartItemsValue + shippingTax).toFixed(2));
+      if (coupon) {
+        calc = totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
+        console.log(calc);
+        if (calc < 0) {
+          Swal.fire({
+            icon: "warning",
+            title: "O desconto não pode o valor total",
+          });
+          return prev;
+        }
+        return calc;
+      }
+      calc = Number((totalCartItemsValue + shippingTax).toFixed(2));
+
+      return calc;
     });
   }, [customer, shippingTax, coupon]);
 
@@ -436,6 +450,16 @@ function Checkout() {
     return elements;
   }
 
+  function renderWalletAmountDiscount() {
+    if (!customer?.wallet?.value) return 0;
+
+    let value = Number(customer.wallet.value - subTotal);
+
+    if (value < 0) return 0;
+
+    return value.toFixed(2);
+  }
+
   return (
     <>
       <Table bordered hover>
@@ -497,7 +521,7 @@ function Checkout() {
                   if (val.currentTarget.value === "-1") {
                     setShowNewAddress(true);
                     val.currentTarget.value = "";
-                    return
+                    return;
                   }
                   handleTax(val.target.value);
                 }}
@@ -569,10 +593,24 @@ function Checkout() {
             <hr />
           </div>
 
+          <div className="d-flex space-between mt-2 mb-4">
+            <strong className="w-100">Saldo na carteira</strong>
+            <span>R$:</span>
+            <span>{customer?.wallet?.value}</span>
+          </div>
+
           <div className="d-flex space-between mt-2">
             <strong className="w-100">Valor do Frete</strong>
             <span>R$:</span>
             <span>{shippingTax}</span>
+          </div>
+
+          <div className="d-flex space-between mt-2 mb-4">
+            <strong className="w-100">Subtotal</strong>
+            <div className="d-flex">
+              <span>R$:</span>
+              <span>{subTotal}</span>
+            </div>
           </div>
 
           {coupon && (
@@ -583,36 +621,37 @@ function Checkout() {
             </div>
           )}
 
-          <div className="d-flex space-between mt-2">
-            <strong className="w-100">Subtotal</strong>
-            <div className="d-flex">
-              <span>R$:</span>
-              <span>{subTotal}</span>
-            </div>
-          </div>
-
-          {/* <div>
-            <div className="d-flex space-between mt-2">
-              <strong className="w-100">Saldo na carteira</strong>
-              <span>R$:</span>
-              <span>50,00</span>
-            </div>
-
+          <div>
             <div className="d-flex space-between mt-2">
               <strong className="w-100">Valor descontado na carteira</strong>
               <span>R$:</span>
-              <span>25,00</span>
+              <span>
+                {customer?.wallet?.value! < subTotal
+                  ? customer?.wallet?.value!
+                  : subTotal}
+              </span>
+            </div>
+
+            <div className="d-flex space-between mt-2 mb-4">
+              <strong className="w-100">Saldo restante na carteira</strong>
+              <span>R$:</span>
+              <span>{renderWalletAmountDiscount()}</span>
             </div>
 
             <div className="d-flex space-between mt-2">
-              <strong className="w-100">Saldo restante na carteira</strong>
-              <span>R$:</span>
-              <span>25,00</span>
+              <strong className="w-100">Total</strong>
+              <div className="d-flex">
+                <span>R$:</span>
+                <span>
+                  {subTotal - customer?.wallet?.value! < 0
+                    ? 0
+                    : Number(subTotal - customer?.wallet?.value!).toFixed(2)}
+                </span>
+              </div>
             </div>
 
             <hr />
           </div>
-         */}
         </aside>
       </section>
 

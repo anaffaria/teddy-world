@@ -50,6 +50,10 @@ export interface Customer {
     hasDevolution?: boolean;
   }>;
   devolutions?: Array<Devolution>;
+  wallet?: {
+    id?: string;
+    value: number;
+  };
 }
 
 export interface Address {
