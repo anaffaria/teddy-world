@@ -102,7 +102,6 @@ export async function DeleteTeddy({
   token,
   id,
 }: ServiceTypes<Teddy>) {
-  console.log(token)
   axiosInstance
     .delete(`/teddy/${id}`, {
       headers: {

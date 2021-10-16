@@ -178,8 +178,7 @@ function Checkout() {
 
               paymentMethodTotal += Number(paymentMethod.paymentValue);
             });
-            console.log(paymentMethodTotal)
-            console.log(subTotal)
+
             if (Number(paymentMethodTotal.toFixed(2)) !== Number((subTotal - customer?.wallet?.value!).toFixed(2)))
               return false;
 

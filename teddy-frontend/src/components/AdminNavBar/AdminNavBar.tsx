@@ -12,7 +12,6 @@ import "../../assets/Global.css";
 
 function AdminNavBar() {
   function handleLogoff() {
-    console.log('olaaa')
     localStorage.clear();
   }
 
