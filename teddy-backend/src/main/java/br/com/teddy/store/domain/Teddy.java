@@ -78,6 +78,7 @@ public class Teddy extends DomainEntity{
     }
 
     public Teddy() {
+        this.amountAvailable = amount;
         this.active = false;
     }
 
