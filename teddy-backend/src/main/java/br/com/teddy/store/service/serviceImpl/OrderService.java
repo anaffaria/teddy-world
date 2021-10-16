@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -37,6 +38,9 @@ public class OrderService implements IOrderService {
 
     @Autowired
     ITeddyRepository teddy;
+
+    @Autowired
+    IPaymentMethodsRepository paymentMethodsRepository;
 
     @Override
     public List<AttrResponseDTO> findAll() {
@@ -65,8 +69,6 @@ public class OrderService implements IOrderService {
         Double totalItemsValue = items.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
         Double total = totalItemsValue + object.getShippingTax();
 
-
-        object.setCustomer(customer);
         object.setItemList(items);
 
         errorsMessages.append(object.validate());
@@ -90,19 +92,29 @@ public class OrderService implements IOrderService {
             teddy.save(item.getTeddy());
         }
 
-        Order newOrder = orders.saveAndFlush(object);
-
         customer.getCart().getItemList().clear();
+
+        BigDecimal valueWallet = new BigDecimal(walletValue - total);
+        valueWallet.setScale(2, RoundingMode.HALF_DOWN);
+
+        customer.getWallet().setValue(valueWallet.doubleValue());
 
         if(walletValue - total < 0) {
             customer.getWallet().setValue(0d);
         }
 
-        BigDecimal valueWallet = new BigDecimal(walletValue - total);
-        valueWallet.setScale(2, RoundingMode.UNNECESSARY);
-        customer.getWallet().setValue(walletValue - total);
+        // foreach credit card and saveandflush.
+        customer.getCreditCardList().forEach(c -> creditCards.saveAndFlush(c));
 
-        customers.save(customer);
+        customers.saveAndFlush(customer);
+
+        if(null != object.getPaymentMethodList())
+            object.getPaymentMethodList().forEach(p -> {
+                creditCards.saveAndFlush(p.getCreditCard());
+                paymentMethodsRepository.saveAndFlush(p);
+            });
+
+        Order newOrder = orders.save(object);
 
         return FactoryResponseDTO.createDTO(newOrder, "CREATE");
     }

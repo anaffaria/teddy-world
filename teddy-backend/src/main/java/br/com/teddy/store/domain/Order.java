@@ -41,7 +41,7 @@ public class Order extends DomainEntity{
     @OneToOne
     private Tracking tracking;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     private List<PaymentMethod> paymentMethodList;
 
     @ManyToOne
