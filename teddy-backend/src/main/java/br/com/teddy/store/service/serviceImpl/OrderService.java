@@ -15,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,8 +59,12 @@ public class OrderService implements IOrderService {
         StringBuilder errorsMessages = new StringBuilder();
         Customer customer = customers.findById(object.getCustomer().getId()).get();
         List<Item> items = new ArrayList<>();
-
+        Double walletValue = customer.getWallet().getValue();
         customer.getCart().getItemList().forEach(i -> items.add(i));
+
+        Double totalItemsValue = items.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
+        Double total = totalItemsValue + object.getShippingTax();
+
 
         object.setCustomer(customer);
         object.setItemList(items);
@@ -84,9 +90,17 @@ public class OrderService implements IOrderService {
             teddy.save(item.getTeddy());
         }
 
-        Order newOrder = orders.save(object);
+        Order newOrder = orders.saveAndFlush(object);
 
         customer.getCart().getItemList().clear();
+
+        if(walletValue - total < 0) {
+            customer.getWallet().setValue(0d);
+        }
+
+        BigDecimal valueWallet = new BigDecimal(walletValue - total);
+        valueWallet.setScale(2, RoundingMode.UNNECESSARY);
+        customer.getWallet().setValue(walletValue - total);
 
         customers.save(customer);
 

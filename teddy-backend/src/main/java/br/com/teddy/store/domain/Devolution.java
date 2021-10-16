@@ -35,7 +35,6 @@ public class Devolution extends DomainEntity{
     private Double value;
 
     public Devolution() {
-        System.out.println(this.statusDevolution);
         this.statusDevolution = StatusDevolution.WAITING_ANSWER;
     }
 

@@ -119,13 +119,23 @@ function Checkout() {
       (el) => Number(el.id) === Number(postalCode)
     );
 
+    Swal.fire({
+      title: "Buscando valor do frete",
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+    });
+
     const onSuccess = (resp: any) => {
       setShippingTax(resp.data);
       console.log(resp);
+      Swal.close();
     };
 
     const onError = (err: any) => {
       console.log(err);
+      Swal.close();
     };
 
     CalculateTax({
@@ -159,6 +169,7 @@ function Checkout() {
           "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
           "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
           (value) => {
+            if (subTotal - customer?.wallet?.value! <= 0) return true;
             const paymentMethods = value as PaymentMethod[];
             let paymentMethodTotal = 0;
 

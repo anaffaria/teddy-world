@@ -19,7 +19,7 @@ public class PaymentMethod extends DomainEntity{
 
     private Double paymentValue;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name= "credit_card_id")
     private CreditCard creditCard;
 

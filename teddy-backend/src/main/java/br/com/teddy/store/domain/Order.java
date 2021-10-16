@@ -41,7 +41,7 @@ public class Order extends DomainEntity{
     @OneToOne
     private Tracking tracking;
 
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<PaymentMethod> paymentMethodList;
 
     @ManyToOne
@@ -65,20 +65,22 @@ public class Order extends DomainEntity{
     @Override
     @Transient
     public String validate() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Double totalReceived = paymentMethodList.stream().mapToDouble(p -> p.getPaymentValue()).sum();
-        Double totalItemsValue = itemList.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
-
-        if(null == total || total <= 0) {
-            stringBuilder.append("O valor total da compra não pode ser nulo ou menor que 0");
-        }
-
-        if(addressList.size() < 2) {
-            stringBuilder.append("Para solicitar o pedido é necessário 1 endereço para entrega e outro para cobrança");
-        }
-
-
-
-        return stringBuilder.toString();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        Double totalReceived = paymentMethodList.stream().mapToDouble(p -> p.getPaymentValue()).sum();
+//        Double totalItemsValue = itemList.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
+//        Double subTotal = totalItemsValue + this.shippingTax;
+//
+//        if(null == total || total <= 0) {
+//            stringBuilder.append("O valor total da compra não pode ser nulo ou menor que 0");
+//        }
+//
+//        if(addressList.size() < 2) {
+//            stringBuilder.append("Para solicitar o pedido é necessário 1 endereço para entrega e outro para cobrança");
+//        }
+//
+//
+//
+//        return stringBuilder.toString();
+        return "";
     }
 }
