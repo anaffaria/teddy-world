@@ -9,6 +9,7 @@ import br.com.teddy.store.repostiory.IDevolutionRepository;
 import br.com.teddy.store.repostiory.IOrdersRepository;
 import br.com.teddy.store.service.IDevolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
@@ -71,7 +72,7 @@ public class DevolutionService implements IDevolutionService {
     @Override
     public List<AttrResponseDTO> findAll() {
         List<AttrResponseDTO> responseDTOList = new ArrayList<>();
-        devolutions.findAll().forEach(d -> responseDTOList.add(FactoryResponseDTO.createDTO(d, "LIST")));
+        devolutions.findAll(Sort.by(Sort.Order.desc("id"))).forEach(d -> responseDTOList.add(FactoryResponseDTO.createDTO(d, "LIST")));
         return responseDTOList;
     }
 

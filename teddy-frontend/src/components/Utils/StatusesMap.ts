@@ -9,5 +9,5 @@ export const StatusBadge = new Map([
   ["WAITING_ANSWER", "badge badge-warning"],
   ["IN_PROCESS", "badge badge-info"],
   ["ACCEPTED", "badge badge-success"],
-  ["REFUSED", "badge badge-error"],
+  ["REFUSED", "badge badge-danger"],
 ])
