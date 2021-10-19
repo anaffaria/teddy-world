@@ -8,12 +8,11 @@ import { CgArrowsExchangeAlt } from "react-icons/cg";
 import { RiUserHeartLine } from "react-icons/ri";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { RiBearSmileLine } from "react-icons/ri";
+import { useHistory } from "react-router";
 import "../../assets/Global.css";
 
 function AdminNavBar() {
-  function handleLogoff() {
-    localStorage.clear();
-  }
+  const history = useHistory();
 
   const links = [
     {
@@ -78,12 +77,18 @@ function AdminNavBar() {
           })}
         </div>
 
-        <div className="navbar-footer">
+        <div
+          className="navbar-footer"
+          onClick={() => {
+            localStorage.clear();
+            history.push("/login");
+          }}
+        >
           <div className="navbar-footer-icon">
             <IoExitOutline fontSize={24}></IoExitOutline>
           </div>
           <div className="navbar-footer-text">
-            <button onClick={handleLogoff} className='btn-logoff-admin'>Sair</button>
+            <button className="btn-logoff-admin">Sair</button>
           </div>
         </div>
       </div>
