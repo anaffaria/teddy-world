@@ -23,10 +23,10 @@ function CustumerOrders() {
     };
 
     const onError = (err: AxiosError) => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops... Tivemos um erro por aqui.",
-      });
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops... Tivemos um erro por aqui.",
+      // });
 
       if(err.response!.status! >= 401 && err.response!.status! <= 403) {
         history.push("/login");
