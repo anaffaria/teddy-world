@@ -47,3 +47,22 @@ export async function UpdateOrder({
     });
   return coupon;
 }
+
+export async function DeleteOrder({
+  onSuccess,
+  onError,
+  data,
+  token,
+  id,
+}: ServiceTypes<any>) {
+  await axiosInstance
+    .delete(`/customer/${id}/order/${data.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((resp) => {
+      onSuccess?.(resp);
+    })
+    .catch((err) => {
+      onError?.(err);
+    });
+}
