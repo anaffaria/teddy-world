@@ -60,6 +60,7 @@ public class Customer extends DomainEntity{
     private Wallet wallet;
 
     @OneToMany(mappedBy = "customer", targetEntity = Order.class)
+    @OrderBy("created_at desc")
     private List<Order> orderList;
 
     public Customer() {

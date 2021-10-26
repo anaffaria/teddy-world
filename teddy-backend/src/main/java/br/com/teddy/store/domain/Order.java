@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "_order")
-@Where(clause = "deleted_at is null")
 public class Order extends DomainEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime deliveryDate;

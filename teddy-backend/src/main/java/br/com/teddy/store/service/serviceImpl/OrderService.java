@@ -1,9 +1,6 @@
 package br.com.teddy.store.service.serviceImpl;
 
-import br.com.teddy.store.domain.Customer;
-import br.com.teddy.store.domain.Item;
-import br.com.teddy.store.domain.Order;
-import br.com.teddy.store.domain.Teddy;
+import br.com.teddy.store.domain.*;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.dto.ChartDTO;
 import br.com.teddy.store.dto.FactoryResponseDTO;
@@ -122,6 +119,13 @@ public class OrderService implements IOrderService {
 
     @Override
     public AttrResponseDTO delete(Long id) {
+        beforeEach();
+        Order order = orders.findById(id).get();
+
+        order.setStatus(Status.ORDER_CANCEL);
+        order.setDeletedAt(LocalDateTime.now());
+
+        orders.saveAndFlush(order);
         return null;
     }
 
