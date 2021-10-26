@@ -110,7 +110,7 @@ public class OrderService implements IOrderService {
 
         if(null != object.getPaymentMethodList())
             object.getPaymentMethodList().forEach(p -> {
-                p.getCreditCard().setCustomer(customer);
+                p.setCreditCard(creditCards.getById(p.getCreditCard().getId()));
                 creditCards.saveAndFlush(p.getCreditCard());
                 paymentMethodsRepository.saveAndFlush(p);
             });
