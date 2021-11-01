@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("")
 public class OrderController {
@@ -34,5 +36,13 @@ public class OrderController {
             return ResponseEntity.status(403).body("");
         }
         return ResponseEntity.ok(orderService.delete(orderID));
+    }
+
+    @GetMapping("/admin/filterOrders")
+    public ResponseEntity filterOrders(@RequestParam String start, String end, String type) {
+        System.err.println(start);
+        System.err.println(end);
+        System.err.println(type);
+        return ResponseEntity.ok(orderService.ordersFiltered(start,end,type));
     }
 }

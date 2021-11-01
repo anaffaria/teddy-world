@@ -66,3 +66,24 @@ export async function DeleteOrder({
       onError?.(err);
     });
 }
+
+export async function FilterOrder({
+  onSuccess,
+  onError,
+  token,
+  data,
+}: ServiceTypes<any>) {
+  await axiosInstance
+    .get(
+      `/admin/filterOrders?type=${data.type}&start=${data.start}&end=${data.end}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    .then((resp) => {
+      onSuccess?.(resp);
+    })
+    .catch((err) => {
+      onError?.(err);
+    });
+}

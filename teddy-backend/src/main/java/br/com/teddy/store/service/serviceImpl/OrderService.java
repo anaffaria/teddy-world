@@ -3,23 +3,24 @@ package br.com.teddy.store.service.serviceImpl;
 import br.com.teddy.store.domain.*;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.dto.ChartDTO;
+import br.com.teddy.store.dto.DataSetDTO;
 import br.com.teddy.store.dto.FactoryResponseDTO;
 import br.com.teddy.store.repostiory.*;
-import br.com.teddy.store.service.IGenericService;
 import br.com.teddy.store.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService implements IOrderService {
@@ -38,6 +39,9 @@ public class OrderService implements IOrderService {
 
     @Autowired
     IPaymentMethodsRepository paymentMethodsRepository;
+
+    @Autowired
+    ICategoryRepository categories;
 
     @Override
     public List<AttrResponseDTO> findAll() {
@@ -149,6 +153,82 @@ public class OrderService implements IOrderService {
     @Override
     public List<HashMap<String, Double>> fillCardsIndex() {
         return null;
+    }
+
+    @Override
+    public List<DataSetDTO> ordersFiltered(String start, String end, String type) {
+        String startConv = start + " 00:00:00";
+        String endConv = end.toString() + " 23:59:59";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        //LocalDateTime dateTime = LocalDateTime.parse(startConv, formatter);
+
+
+        List<Order> orderList = orders.findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqual(LocalDateTime.parse(startConv, formatter),
+                LocalDateTime.parse(endConv, formatter));
+
+        List<AttrResponseDTO> responseDTOList = new ArrayList<>();
+        orderList.forEach(t -> responseDTOList.add(FactoryResponseDTO.createDTO(t, "LIST")));
+
+        Map<LocalDate, List<Order>> groupedByDate = orderList.stream()
+                .collect(Collectors.groupingBy(order ->
+                        order.getCreatedAt().truncatedTo(ChronoUnit.DAYS).atZone(ZoneId.systemDefault()).toLocalDate()));
+
+            List<HashMap<String, Double>> orderValue = new ArrayList<>();
+
+        List<DataSetDTO> listDataSetDTOS = new ArrayList<>();
+
+        if(type.equals(0)){
+            List<Teddy> allTeddys = teddy.findAll();
+
+            for (Teddy teddy : allTeddys) {
+                DataSetDTO dataSetDTO = new DataSetDTO();
+                List<Double> doubleList = new ArrayList<>();
+                dataSetDTO.setLabel(teddy.getTitle());
+
+
+                for(List<Order> order : groupedByDate.values()) {
+                    Integer amount = 0;
+                    for(Order orderValueGroup : order) {
+                        for (Item item : orderValueGroup.getItemList()) {
+                            if(item.getTeddy().equals(teddy))
+                                amount++;
+                        }
+                    }
+                    doubleList.add(amount * teddy.getPriceFactory());
+                }
+
+                dataSetDTO.setData(doubleList);
+                listDataSetDTOS.add(dataSetDTO);
+            }
+        } else {
+            List<Category> allGenders = categories.findAll();
+
+            for (Category gender : allGenders) {
+                DataSetDTO dataSetDTO = new DataSetDTO();
+                List<Double> doubleList = new ArrayList<>();
+                dataSetDTO.setLabel(gender.getName());
+
+
+                for (List<Order> order : groupedByDate.values()) {
+                    Integer amount = 0;
+                    Teddy teddy = null;
+                    for (Order orderValueGroup : order) {
+                        for (Item item : orderValueGroup.getItemList()) {
+                            if (item.getTeddy().getCategory().contains(gender)) {
+                                amount++;
+                            }
+                            teddy = item.getTeddy();
+                        }
+                    }
+                    if (null != teddy)
+                        doubleList.add(amount * teddy.getPriceFactory());
+                }
+
+                dataSetDTO.setData(doubleList);
+                listDataSetDTOS.add(dataSetDTO);
+            }
+        }
+        return listDataSetDTOS;
     }
 
     public void beforeEach() {

@@ -84,7 +84,6 @@ function Login() {
       <main className="layout-main">
         <section className="layout-container layout-form m-auto h-100">
           <Form className="layout-box" onSubmit={handleSubmit} ref={formRef}>
-            
             <div className="header-logo mb-4 mt-2">
               <img src={logoImg} alt="logo" />
             </div>
@@ -141,7 +140,6 @@ function Login() {
                 <FaUserTie className="mb-2" fontSize={17} /> Administrador
               </Link>
             </div>
-
           </Form>
         </section>
       </main>
