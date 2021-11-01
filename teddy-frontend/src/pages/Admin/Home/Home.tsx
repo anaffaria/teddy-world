@@ -13,7 +13,7 @@ import { Line } from "react-chartjs-2";
 
 // Create a Object following this structure in the example bellow:
 
-type chartType = {
+type ChartType = {
   labels: string[];
   datasets: [
     {
@@ -36,14 +36,14 @@ type chartType = {
 };
 
 function AdminIndex() {
-  const [chartData, setChartData] = useState<chartType>();
+  const [chartData, setChartData] = useState<ChartType>();
   const formRef = useRef<FormHandles>(null);
   const token = localStorage.getItem("token") || "";
 
   function convertISODateToString(date: Date) {
     let year = date.getFullYear();
-    let month = date.getMonth() + 1 || '';
-    let dt = date.getDate() || '';
+    let month = date.getMonth() + 1 || "";
+    let dt = date.getDate() || "";
 
     if (dt < 10) {
       dt = "0" + dt;
@@ -66,11 +66,8 @@ function AdminIndex() {
       type: "0",
     };
     const onSuccess = (resp: any) => {
-      console.log(resp);
-
       setChartData(() => {
-        const labels = resp.data.map((el: any) => el.label);
-
+        const labels = resp.data.map((el: any) => el.label + " ");
         return {
           labels,
           datasets: resp.data,
@@ -212,6 +209,7 @@ function AdminIndex() {
           </div>
         </Form>
         {/* <Chart data={data} dataKeys={dataKeys} /> */}
+        {console.log("chartData", chartData)}
         {chartData && <Line data={chartData as any} />}
       </main>
     </>

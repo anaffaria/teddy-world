@@ -60,6 +60,8 @@ public class TeddyService implements IGenericService<Teddy>, ITeddyService {
             object.setCreatedAt(oldTeddy.getCreatedAt());
         }
 
+        object.setAmountAvailable(object.getAmount());
+
         Teddy newTeddy = teddy.saveAndFlush(object);
 
         return FactoryResponseDTO.createDTO(newTeddy, "CREATE");

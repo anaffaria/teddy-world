@@ -158,10 +158,8 @@ public class OrderService implements IOrderService {
     @Override
     public List<DataSetDTO> ordersFiltered(String start, String end, String type) {
         String startConv = start + " 00:00:00";
-        String endConv = end.toString() + " 23:59:59";
+        String endConv = end + " 23:59:59";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //LocalDateTime dateTime = LocalDateTime.parse(startConv, formatter);
-
 
         List<Order> orderList = orders.findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqual(LocalDateTime.parse(startConv, formatter),
                 LocalDateTime.parse(endConv, formatter));
@@ -173,11 +171,9 @@ public class OrderService implements IOrderService {
                 .collect(Collectors.groupingBy(order ->
                         order.getCreatedAt().truncatedTo(ChronoUnit.DAYS).atZone(ZoneId.systemDefault()).toLocalDate()));
 
-            List<HashMap<String, Double>> orderValue = new ArrayList<>();
-
         List<DataSetDTO> listDataSetDTOS = new ArrayList<>();
 
-        if(type.equals(0)){
+        if(type.equals("0")){
             List<Teddy> allTeddys = teddy.findAll();
 
             for (Teddy teddy : allTeddys) {
@@ -191,7 +187,7 @@ public class OrderService implements IOrderService {
                     for(Order orderValueGroup : order) {
                         for (Item item : orderValueGroup.getItemList()) {
                             if(item.getTeddy().equals(teddy))
-                                amount++;
+                                amount+= item.getAmount();
                         }
                     }
                     doubleList.add(amount * teddy.getPriceFactory());
