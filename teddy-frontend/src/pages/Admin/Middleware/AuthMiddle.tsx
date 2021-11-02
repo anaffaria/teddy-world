@@ -9,7 +9,11 @@ export interface AuthAdminProps {
   exact?: boolean;
 }
 
-export const AuthAdmin: React.FC<AuthAdminProps> = ({ component, path, exact }) => {
+export const AuthAdmin: React.FC<AuthAdminProps> = ({
+  component,
+  path,
+  exact,
+}) => {
   const token = localStorage.getItem("token") || "";
   const history = useHistory();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,21 +26,25 @@ export const AuthAdmin: React.FC<AuthAdminProps> = ({ component, path, exact }) 
       showConfirmButton: false,
     });
 
-    const onSuccess = (response: any) => {
+    const onSuccess = () => {
       setIsAuthenticated(true);
       Swal.close();
     };
 
-    const onError = (err: any) => {
+    const onError = () => {
       Swal.fire({
         icon: "warning",
         title: "Verifique suas permissões",
       });
-      history.push("/login");
+      history.push("/login?admin=true");
     };
 
     GetAuthAdmin({ token, onSuccess, onError });
   }, [setIsAuthenticated, token, history]);
 
-  return isAuthenticated ? <Route component={component} path={path} exact={exact}/> : <></>;
+  return isAuthenticated ? (
+    <Route component={component} path={path} exact={exact} />
+  ) : (
+    <></>
+  );
 };

@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 import { useHistory } from "react-router";
 import { AxiosError } from "axios";
 import { DeleteOrder } from "../../service/orderService";
-import { icons } from "react-icons/lib";
 
 function CustumerOrders() {
   const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
@@ -27,11 +26,6 @@ function CustumerOrders() {
     };
 
     const onError = (err: AxiosError) => {
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops... Tivemos um erro por aqui.",
-      // });
-
       if (err.response!.status! >= 401 && err.response!.status! <= 403) {
         history.push("/login");
       }

@@ -41,7 +41,7 @@ public class JwtAuthenticationController {
 
         Customer customer = getCustomerByUsername(authenticationRequest.getUsername());
 
-        return ResponseEntity.ok(new LoginDTO(new JwtResponse(token), customer.getId()));
+        return ResponseEntity.ok(new LoginDTO(new JwtResponse(token), customer.getId(), customer.getRoles().contains("ADMIN")));
     }
 
     private void authenticate(String username, String password) throws Exception {

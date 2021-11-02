@@ -1,5 +1,4 @@
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
-import Chart from "../../../components/Chart/Chart";
 import { BiCreditCard } from "react-icons/bi";
 import { MdAttachMoney } from "react-icons/md";
 import { BiSearchAlt } from "react-icons/bi";
@@ -10,27 +9,31 @@ import { Select } from "../../../components/Form/SelectInput";
 import InputText from "../../../components/Form/InputText";
 import { FilterOrder } from "../../../service/orderService";
 import { Line } from "react-chartjs-2";
-
-// Create a Object following this structure in the example bellow:
+import { convertISODateToString } from "../../../components/Utils/dateConverter";
 
 type ChartType = {
   labels: string[];
   datasets: [
     {
-      backgroundColor: "#000000";
+      backgroundColor: string;
       hoverBackgroundColor: string;
       hoverBorderColor: string;
-      borderWidth: 1;
-      label: "test";
-      data: [1, null, 3];
+      borderWidth: number;
+      label: string;
+      data: Number[];
     },
     {
-      backgroundColor: "#ff0000";
-      borderWidth: { top: 1; right: 1; bottom: 0; left: 1 };
-      label: "test";
-      data: [1, 3, 5];
-      barThickness: "flex";
-      minBarLength: 2;
+      backgroundColor: string;
+      borderWidth: {
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+      };
+      label: string;
+      data: Number[];
+      barThickness: string;
+      minBarLength: number;
     }
   ];
 };
@@ -39,21 +42,6 @@ function AdminIndex() {
   const [chartData, setChartData] = useState<ChartType>();
   const formRef = useRef<FormHandles>(null);
   const token = localStorage.getItem("token") || "";
-
-  function convertISODateToString(date: Date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1 || "";
-    let dt = date.getDate() || "";
-
-    if (dt < 10) {
-      dt = "0" + dt;
-    }
-    if (month < 10) {
-      month = "0" + month;
-    }
-
-    return year + "-" + month + "-" + dt;
-  }
 
   useEffect(() => {
     const start = new Date();
@@ -112,12 +100,6 @@ function AdminIndex() {
       token,
       data,
     });
-  };
-
-  // gamename or categories
-  const dataKeys = {
-    categories: [],
-    products: ["uv", "pv", "kct", "amt"],
   };
 
   return (
@@ -208,8 +190,6 @@ function AdminIndex() {
             </div>
           </div>
         </Form>
-        {/* <Chart data={data} dataKeys={dataKeys} /> */}
-        {console.log("chartData", chartData)}
         {chartData && <Line data={chartData as any} />}
       </main>
     </>

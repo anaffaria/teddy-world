@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { FaUserTie } from "react-icons/fa";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { GetCustomer } from "../../service/customerService";
+import { useQuery } from "../Utils/getQuery";
 
 interface LoginProps {
   username: string;
@@ -21,6 +22,7 @@ function Login() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const { setCustomer } = useCustomer() as CustomerContextTiping;
+  const query = useQuery();
 
   async function handleSubmit(data: LoginProps) {
     try {
@@ -44,12 +46,18 @@ function Login() {
         });
       };
 
-      const onSuccess = () => {
+      const onSuccess = (authResponse: any) => {
         const customer_id = localStorage.getItem("customer_id")!;
         const token = localStorage.getItem("token")!;
 
         function onSuccessAuth(response: any) {
           setCustomer(response?.data);
+
+          console.log(authResponse)
+          if(authResponse.isAdmin === true) {
+            return history.push("/admin");
+          }
+
           history.push("/");
         }
 
