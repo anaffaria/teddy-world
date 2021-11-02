@@ -40,12 +40,6 @@ public class OrderController {
 
     @GetMapping("/admin/filterOrders")
     public ResponseEntity filterOrders(@RequestParam String start, String end, String type) {
-        System.err.println(start);
-        System.err.println(end);
-        System.err.println(type);
-
-
-
         return ResponseEntity.ok(orderService.ordersFiltered(start,end,type));
     }
 }

@@ -13,4 +13,5 @@ import lombok.Setter;
 public class LoginDTO {
     private JwtResponse jwtResponse;
     private Long id;
+    private Boolean isAdmin;
 }

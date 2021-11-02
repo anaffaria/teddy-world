@@ -46,14 +46,15 @@ function Login() {
         });
       };
 
-      const onSuccess = () => {
+      const onSuccess = (authResponse: any) => {
         const customer_id = localStorage.getItem("customer_id")!;
         const token = localStorage.getItem("token")!;
 
         function onSuccessAuth(response: any) {
           setCustomer(response?.data);
 
-          if(query.get("admin")) {
+          console.log(authResponse)
+          if(authResponse.isAdmin === true) {
             return history.push("/admin");
           }
 
