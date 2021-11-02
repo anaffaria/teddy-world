@@ -134,12 +134,6 @@ function Login() {
                 <span>Ainda não sou cliente</span>
               </Link>
             </div>
-
-            <div className="col-sm text-center mt-5">
-              <Link to="/admin">
-                <FaUserTie className="mb-2" fontSize={17} /> Administrador
-              </Link>
-            </div>
           </Form>
         </section>
       </main>
