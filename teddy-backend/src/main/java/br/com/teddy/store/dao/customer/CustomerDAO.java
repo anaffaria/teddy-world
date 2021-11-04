@@ -1,6 +1,7 @@
 package br.com.teddy.store.dao.customer;
 
 import br.com.teddy.store.dao.IDAO;
+import br.com.teddy.store.domain.Cart;
 import br.com.teddy.store.domain.Customer;
 import br.com.teddy.store.domain.DomainEntity;
 import br.com.teddy.store.repostiory.ICustomerRepository;
@@ -51,6 +52,7 @@ public class CustomerDAO implements IDAO {
         String roles = customerExisting.getRoles();
         LocalDateTime createdAt = customerExisting.getCreatedAt();
         String encryptedPassword = customerExisting.getPassword();
+        Cart customerCart = customerExisting.getCart();
 
         FillNullProperty.copyNonNullProperties(customerNew, customerExisting);
 
@@ -59,6 +61,7 @@ public class CustomerDAO implements IDAO {
         customerExisting.setPassword(encryptedPassword);
         customerExisting.setUpdatedAt(LocalDateTime.now());
         customerExisting.setRoles(roles);
+        customerExisting.setCart(customerCart);
 
 
         if(null != customerNew.getNewPassword()) {
