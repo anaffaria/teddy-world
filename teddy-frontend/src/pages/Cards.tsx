@@ -28,7 +28,6 @@ export interface CreditCard {
 
 function Cards() {
   const [show, setShow] = useState(false);
-  const [cards, setCards] = useState<CreditCard[]>([]);
   const token = localStorage.getItem("token") || "";
 
   const handleClose = () => setShow(false);
@@ -148,13 +147,7 @@ function Cards() {
         show={show}
         title="Adicionar Novo Cartão"
       >
-        <CreditCardForm
-          customer={{ id: Number(id) }}
-          toggleModal={() => {
-            setShow((prev) => !prev);
-          }}
-          handleCards={setCards}
-        />
+        <CreditCardForm />
       </ModalTeddy>
     </CustomerAccount>
   );
