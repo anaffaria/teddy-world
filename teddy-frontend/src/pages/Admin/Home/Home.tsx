@@ -54,13 +54,7 @@ function AdminIndex() {
       type: "0",
     };
     const onSuccess = (resp: any) => {
-      setChartData(() => {
-        const labels = resp.data.map((el: any) => el.label + " ");
-        return {
-          labels,
-          datasets: resp.data,
-        };
-      });
+      setChartData(resp.data);
     };
 
     const onError = (err: any) => {
@@ -80,14 +74,7 @@ function AdminIndex() {
     const onSuccess = (resp: any) => {
       console.log(resp);
 
-      setChartData(() => {
-        const labels = resp.data.map((el: any) => el.label);
-
-        return {
-          labels,
-          datasets: resp.data,
-        };
-      });
+      setChartData(resp.data);
     };
 
     const onError = (err: any) => {

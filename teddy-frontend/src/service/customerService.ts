@@ -69,7 +69,7 @@ export async function UpdatePassword({
   axiosInstance
     .patch("/customer", data, {
       headers: {
-        Authorizarion: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
     .then((resp) => {

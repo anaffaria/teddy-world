@@ -10,6 +10,8 @@ import CustomerAccount from "../components/CustomerAccount/CustomerAccount";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { DeleteCard, GetCreditCardByUser } from "../service/cardsService";
+import { CustomerContextTiping, useCustomer } from "../providers/Customer";
+import Swal from "sweetalert2";
 
 export interface CreditCard {
   id?: string;
@@ -26,7 +28,6 @@ export interface CreditCard {
 
 function Cards() {
   const [show, setShow] = useState(false);
-  const [cards, setCards] = useState<CreditCard[]>([]);
   const token = localStorage.getItem("token") || "";
 
   const handleClose = () => setShow(false);
@@ -34,16 +35,24 @@ function Cards() {
 
   const { id } = useParams<{ id: string }>();
 
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+
   useEffect(() => {
     const onSuccess = (resp: any) => {
-      setCards(resp.data);
+      setCustomer((prev) => {
+        const newCustomer = Object.assign({}, prev);
+
+        newCustomer.creditCardList = resp.data;
+
+        return newCustomer;
+      });
     };
     GetCreditCardByUser({
       id,
       onSuccess,
       token,
     });
-  }, [id, token]);
+  }, [id, token, setCustomer]);
 
   return (
     <CustomerAccount>
@@ -64,7 +73,7 @@ function Cards() {
             </tr>
           </thead>
           <tbody>
-            {cards.map((el, index) => {
+            {customer?.creditCardList?.map((el, index) => {
               return (
                 <tr key={index}>
                   <td className="align-middle">
@@ -79,14 +88,20 @@ function Cards() {
                           className="m-auto btn btn-sm btn-outline-danger"
                           onClick={() => {
                             const onSuccess = () => {
-                              setCards((prev) => {
-                                let newCreditCards = Object.assign([], prev);
+                              Swal.fire({
+                                icon: "success",
+                                title: "Dados atualizados com sucesso!",
+                              });
 
-                                newCreditCards = newCreditCards.filter(
-                                  (card: CreditCard) => card?.id !== el.id
-                                );
+                              setCustomer((prev) => {
+                                let newCustomer = Object.assign([], prev);
 
-                                return newCreditCards;
+                                newCustomer.creditCardList =
+                                  newCustomer?.creditCardList?.filter(
+                                    (card) => card?.id !== el.id
+                                  );
+
+                                return newCustomer;
                               });
                             };
 
@@ -132,13 +147,7 @@ function Cards() {
         show={show}
         title="Adicionar Novo Cartão"
       >
-        <CreditCardForm
-          customer={{ id: Number(id) }}
-          toggleModal={() => {
-            setShow((prev) => !prev);
-          }}
-          handleCards={setCards}
-        />
+        <CreditCardForm />
       </ModalTeddy>
     </CustomerAccount>
   );

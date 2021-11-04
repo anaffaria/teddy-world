@@ -48,6 +48,7 @@ public class CustomerDAO implements IDAO {
         Customer customerNew = (Customer) domainEntity;
         Customer customerExisting = (Customer) get(domainEntity.getId());
         String cpf = customerExisting.getCpf();
+        String roles = customerExisting.getRoles();
         LocalDateTime createdAt = customerExisting.getCreatedAt();
         String encryptedPassword = customerExisting.getPassword();
 
@@ -57,6 +58,8 @@ public class CustomerDAO implements IDAO {
         customerExisting.setCreatedAt(createdAt);
         customerExisting.setPassword(encryptedPassword);
         customerExisting.setUpdatedAt(LocalDateTime.now());
+        customerExisting.setRoles(roles);
+
 
         if(null != customerNew.getNewPassword()) {
             customerExisting.setPassword(passwordEncoder.encode(customerNew.getNewPassword()));

@@ -156,7 +156,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<DataSetDTO> ordersFiltered(String start, String end, String type) {
+    public ChartDTO ordersFiltered(String start, String end, String type) {
         String startConv = start + " 00:00:00";
         String endConv = end + " 23:59:59";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -190,7 +190,7 @@ public class OrderService implements IOrderService {
                                 amount+= item.getAmount();
                         }
                     }
-                    doubleList.add(amount * teddy.getPriceFactory());
+                    doubleList.add(amount.doubleValue());
                 }
 
                 dataSetDTO.setData(doubleList);
@@ -204,27 +204,29 @@ public class OrderService implements IOrderService {
                 List<Double> doubleList = new ArrayList<>();
                 dataSetDTO.setLabel(gender.getName());
 
-
                 for (List<Order> order : groupedByDate.values()) {
                     Integer amount = 0;
                     Teddy teddy = null;
                     for (Order orderValueGroup : order) {
                         for (Item item : orderValueGroup.getItemList()) {
                             if (item.getTeddy().getCategory().contains(gender)) {
-                                amount++;
+                                amount+= item.getAmount();
                             }
                             teddy = item.getTeddy();
                         }
                     }
-                    if (null != teddy)
-                        doubleList.add(amount * teddy.getPriceFactory());
+
+                    doubleList.add(amount.doubleValue());
                 }
 
                 dataSetDTO.setData(doubleList);
                 listDataSetDTOS.add(dataSetDTO);
             }
         }
-        return listDataSetDTOS;
+
+        List<String> labelsXAxis = groupedByDate.keySet().stream().collect(Collectors.toList()).stream().map(d -> d.toString()).collect(Collectors.toList());
+
+        return new ChartDTO(labelsXAxis,listDataSetDTOS);
     }
 
     public void beforeEach() {

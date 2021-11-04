@@ -36,6 +36,9 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public boolean isCurrentUserLoggedIn(Long id) {
+        if(null == this.currentUserLoggedIn())
+            return false;
+
         return this.currentUserLoggedIn().getId().equals(id);
     }
 }
