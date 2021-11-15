@@ -43,7 +43,7 @@ function Header({ children }: HeaderProps) {
               <FiShoppingBag fontSize={37} color={'212529'}></FiShoppingBag>
             </div>
 
-            <div className="hearder-shopping-circle">
+            <div className="hearder-shopping-circle" id="sacola">
               <span className="shopping-bag-count">
                 {customer?.cart?.itemDTOS.length}
               </span>

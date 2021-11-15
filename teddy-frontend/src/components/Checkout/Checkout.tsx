@@ -593,6 +593,7 @@ function Checkout() {
           <div className="form-group mt-2">
             <label>Cupom de Desconto</label>
             <input
+              id="cupon"
               className="form-control"
               onChange={(e) => {
                 searchCoupon(e.target.value);

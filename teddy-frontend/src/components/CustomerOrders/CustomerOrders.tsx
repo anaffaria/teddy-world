@@ -94,7 +94,7 @@ function CustumerOrders() {
               <span className="badge badge-warning">Troca solicitada</span>
             )}
           </td>
-          <td>
+          <td id="cancelar">
             {order.status === "Processando" && (
               <button
                 className="btn badge badge-info"
