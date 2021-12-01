@@ -1,5 +1,7 @@
 # Teddy World
 
+<img align="right" alt="Teddy-gif" src="https://i.pinimg.com/originals/71/30/ab/7130ab0c97e6d4c66b1982363a6fbd67.gif">
+
 ## Objectives
 
 This project is an e-commerce of LES class of FATEC - Mogi das Cruzes. Here we have conduction use case, analisis and tests.
