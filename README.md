@@ -9,7 +9,7 @@ This project is an e-commerce of LES class of FATEC - Mogi das Cruzes. Here we h
 - Java 11
 - PostgreSQL
 - SpringBoot
-- ReactJS
+- ReactJS + TypeScript
 
 ## Run
 
