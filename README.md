@@ -22,7 +22,7 @@ This project is an e-commerce of LES class of FATEC - Mogi das Cruzes. Here we h
 
 ## Prints
 
-![home](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/01-home.png)</>
+![home](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/01-home.png)
 
 ![products](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/02-products.png)
 
@@ -34,8 +34,5 @@ This project is an e-commerce of LES class of FATEC - Mogi das Cruzes. Here we h
 
 ![adminIndex](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/06-dashboard.png)
 
-## Demonstration
-
-![adminIndex](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/demostracao.mp4)
 
 
