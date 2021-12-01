@@ -1,4 +1,4 @@
-# A.M. STORE
+# Teddy World
 
 ## Objectives
 
