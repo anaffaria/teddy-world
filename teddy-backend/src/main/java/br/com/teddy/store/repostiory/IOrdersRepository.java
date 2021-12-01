@@ -12,5 +12,5 @@ import java.util.List;
 public interface IOrdersRepository extends JpaRepository<Order, Long> {
     List<Order> findAllByCreatedAtBetweenOrderByCreatedAt(Date dateInitial, Date dateFinal);
 
-    List<Order> findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqual(LocalDateTime start, LocalDateTime end);
+    List<Order> findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqualOrderByCreatedAtAsc(LocalDateTime start, LocalDateTime end);
 }

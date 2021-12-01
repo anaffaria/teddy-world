@@ -37,6 +37,4 @@ public class Devolution extends DomainEntity{
     public Devolution() {
         this.statusDevolution = StatusDevolution.WAITING_ANSWER;
     }
-
-
 }

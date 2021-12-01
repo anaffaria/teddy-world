@@ -161,15 +161,13 @@ public class OrderService implements IOrderService {
         String endConv = end + " 23:59:59";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        List<Order> orderList = orders.findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqual(LocalDateTime.parse(startConv, formatter),
+        List<Order> orderList = orders.findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqualOrderByCreatedAtAsc(LocalDateTime.parse(startConv, formatter),
                 LocalDateTime.parse(endConv, formatter));
-
         List<AttrResponseDTO> responseDTOList = new ArrayList<>();
         orderList.forEach(t -> responseDTOList.add(FactoryResponseDTO.createDTO(t, "LIST")));
 
-        Map<LocalDate, List<Order>> groupedByDate = orderList.stream()
-                .collect(Collectors.groupingBy(order ->
-                        order.getCreatedAt().truncatedTo(ChronoUnit.DAYS).atZone(ZoneId.systemDefault()).toLocalDate()));
+        Map<LocalDate, List<Order>> groupedByDate = orderList.stream().sorted(Comparator.comparing(DomainEntity::getCreatedAt))
+                .collect(Collectors.groupingBy(order -> {return order.getCreatedAt().truncatedTo(ChronoUnit.DAYS).atZone(ZoneId.systemDefault()).toLocalDate();}, LinkedHashMap::new, Collectors.toList()));
 
         List<DataSetDTO> listDataSetDTOS = new ArrayList<>();
 
