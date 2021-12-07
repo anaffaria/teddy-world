@@ -8,7 +8,7 @@ export interface Order {
   total: number;
   shippingTax: number;
   customer: Customer;
-  status: "Processando";
+  status: string;
   itemList: [
     {
       id: number;
@@ -17,5 +17,5 @@ export interface Order {
       amount: number;
     }
   ];
-  devolution: null;
+  devolution?: null;
 }

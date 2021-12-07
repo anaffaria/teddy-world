@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class ChartDTO {
-    private List<String> label;
+    private List<String> labels;
     private List<DataSetDTO> datasets;
 }

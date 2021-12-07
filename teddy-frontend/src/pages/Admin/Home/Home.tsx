@@ -1,65 +1,92 @@
 import AdminNavBar from "../../../components/AdminNavBar/AdminNavBar";
-import Chart from "../../../components/Chart/Chart";
 import { BiCreditCard } from "react-icons/bi";
 import { MdAttachMoney } from "react-icons/md";
 import { BiSearchAlt } from "react-icons/bi";
+import { Form } from "@unform/web";
+import { useEffect, useRef, useState } from "react";
+import { FormHandles } from "@unform/core";
+import { Select } from "../../../components/Form/SelectInput";
+import InputText from "../../../components/Form/InputText";
+import { FilterOrder } from "../../../service/orderService";
+import { Line } from "react-chartjs-2";
+import { convertISODateToString } from "../../../components/Utils/dateConverter";
+
+type ChartType = {
+  labels: string[];
+  datasets: [
+    {
+      backgroundColor: string;
+      hoverBackgroundColor: string;
+      hoverBorderColor: string;
+      borderWidth: number;
+      label: string;
+      data: Number[];
+    },
+    {
+      backgroundColor: string;
+      borderWidth: {
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+      };
+      label: string;
+      data: Number[];
+      barThickness: string;
+      minBarLength: number;
+    }
+  ];
+};
 
 function AdminIndex() {
-  const data = [
-    {
-      name: "JAN",
-      uv: 4000,
-      pv: 2400,
-      kct: 12345,
-      amt: 2400,
-    },
-    {
-      name: "FEV",
-      uv: 3000,
-      pv: 1398,
-      kct: 12345,
-      amt: 2210,
-    },
-    {
-      name: "MAR",
-      uv: 2000,
-      pv: 9800,
-      kct: 12345,
-      amt: 2290,
-    },
-    {
-      name: "ABR",
-      uv: 2780,
-      pv: 3908,
-      kct: 12345,
-      amt: 2000,
-    },
-    {
-      name: "MAI",
-      uv: 1890,
-      pv: 4800,
-      kct: 12345,
-      amt: 2181,
-    },
-    {
-      name: "JUN",
-      uv: 2390,
-      pv: 3800,
-      kct: 12345,
-      amt: 2500,
-    },
-    {
-      name: "JUL",
-      uv: 3490,
-      pv: 4300,
-      kct: 12345,
-      amt: 2100,
-    },
-  ];
+  const [chartData, setChartData] = useState<ChartType>();
+  const formRef = useRef<FormHandles>(null);
+  const token = localStorage.getItem("token") || "";
 
-  const dataKeys = {
-    categories: [],
-    products: ["uv", "pv", "kct", "amt"],
+  useEffect(() => {
+    const start = new Date();
+    start.setMonth(start.getMonth() - 1);
+    const end = new Date();
+
+    const data = {
+      start: convertISODateToString(start),
+      end: convertISODateToString(end),
+      type: "0",
+    };
+    const onSuccess = (resp: any) => {
+      setChartData(resp.data);
+    };
+
+    const onError = (err: any) => {
+      console.log(err);
+    };
+
+    FilterOrder({
+      onSuccess,
+      onError,
+      token,
+      data,
+    });
+  }, [token]);
+
+  const handleSubmit = (data: any) => {
+    console.log(data);
+    const onSuccess = (resp: any) => {
+      console.log(resp);
+
+      setChartData(resp.data);
+    };
+
+    const onError = (err: any) => {
+      console.log(err);
+    };
+
+    FilterOrder({
+      onSuccess,
+      onError,
+      token,
+      data,
+    });
   };
 
   return (
@@ -111,27 +138,30 @@ function AdminIndex() {
             </div>
           </div>
         </div>
-        <form className="d-flex justify-content-center">
+        <Form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="d-flex justify-content-center"
+        >
           <div className="row col-12">
             <div className="form-group col-sm-3">
               <label>Data início:</label>
-              <input type="date" name="start-date" className="form-control" />
+              <InputText type="date" name="start" className="form-control" />
             </div>
             <div className="form-group col-sm-3">
               <label>Data fim:</label>
-              <input type="date" name="end-date" className="form-control" />
+              <InputText type="date" name="end" className="form-control" />
             </div>
             <div className="form-group col-sm-3">
               <label htmlFor="products">Categoria:</label>
-              <select defaultValue="" className="form-control">
+              <Select name="type" defaultValue="" className="form-control">
                 <option value="">Selecione</option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>
+                <option value="0">Pelúcias</option>
+                <option value="1">Categoria</option>
+              </Select>
             </div>
 
-            <div className='col-sm-3 search-button align-self-end'>
+            <div className="col-sm-3 search-button align-self-end">
               <button
                 className="buttom btn-block"
                 style={{
@@ -139,7 +169,6 @@ function AdminIndex() {
                   height: 50,
                   alignSelf: "flex-end",
                   marginBottom: "1rem",
-                
                 }}
               >
                 <BiSearchAlt fontSize={20} />
@@ -147,8 +176,8 @@ function AdminIndex() {
               </button>
             </div>
           </div>
-        </form>
-        <Chart data={data} dataKeys={dataKeys} />
+        </Form>
+        {chartData && <Line data={chartData as any} />}
       </main>
     </>
   );

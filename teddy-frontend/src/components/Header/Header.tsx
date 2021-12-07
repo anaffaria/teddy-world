@@ -37,8 +37,8 @@ function Header({ children }: HeaderProps) {
 
         <div className="header-user d-flex  align-items-center">{children}</div>
 
-        <Link to={`/cliente/${customer?.id}/checkout`}>
-          <div className="hearder-shopping-bag d-flex align-items-center">
+        <Link to={`/cliente/${customer?.id}/checkout`} >
+          <div id="sacola" className="hearder-shopping-bag d-flex align-items-center">
             <div>
               <FiShoppingBag fontSize={37} color={'212529'}></FiShoppingBag>
             </div>

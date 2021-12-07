@@ -31,8 +31,8 @@ function Routes() {
         <Route path="/login" component={Login} />
         <Route path="/cadastro" component={Register} />
         <Route path="/recuperarsenha" component={RememberPass} />
-        <Route path="/atendimento" exact component={CustomerContactUs} />
-        <Route path="/atendimento/novo" component={ContactUs} />
+        <Route path="/atendimento/:id" exact component={CustomerContactUs} />
+        <Route path="/atendimento/:id/novo" component={ContactUs} />
         <Route path="/produto/:id" component={Product} />
         <Route path="/produtos" component={ProductList} />
         <Route path="/cliente/:id/alterar_dados" component={CustomerEdit} />
@@ -41,7 +41,7 @@ function Routes() {
         <Route path="/cliente/:id/checkout" component={Checkout} />
         <Route path="/cliente/:id/cartao" component={Cards} />
 
-        <AuthAdmin component={AdminIndex} path="/admin"/>
+        <AuthAdmin component={AdminIndex} path="/admin" exact/>
         <AuthAdmin path="/admin/pelucias" exact component={AdminTeddy} />
         <AuthAdmin path="/admin/pelucias/new" component={NewTeddy} />
         <AuthAdmin path="/admin/pelucias/edit/:id" component={NewTeddy} />

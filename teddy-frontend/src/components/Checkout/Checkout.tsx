@@ -85,8 +85,10 @@ function Checkout() {
   }, [customer?.id, setCustomer, token, history]);
 
   useEffect(() => {
-    setSubtotal(() => {
+    setSubtotal((prev) => {
       let totalCartItemsValue = 0;
+
+      let calc;
 
       for (let i = 0; i < customer?.cart?.itemDTOS?.length!; i++) {
         const element = customer?.cart?.itemDTOS?.[i];
@@ -94,9 +96,21 @@ function Checkout() {
           totalCartItemsValue +
           element?.amount! * element?.teddyItemDTO?.priceFactory!;
       }
-      if (coupon)
-        return totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
-      return Number((totalCartItemsValue + shippingTax).toFixed(2));
+      if (coupon) {
+        calc = totalCartItemsValue + shippingTax - (coupon[0]?.value! || 0);
+        console.log(calc);
+        if (calc < 0) {
+          Swal.fire({
+            icon: "warning",
+            title: "O desconto não pode o valor total",
+          });
+          return prev;
+        }
+        return calc;
+      }
+      calc = Number((totalCartItemsValue + shippingTax).toFixed(2));
+
+      return calc;
     });
   }, [customer, shippingTax, coupon]);
 
@@ -105,13 +119,23 @@ function Checkout() {
       (el) => Number(el.id) === Number(postalCode)
     );
 
+    Swal.fire({
+      title: "Buscando valor do frete",
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+    });
+
     const onSuccess = (resp: any) => {
       setShippingTax(resp.data);
       console.log(resp);
+      Swal.close();
     };
 
     const onError = (err: any) => {
       console.log(err);
+      Swal.close();
     };
 
     CalculateTax({
@@ -145,6 +169,7 @@ function Checkout() {
           "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
           "Dados inválidos! Verifique as informações do cartão e os valores inseridos",
           (value) => {
+            if (subTotal - customer?.wallet?.value! <= 0) return true;
             const paymentMethods = value as PaymentMethod[];
             let paymentMethodTotal = 0;
 
@@ -153,8 +178,8 @@ function Checkout() {
 
               paymentMethodTotal += Number(paymentMethod.paymentValue);
             });
-            console.log(paymentMethodTotal);
-            if (Number(paymentMethodTotal.toFixed(2)) !== subTotal)
+
+            if (Number(paymentMethodTotal.toFixed(2)) !== Number((subTotal - customer?.wallet?.value!).toFixed(2)))
               return false;
 
             return true;
@@ -404,9 +429,9 @@ function Checkout() {
               name={`paymentMethodList[${i}].creditCard.id`}
               className="form-control"
               onChange={(val) => {
-                if (val.currentTarget.value === "-1"){
+                if (val.currentTarget.value === "-1") {
                   setShowNewPaymentMethod(true);
-                  val.currentTarget.value = ""
+                  val.currentTarget.value = "";
                 }
               }}
             >
@@ -435,6 +460,16 @@ function Checkout() {
       );
     }
     return elements;
+  }
+
+  function renderWalletAmountDiscount() {
+    if (!customer?.wallet?.value) return 0;
+
+    let value = Number(customer.wallet.value - subTotal);
+
+    if (value < 0) return 0;
+
+    return value.toFixed(2);
   }
 
   return (
@@ -495,7 +530,11 @@ function Checkout() {
                 className="form-control"
                 name="deliveryAddress"
                 onChange={(val) => {
-                  if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                  if (val.currentTarget.value === "-1") {
+                    setShowNewAddress(true);
+                    val.currentTarget.value = "";
+                    return;
+                  }
                   handleTax(val.target.value);
                 }}
               >
@@ -512,7 +551,10 @@ function Checkout() {
                 name="billingAddress"
                 className="form-control"
                 onChange={(val) => {
-                  if (val.currentTarget.value === "-1") setShowNewAddress(true);
+                  if (val.currentTarget.value === "-1") {
+                    setShowNewAddress(true);
+                    val.currentTarget.value = "";
+                  }
                 }}
               >
                 <option value="">Selecione</option>
@@ -563,10 +605,24 @@ function Checkout() {
             <hr />
           </div>
 
+          <div className="d-flex space-between mt-2 mb-4">
+            <strong className="w-100">Saldo na carteira</strong>
+            <span>R$:</span>
+            <span>{customer?.wallet?.value}</span>
+          </div>
+
           <div className="d-flex space-between mt-2">
             <strong className="w-100">Valor do Frete</strong>
             <span>R$:</span>
             <span>{shippingTax}</span>
+          </div>
+
+          <div className="d-flex space-between mt-2 mb-4">
+            <strong className="w-100">Subtotal</strong>
+            <div className="d-flex">
+              <span>R$:</span>
+              <span>{subTotal}</span>
+            </div>
           </div>
 
           {coupon && (
@@ -577,36 +633,37 @@ function Checkout() {
             </div>
           )}
 
-          <div className="d-flex space-between mt-2">
-            <strong className="w-100">Subtotal</strong>
-            <div className="d-flex">
-              <span>R$:</span>
-              <span>{subTotal}</span>
-            </div>
-          </div>
-
-          {/* <div>
-            <div className="d-flex space-between mt-2">
-              <strong className="w-100">Saldo na carteira</strong>
-              <span>R$:</span>
-              <span>50,00</span>
-            </div>
-
+          <div>
             <div className="d-flex space-between mt-2">
               <strong className="w-100">Valor descontado na carteira</strong>
               <span>R$:</span>
-              <span>25,00</span>
+              <span>
+                {customer?.wallet?.value! < subTotal
+                  ? customer?.wallet?.value!
+                  : subTotal}
+              </span>
+            </div>
+
+            <div className="d-flex space-between mt-2 mb-4">
+              <strong className="w-100">Saldo restante na carteira</strong>
+              <span>R$:</span>
+              <span>{renderWalletAmountDiscount()}</span>
             </div>
 
             <div className="d-flex space-between mt-2">
-              <strong className="w-100">Saldo restante na carteira</strong>
-              <span>R$:</span>
-              <span>25,00</span>
+              <strong className="w-100">Total</strong>
+              <div className="d-flex">
+                <span>R$:</span>
+                <span>
+                  {subTotal - customer?.wallet?.value! < 0
+                    ? 0
+                    : Number(subTotal - customer?.wallet?.value!).toFixed(2)}
+                </span>
+              </div>
             </div>
 
             <hr />
           </div>
-         */}
         </aside>
       </section>
 

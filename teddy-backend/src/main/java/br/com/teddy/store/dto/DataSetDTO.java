@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +19,13 @@ public class DataSetDTO {
 
     public DataSetDTO() {
         Random random = new Random();
-        this.borderColor = "#" + random.nextInt(900) + 100;
+
+        int rand_num = random.nextInt(0xffffff + 1);
+
+        String colorCode = String.format("#%06x", rand_num);
+
+        this.borderColor = colorCode;
+
         this.backgroundColor = "rgba(255,255,255,0)";
     }
 }

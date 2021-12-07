@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface ICustomerService {
     Optional<Customer> findByEmail(String email);
+    public Customer currentUserLoggedIn();
+    public boolean isCurrentUserLoggedIn(Long id);
 }

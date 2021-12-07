@@ -1,47 +1,31 @@
 import { useHistory } from "react-router-dom";
 import CustomerAccount from "../CustomerAccount/CustomerAccount";
-import InputText from "../Form/InputText";
 import { useRef } from "react";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 import { Form } from "@unform/web";
 import { Select } from "../Form/SelectInput";
 import TextArea from "../Form/TextArea";
-
+import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
+import Swal from "sweetalert2";
+import { SendDevolutionRequest } from "../../service/devolutionService";
 
 interface ContactUsProps {
-  devolution: string;
-  name: string;
-  numberRequest: string;
-  email: string;
-  subject: string;
-  justification: string;
+  orderID: string;
+  reason: string;
 }
 
 function ContactUs() {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
+  const { customer, setCustomer } = useCustomer() as CustomerContextTiping;
+  const token = localStorage.getItem("token") || "";
 
   async function handleSubmit(data: ContactUsProps) {
     try {
       const schema = Yup.object().shape({
-        devolution: Yup.string()
-          .required("Selecionar uma opção é obrigatório")
-          .test(
-            "Devolução",
-            "Selecione uma opção",
-            (value = "") => Number(value) > 0
-          ),
-          name: Yup.string()
-          .required("Nome é obrigatório"),
-          numberRequest: Yup.string()
-          .required("N° pedido é obrigatório"),
-          email: Yup.string()
-          .required("E-mail é obrigatório"),
-          subject: Yup.string()
-          .required("Assunto é obrigatório"), 
-          justification: Yup.string()
-          .required("Justificativa obrigatória")
+        orderID: Yup.string().required("N° pedido é obrigatório"),
+        reason: Yup.string().required("Justificativa obrigatória"),
       });
 
       await schema.validate(data, {
@@ -50,8 +34,50 @@ function ContactUs() {
 
       formRef.current?.setErrors({});
 
-      history.push("/atendimento");
-    } catch (error) { 
+      const finalData = {
+        reason: data.reason,
+        order: {
+          id: Number(data.orderID),
+        },
+      };
+
+      const onSuccess = (resp: any) => {
+        Swal.fire({
+          icon: "success",
+          title: "Requisição enviada com sucesso",
+          titleText:
+            "Agora é só aguardar que um de nossos colabores irá responder o seu pedido!",
+        });
+        history.push(`/atendimento/${customer?.id}`);
+
+        setCustomer((prev) => {
+          const newCustomer = Object.assign({}, prev);
+          newCustomer.devolutions?.push(resp.data);
+          let index = newCustomer.ordersDTOS?.findIndex(
+            (order) => `${order.id}` === data.orderID
+          );
+          if (index) {
+            newCustomer!.ordersDTOS![index]!.hasDevolution = true;
+          }
+          return newCustomer;
+        });
+      };
+
+      const onError = () => {
+        Swal.fire({
+          icon: "error",
+          title: "Deu ruim aqui :/",
+        });
+      };
+
+      SendDevolutionRequest({
+        onSuccess,
+        onError,
+        token,
+        id: `${customer?.id}`,
+        data: finalData,
+      });
+    } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
 
@@ -64,6 +90,19 @@ function ContactUs() {
     }
   }
 
+  const renderOrdersFinished = () => {
+    return customer?.ordersDTOS?.map((order, index) => {
+      if (order.status === "Entregue" && !order.hasDevolution) {
+        return (
+          <option value={order.id} key={index}>
+            {order.id}
+          </option>
+        );
+      }
+      return undefined;
+    });
+  };
+
   return (
     <>
       <CustomerAccount>
@@ -71,60 +110,31 @@ function ContactUs() {
           <div className="col-sm-8 ">
             <Form onSubmit={handleSubmit} ref={formRef}>
               <div className="form-row ">
-                <div className="form-group  col-md-4 col-sm-4 mt-2">
-                  <label>Departamento</label>
+                {/* TODO: Each order has 0..1 Devolution Request. -> Done
+                          Create a transient boolean prop to say which order has devolution requested -> Done
+                          Filter select based on this prop. -> Done
+                          Update only statuses of devolution request -> Done
+                          Add a flag of devolution request on front end orders table (custoemr and/or admin) -> Done (customer)
+                          Finish request to new devolution request
+                          Update status of devolution on admin
+                          Update checkout flow
+                 */}
+                <div className="col-12 mt-2">
+                  <label>N° do pedido</label>
                   <Select
-                    name="devolution"
-                    id="devolution"
-                    className="form-control select_product"
+                    name="orderID"
+                    className="form-control"
+                    placeholder="Número do pedido"
                   >
-                    <option selected>Selecione</option>
-                    <option value="1">Devolução</option>
+                    <option value="">Selecione</option>
+                    {renderOrdersFinished()}
                   </Select>
                 </div>
 
-                <div className="col-8 col-sm-8 mt-2">
-                  <label>Nome</label>
-                  <InputText
-                    name="name"
-                    type="text"
-                    className="form-control"
-                    placeholder="Nome"
-                  />
-                </div>
-
-                <div className="col-4 col-sm-4 mt-2">
-                  <label>N° do pedido</label>
-                  <InputText
-                    name="numberRequest"
-                    type="text"
-                    className="form-control"
-                    placeholder="Número do pedido"
-                  />
-                </div>
-                <div className="col-8 col-sm-8 mt-2">
-                  <label>E-mail</label>
-                  <InputText
-                    name="email"
-                    type="text"
-                    className="form-control"
-                    placeholder="E-mail"
-                  />
-                </div>
-
-                <div className="col-12 col-sm-12  mt-2">
-                  <label>Assunto</label>
-                  <InputText
-                    name="subject"
-                    type="text"
-                    className="form-control"
-                    placeholder="Ex: devolução do produto"
-                  />
-                </div>
                 <div className="col-12 col-sm-12  mt-2">
                   <label>Justificativa</label>
                   <TextArea
-                    name="justification"
+                    name="reason"
                     className="form-control"
                     id="exampleFormControlTextarea1"
                     rows={3}

@@ -54,7 +54,7 @@ function Product({ teddy }: ProductListProps) {
     function onSuccess() {
       Swal.fire({
         icon: "success",
-        title: "Dados Atualizados!",
+        title: "Produto adicionado ao carrinho!",
       });
 
       setCustomer((prev) => {

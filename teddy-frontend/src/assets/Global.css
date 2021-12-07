@@ -99,3 +99,8 @@
 .goBack{
   color: #fa98af;
 }
+
+.btn-logoff-admin {
+  background: transparent;
+  border: 0;
+}

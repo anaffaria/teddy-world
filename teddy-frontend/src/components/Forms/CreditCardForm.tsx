@@ -12,7 +12,7 @@ import { CreditCard } from "../../types/card";
 import { useHistory } from "react-router";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 
-export function CreditCardForm(creditCardProp: CreditCard) {
+export function CreditCardForm() {
   const formRef = useRef<FormHandles>(null);
   const token = localStorage.getItem("token");
   const [cardFlag, setCardFlag] = useState<string | undefined>("");

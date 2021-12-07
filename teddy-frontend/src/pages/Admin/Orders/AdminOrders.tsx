@@ -41,6 +41,8 @@ function AdminOrders() {
         return "5";
       case "Em Processo de Troca":
         return "6";
+      case "Pedido cancelado":
+        return "7";
       default:
         break;
     }
@@ -96,6 +98,7 @@ function AdminOrders() {
               <option value="4">Troca Recusada</option>
               <option value="5">Troca Aprovada</option>
               <option value="6">Em Processo de Troca</option>
+              <option value="7">Pedido cancelado</option>
             </select>
           </td>
         </tr>

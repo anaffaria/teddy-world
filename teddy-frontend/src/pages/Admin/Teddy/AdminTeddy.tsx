@@ -133,7 +133,7 @@ function AdminTeddy() {
                                   teddyList = teddyList.filter(
                                     (el) => el.id !== teddy.id
                                   );
-                                  console.log(teddyList);
+
                                   return teddyList;
                                 });
                               };

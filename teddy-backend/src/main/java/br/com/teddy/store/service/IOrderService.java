@@ -13,4 +13,5 @@ public interface IOrderService extends IGenericService<Order>{
     Order saveAndFlush(Order order, BindingResult result);
     ChartDTO findAllByCreatedAtBetween(Date dateInitial, Date dateFinal, Integer searchType);
     List<HashMap<String, Double>> fillCardsIndex();
+    ChartDTO ordersFiltered(String start, String end, String type);
 }

@@ -3,6 +3,7 @@ package br.com.teddy.store.dto.customer;
 import br.com.teddy.store.domain.Cart;
 import br.com.teddy.store.domain.CreditCard;
 import br.com.teddy.store.domain.Customer;
+import br.com.teddy.store.domain.Wallet;
 import br.com.teddy.store.dto.AttrResponseDTO;
 import br.com.teddy.store.dto.address.AddressDTO;
 import br.com.teddy.store.dto.cart.CartDTO;
@@ -32,6 +33,7 @@ public class CustomerDTO extends AttrResponseDTO {
     private CartDTO cart;
     private List<CreditCardDTO> creditCardList = new ArrayList<>();
     private List<OrderDTO> ordersDTOS = new ArrayList<>();
+    private Wallet wallet;
 
     public CustomerDTO(Customer customer, String method) {
         this.id = customer.getId();
@@ -44,6 +46,7 @@ public class CustomerDTO extends AttrResponseDTO {
         this.telNumber = customer.getTelNumber();
         this.birthDate = customer.getBirthDate();
         this.cart = new CartDTO(customer.getCart());
+        this.wallet = customer.getWallet();
 
         if(method.equals("GET")){
             customer.getAddressList().forEach(a -> addressList.add(new AddressDTO(a)));

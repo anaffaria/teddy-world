@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { Authenticate } from "../../service/loginService";
 import "./Login.css";
 import Swal from "sweetalert2";
+import { FaUserTie } from "react-icons/fa";
 import { CustomerContextTiping, useCustomer } from "../../providers/Customer";
 import { GetCustomer } from "../../service/customerService";
 
@@ -43,28 +44,33 @@ function Login() {
         });
       };
 
-      const onSuccess = () => {
-        const customer_id = localStorage.getItem("customer_id")!
-        const token = localStorage.getItem("token")!
+      const onSuccess = (authResponse: any) => {
+        const customer_id = localStorage.getItem("customer_id")!;
+        const token = localStorage.getItem("token")!;
 
         function onSuccessAuth(response: any) {
-          setCustomer(response?.data)
-          history.push("/")
+          setCustomer(response?.data);
+
+          if(authResponse.isAdmin === true) {
+            return history.push("/admin");
+          }
+
+          history.push("/");
         }
 
         GetCustomer({
-          id: customer_id, 
+          id: customer_id,
           onSuccess: onSuccessAuth,
-          token
-        })
-      }
+          token,
+        });
+      };
 
       Authenticate({
         username: data.username,
         password: data.password,
         onError,
-        onSuccess
-      })
+        onSuccess,
+      });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessage: { [key: string]: string } = {};
@@ -131,6 +137,12 @@ function Login() {
             <div className="col text-center">
               <Link to="/cadastro">
                 <span>Ainda não sou cliente</span>
+              </Link>
+            </div>
+
+            <div className="col-sm text-center mt-5">
+              <Link to="/admin">
+                <FaUserTie className="mb-2" fontSize={17} /> Administrador
               </Link>
             </div>
           </Form>

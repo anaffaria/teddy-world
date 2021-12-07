@@ -28,7 +28,7 @@ public class OrderDTO extends AttrResponseDTO {
     private Tracking tracking;
     private List<PaymentMethod> paymentMethodList;
     private List<Item> itemList;
-    private Devolution devolution;
+    private boolean hasDevolution;
 
     public OrderDTO(Order order) {
         this.id = order.getId();
@@ -39,7 +39,7 @@ public class OrderDTO extends AttrResponseDTO {
         this.status = order.getStatus().getDescription();
         this.tracking = order.getTracking();
         this.itemList = order.getItemList();
-        this.devolution = order.getDevolution();
+        this.hasDevolution = order.getDevolution() != null;
     }
 
 }

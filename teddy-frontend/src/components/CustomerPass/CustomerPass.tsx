@@ -95,8 +95,6 @@ function CustomerPass() {
         });
       };
 
-      console.log(data);
-
       if (token === null) {
         Swal.fire({
           icon: "warning",

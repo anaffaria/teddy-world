@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity(name = "_customer")
 @Where(clause = "deleted_at is null")
 public class Customer extends DomainEntity{
@@ -61,10 +60,11 @@ public class Customer extends DomainEntity{
     private Wallet wallet;
 
     @OneToMany(mappedBy = "customer", targetEntity = Order.class)
+    @OrderBy("created_at desc")
     private List<Order> orderList;
 
     public Customer() {
-        this.setRoles("CUSTOMER");
+        this.setRoles("ROLE_CUSTOMER");
         this.cart = new Cart();
         this.wallet = new Wallet();
     }

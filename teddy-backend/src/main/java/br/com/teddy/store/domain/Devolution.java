@@ -1,5 +1,6 @@
 package br.com.teddy.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,13 +25,18 @@ public class Devolution extends DomainEntity{
     @Size(max = 254)
     private String reason;
 
+    @Size(max = 254)
     private String answer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Order order;
     private StatusDevolution statusDevolution;
+
+    private Double value;
 
     public Devolution() {
         this.statusDevolution = StatusDevolution.WAITING_ANSWER;
     }
+
+
 }

@@ -1,10 +1,8 @@
 package br.com.teddy.store.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "_order")
-@Where(clause = "deleted_at is null")
 public class Order extends DomainEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime deliveryDate;
@@ -43,7 +40,7 @@ public class Order extends DomainEntity{
     @OneToOne
     private Tracking tracking;
 
-    @ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+    @ManyToMany
     private List<PaymentMethod> paymentMethodList;
 
     @ManyToOne
@@ -54,6 +51,7 @@ public class Order extends DomainEntity{
     private List<Item> itemList;
 
     @OneToOne(mappedBy = "order")
+    @JsonIgnore
     private Devolution devolution;
 
     @Transient
@@ -66,20 +64,22 @@ public class Order extends DomainEntity{
     @Override
     @Transient
     public String validate() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Double totalReceived = paymentMethodList.stream().mapToDouble(p -> p.getPaymentValue()).sum();
-        Double totalItemsValue = itemList.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
-
-        if(null == total || total <= 0) {
-            stringBuilder.append("O valor total da compra não pode ser nulo ou menor que 0");
-        }
-
-        if(addressList.size() < 2) {
-            stringBuilder.append("Para solicitar o pedido é necessário 1 endereço para entrega e outro para cobrança");
-        }
-
-
-
-        return stringBuilder.toString();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        Double totalReceived = paymentMethodList.stream().mapToDouble(p -> p.getPaymentValue()).sum();
+//        Double totalItemsValue = itemList.stream().mapToDouble(i -> i.getAmount() * i.getTeddy().getPriceFactory()).sum();
+//        Double subTotal = totalItemsValue + this.shippingTax;
+//
+//        if(null == total || total <= 0) {
+//            stringBuilder.append("O valor total da compra não pode ser nulo ou menor que 0");
+//        }
+//
+//        if(addressList.size() < 2) {
+//            stringBuilder.append("Para solicitar o pedido é necessário 1 endereço para entrega e outro para cobrança");
+//        }
+//
+//
+//
+//        return stringBuilder.toString();
+        return "";
     }
 }

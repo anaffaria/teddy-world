@@ -13,5 +13,4 @@ export interface CreditCard {
     id: number;
   };
   toggleModal?: Function;
-  handleCards?: Function;
 }

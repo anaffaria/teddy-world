@@ -10,11 +10,14 @@ import org.hibernate.annotations.Where;
 import javax.persistence.Entity;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "_wallet")
 @Where(clause = "deleted_at is null")
 public class Wallet extends DomainEntity{
     private double value;
+
+    public Wallet() {
+        this.value = 0d;
+    }
 }
