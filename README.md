@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+# Teddy World
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img align="right" alt="Teddy-gif" src="https://i.pinimg.com/originals/71/30/ab/7130ab0c97e6d4c66b1982363a6fbd67.gif">
 
-## Available Scripts
+## Objectives
 
-In the project directory, you can run:
+This project is an e-commerce of LES class of FATEC - Mogi das Cruzes. Here we have conduction use case, analisis and tests.
 
-### `yarn start`
+## Technologies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Java 11
+- PostgreSQL
+- SpringBoot
+- ReactJS + TypeScript
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Run
 
-### `yarn test`
+- Create Database named teddyworld_development or other name you want
+- add these environment variables to your ide:
+  ```
+  DB_NAME=TEDDY_DB ; DB_USER=TEDDY_DB_USER ; DB_PASSWORD=TEDDY_DB_PASSWORD
+  ```
+- **Remember to install dependencies before running the project.**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prints
 
-### `yarn build`
+![home](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/01-home.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![products](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/02-products.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![product](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/03-product.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![login](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/04%20-%20login.png)
 
-### `yarn eject`
+![checkout](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/05-checkout.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![adminIndex](https://github.com/aninhafsilva/teddy-world/blob/feature/orders_devolution/redImages/06-dashboard.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
